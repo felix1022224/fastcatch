@@ -1,0 +1,18 @@
+PODS:
+  - Kingfisher (3.10.3)
+  - SnapKit (3.2.0)
+  - WechatOpenSDK (1.7.8)
+
+DEPENDENCIES:
+  - Kingfisher (~> 3.0)
+  - SnapKit (~> 3.2.0)
+  - WechatOpenSDK
+
+SPEC CHECKSUMS:
+  Kingfisher: a0ac82dc5bcf0388dd74b294cf2cc13730c63436
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  WechatOpenSDK: ad1e7be1b66416df847ac50830c798b70c9e365e
+
+PODFILE CHECKSUM: e620441f977ac322aa9441258dfc02b0058aa6b0
+
+COCOAPODS: 1.2.1

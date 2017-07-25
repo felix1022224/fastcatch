@@ -7,15 +7,46 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D18ACBF1F260801005363A4 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACBD1F260801005363A4 /* TencentOpenAPI.framework */; };
+		4D18ACC01F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4D18ACBE1F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle */; };
+		4D18ACC31F260817005363A4 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACC21F260817005363A4 /* Security.framework */; };
+		4D18ACC51F26081F005363A4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACC41F26081F005363A4 /* SystemConfiguration.framework */; };
+		4D18ACC71F260827005363A4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACC61F260827005363A4 /* CoreGraphics.framework */; };
+		4D18ACC91F26082E005363A4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACC81F26082E005363A4 /* CoreTelephony.framework */; };
+		4D18ACCB1F260837005363A4 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACCA1F260837005363A4 /* libiconv.tbd */; };
+		4D18ACCD1F26083E005363A4 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACCC1F26083E005363A4 /* libsqlite3.tbd */; };
+		4D18ACCF1F260846005363A4 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACCE1F260846005363A4 /* libstdc++.tbd */; };
+		4D18ACD11F26084E005363A4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACD01F26084E005363A4 /* libz.tbd */; };
+		4D18ACD41F261378005363A4 /* TencentShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D18ACD31F261378005363A4 /* TencentShared.swift */; };
+		4D18ACD61F261686005363A4 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D18ACD51F261686005363A4 /* MainViewController.swift */; };
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
 		4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D56251C1F2605A700515C98 /* Assets.xcassets */; };
+		4D9EBB811F26F163002674DE /* WeChatShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB801F26F163002674DE /* WeChatShared.swift */; };
+		958698C56D14F18FE0B94475 /* Pods_FelixFastCatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7E009E5610C1572048261D2 /* Pods_FelixFastCatch.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D18ACBD1F260801005363A4 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		4D18ACBE1F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		4D18ACC21F260817005363A4 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		4D18ACC41F26081F005363A4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4D18ACC61F260827005363A4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		4D18ACC81F26082E005363A4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		4D18ACCA1F260837005363A4 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		4D18ACCC1F26083E005363A4 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		4D18ACCE1F260846005363A4 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		4D18ACD01F26084E005363A4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		4D18ACD21F2608F3005363A4 /* Login-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Login-header.h"; sourceTree = "<group>"; };
+		4D18ACD31F261378005363A4 /* TencentShared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TencentShared.swift; sourceTree = "<group>"; };
+		4D18ACD51F261686005363A4 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		4D5625121F2605A700515C98 /* FelixFastCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FelixFastCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5625151F2605A700515C98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D56251C1F2605A700515C98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D5625211F2605A700515C98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D9EBB801F26F163002674DE /* WeChatShared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeChatShared.swift; sourceTree = "<group>"; };
+		9DA239CE4A7A8989C9E6EAED /* Pods-FelixFastCatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FelixFastCatch.release.xcconfig"; path = "Pods/Target Support Files/Pods-FelixFastCatch/Pods-FelixFastCatch.release.xcconfig"; sourceTree = "<group>"; };
+		D7E009E5610C1572048261D2 /* Pods_FelixFastCatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FelixFastCatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFC6B4F6BC202EA7BB7FDC1F /* Pods-FelixFastCatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FelixFastCatch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FelixFastCatch/Pods-FelixFastCatch.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -23,17 +54,45 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D18ACD11F26084E005363A4 /* libz.tbd in Frameworks */,
+				4D18ACCF1F260846005363A4 /* libstdc++.tbd in Frameworks */,
+				4D18ACCD1F26083E005363A4 /* libsqlite3.tbd in Frameworks */,
+				4D18ACCB1F260837005363A4 /* libiconv.tbd in Frameworks */,
+				4D18ACC91F26082E005363A4 /* CoreTelephony.framework in Frameworks */,
+				4D18ACC71F260827005363A4 /* CoreGraphics.framework in Frameworks */,
+				4D18ACC51F26081F005363A4 /* SystemConfiguration.framework in Frameworks */,
+				4D18ACC31F260817005363A4 /* Security.framework in Frameworks */,
+				4D18ACBF1F260801005363A4 /* TencentOpenAPI.framework in Frameworks */,
+				958698C56D14F18FE0B94475 /* Pods_FelixFastCatch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D18ACC11F260816005363A4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4D18ACD01F26084E005363A4 /* libz.tbd */,
+				4D18ACCE1F260846005363A4 /* libstdc++.tbd */,
+				4D18ACCC1F26083E005363A4 /* libsqlite3.tbd */,
+				4D18ACCA1F260837005363A4 /* libiconv.tbd */,
+				4D18ACC81F26082E005363A4 /* CoreTelephony.framework */,
+				4D18ACC61F260827005363A4 /* CoreGraphics.framework */,
+				4D18ACC41F26081F005363A4 /* SystemConfiguration.framework */,
+				4D18ACC21F260817005363A4 /* Security.framework */,
+				D7E009E5610C1572048261D2 /* Pods_FelixFastCatch.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4D5625091F2605A700515C98 = {
 			isa = PBXGroup;
 			children = (
 				4D5625141F2605A700515C98 /* FelixFastCatch */,
 				4D5625131F2605A700515C98 /* Products */,
+				4D18ACC11F260816005363A4 /* Frameworks */,
+				86C29A63B7571C0DB24E59E0 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -48,11 +107,34 @@
 		4D5625141F2605A700515C98 /* FelixFastCatch */ = {
 			isa = PBXGroup;
 			children = (
+				4D9EBB821F27111D002674DE /* Classes */,
+				4D18ACBD1F260801005363A4 /* TencentOpenAPI.framework */,
+				4D18ACBE1F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle */,
 				4D5625151F2605A700515C98 /* AppDelegate.swift */,
 				4D56251C1F2605A700515C98 /* Assets.xcassets */,
 				4D5625211F2605A700515C98 /* Info.plist */,
+				4D18ACD21F2608F3005363A4 /* Login-header.h */,
+				4D18ACD31F261378005363A4 /* TencentShared.swift */,
+				4D18ACD51F261686005363A4 /* MainViewController.swift */,
+				4D9EBB801F26F163002674DE /* WeChatShared.swift */,
 			);
 			path = FelixFastCatch;
+			sourceTree = "<group>";
+		};
+		4D9EBB821F27111D002674DE /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		86C29A63B7571C0DB24E59E0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DFC6B4F6BC202EA7BB7FDC1F /* Pods-FelixFastCatch.debug.xcconfig */,
+				9DA239CE4A7A8989C9E6EAED /* Pods-FelixFastCatch.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -62,9 +144,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4D5625241F2605A700515C98 /* Build configuration list for PBXNativeTarget "FelixFastCatch" */;
 			buildPhases = (
+				4674BB04F245C16642CB0503 /* [CP] Check Pods Manifest.lock */,
 				4D56250E1F2605A700515C98 /* Sources */,
 				4D56250F1F2605A700515C98 /* Frameworks */,
 				4D5625101F2605A700515C98 /* Resources */,
+				5F7762A85870F3885B6F6947 /* [CP] Embed Pods Frameworks */,
+				877900135BC96E7033C8FB30 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -115,17 +200,69 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D18ACC01F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4674BB04F245C16642CB0503 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5F7762A85870F3885B6F6947 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FelixFastCatch/Pods-FelixFastCatch-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		877900135BC96E7033C8FB30 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FelixFastCatch/Pods-FelixFastCatch-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4D56250E1F2605A700515C98 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D9EBB811F26F163002674DE /* WeChatShared.swift in Sources */,
+				4D18ACD61F261686005363A4 /* MainViewController.swift in Sources */,
+				4D18ACD41F261378005363A4 /* TencentShared.swift in Sources */,
 				4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -230,30 +367,54 @@
 		};
 		4D5625251F2605A700515C98 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DFC6B4F6BC202EA7BB7FDC1F /* Pods-FelixFastCatch.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 69R7EJL9NK;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FelixFastCatch",
+				);
 				INFOPLIST_FILE = FelixFastCatch/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-Objc",
+					"-fobjc-arc",
+				);
+				PODS_ROOT = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fast.catch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/lufan/Developer/ios-git/FelixFastCatch/FelixFastCatch/Login-header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		4D5625261F2605A700515C98 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9DA239CE4A7A8989C9E6EAED /* Pods-FelixFastCatch.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 69R7EJL9NK;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FelixFastCatch",
+				);
 				INFOPLIST_FILE = FelixFastCatch/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-Objc",
+					"-fobjc-arc",
+				);
+				PODS_ROOT = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fast.catch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/lufan/Developer/ios-git/FelixFastCatch/FelixFastCatch/Login-header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -277,6 +438,7 @@
 				4D5625261F2605A700515C98 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -9,16 +9,42 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate{
 
     var window: UIWindow?
 
+    // qq 登录
+    var tencentAuth: TencentOAuth!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        TencentShared.registeApp("101417288", appKey: "2cf4d8fd277a91f2ecd788611fa39755")
+        WeChatShared.registeApp("wxb119161278966b95", appSecret: "2d54a9c60554787ea2a2d9c4f67eebb1")
+        
+        window = UIWindow()
+        let vc = MainViewController()
+        let nav = UINavigationController(rootViewController: vc)
+        window?.rootViewController = nav
+        window?.makeKeyAndVisible()
+        
         return true
     }
 
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        let urlKey: String = options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String
+        
+        if urlKey == "com.tencent.mqq" {
+            // QQ 的回调
+            return  TencentShared.handle(url)
+        } else if urlKey == "com.tencent.xin" {
+            // 微信 的回调
+            return WeChatShared.handle(url)
+        }
+        
+        return true
+    }
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
@@ -43,4 +69,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
+
+
+
+
 
