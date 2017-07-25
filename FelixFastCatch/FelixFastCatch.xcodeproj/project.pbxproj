@@ -107,11 +107,11 @@
 		4D5625141F2605A700515C98 /* FelixFastCatch */ = {
 			isa = PBXGroup;
 			children = (
-				4D9EBB821F27111D002674DE /* Classes */,
 				4D18ACBD1F260801005363A4 /* TencentOpenAPI.framework */,
 				4D18ACBE1F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle */,
 				4D5625151F2605A700515C98 /* AppDelegate.swift */,
 				4D56251C1F2605A700515C98 /* Assets.xcassets */,
+				4D9EBB821F27111D002674DE /* Classes */,
 				4D5625211F2605A700515C98 /* Info.plist */,
 				4D18ACD21F2608F3005363A4 /* Login-header.h */,
 				4D18ACD31F261378005363A4 /* TencentShared.swift */,
