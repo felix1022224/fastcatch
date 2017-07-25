@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate{
@@ -19,8 +20,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        // 延迟一秒钟
+        sleep(1)
+        
         TencentShared.registeApp("101417288", appKey: "2cf4d8fd277a91f2ecd788611fa39755")
         WeChatShared.registeApp("wxb119161278966b95", appSecret: "2d54a9c60554787ea2a2d9c4f67eebb1")
+        
+        /// 取得用户授权 显示通知（上方提示条/声音/badgeNumber）
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .sound, .alert, .carPlay]) { (success, error) in
+                print("授权" + (success ? "成功" : "失败"))
+            }
+        } else {
+            // Fallback on earlier versions
+            let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+        }
         
         window = UIWindow()
         let vc = MainViewController()
