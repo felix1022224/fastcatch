@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 typealias WeChatShared_loginFailClosure = (_ error: String) -> Void
 typealias WeChatShared_loginSuccessClosure = (_ info: [String: Any]) -> Void
@@ -106,10 +107,27 @@ extension WeChatShared {
         
         req.partnerId = dic["partnerid"]!
         req.prepayId = dic["prepayid"]!
-        req.package = dic["package"]!
+        req.package = dic["_package"]!
         req.nonceStr = dic["noncestr"]!
         req.timeStamp = UInt32(dic["timestamp"]!)!
         req.sign = dic["sign"]
+        
+        WXApi.send(req)
+    }
+    
+    class func pay(to identifier: String, _ json: JSON, resultHandle: WeChatShared_payResultHandle? = nil) {
+        
+        WeChatShared.shared.payResultHandle = resultHandle
+        WeChatShared.shared.payIdentifier = identifier
+        
+        let req = PayReq()
+        
+        req.partnerId = json["partnerid"].string!
+        req.prepayId = json["prepayid"].string!
+        req.package = json["_package"].string!
+        req.nonceStr = json["noncestr"].string!
+        req.timeStamp = json["timestamp"].uInt32!
+        req.sign = json["sign"].string!
         
         WXApi.send(req)
     }
