@@ -8,9 +8,10 @@
 
 import UIKit
 import UserNotifications
+import CoreLocation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate{
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate{
 
     var window: UIWindow?
 
@@ -43,9 +44,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
         
+        let locationManager:CLLocationManager = CLLocationManager()
+        //设置定位服务管理器代理
+        locationManager.delegate = self
+        //设置定位进度
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest //最佳定位
+        //更新距离
+        locationManager.distanceFilter = 100
+        //发出授权请求
+        locationManager.requestWhenInUseAuthorization()
+        
+        if (CLLocationManager.locationServicesEnabled()){
+            //允许使用定位服务的话，开始定位服务更新
+            locationManager.startUpdatingLocation()
+            print("定位开始")
+        }
+        
         return true
     }
-
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        //获取最新的坐标
+        let currLocation : CLLocation = locations.last!  // 持续更新
+        // 获取经纬度
+        Constants.Tools.LNG = currLocation.coordinate.longitude.description
+        Constants.Tools.LAT = currLocation.coordinate.latitude.description
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("error:\(error)")
+    }
+    
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         let urlKey: String = options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String
         

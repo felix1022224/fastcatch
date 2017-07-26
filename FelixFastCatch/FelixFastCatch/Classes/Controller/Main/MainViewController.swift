@@ -60,6 +60,14 @@ class MainViewController: UIViewController {
         createBannerView()
         
         createDataList()
+        
+        createMainBtns()
+    }
+    
+    override func removeFromParentViewController() {
+        timer.invalidate()
+        timer = nil
+        super.removeFromParentViewController()
     }
     
     /// banner images
@@ -73,6 +81,8 @@ class MainViewController: UIViewController {
     
     // 边距
     fileprivate let dataListPadding:CGFloat = 8
+    
+    fileprivate var timer:Timer!
 }
 
 
@@ -117,6 +127,7 @@ extension MainViewController:UIScrollViewDelegate{
         // 设置指示器的约束
         pageControl.frame = CGRect(x: self.view.bounds.width/2 - pageControl.bounds.width/2, y: bannerView.bounds.height - pageControl.bounds.height, width: pageControl.bounds.width, height: pageControl.bounds.height)
         
+        creatTimer()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -130,6 +141,27 @@ extension MainViewController:UIScrollViewDelegate{
     func getBannerHeight() -> CGFloat {
         return UIScreen.main.bounds.height * 0.22
     }
+    
+    //创建轮播图定时器
+    func creatTimer() {
+        timer =  Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.timerManager), userInfo: nil, repeats: true)
+        
+        //这句话实现多线程，如果你的ScrollView是作为TableView的headerView的话，在拖动tableView的时候让轮播图仍然能轮播就需要用到这句话
+        RunLoop.current.add(timer, forMode: RunLoopMode.commonModes)
+        
+    }
+    
+    //创建定时器管理者
+    func timerManager() {
+        let contentOffsetX = self.bannerView.contentOffset.x + self.view.frame.size.width
+        if contentOffsetX > self.view.frame.size.width * 3 {
+            // 当前视图显示的是第三个的时候，设置bottomView的偏移量为0
+            self.bannerView.setContentOffset(CGPoint(x:0,y:0), animated: true)
+        }else{
+            self.bannerView.setContentOffset(CGPoint(x:contentOffsetX,y:0), animated: true)
+        }
+    }
+    
 }
 
 
@@ -151,8 +183,11 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         // 設置 header 及 footer 的尺寸
         layout.footerReferenceSize = CGSize(width: CGFloat(4) * main.width, height: 80)
         
+        // item的宽度
+        let itemWidth = (CGFloat(UIScreen.main.bounds.width) - dataListPadding*2)/2 - 5
+        
         // 設置每個 cell 的尺寸
-        layout.itemSize = CGSize(width: (CGFloat(UIScreen.main.bounds.width) - dataListPadding*2)/2 - 5, height: 200)
+        layout.itemSize = CGSize(width: itemWidth, height: itemWidth * 1.3)
         
         dataList = UICollectionView(frame: CGRect(x: 0, y: bannerView.bounds.height, width: self.view.bounds.width, height: self.view.bounds.height - bannerView.bounds.height), collectionViewLayout: layout)
         dataList.backgroundColor = UIColor.clear
@@ -175,12 +210,32 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellId", for: indexPath) as? MainCollectionViewCell
         
+        cell?.addPlayBtnClick(target: self, action: #selector(showPlay))
+        
         return cell!
+    }
+    
+    
+    /// 显示游戏界面
+    func showPlay() -> () {
+        navigationController?.pushViewController(PlayViewController(), animated: true)
     }
 
 }
 
 
+// MARK: - 按钮集合
+extension MainViewController{
+    
+    // 创建首页的按钮
+    func createMainBtns() -> () {
+        let settingImage = UIImageView(image: UIImage(named: "Settings-btn"))
+        let settingsBtn = MainFloatMenu(frame: CGRect(x: 10, y: UIScreen.main.bounds.height - 80, width: settingImage.bounds.width, height: 80), image: settingImage.image, actionTitle: "设置")
+        view.addSubview(settingsBtn)
+        
+    }
+    
+}
 
 
 

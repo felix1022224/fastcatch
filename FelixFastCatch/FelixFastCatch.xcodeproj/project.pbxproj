@@ -20,11 +20,16 @@
 		4D18ACD41F261378005363A4 /* TencentShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D18ACD31F261378005363A4 /* TencentShared.swift */; };
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
 		4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D56251C1F2605A700515C98 /* Assets.xcassets */; };
+		4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8921F287FB9002A9BFD /* PlayViewController.swift */; };
+		4D64B8951F2885AA002A9BFD /* MainFloatMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8941F2885AA002A9BFD /* MainFloatMenu.swift */; };
 		4D9EBB811F26F163002674DE /* WeChatShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB801F26F163002674DE /* WeChatShared.swift */; };
 		4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB8A1F271C80002674DE /* MainViewController.swift */; };
 		4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */; };
 		4D9EBB961F276822002674DE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB951F276822002674DE /* Constants.swift */; };
 		4DDD2B7C1F283F3D00102A0F /* ToastUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B7B1F283F3D00102A0F /* ToastUtils.swift */; };
+		4DDD2B7F1F2848FC00102A0F /* MainCustomerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B7E1F2848FC00102A0F /* MainCustomerLabel.swift */; };
+		4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B811F2849DC00102A0F /* NetWorkUtils.swift */; };
+		4DDD2B861F286BC000102A0F /* DeviceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B851F286BC000102A0F /* DeviceTools.swift */; };
 		958698C56D14F18FE0B94475 /* Pods_FelixFastCatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7E009E5610C1572048261D2 /* Pods_FelixFastCatch.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,11 +50,16 @@
 		4D5625151F2605A700515C98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D56251C1F2605A700515C98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D5625211F2605A700515C98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D64B8921F287FB9002A9BFD /* PlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
+		4D64B8941F2885AA002A9BFD /* MainFloatMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFloatMenu.swift; sourceTree = "<group>"; };
 		4D9EBB801F26F163002674DE /* WeChatShared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeChatShared.swift; sourceTree = "<group>"; };
 		4D9EBB8A1F271C80002674DE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
 		4D9EBB951F276822002674DE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4DDD2B7B1F283F3D00102A0F /* ToastUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastUtils.swift; sourceTree = "<group>"; };
+		4DDD2B7E1F2848FC00102A0F /* MainCustomerLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCustomerLabel.swift; sourceTree = "<group>"; };
+		4DDD2B811F2849DC00102A0F /* NetWorkUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetWorkUtils.swift; sourceTree = "<group>"; };
+		4DDD2B851F286BC000102A0F /* DeviceTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceTools.swift; sourceTree = "<group>"; };
 		9DA239CE4A7A8989C9E6EAED /* Pods-FelixFastCatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FelixFastCatch.release.xcconfig"; path = "Pods/Target Support Files/Pods-FelixFastCatch/Pods-FelixFastCatch.release.xcconfig"; sourceTree = "<group>"; };
 		D7E009E5610C1572048261D2 /* Pods_FelixFastCatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FelixFastCatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFC6B4F6BC202EA7BB7FDC1F /* Pods-FelixFastCatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FelixFastCatch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FelixFastCatch/Pods-FelixFastCatch.debug.xcconfig"; sourceTree = "<group>"; };
@@ -157,8 +167,11 @@
 		4D9EBB861F271C3A002674DE /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				4DDD2B801F2849C600102A0F /* Network */,
+				4DDD2B7D1F2848E600102A0F /* widget */,
 				4D9EBB951F276822002674DE /* Constants.swift */,
 				4DDD2B7B1F283F3D00102A0F /* ToastUtils.swift */,
+				4DDD2B851F286BC000102A0F /* DeviceTools.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -185,6 +198,7 @@
 		4D9EBB891F271C5C002674DE /* PlayInfo */ = {
 			isa = PBXGroup;
 			children = (
+				4D64B8921F287FB9002A9BFD /* PlayViewController.swift */,
 			);
 			path = PlayInfo;
 			sourceTree = "<group>";
@@ -239,6 +253,23 @@
 				4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		4DDD2B7D1F2848E600102A0F /* widget */ = {
+			isa = PBXGroup;
+			children = (
+				4DDD2B7E1F2848FC00102A0F /* MainCustomerLabel.swift */,
+				4D64B8941F2885AA002A9BFD /* MainFloatMenu.swift */,
+			);
+			path = widget;
+			sourceTree = "<group>";
+		};
+		4DDD2B801F2849C600102A0F /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				4DDD2B811F2849DC00102A0F /* NetWorkUtils.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		86C29A63B7571C0DB24E59E0 /* Pods */ = {
@@ -374,8 +405,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DDD2B7C1F283F3D00102A0F /* ToastUtils.swift in Sources */,
+				4DDD2B861F286BC000102A0F /* DeviceTools.swift in Sources */,
+				4D64B8951F2885AA002A9BFD /* MainFloatMenu.swift in Sources */,
+				4DDD2B7F1F2848FC00102A0F /* MainCustomerLabel.swift in Sources */,
 				4D9EBB811F26F163002674DE /* WeChatShared.swift in Sources */,
+				4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */,
 				4D18ACD41F261378005363A4 /* TencentShared.swift in Sources */,
+				4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */,
 				4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */,
 				4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */,
 				4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */,
