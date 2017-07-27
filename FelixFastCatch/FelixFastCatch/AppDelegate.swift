@@ -18,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     // qq 登录
     var tencentAuth: TencentOAuth!
 
+    var locationManager:CLLocationManager!
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -44,13 +46,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
         
-        let locationManager:CLLocationManager = CLLocationManager()
+        locationManager = CLLocationManager()
         //设置定位服务管理器代理
         locationManager.delegate = self
         //设置定位进度
         locationManager.desiredAccuracy = kCLLocationAccuracyBest //最佳定位
         //更新距离
-        locationManager.distanceFilter = 100
+        locationManager.distanceFilter = 5
         //发出授权请求
         locationManager.requestWhenInUseAuthorization()
         
@@ -69,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // 获取经纬度
         Constants.Tools.LNG = currLocation.coordinate.longitude.description
         Constants.Tools.LAT = currLocation.coordinate.latitude.description
-        
+        manager.stopUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

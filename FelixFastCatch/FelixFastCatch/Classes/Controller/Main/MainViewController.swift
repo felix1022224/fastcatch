@@ -15,6 +15,7 @@ import SwiftyJSON
 
 class MainViewController: UIViewController {
 
+    // 背景图
     fileprivate lazy var backgroundImage:UIImageView = UIImageView()
     
     override func viewDidLoad() {
@@ -82,6 +83,7 @@ class MainViewController: UIViewController {
     // 边距
     fileprivate let dataListPadding:CGFloat = 8
     
+    // 计时器
     fileprivate var timer:Timer!
 }
 

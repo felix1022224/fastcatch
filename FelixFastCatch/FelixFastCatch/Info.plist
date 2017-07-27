@@ -2,10 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<true/>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<true/>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>为您提供更智能化的奖品推荐</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>为您提供更智能化的奖品推荐</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
