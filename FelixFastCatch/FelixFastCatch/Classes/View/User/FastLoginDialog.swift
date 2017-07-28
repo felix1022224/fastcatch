@@ -85,7 +85,7 @@ class FastLoginDialog: BaseDialog {
     // 按钮点击事件
     func loginBtnClick(sender:UIButton) -> () {
         if sender == phoneNumberLoginBtn {
-            phoneNumberLogin.createView()
+            phoneNumberLogin.createView(fastLogin:self)
             phoneNumberLogin.show()
         }else if sender == wechatLoginBtn {
             WeChatShared.login({ (info) in

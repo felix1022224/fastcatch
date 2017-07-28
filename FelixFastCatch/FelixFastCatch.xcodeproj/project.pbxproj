@@ -27,6 +27,7 @@
 		4D64B89E1F29D9C7002A9BFD /* PhoneNumberDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B89D1F29D9C7002A9BFD /* PhoneNumberDialog.swift */; };
 		4D64B8A01F29D9DA002A9BFD /* BaseDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B89F1F29D9DA002A9BFD /* BaseDialog.swift */; };
 		4D64B8A21F2ADC50002A9BFD /* MainCustomerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8A11F2ADC50002A9BFD /* MainCustomerTextField.swift */; };
+		4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8A31F2B079E002A9BFD /* LocalDataUtils.swift */; };
 		4D9EBB811F26F163002674DE /* WeChatShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB801F26F163002674DE /* WeChatShared.swift */; };
 		4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB8A1F271C80002674DE /* MainViewController.swift */; };
 		4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */; };
@@ -62,6 +63,7 @@
 		4D64B89D1F29D9C7002A9BFD /* PhoneNumberDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberDialog.swift; sourceTree = "<group>"; };
 		4D64B89F1F29D9DA002A9BFD /* BaseDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDialog.swift; sourceTree = "<group>"; };
 		4D64B8A11F2ADC50002A9BFD /* MainCustomerTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCustomerTextField.swift; sourceTree = "<group>"; };
+		4D64B8A31F2B079E002A9BFD /* LocalDataUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDataUtils.swift; sourceTree = "<group>"; };
 		4D9EBB801F26F163002674DE /* WeChatShared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeChatShared.swift; sourceTree = "<group>"; };
 		4D9EBB8A1F271C80002674DE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				4D9EBB951F276822002674DE /* Constants.swift */,
 				4DDD2B7B1F283F3D00102A0F /* ToastUtils.swift */,
 				4DDD2B851F286BC000102A0F /* DeviceTools.swift */,
+				4D64B8A31F2B079E002A9BFD /* LocalDataUtils.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */,
 				4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */,
 				4D64B89C1F29D984002A9BFD /* FastLoginDialog.swift in Sources */,
+				4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */,
 				4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */,
 				4D9EBB961F276822002674DE /* Constants.swift in Sources */,
 			);

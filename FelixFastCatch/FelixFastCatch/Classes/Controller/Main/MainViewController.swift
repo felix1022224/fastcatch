@@ -72,8 +72,10 @@ class MainViewController: UIViewController {
     func loadDialogToWindow() -> () {
         fastLoginDialog = FastLoginDialog(frame: UIScreen.main.bounds)
         
-        fastLoginDialog.createView()
-        fastLoginDialog.show()
+        if Constants.User.USER_ID == "" {
+            fastLoginDialog.createView()
+            fastLoginDialog.show()
+        }
     }
     
     func test() -> () {
@@ -302,8 +304,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     /// 显示游戏界面
     func showPlay(sender: UIButton) -> () {
-        print("id:\(sender.tag)")
-        navigationController?.pushViewController(PlayViewController(), animated: true)
+        let playView = PlayViewController()
+        playView.deviceId = String(sender.tag)
+        navigationController?.pushViewController(playView, animated: true)
     }
 
 }
@@ -332,7 +335,7 @@ extension MainViewController{
                 self.dataList.dataSource = self
                 self.dataList.reloadData()
                 
-                print("result:\(jsonObject)")
+//                print("result:\(jsonObject)")
                 
                 // 如果数据不等于0 页码+1
                 if self.mainListData.count > 0 {

@@ -25,7 +25,15 @@ class PhoneNumberDialog: BaseDialog {
     // 验证码发送按钮
     fileprivate lazy var verifySendBtn:UIButton = UIButton(type: UIButtonType.custom)
     
+    fileprivate var fastLoginDialog:FastLoginDialog!
+    
     override func createView() {
+        
+    }
+    
+    func createView(fastLogin:FastLoginDialog) {
+        self.fastLoginDialog = fastLogin
+        
         createBackgroundImage(imageName: "register_login_background")
         createCloseBtn()
         
@@ -57,6 +65,7 @@ class PhoneNumberDialog: BaseDialog {
         phoneNumberEdit.tintColor = UIColor.clear
         phoneNumberEdit.delegate = self
         phoneNumberEdit.clearButtonMode = .unlessEditing
+        phoneNumberEdit.text = "17600860082"
         addSubview(phoneNumberEdit)
         
         phoneNumberEdit.snp.makeConstraints { (make) in
@@ -128,6 +137,8 @@ class PhoneNumberDialog: BaseDialog {
             make.centerX.equalTo(backgroundImage)
         }
         
+        loginBtn.addTarget(self, action: #selector(loginByPhoneNumber), for: .touchUpInside)
+        
         addDialogToWindow()
     }
 
@@ -170,6 +181,9 @@ class PhoneNumberDialog: BaseDialog {
     override func hide() {
         super.hide()
         isCounting = false
+        if self.fastLoginDialog != nil {
+            self.fastLoginDialog.hide()
+        }
     }
     
     @objc private func updateTime() {
@@ -178,6 +192,42 @@ class PhoneNumberDialog: BaseDialog {
     
 }
 
+
+// MARK: - 手机号登录
+extension PhoneNumberDialog{
+    
+    // 手机号登录
+    func loginByPhoneNumber() -> () {
+        if (phoneNumberEdit.text?.characters.count)! <= 0 {
+            ToastUtils.showErrorToast(msg: "请输入手机号")
+            return
+        }
+        if (verifyCodeEdit.text?.characters.count)! <= 0 {
+            ToastUtils.showErrorToast(msg: "请输入验证码")
+            return
+        }
+        
+//        ToastUtils.showLoadingToast(msg: "登录中……")
+        
+        var params = NetWorkUtils.createBaseParams()
+        params["code"] = verifyCodeEdit.text
+        params["phone"] = phoneNumberEdit.text
+        
+        Alamofire.request(Constants.Network.PHONE_NUMBER_LOGIN, method: .post, parameters: params).responseJSON { (response) in
+            if response.error == nil && response.data != nil {
+//                SVProgressHUD.dismiss()
+                let resultJson = JSON(data: response.data!)
+                if NetWorkUtils.checkReponse(response: response) {
+                    print("response:\(response.response?.allHeaderFields)")
+                    LocalDataUtils.updateLocalUserData(resultData: resultJson, dataResponse:response)
+//                    ToastUtils.showSuccessToast(msg: "登录成功")
+                    self.hide()
+                }
+            }
+        }
+    }
+    
+}
 
 // MARK: - 发送验证码
 extension PhoneNumberDialog{
@@ -202,7 +252,6 @@ extension PhoneNumberDialog{
             }
         }
     }
-
 }
 
 // MARK: - 文字输入框的代理

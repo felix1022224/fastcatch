@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreLocation
+import Alamofire
+import SwiftyJSON
 
 class NetWorkUtils: NSObject , CLLocationManagerDelegate{
     
@@ -29,5 +31,23 @@ class NetWorkUtils: NSObject , CLLocationManagerDelegate{
         baseParams["lat"] = Constants.Tools.LAT
         
         return baseParams
+    }
+    
+    
+    /// 检查返回的数据是否是正确的
+    ///
+    /// - Parameter response: 服务器返回的数据
+    /// - Returns: 是否code == 0
+    class func checkReponse(response:DataResponse<Any>) -> Bool{
+        if response.error == nil && response.data != nil {
+            let jsonData = JSON(data: response.data!)
+            if jsonData["code"].int! == 0 {
+                 return true
+            }
+            return false
+        }else{
+            print("error:\(String(describing: response.error))")
+            return false
+        }
     }
 }
