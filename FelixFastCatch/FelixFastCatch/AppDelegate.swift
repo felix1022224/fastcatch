@@ -9,6 +9,7 @@
 import UIKit
 import UserNotifications
 import CoreLocation
+import SVProgressHUD
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate{
@@ -24,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // Override point for customization after application launch.
         
         // 延迟一秒钟
-        sleep(1)
+//        sleep(1)
         
         TencentShared.registeApp("101417288", appKey: "2cf4d8fd277a91f2ecd788611fa39755")
         WeChatShared.registeApp("wxb119161278966b95", appSecret: "2d54a9c60554787ea2a2d9c4f67eebb1")
@@ -40,11 +41,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             application.registerUserNotificationSettings(settings)
         }
         
+        SVProgressHUD.setDefaultStyle(.dark)
+        SVProgressHUD.setDefaultMaskType(.black)
+        
         window = UIWindow()
         let vc = MainViewController()
         let nav = UINavigationController(rootViewController: vc)
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
+        
+        vc.loadDialogToWindow()
         
         locationManager = CLLocationManager()
         //设置定位服务管理器代理

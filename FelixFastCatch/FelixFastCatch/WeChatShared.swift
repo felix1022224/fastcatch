@@ -309,12 +309,18 @@ extension WeChatShared: WXApiDelegate {
                             return
                         }
                         
-                        self.requestAccessToken((sd.code)!)
+                        let resultCode = ["code":sd.code!]
+                        DispatchQueue.main.async {
+                            if let closure = self.successClosure {
+                                closure(resultCode)
+                            }
+                        }
+//                        self.requestAccessToken((sd.code)!)
                     } else {
                         
                         DispatchQueue.main.async {
                             if let closure = self.failClosure {
-                                closure(sd.errStr)
+                                closure(String(sd.errCode))
                             }
                         }
                     }

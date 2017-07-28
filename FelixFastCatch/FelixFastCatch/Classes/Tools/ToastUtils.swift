@@ -16,8 +16,9 @@ class ToastUtils: NSObject {
     /// - Parameter msg: 错误信息
     class func showErrorToast(msg:String) {
         SVProgressHUD.dismiss()
+        SVProgressHUD.setDefaultMaskType(.clear)
         SVProgressHUD.showError(withStatus: msg)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             SVProgressHUD.dismiss()
         }
     }
@@ -28,8 +29,9 @@ class ToastUtils: NSObject {
     /// - Parameter msg: 成功信息
     class func showSuccessToast(msg:String) {
         SVProgressHUD.dismiss()
+        SVProgressHUD.setDefaultMaskType(.clear)
         SVProgressHUD.showSuccess(withStatus: msg)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             SVProgressHUD.dismiss()
         }
     }
@@ -40,10 +42,21 @@ class ToastUtils: NSObject {
     /// - Parameter msg: info msg
     class func showInfoToast(msg:String) {
         SVProgressHUD.dismiss()
+        SVProgressHUD.setDefaultMaskType(.clear)
         SVProgressHUD.showInfo(withStatus: msg)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             SVProgressHUD.dismiss()
         }
+    }
+    
+    
+    /// 显示info
+    ///
+    /// - Parameter msg: info msg
+    class func showLoadingToast(msg:String) {
+        SVProgressHUD.dismiss()
+        SVProgressHUD.setDefaultMaskType(.black)
+        SVProgressHUD.show(withStatus: msg)
     }
     
 }

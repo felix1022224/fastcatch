@@ -16,6 +16,15 @@ class Constants: NSObject {
         
         // 微信Pay支付接口
         static let WECHAT_PAY_URL =  BASE_URL +  "trade/wechatorder"
+        
+        // 首页banner图的数据
+        static let MAIN_BANNER_LIST = BASE_URL + "activity/bannerlist"
+        
+        // 首页的数据
+        static let MAIN_LIST = BASE_URL + "machine/list"
+        
+        // 发送验证码的接口
+        static let SEND_VERIFY_CODE = BASE_URL + "user/sendcode"
     }
     
     // 工具

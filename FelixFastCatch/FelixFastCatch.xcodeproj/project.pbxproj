@@ -22,6 +22,11 @@
 		4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D56251C1F2605A700515C98 /* Assets.xcassets */; };
 		4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8921F287FB9002A9BFD /* PlayViewController.swift */; };
 		4D64B8951F2885AA002A9BFD /* MainFloatMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8941F2885AA002A9BFD /* MainFloatMenu.swift */; };
+		4D64B8981F29B549002A9BFD /* MainBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8971F29B549002A9BFD /* MainBanner.swift */; };
+		4D64B89C1F29D984002A9BFD /* FastLoginDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B89B1F29D984002A9BFD /* FastLoginDialog.swift */; };
+		4D64B89E1F29D9C7002A9BFD /* PhoneNumberDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B89D1F29D9C7002A9BFD /* PhoneNumberDialog.swift */; };
+		4D64B8A01F29D9DA002A9BFD /* BaseDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B89F1F29D9DA002A9BFD /* BaseDialog.swift */; };
+		4D64B8A21F2ADC50002A9BFD /* MainCustomerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8A11F2ADC50002A9BFD /* MainCustomerTextField.swift */; };
 		4D9EBB811F26F163002674DE /* WeChatShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB801F26F163002674DE /* WeChatShared.swift */; };
 		4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB8A1F271C80002674DE /* MainViewController.swift */; };
 		4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */; };
@@ -52,6 +57,11 @@
 		4D5625211F2605A700515C98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D64B8921F287FB9002A9BFD /* PlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
 		4D64B8941F2885AA002A9BFD /* MainFloatMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFloatMenu.swift; sourceTree = "<group>"; };
+		4D64B8971F29B549002A9BFD /* MainBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainBanner.swift; sourceTree = "<group>"; };
+		4D64B89B1F29D984002A9BFD /* FastLoginDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastLoginDialog.swift; sourceTree = "<group>"; };
+		4D64B89D1F29D9C7002A9BFD /* PhoneNumberDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberDialog.swift; sourceTree = "<group>"; };
+		4D64B89F1F29D9DA002A9BFD /* BaseDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDialog.swift; sourceTree = "<group>"; };
+		4D64B8A11F2ADC50002A9BFD /* MainCustomerTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCustomerTextField.swift; sourceTree = "<group>"; };
 		4D9EBB801F26F163002674DE /* WeChatShared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeChatShared.swift; sourceTree = "<group>"; };
 		4D9EBB8A1F271C80002674DE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -136,6 +146,14 @@
 			path = FelixFastCatch;
 			sourceTree = "<group>";
 		};
+		4D64B8961F29B53D002A9BFD /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				4D64B8971F29B549002A9BFD /* MainBanner.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		4D9EBB831F271BD2002674DE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +178,7 @@
 		4D9EBB851F271C3A002674DE /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4D64B8961F29B53D002A9BFD /* Main */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -183,6 +202,7 @@
 				4D9EBB8D1F271CD8002674DE /* Pay */,
 				4D9EBB8E1F271CD8002674DE /* PlayInfo */,
 				4D9EBB8F1F271CD8002674DE /* User */,
+				4D64B89F1F29D9DA002A9BFD /* BaseDialog.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -227,6 +247,8 @@
 		4D9EBB8F1F271CD8002674DE /* User */ = {
 			isa = PBXGroup;
 			children = (
+				4D64B89B1F29D984002A9BFD /* FastLoginDialog.swift */,
+				4D64B89D1F29D9C7002A9BFD /* PhoneNumberDialog.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -260,6 +282,7 @@
 			children = (
 				4DDD2B7E1F2848FC00102A0F /* MainCustomerLabel.swift */,
 				4D64B8941F2885AA002A9BFD /* MainFloatMenu.swift */,
+				4D64B8A11F2ADC50002A9BFD /* MainCustomerTextField.swift */,
 			);
 			path = widget;
 			sourceTree = "<group>";
@@ -407,13 +430,18 @@
 				4DDD2B7C1F283F3D00102A0F /* ToastUtils.swift in Sources */,
 				4DDD2B861F286BC000102A0F /* DeviceTools.swift in Sources */,
 				4D64B8951F2885AA002A9BFD /* MainFloatMenu.swift in Sources */,
+				4D64B8A21F2ADC50002A9BFD /* MainCustomerTextField.swift in Sources */,
 				4DDD2B7F1F2848FC00102A0F /* MainCustomerLabel.swift in Sources */,
+				4D64B89E1F29D9C7002A9BFD /* PhoneNumberDialog.swift in Sources */,
 				4D9EBB811F26F163002674DE /* WeChatShared.swift in Sources */,
+				4D64B8A01F29D9DA002A9BFD /* BaseDialog.swift in Sources */,
 				4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */,
 				4D18ACD41F261378005363A4 /* TencentShared.swift in Sources */,
+				4D64B8981F29B549002A9BFD /* MainBanner.swift in Sources */,
 				4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */,
 				4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */,
 				4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */,
+				4D64B89C1F29D984002A9BFD /* FastLoginDialog.swift in Sources */,
 				4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */,
 				4D9EBB961F276822002674DE /* Constants.swift in Sources */,
 			);

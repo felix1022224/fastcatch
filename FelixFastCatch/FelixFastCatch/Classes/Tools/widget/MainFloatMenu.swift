@@ -32,8 +32,15 @@ class MainFloatMenu: UIView {
         actionLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
         actionLabel.textAlignment = .center
         actionLabel.sizeToFit()
-        actionLabel.frame = CGRect(x: 0, y: actionBtn.bounds.height, width: actionBtn.bounds.width, height: actionLabel.bounds.height)
+        actionLabel.frame = CGRect(x: 0, y: actionBtn.bounds.height + 2, width: actionBtn.bounds.width, height: actionLabel.bounds.height)
         addSubview(actionLabel)
+    }
+    
+    // 为按钮添加点击事件
+    func addBtnClickAction(target:Any, action:Selector) -> () {
+        if actionBtn != nil {
+            actionBtn.addTarget(target, action: action, for: .touchUpInside)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

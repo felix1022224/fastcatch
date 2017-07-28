@@ -67,14 +67,14 @@ extension MainCollectionViewCell{
     fileprivate func setupImage() -> () {
         productImage = UIImageView()
         productImage.frame = CGRect(x: 0, y: 0, width: rootView.bounds.width, height: rootView.bounds.height * 0.8)
-        productImage.backgroundColor = UIColor.red
+        productImage.backgroundColor = UIColor.lightGray
         productImage.frame = productImage.frame.insetBy(dx: CGFloat(4), dy: CGFloat(4))
         productImage.layer.cornerRadius = 5
         productImage.layer.masksToBounds = true
         productImage.contentMode = .scaleAspectFill
         addSubview(productImage)
         
-        productImage.kf.setImage(with: URL(string: "http://image15.poco.cn/mypoco/myphoto/20150105/22/54827367201501052235372969159251560_026.jpg"))
+//        productImage.kf.setImage(with: URL(string: "http://image15.poco.cn/mypoco/myphoto/20150105/22/54827367201501052235372969159251560_026.jpg"))
     }
     
 }

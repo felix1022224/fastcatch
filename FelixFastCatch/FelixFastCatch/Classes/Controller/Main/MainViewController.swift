@@ -12,11 +12,48 @@ import SnapKit
 import SVProgressHUD
 import Alamofire
 import SwiftyJSON
+import MJRefresh
 
 class MainViewController: UIViewController {
 
     // 背景图
     fileprivate lazy var backgroundImage:UIImageView = UIImageView()
+    
+    /// banner images
+    fileprivate lazy var bannerView:UIScrollView = UIScrollView()
+    
+    // banner 指示器
+    fileprivate lazy var pageControl:UIPageControl = UIPageControl()
+    
+    // 数据列表
+    fileprivate var dataList:UICollectionView!
+    
+    // 边距
+    fileprivate let dataListPadding:CGFloat = 8
+    
+    // 计时器
+    fileprivate var timer:Timer!
+    
+    // banner数据
+    fileprivate var mainBannersData:[JSON]!
+    
+    // 首页列表的数据
+    fileprivate lazy var mainListData:[JSON] = [JSON]()
+    
+    // 当前的页数
+    fileprivate var page:Int = 0
+    
+    // 没有数据时需要展示的view
+    fileprivate var noValueBtn:UIButton!
+    
+    // 顶部刷新
+    let header = MJRefreshNormalHeader()
+    
+    // 是否是下拉刷新
+    fileprivate var isRefresh:Bool = false
+    
+    /// 快速登录
+    fileprivate var fastLoginDialog:FastLoginDialog!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +68,14 @@ class MainViewController: UIViewController {
     
     }
 
+    /// 在加载显示完首页的viewcontroller之后，需要调用该方法来成功获取系统的window
+    func loadDialogToWindow() -> () {
+        fastLoginDialog = FastLoginDialog(frame: UIScreen.main.bounds)
+        
+        fastLoginDialog.createView()
+        fastLoginDialog.show()
+    }
+    
     func test() -> () {
         SVProgressHUD.setDefaultStyle(.dark)
         SVProgressHUD.show(withStatus: "正在下单……")
@@ -70,21 +115,6 @@ class MainViewController: UIViewController {
         timer = nil
         super.removeFromParentViewController()
     }
-    
-    /// banner images
-    fileprivate lazy var bannerView:UIScrollView = UIScrollView()
-
-    // banner 指示器
-    fileprivate lazy var pageControl:UIPageControl = UIPageControl()
-    
-    // 数据列表
-    fileprivate var dataList:UICollectionView!
-    
-    // 边距
-    fileprivate let dataListPadding:CGFloat = 8
-    
-    // 计时器
-    fileprivate var timer:Timer!
 }
 
 
@@ -97,29 +127,12 @@ extension MainViewController:UIScrollViewDelegate{
         //设置banner图view的属性
         bannerView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: getBannerHeight())
         bannerView.contentSize = CGSize(width: CGFloat(4) * self.view.bounds.width, height: getBannerHeight())
-        bannerView.backgroundColor = UIColor.red
+        bannerView.backgroundColor = UIColor.gray
         bannerView.bounces = false
         bannerView.isPagingEnabled = true
         bannerView.showsHorizontalScrollIndicator = false
         bannerView.showsVerticalScrollIndicator = false
         view.addSubview(bannerView)
-        
-        //循环增加图片到scrollview当中
-        for i in 0..<4 {
-            let iv = UIImageView(image: UIImage(named: "test_banner.jpg"))
-            iv.frame = CGRect(x: CGFloat(i) * bannerView.bounds.width, y: 0, width: bannerView.bounds.width, height: getBannerHeight())
-            bannerView.addSubview(iv)
-            iv.contentMode = .scaleAspectFill
-            iv.kf.setImage(with: URL(string: "http://img.zcool.cn/community/012719572881db6ac72538122486fd.jpg"))
-        }
-
-        // 设置指示器的属性
-        pageControl.numberOfPages = 4
-        pageControl.backgroundColor = UIColor.clear
-        pageControl.currentPage = 0
-        pageControl.sizeToFit()
-        pageControl.currentPageIndicatorTintColor = UIColor.yellow
-        pageControl.pageIndicatorTintColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 0.8)
 
         // 设置代理
         bannerView.delegate = self
@@ -129,7 +142,7 @@ extension MainViewController:UIScrollViewDelegate{
         // 设置指示器的约束
         pageControl.frame = CGRect(x: self.view.bounds.width/2 - pageControl.bounds.width/2, y: bannerView.bounds.height - pageControl.bounds.height, width: pageControl.bounds.width, height: pageControl.bounds.height)
         
-        creatTimer()
+        getBannerList()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -156,7 +169,9 @@ extension MainViewController:UIScrollViewDelegate{
     //创建定时器管理者
     func timerManager() {
         let contentOffsetX = self.bannerView.contentOffset.x + self.view.frame.size.width
-        if contentOffsetX > self.view.frame.size.width * 3 {
+        let count = CGFloat(mainBannersData.count)
+        
+        if contentOffsetX > self.view.frame.size.width * CGFloat(count) {
             // 当前视图显示的是第三个的时候，设置bottomView的偏移量为0
             self.bannerView.setContentOffset(CGPoint(x:0,y:0), animated: true)
         }else{
@@ -164,8 +179,52 @@ extension MainViewController:UIScrollViewDelegate{
         }
     }
     
+    func setupImages() -> () {
+        //循环增加图片到scrollview当中
+        for i:Int in 0..<mainBannersData.count{
+            let iv = UIImageView()
+            iv.frame = CGRect(x: CGFloat(i) * bannerView.bounds.width, y: 0, width: bannerView.bounds.width, height: getBannerHeight())
+            bannerView.addSubview(iv)
+            iv.contentMode = .scaleAspectFill
+            iv.kf.setImage(with: URL(string: mainBannersData[i]["bannerBigImg"].string!))
+        }
+        
+        // 设置指示器的属性
+        pageControl.numberOfPages = mainBannersData.count
+        pageControl.backgroundColor = UIColor.clear
+        pageControl.currentPage = 0
+        pageControl.sizeToFit()
+        pageControl.currentPageIndicatorTintColor = UIColor.yellow
+        pageControl.pageIndicatorTintColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 0.8)
+        
+        if mainBannersData.count <= 1 {
+            return
+        }
+        creatTimer()
+    }
+    
 }
 
+// MARK: - 从网络获取banner图数据
+extension MainViewController{
+    
+    /// 获取banner图的数据列表
+    fileprivate func getBannerList(){
+        Alamofire.request(Constants.Network.MAIN_BANNER_LIST, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { (response) in
+            if response.error == nil {
+                
+                let jsonObject = JSON(response.data!)
+                self.mainBannersData = jsonObject["data"].array
+                
+                self.setupImages()
+                
+            }else{
+                print("error:\(String(describing: response.error))")
+            }
+        }
+    }
+    
+}
 
 // MARK: - 装载首页的列表数据
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource{
@@ -193,16 +252,32 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         dataList = UICollectionView(frame: CGRect(x: 0, y: bannerView.bounds.height, width: self.view.bounds.width, height: self.view.bounds.height - bannerView.bounds.height), collectionViewLayout: layout)
         dataList.backgroundColor = UIColor.clear
-        dataList.delegate = self
-        dataList.dataSource = self
+        
         view.addSubview(dataList)
         
         dataList.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: "CellId")
         
+        //下拉刷新相关设置
+        header.setRefreshingTarget(self, refreshingAction: #selector(headerRefresh))
+        header.lastUpdatedTimeLabel.isHidden = true // 隐藏时间
+        //隐藏状态
+        header.stateLabel.isHidden = true
+        dataList!.mj_header = header
+        
+        getMainListData()
+    }
+    
+    //顶部下拉刷新
+    func headerRefresh(){
+        page = 0
+        isRefresh = true
+        getMainListData()
+        //结束刷新
+        self.dataList!.mj_header.endRefreshing()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return mainListData.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -212,19 +287,106 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellId", for: indexPath) as? MainCollectionViewCell
         
+        let itemData = mainListData[indexPath.row]
+        
+        cell?.playBtn.tag = Int(itemData["deviceId"].string!)!
         cell?.addPlayBtnClick(target: self, action: #selector(showPlay))
+        
+        cell?.productImage.kf.setImage(with: URL(string: itemData["activity"]["bannerBigImg"].string!))
+        cell?.titleLabel.text = itemData["award"]["title"].string!
+        cell?.gemNumberLabel.text = String(itemData["perDiamondsCount"].int!) + "钻"
         
         return cell!
     }
     
     
     /// 显示游戏界面
-    func showPlay() -> () {
+    func showPlay(sender: UIButton) -> () {
+        print("id:\(sender.tag)")
         navigationController?.pushViewController(PlayViewController(), animated: true)
     }
 
 }
 
+
+// MARK: - 从网络获取首页的网络数据
+extension MainViewController{
+    
+    
+    /// 获取首页的数据
+    func getMainListData() -> () {
+        var params = NetWorkUtils.createBaseParams()
+        params["size"] = "10"
+        params["page"] = String(page)
+        
+        Alamofire.request(Constants.Network.MAIN_LIST, method: .post, parameters: params).responseJSON { (response) in
+            if response.error == nil {
+                let jsonObject = JSON(response.data!)
+                if self.isRefresh {
+                    self.mainListData.removeAll()
+                    self.isRefresh = false
+                }
+                self.mainListData = self.mainListData + jsonObject["data"]["content"].array!
+                
+                self.dataList.delegate = self
+                self.dataList.dataSource = self
+                self.dataList.reloadData()
+                
+                print("result:\(jsonObject)")
+                
+                // 如果数据不等于0 页码+1
+                if self.mainListData.count > 0 {
+                    self.page += 1
+                    if self.noValueBtn != nil {
+                        self.noValueBtn.isHidden = true
+                    }
+                    self.dataList.isHidden = false
+                }else{
+                    // 没有数据
+                    self.setupNoValueView()
+                }
+            }else {
+                // 数量小于等于0
+                if self.mainListData.count <= 0 {
+                    // 没有数据
+                    self.setupNoValueView()
+                }
+            }
+            
+            SVProgressHUD.dismiss()
+        }
+    }
+    
+    /// 没有数据，需要展示没有数据的view
+    func setupNoValueView() -> () {
+        if noValueBtn == nil {
+            noValueBtn = UIButton(type: .system)
+            noValueBtn.setTitle("发生错误，点击重试", for: .normal)
+            noValueBtn.sizeToFit()
+            noValueBtn.setTitleColor(UIColor.orange, for: .normal)
+            noValueBtn.layer.borderWidth = 1
+            noValueBtn.layer.borderColor = UIColor.orange.cgColor
+            noValueBtn.layer.cornerRadius = 5
+            noValueBtn.layer.masksToBounds = true
+            noValueBtn.titleLabel?.font = UIFont.systemFont(ofSize: CGFloat(14))
+            view.addSubview(noValueBtn)
+            
+            noValueBtn.frame = CGRect(x: self.view.bounds.width/2 - (noValueBtn.bounds.width*1.2)/2, y: self.view.bounds.height/2 - noValueBtn.bounds.height/2, width: noValueBtn.bounds.width*1.2, height: noValueBtn.bounds.height + noValueBtn.bounds.height/2)
+            
+            noValueBtn.addTarget(self, action: #selector(reLoadNetworkData), for: .touchUpInside)
+        }
+        
+        noValueBtn.isHidden = false
+        dataList.isHidden = true
+    }
+    
+    // 重新获取数据
+    func reLoadNetworkData() -> () {
+        ToastUtils.showLoadingToast(msg: "加载数据……")
+        getMainListData()
+    }
+    
+}
 
 // MARK: - 按钮集合
 extension MainViewController{
@@ -235,11 +397,15 @@ extension MainViewController{
         let settingsBtn = MainFloatMenu(frame: CGRect(x: 10, y: UIScreen.main.bounds.height - 80, width: settingImage.bounds.width, height: 80), image: settingImage.image, actionTitle: "设置")
         view.addSubview(settingsBtn)
         
+        settingsBtn.addBtnClickAction(target: self, action: #selector(testLogin))
+    }
+    
+    func testLogin() -> () {
+        fastLoginDialog.createView()
+        fastLoginDialog.show()
     }
     
 }
-
-
 
 
 
