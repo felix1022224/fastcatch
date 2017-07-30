@@ -36,6 +36,37 @@ class LocalDataUtils: NSObject {
                 HTTPCookieStorage.shared.setCookie(cookie)
             }
         }
+        
+        initUserInfo()
+    }
+    
+    class func initUserInfo() -> () {
+        // sessionId
+        if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
+            for cookieData in cookieArray {
+                if let dict = cookieData as? [HTTPCookiePropertyKey : Any] {
+                    if let cookie = HTTPCookie.init(properties : dict) {
+                        HTTPCookieStorage.shared.setCookie(cookie)
+                    }
+                }
+            }
+        }
+        
+        // 用户昵称
+        let userNickName = UserDefaults.standard.string(forKey: Constants.User.USER_NICK_NAME_KEY)
+        if userNickName == nil {
+            Constants.User.USER_NICK_NAME = ""
+        }else {
+            Constants.User.USER_NICK_NAME = userNickName!
+        }
+        
+        // 用户ID
+        let userId = UserDefaults.standard.string(forKey: Constants.User.USER_ID_KEY)
+        if userId == nil {
+            Constants.User.USER_ID = ""
+        }else {
+            Constants.User.USER_ID = userId!
+        }
     }
     
 }

@@ -304,6 +304,11 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     /// 显示游戏界面
     func showPlay(sender: UIButton) -> () {
+        if Constants.User.USER_ID == "" {
+            fastLoginDialog.createView()
+            fastLoginDialog.show()
+            return
+        }
         let playView = PlayViewController()
         playView.deviceId = String(sender.tag)
         navigationController?.pushViewController(playView, animated: true)

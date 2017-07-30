@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 class PlayViewController: UIViewController {
 
@@ -22,6 +23,51 @@ class PlayViewController: UIViewController {
     
     /// 钻石数量
     fileprivate lazy var gemLabel:MainCustomerLabel = MainCustomerLabel()
+    
+    /// 视屏view
+    fileprivate lazy var videoView:UIView = UIView()
+    
+    /// 游戏开始的按钮
+    fileprivate lazy var startPlayBtn:UIButton = UIButton()
+
+    /// 观看人数
+    fileprivate var playNumber:MainCustomerLabel!
+    
+    /// 排队人数
+    fileprivate var queueNumber:MainCustomerLabel!
+    
+    /// 操作group
+    fileprivate var startBtnBackgroundView = UIView()
+    
+    /// 游戏group
+    fileprivate var playGroupView:UIView = UIView()
+    
+    /// 下爪按钮
+    fileprivate lazy var grabBtn = UIButton()
+    
+    /// controller up
+    fileprivate var controllerUp:CustomerControllerButton!
+    
+    /// play time
+    fileprivate lazy var playTime:MainCustomerLabel = MainCustomerLabel()
+    
+    /// controller down
+    fileprivate var controllerDown:CustomerControllerButton!
+    
+    /// controller left
+    fileprivate var controllerLeft:CustomerControllerButton!
+    
+    /// controller right
+    fileprivate var controllerRight:CustomerControllerButton!
+    
+    /// 是否已经下爪
+    fileprivate lazy var isGrab:Bool = false
+    
+    /// 是否正在操作
+    fileprivate lazy var isControoler:Bool = false
+    
+    /// 是否调用了开始游戏
+    fileprivate lazy var isStartClick:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +85,42 @@ class PlayViewController: UIViewController {
         out(deviceId: deviceId)
     }
     
+    /// 倒计时
+    fileprivate var countdownTimer: Timer?
+    
+    fileprivate var remainingSeconds: Int = 0 {
+        willSet {
+            if newValue < 10 {
+                playTime.text = "0:0\(newValue)"
+            }else {
+                playTime.text = "0:\(newValue)"
+            }
+            
+            if newValue <= 0 {
+                playTime.text = "0:30"
+                isCounting = false
+                if !isGrab{
+                    //到时间了，还没抓呢
+                    controllerGrap()
+                }
+//                hidePlayGroup()
+            }
+        }
+    }
+    
+    var isCounting = false {
+        willSet {
+            if newValue {
+                countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
+                isControoler = false
+                remainingSeconds = 30
+            } else {
+                countdownTimer?.invalidate()
+                countdownTimer = nil
+            }
+        }
+    }
+    
 }
 
 
@@ -49,7 +131,11 @@ extension PlayViewController{
     func setupUI() -> () {
         createBackground()
         
+        createVideo()
+        
         createBtns()
+        
+        createPlayControllerView()
     }
     
     /// 创建背景板
@@ -57,6 +143,11 @@ extension PlayViewController{
         backgroundView.backgroundColor = UIColor.lightGray
         backgroundView.frame = self.view.bounds
         view.addSubview(backgroundView)
+        
+        let backgroundImageView = UIImageView(image: UIImage(named: "main_background"))
+        backgroundImageView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+        view.addSubview(backgroundImageView)
+        
     }
     
     /// 创建按钮的集合
@@ -73,6 +164,12 @@ extension PlayViewController{
         }
         
         createGemBackground()
+        
+        createVideoBtns()
+        
+        createStartBtn()
+        
+        createNumber()
     }
     
     /// 创建钻石
@@ -82,15 +179,15 @@ extension PlayViewController{
         view.addSubview(gemBackground)
         
         gemBackground.snp.makeConstraints { (make) in
-            make.top.equalTo(self.view).offset(UIApplication.shared.statusBarFrame.height + 10)
+            make.top.equalTo(self.view).offset(UIApplication.shared.statusBarFrame.height + 2)
             make.right.equalTo(self.view).offset(-10)
         }
         
-        gemLabel.text = "99999"
+        gemLabel.text = "999999"
         gemLabel.outLineWidth = 2
         gemLabel.outTextColor = UIColor.white
         gemLabel.outLienTextColor = UIColor.black
-        gemLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
+        gemLabel.font = UIFont.systemFont(ofSize: CGFloat(11))
         view.addSubview(gemLabel)
         
         gemLabel.snp.makeConstraints { (make) in
@@ -99,9 +196,130 @@ extension PlayViewController{
         }
     }
     
+    /// 创建游戏相关按钮
+    func createVideoBtns() -> () {
+        /// 教程按钮
+        let helpBtn = UIButton(type: .custom)
+        helpBtn.setImage(UIImage(named: "icon_qa"), for: .normal)
+        helpBtn.sizeToFit()
+        view.addSubview(helpBtn)
+        
+        helpBtn.snp.makeConstraints { (make) in
+            make.bottom.equalTo(videoView).offset(-10)
+            make.left.equalTo(self.view).offset(10)
+        }
+        
+        /// 音频按钮
+        let audioBtn = UIButton(type: .custom)
+        audioBtn.setImage(UIImage(named: "icon_audio"), for: .normal)
+        audioBtn.sizeToFit()
+        view.addSubview(audioBtn)
+        
+        audioBtn.snp.makeConstraints { (make) in
+            make.bottom.equalTo(helpBtn).offset(-(helpBtn.bounds.height + 10))
+            make.left.equalTo(helpBtn)
+        }
+        
+        let lensBtn = UIButton(type: .custom)
+        lensBtn.setImage(UIImage(named: "icon_lens"), for: .normal)
+        lensBtn.sizeToFit()
+        view.addSubview(lensBtn)
+        
+        lensBtn.snp.makeConstraints { (make) in
+            make.centerY.equalTo(helpBtn)
+            make.right.equalTo(self.view).offset(-10)
+        }
+    }
+    
+    /// 创建开始游戏的按钮
+    func createStartBtn() -> () {
+        let startBtnImage = UIImage(named: "icon_start")
+        startBtnBackgroundView.backgroundColor = UIColor.orange
+        startBtnBackgroundView.frame = CGRect(x: 0, y: videoView.bounds.height, width: self.view.bounds.width, height: startBtnImage!.size.height + 25)
+        view.addSubview(startBtnBackgroundView)
+        
+        startPlayBtn.setImage(startBtnImage, for: .normal)
+        startPlayBtn.sizeToFit()
+        startBtnBackgroundView.addSubview(startPlayBtn)
+        
+        startPlayBtn.snp.makeConstraints { (make) in
+            make.centerY.equalTo(startBtnBackgroundView)
+            make.right.equalTo(self.view).offset(-30)
+        }
+        
+        startPlayBtn.addTarget(self, action: #selector(waitQueue), for: .touchUpInside)
+    }
+    
     /// 关闭当前页面
     func backBtnClick() -> () {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+}
+
+
+// MARK: - 创建直播视屏的view
+extension PlayViewController{
+    
+    /// 创建video 的view
+    func createVideo() -> () {
+        videoView.backgroundColor = UIColor.lightGray
+        videoView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height * 0.45)
+        view.addSubview(videoView)
+    }
+    
+}
+
+// MARK: - 观看人数和排队人数
+extension PlayViewController{
+
+    func createNumber() -> () {
+        let playNumberBackground = UIImageView(image: UIImage(named: "bg_now_play_number"))
+        playNumberBackground.sizeToFit()
+        startBtnBackgroundView.addSubview(playNumberBackground)
+        
+        playNumberBackground.snp.makeConstraints { (make) in
+            make.top.equalTo(startPlayBtn)
+            make.left.equalTo(10)
+        }
+        
+        playNumber = MainCustomerLabel()
+        playNumber.text = "0人观看"
+        playNumber.outLineWidth = Constants.UI.OUT_LINE_WIDTH
+        playNumber.outTextColor = UIColor.white
+        playNumber.outLienTextColor = Constants.UI.OUT_LINE_COLOR
+        playNumber.font = UIFont.systemFont(ofSize: CGFloat(12))
+        playNumber.sizeToFit()
+        startBtnBackgroundView.addSubview(playNumber)
+        
+        playNumber.snp.makeConstraints { (make) in
+            make.left.equalTo(playNumberBackground).offset(playNumberBackground.bounds.width * 0.25)
+            make.centerY.equalTo(playNumberBackground)
+        }
+        
+        /// 等待人数
+        let queueNumberBackground = UIImageView(image: UIImage(named: "bg_queue"))
+        queueNumberBackground.sizeToFit()
+        startBtnBackgroundView.addSubview(queueNumberBackground)
+        
+        queueNumberBackground.snp.makeConstraints { (make) in
+            make.left.equalTo(playNumberBackground)
+            make.bottom.equalTo(startPlayBtn)
+        }
+        
+        queueNumber = MainCustomerLabel()
+        queueNumber.text = "0人等待"
+        queueNumber.outLineWidth = Constants.UI.OUT_LINE_WIDTH
+        queueNumber.outTextColor = UIColor.white
+        queueNumber.outLienTextColor = Constants.UI.OUT_LINE_COLOR
+        queueNumber.font = UIFont.systemFont(ofSize: CGFloat(12))
+        queueNumber.sizeToFit()
+        startBtnBackgroundView.addSubview(queueNumber)
+        
+        queueNumber.snp.makeConstraints { (make) in
+            make.centerY.equalTo(queueNumberBackground)
+            make.left.equalTo(queueNumberBackground).offset(queueNumberBackground.bounds.width * 0.25)
+        }
     }
     
 }
@@ -115,9 +333,21 @@ extension PlayViewController{
         params["deviceid"] = deviceId
         
         Alamofire.request(Constants.Network.Machine.ENTER_WATCH, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: nil).responseJSON { (response) in
-            if response.error == nil && response.data != nil {
-                print("result_进入房间:\(response.result.value ?? "")")
+            if NetWorkUtils.checkReponse(response: response) {
+                let json = JSON(data: response.data!)
+                self.setupInfo(resultData:json)
             }
+        }
+    }
+    
+    /// 装载数据
+    fileprivate func setupInfo(resultData:JSON) -> () {
+        if let watchNumber = resultData["data"]["waitWatchCount"].int {
+            playNumber.text = String(watchNumber) + "人观看"
+        }
+        
+        if let queue = resultData["data"]["waitCtlCount"].int {
+            queueNumber.text = String(queue) + "人等待"
         }
         
     }
@@ -132,5 +362,289 @@ extension PlayViewController{
             }
         }
     }
+}
+
+// MARK: - 游戏操作界面
+extension PlayViewController{
+    
+    /// 创建操作界面
+    func createPlayControllerView() -> () {
+        let topHeight = videoView.bounds.height + startBtnBackgroundView.bounds.height
+        
+        playGroupView.frame = CGRect(x: 0, y: topHeight, width: self.view.bounds.width, height: self.view.bounds.height - topHeight)
+        view.addSubview(playGroupView)
+        playGroupView.backgroundColor = UIColor.orange
+        
+        /// 上
+        controllerUp = CustomerControllerButton(frame: CGRect.zero, controllerDown: { [weak self] (button)  in
+            self?.controllerPathDown(sender: button)
+        }, controllerUp: { [weak self] (button) in
+            self?.controllerPathUp(sender: button)
+        }, controllerMove:{[weak self] (button) in
+            self?.controllerMove(sender: button)
+        })
+        controllerUp.setImage(UIImage(named: "controller_up"), for: .normal)
+        controllerUp.sizeToFit()
+        playGroupView.addSubview(controllerUp)
+        
+//        controllerUp.addTarget(self, action: #selector(controllerPathDown(sender:)), for: .)
+//        controllerUp.addTarget(self, action: #selector(controllerPathUp(sender:)), for: .touchUpOutside)
+        
+        controllerUp.snp.makeConstraints { (make) in
+            make.left.equalTo(self.view).offset(20 + controllerUp.bounds.width)
+            make.top.equalTo(playGroupView).offset(30)
+        }
+        
+        /// 左
+        controllerLeft = CustomerControllerButton(frame: CGRect.zero, controllerDown: {[weak self] (button) in
+            self?.controllerPathDown(sender: button)
+        }, controllerUp: {[weak self] (button) in
+            self?.controllerPathUp(sender: button)
+        }, controllerMove:{[weak self] (button) in
+            self?.controllerMove(sender: button)
+        })
+        controllerLeft.setImage(UIImage(named: "controller_left"), for: .normal)
+        controllerLeft.sizeToFit()
+        playGroupView.addSubview(controllerLeft)
+        
+        controllerLeft.snp.makeConstraints { (make) in
+            make.right.equalTo(controllerUp).offset(-(controllerUp.bounds.width))
+            make.top.equalTo(controllerUp).offset(controllerUp.bounds.height + 5)
+        }
+        
+//        controllerLeft.addTarget(self, action: #selector(controllerPathDown(sender:)), for: .touchUpInside)
+//        controllerLeft.addTarget(self, action: #selector(controllerPathUp(sender:)), for: .touchUpOutside)
+        
+        /// 右
+        controllerRight = CustomerControllerButton(frame: CGRect.zero, controllerDown: {[weak self] (button) in
+            self?.controllerPathDown(sender: button)
+        }, controllerUp: {[weak self] (button) in
+            self?.controllerPathUp(sender: button)
+        }, controllerMove:{[weak self] (button) in
+            self?.controllerMove(sender: button)
+        })
+        controllerRight.setImage(UIImage(named: "controller_right"), for: .normal)
+        controllerRight.sizeToFit()
+        playGroupView.addSubview(controllerRight)
+        
+        controllerRight.snp.makeConstraints { (make) in
+            make.left.equalTo(controllerUp).offset(controllerUp.bounds.width)
+            make.centerY.equalTo(controllerLeft)
+        }
+        
+        controllerRight.addTarget(self, action: #selector(controllerPathDown(sender:)), for: .touchUpInside)
+        controllerRight.addTarget(self, action: #selector(controllerPathUp(sender:)), for: .touchUpOutside)
+        
+        /// 下
+        controllerDown = CustomerControllerButton(frame: CGRect.zero, controllerDown: {[weak self] (button) in
+            self?.controllerPathDown(sender: button)
+        }, controllerUp: {[weak self] (button) in
+            self?.controllerPathUp(sender: button)
+        }, controllerMove:{[weak self] (button) in
+            self?.controllerMove(sender: button)
+        })
+        controllerDown.setImage(UIImage(named: "controller_down"), for: .normal)
+        controllerDown.sizeToFit()
+        playGroupView.addSubview(controllerDown)
+        
+        controllerDown.snp.makeConstraints { (make) in
+            make.centerX.equalTo(controllerUp)
+            make.top.equalTo(controllerLeft).offset(controllerUp.bounds.height + 5)
+        }
+        
+        controllerDown.addTarget(self, action: #selector(controllerPathDown(sender:)), for: .touchUpInside)
+        controllerDown.addTarget(self, action: #selector(controllerPathUp(sender:)), for: .touchUpOutside)
+        
+        /// 下爪
+        grabBtn.setImage(UIImage(named: "controller_grab"), for: .normal)
+        grabBtn.sizeToFit()
+        playGroupView.addSubview(grabBtn)
+        
+        grabBtn.snp.makeConstraints { (make) in
+            make.centerY.equalTo(controllerRight)
+            make.left.equalTo(controllerRight).offset(controllerRight.bounds.width)
+            make.right.equalTo(self.view)
+        }
+        
+        grabBtn.addTarget(self, action: #selector(controllerGrap), for: .touchUpInside)
+        
+        
+        /// 倒计时
+        playTime.outLineWidth = 1
+        playTime.outTextColor = UIColor.white
+        playTime.outLienTextColor = UIColor.gray
+        playTime.font = UIFont.systemFont(ofSize: CGFloat(20))
+        playTime.text = "0:30"
+        playTime.sizeToFit()
+        playTime.textAlignment = .center
+        playGroupView.addSubview(playTime)
+        
+        playTime.snp.makeConstraints { (make) in
+            make.centerX.equalTo(grabBtn)
+            make.top.equalTo(grabBtn).offset(grabBtn.bounds.height + 5)
+            make.width.equalTo(100)
+        }
+        
+        playGroupView.isHidden = true
+    }
+    
+    /// 展示游戏界面
+    func showPlayGroup() -> () {
+        startPlayBtn.isHidden = true
+        playGroupView.isHidden = false
+        isGrab = false
+        isCounting = true
+    }
+    
+    func hidePlayGroup() -> () {
+        startPlayBtn.isHidden = false
+        playGroupView.isHidden = true
+    }
+    
+    @objc func updateTime() {
+        remainingSeconds -= 1
+    }
+    
+    /// 开始游戏
+    func startPlay() -> () {
+        if isStartClick {
+            return
+        }
+        isStartClick = true
+        print("开始游戏")
+        var params = NetWorkUtils.createBaseParams()
+        params["deviceid"] = deviceId
+        
+        Alamofire.request(Constants.Network.Machine.START_PLAY, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            if NetWorkUtils.checkReponse(response: response) {
+                print("开始游戏回调:\(String(describing: response.result.value))")
+                self.showPlayGroup()
+            }else {
+                print("error:\(String(describing: response.error))")
+            }
+            self.isStartClick = false
+        }
+    }
+    
+    /// 开始预约
+    func waitQueue(){
+        var params = NetWorkUtils.createBaseParams()
+        params["deviceid"] = deviceId
+        
+        Alamofire.request(Constants.Network.Machine.WAIT_QUEUE, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            print("result:\(response.result),error:\(String(describing: response.error))")
+            if NetWorkUtils.checkReponse(response: response) {
+                let json = JSON(data: response.data!)
+                if json["data"]["tryLock"].bool! == true {
+                    // 可以开始游戏了
+                    self.startPlay()
+                }
+            }
+        }
+    }
+    
+    ///  按下操作方向
+    func controllerPathDown(sender:CustomerControllerButton ) -> () {
+        if isGrab {
+            // 如果是下爪的过程中，不能操作
+            return
+        }
+        if sender == controllerUp {
+            // 上
+//            print("按下，上")
+            controllerNetworkPath(path:"3", status: "1")
+        }else if sender == controllerDown {
+            // 下
+//            print("按下，下")
+            controllerNetworkPath(path:"2", status: "1")
+        }else if sender == controllerLeft {
+            // 左
+//            print("按下，左")
+            controllerNetworkPath(path:"0", status: "1")
+        }else if sender == controllerRight {
+            // 右
+            controllerNetworkPath(path:"1", status: "1")
+        }
+    }
+    
+    func controllerPathUp(sender:CustomerControllerButton ) -> () {
+        isControoler = false
+        if isGrab {
+            // 如果是下爪的过程中，不能操作
+            return
+        }
+        if sender == controllerUp {
+            // 上
+            controllerNetworkPath(path:"3", status: "0")
+        }else if sender == controllerDown {
+            // 下
+            controllerNetworkPath(path:"2", status: "0")
+        }else if sender == controllerLeft {
+            // 左
+            controllerNetworkPath(path:"0", status: "0")
+        }else if sender == controllerRight {
+            // 右
+            controllerNetworkPath(path:"1", status: "0")
+        }
+    }
+    
+    func controllerMove(sender:CustomerControllerButton) -> () {
+//        if sender == controllerUp {
+//            // 上
+//            print("按下，上")
+//            controllerNetworkPath(path:"3", status: "1")
+//        }else if sender == controllerDown {
+//            // 下
+//            print("按下，下")
+//            controllerNetworkPath(path:"2", status: "1")
+//        }else if sender == controllerLeft {
+//            // 左
+//            print("按下，左")
+//            controllerNetworkPath(path:"0", status: "1")
+//        }else if sender == controllerRight {
+//            // 右
+//            print("按下，右")
+//            controllerNetworkPath(path:"1", status: "1")
+//        }
+    }
+    
+    /// 通过网络操作机器臂的方向
+    func controllerNetworkPath(path:String, status:String) -> () {
+        print("status:\(status)")
+        var params = NetWorkUtils.createBaseParams()
+        params["deviceid"] = deviceId
+        params["direction"] = path
+        params["status"] = status
+        
+        Alamofire.request(Constants.Network.Machine.DIECTION_CONTROLLER, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            if NetWorkUtils.checkReponse(response: response) {
+                print("result:\(String(describing: response.result.value))")
+            }else {
+                print("error:\(String(describing: response.error))")
+            }
+        }
+    }
+    
+    /// 下爪
+    func controllerGrap() -> () {
+        isGrab = true
+        var params = NetWorkUtils.createBaseParams()
+        params["deviceid"] = deviceId
+        
+        Alamofire.request(Constants.Network.Machine.CONTROLLER_CATCH, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            if NetWorkUtils.checkReponse(response: response) {
+                print("下爪成功")
+                self.hidePlayGroup()
+            }
+        }
+    }
     
 }
+
+
+
+
+
+
+
+

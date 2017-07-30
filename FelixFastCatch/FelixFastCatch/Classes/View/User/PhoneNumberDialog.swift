@@ -207,7 +207,7 @@ extension PhoneNumberDialog{
             return
         }
         
-//        ToastUtils.showLoadingToast(msg: "登录中……")
+        ToastUtils.showLoadingToast(msg: "登录中……")
         
         var params = NetWorkUtils.createBaseParams()
         params["code"] = verifyCodeEdit.text
@@ -218,9 +218,9 @@ extension PhoneNumberDialog{
 //                SVProgressHUD.dismiss()
                 let resultJson = JSON(data: response.data!)
                 if NetWorkUtils.checkReponse(response: response) {
-                    print("response:\(response.response?.allHeaderFields)")
+                    print("response:\(String(describing: response.response?.allHeaderFields))")
                     LocalDataUtils.updateLocalUserData(resultData: resultJson, dataResponse:response)
-//                    ToastUtils.showSuccessToast(msg: "登录成功")
+                    ToastUtils.showSuccessToast(msg: "登录成功")
                     self.hide()
                 }
             }

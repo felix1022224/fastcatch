@@ -12,7 +12,9 @@ class Constants: NSObject {
     
     /// 网络
     struct Network {
-        static let BASE_URL = "http://101.201.68.47:9125/"
+//        static let BASE_URL = "http://101.201.68.47:9125/"
+        
+        static let BASE_URL = "http://192.168.1.103:9125/"
         
         /// 微信Pay支付接口
         static let WECHAT_PAY_URL =  BASE_URL +  "trade/wechatorder"
@@ -37,6 +39,20 @@ class Constants: NSObject {
             
             /// 退出房间
             static let OUT_WATCH = BASE_URL + "machine/quitwatch"
+            
+            /// 开始游戏
+            static let START_PLAY = BASE_URL + "machine/startgame"
+            
+            /// 开始预约
+            static let WAIT_QUEUE = BASE_URL + "machine/waitqueue"
+            
+            /// 操作机器臂
+            static let DIECTION_CONTROLLER =  BASE_URL + "machine/directionctl"
+            
+            /// 下爪
+            static let CONTROLLER_CATCH = BASE_URL + "machine/catchpress"
+            
+//            static let END_PALY = BASE_URL + ""
         }
     }
     

@@ -14,5 +14,6 @@ pod 'Alamofire', '~> 4.4'
 pod 'SVProgressHUD'
 pod 'SwiftyJSON'
 pod 'MJRefresh'
+pod 'AgoraRtcEngine_iOS'
 
 end
