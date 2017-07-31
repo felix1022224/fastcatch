@@ -243,6 +243,8 @@ extension PlayViewController{
         lensBtn.sizeToFit()
         view.addSubview(lensBtn)
         
+        lensBtn.addTarget(self, action: #selector(changeLens(sender:)), for: .touchUpInside)
+        
         lensBtn.snp.makeConstraints { (make) in
             make.centerY.equalTo(helpBtn)
             make.right.equalTo(self.view).offset(-10)
@@ -290,7 +292,12 @@ extension PlayViewController{
         /// 默认是直播模式
         agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_LiveBroadcasting)
         agoraKit.enableDualStreamMode(true)
+        
+        agoraKit.disableAudio()
+        
+        agoraKit.enableLocalVideo(false)
         agoraKit.enableVideo()
+        
         agoraKit.setVideoProfile(._VideoProfile_1080P, swapWidthAndHeight: false)
         agoraKit.setClientRole(AgoraRtcClientRole.clientRole_Audience, withKey: nil)
         
@@ -299,22 +306,25 @@ extension PlayViewController{
         let hostingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         hostingView.translatesAutoresizingMaskIntoConstraints = false
         
-        let code = agoraKit.joinChannel(byKey: nil, channelName: "test3", info: nil, uid: 0, joinSuccess: nil)
+//        let code = agoraKit.joinChannel(byKey: nil, channelName: "test3", info: nil, uid: 0, joinSuccess: nil)
+//        
+//        if code != 0 {
+//            DispatchQueue.main.async(execute: {
+//                print("Join channel failed: \(code)")
+//            })
+//        }else {
+//            print("进入房间成功:\(code)")
+//        }
         
-        if code != 0 {
-            DispatchQueue.main.async(execute: {
-                print("Join channel failed: \(code)")
-            })
-        }else {
-            print("进入房间成功:\(code)")
-        }
+        switchVideoChannelToDefault(lensCode: 3)
         
         // 在没有游戏时，隐藏摄像头的按钮
-        lensBtn.isHidden = true
+//        lensBtn.isHidden = true
     }
     
     /// 切换视频的房间到一对一聊天界面
     func switchVideoChannelToDefault(lensCode:Int) -> () {
+        
         agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_Communication)
         
         lensBtn.tag = lensCode
@@ -332,10 +342,16 @@ extension PlayViewController{
     
     // 切换镜头
     func changeLens(sender:UIButton) -> () {
-        if sender.tag == 1 {
-            switchVideoChannelToDefault(lensCode: 2)
-        }else if sender.tag == 2 {
-            switchVideoChannelToDefault(lensCode: 1)
+        if sender.tag == 3 {
+            agoraKit.leaveChannel({ (start) in
+                print("离开")
+            })
+            switchVideoChannelToDefault(lensCode: 4)
+        }else if sender.tag == 4 {
+            agoraKit.leaveChannel({ (start) in
+                print("离开")
+            })
+            switchVideoChannelToDefault(lensCode: 3)
         }
     }
     
