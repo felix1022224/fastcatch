@@ -122,11 +122,13 @@ extension WeChatShared {
         
         let req = PayReq()
         
+        print("result:\(json)")
+        
         req.partnerId = json["partnerid"].string!
         req.prepayId = json["prepayid"].string!
         req.package = json["_package"].string!
         req.nonceStr = json["noncestr"].string!
-        req.timeStamp = json["timestamp"].uInt32!
+        req.timeStamp = UInt32(json["timestamp"].string!)!
         req.sign = json["sign"].string!
         
         WXApi.send(req)

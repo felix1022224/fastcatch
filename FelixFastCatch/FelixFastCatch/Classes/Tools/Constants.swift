@@ -12,12 +12,15 @@ class Constants: NSObject {
     
     /// 网络
     struct Network {
-//        static let BASE_URL = "http://101.201.68.47:9125/"
+        static let BASE_URL = "http://101.201.68.47:9125/"
         
-        static let BASE_URL = "http://192.168.1.103:9125/"
+//        static let BASE_URL = "http://192.168.1.103:9125/"
         
         /// 微信Pay支付接口
         static let WECHAT_PAY_URL =  BASE_URL +  "trade/wechatorder"
+        
+        /// 支付宝支付接口
+        static let ALIPAY_URL = BASE_URL + "trade/alipayorder"
         
         /// 首页banner图的数据
         static let MAIN_BANNER_LIST = BASE_URL + "activity/bannerlist"
@@ -52,7 +55,24 @@ class Constants: NSObject {
             /// 下爪
             static let CONTROLLER_CATCH = BASE_URL + "machine/catchpress"
             
+            /// 获取中奖信息
+            static let GET_WARD = BASE_URL + "machine/getaward"
+            
 //            static let END_PALY = BASE_URL + ""
+        }
+        
+        /// 用户相关
+        struct User {
+            
+            /// 微信登录
+            static let WECHAT_LOGIN = BASE_URL + "user/wechatlogin"
+            
+            /// qq登录
+            static let QQ_LOGIN = BASE_URL + "user/qqlogin"
+            
+            /// 退出登录
+            static let LOGOUT_URL = BASE_URL + "user/logout"
+            
         }
     }
     

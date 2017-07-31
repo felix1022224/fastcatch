@@ -20,6 +20,8 @@ class LocalDataUtils: NSObject {
         
         UserDefaults.standard.set(resultData["data"]["nick"].string!, forKey: Constants.User.USER_NICK_NAME_KEY)
         UserDefaults.standard.set(String(resultData["data"]["uid"].int!), forKey: Constants.User.USER_ID_KEY)
+        UserDefaults.standard.set(resultData["data"]["avatar"].string, forKey: Constants.User.USER_FACE_IMAGE_KEY)
+        UserDefaults.standard.set(String(resultData["data"]["gender"].int!), forKey: Constants.User.USER_SEX_KEY)
         
         let headerFields = dataResponse.response?.allHeaderFields as! [String: String]
         let url = dataResponse.request?.url
@@ -67,6 +69,37 @@ class LocalDataUtils: NSObject {
         }else {
             Constants.User.USER_ID = userId!
         }
+        
+        // 用户头像
+        let userFaceImage = UserDefaults.standard.string(forKey: Constants.User.USER_FACE_IMAGE_KEY)
+        if userFaceImage == nil {
+            Constants.User.USER_FACE_IMAGE = ""
+        }else {
+            Constants.User.USER_FACE_IMAGE = userFaceImage!
+        }
+        
+        // 用户性别
+        let userSex = UserDefaults.standard.string(forKey: Constants.User.USER_SEX_KEY)
+        if userSex == nil {
+            Constants.User.USER_SEX = ""
+        }else {
+            Constants.User.USER_SEX = userSex!
+        }
+    }
+    
+    
+    /// 清除数据
+    class func clearLoaclData() -> () {
+        UserDefaults.standard.removeObject(forKey: Constants.User.USER_ID_KEY)
+        UserDefaults.standard.removeObject(forKey: Constants.User.USER_SESSION_KEY)
+        UserDefaults.standard.removeObject(forKey: Constants.User.USER_FACE_IMAGE_KEY)
+        UserDefaults.standard.removeObject(forKey: Constants.User.USER_NICK_NAME_KEY)
+        UserDefaults.standard.removeObject(forKey: Constants.User.USER_SEX_KEY)
+        
+        Constants.User.USER_NICK_NAME = ""
+        Constants.User.USER_ID = ""
+        Constants.User.USER_FACE_IMAGE = ""
+        Constants.User.USER_SEX = ""
     }
     
 }

@@ -69,13 +69,28 @@ class PlayViewController: UIViewController {
     /// 是否调用了开始游戏
     fileprivate lazy var isStartClick:Bool = false
     
+    /// 本地local
+    var localVideo:AgoraRtcVideoCanvas!
+    
+    /// 中奖信息的code
+    var wardCode = ""
+    
+    /// 获取中奖信息的次数
+    fileprivate var getWardCodeNumber = 0
+    
+    /// 直播kit
+    var agoraKit: AgoraRtcEngineKit!
+    
+    /// 摄像头按钮
+    fileprivate lazy var lensBtn:UIButton = UIButton(type: UIButtonType.custom)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.navigationController?.navigationBar.isHidden = true
         
         view.backgroundColor = UIColor.white
-
+        
         enter()
         
         setupUI()
@@ -83,6 +98,10 @@ class PlayViewController: UIViewController {
 
     deinit {
         out(deviceId: deviceId)
+        agoraKit.leaveChannel { (starts) in
+            // 离开
+            print("离开")
+        }
     }
     
     /// 倒计时
@@ -183,7 +202,7 @@ extension PlayViewController{
             make.right.equalTo(self.view).offset(-10)
         }
         
-        gemLabel.text = "999999"
+        gemLabel.text = ""
         gemLabel.outLineWidth = 2
         gemLabel.outTextColor = UIColor.white
         gemLabel.outLienTextColor = UIColor.black
@@ -220,7 +239,6 @@ extension PlayViewController{
             make.left.equalTo(helpBtn)
         }
         
-        let lensBtn = UIButton(type: .custom)
         lensBtn.setImage(UIImage(named: "icon_lens"), for: .normal)
         lensBtn.sizeToFit()
         view.addSubview(lensBtn)
@@ -266,9 +284,92 @@ extension PlayViewController{
         videoView.backgroundColor = UIColor.lightGray
         videoView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height * 0.45)
         view.addSubview(videoView)
+        
+        agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: "90206f8d680c489d9b7641ba9b0f31ee", delegate: self)
+        
+        /// 默认是直播模式
+        agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_LiveBroadcasting)
+        agoraKit.enableDualStreamMode(true)
+        agoraKit.enableVideo()
+        agoraKit.setVideoProfile(._VideoProfile_1080P, swapWidthAndHeight: false)
+        agoraKit.setClientRole(AgoraRtcClientRole.clientRole_Audience, withKey: nil)
+        
+        agoraKit.muteAllRemoteAudioStreams(true)
+        
+        let hostingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+        hostingView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let code = agoraKit.joinChannel(byKey: nil, channelName: "test3", info: nil, uid: 0, joinSuccess: nil)
+        
+        if code != 0 {
+            DispatchQueue.main.async(execute: {
+                print("Join channel failed: \(code)")
+            })
+        }else {
+            print("进入房间成功:\(code)")
+        }
+        
+        // 在没有游戏时，隐藏摄像头的按钮
+        lensBtn.isHidden = true
     }
     
+    /// 切换视频的房间到一对一聊天界面
+    func switchVideoChannelToDefault(lensCode:Int) -> () {
+        agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_Communication)
+        
+        lensBtn.tag = lensCode
+        let code = agoraKit.joinChannel(byKey: nil, channelName: "test" + String(lensCode), info: nil, uid: 0, joinSuccess: nil)
+        
+        if code != 0 {
+            DispatchQueue.main.async(execute: {
+                print("Join channel failed: \(code)")
+            })
+        }else {
+            print("进入房间成功:\(code)")
+            lensBtn.isHidden = false
+        }
+    }
+    
+    // 切换镜头
+    func changeLens(sender:UIButton) -> () {
+        if sender.tag == 1 {
+            switchVideoChannelToDefault(lensCode: 2)
+        }else if sender.tag == 2 {
+            switchVideoChannelToDefault(lensCode: 1)
+        }
+    }
+    
+    /// 切换视频到直播界面
+    func swichVideoChannerlToLive() -> () {
+        agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_LiveBroadcasting)
+        
+    
+    }
+    
+    
 }
+
+extension PlayViewController: AgoraRtcEngineDelegate {
+    func rtcEngine(_ engine: AgoraRtcEngineKit!, firstRemoteVideoDecodedOfUid uid: UInt, size: CGSize, elapsed: Int) {
+        // 初始化成功
+        print("成功")
+        let canvas = AgoraRtcVideoCanvas()
+        canvas.view = videoView
+        canvas.uid = uid
+        canvas.renderMode = .render_Hidden
+        agoraKit.setRemoteVideoStream(UInt(uid), type: .videoStream_High)
+        agoraKit.setupRemoteVideo(canvas)
+    }
+    
+    func rtcEngine(_ engine: AgoraRtcEngineKit!, firstLocalVideoFrameWith size: CGSize, elapsed: Int) {
+        
+    }
+    
+    func rtcEngine(_ engine: AgoraRtcEngineKit!, didOfflineOfUid uid: UInt, reason: AgoraRtcUserOfflineReason) {
+    
+    }
+}
+
 
 // MARK: - 观看人数和排队人数
 extension PlayViewController{
@@ -499,6 +600,8 @@ extension PlayViewController{
     func hidePlayGroup() -> () {
         startPlayBtn.isHidden = false
         playGroupView.isHidden = true
+        countdownTimer?.invalidate()
+        countdownTimer = nil
     }
     
     @objc func updateTime() {
@@ -519,6 +622,9 @@ extension PlayViewController{
             if NetWorkUtils.checkReponse(response: response) {
                 print("开始游戏回调:\(String(describing: response.result.value))")
                 self.showPlayGroup()
+                let json = JSON(response.result.value!)
+                self.gemLabel.text = String(json["data"]["diamondsCount"].int!)
+                self.wardCode = json["data"]["gTradeNo"].string!
             }else {
                 print("error:\(String(describing: response.error))")
             }
@@ -532,13 +638,20 @@ extension PlayViewController{
         params["deviceid"] = deviceId
         
         Alamofire.request(Constants.Network.Machine.WAIT_QUEUE, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
-            print("result:\(response.result),error:\(String(describing: response.error))")
+            print("result:\(response.result.value),error:\(String(describing: response.error))")
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(data: response.data!)
                 if json["data"]["tryLock"].bool! == true {
                     // 可以开始游戏了
                     self.startPlay()
+                }else{
+                    print("已经有\(String(describing: json["data"]["waitCtlCount"].int!))人在游戏中，请等候")
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: {
+                        self.waitQueue()
+                    })
                 }
+            }else{
+                /// 当数据data为空的时候，报告异常
             }
         }
     }
@@ -620,7 +733,7 @@ extension PlayViewController{
             if NetWorkUtils.checkReponse(response: response) {
                 print("result:\(String(describing: response.result.value))")
             }else {
-                print("error:\(String(describing: response.error))")
+                print("error:\(String(describing: response.error)),response:\(String(describing: response.response))")
             }
         }
     }
@@ -635,6 +748,50 @@ extension PlayViewController{
             if NetWorkUtils.checkReponse(response: response) {
                 print("下爪成功")
                 self.hidePlayGroup()
+                self.getWard()
+            }else{
+                print("response:\(response)")
+                self.hidePlayGroup()
+            }
+        }
+    }
+    
+    /// 获取中奖信息
+    func getWard() -> () {
+        if wardCode == "" {
+            return
+        }
+        
+        /// 调用接口超过十次，默认失败
+        if getWardCodeNumber >= 10 {
+            getWardCodeNumber = 0
+            wardCode = ""
+            return
+        }
+        
+        var params = NetWorkUtils.createBaseParams()
+        params["gtradeno"] = wardCode
+        
+        Alamofire.request(Constants.Network.Machine.GET_WARD, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            if NetWorkUtils.checkReponse(response: response) {
+                let json = JSON(response.result.value!)
+                if json["data"]["drawable"].bool! == true {
+                    self.getWardCodeNumber = 0
+                    print("抓取成功")
+                    self.wardCode = ""
+                }else {
+                    print("抓取失败")
+                    self.getWardCodeNumber = self.getWardCodeNumber + 1
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: { 
+                        self.getWard()
+                    })
+                }
+            }else{
+                print("抓取失败")
+                self.getWardCodeNumber = self.getWardCodeNumber + 1
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
+                    self.getWard()
+                })
             }
         }
     }

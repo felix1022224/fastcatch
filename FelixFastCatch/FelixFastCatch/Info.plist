@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>为您提供更智能化的奖品推荐</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>为您提供更智能化的奖品推荐</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -44,6 +40,16 @@
 				<string>wxb119161278966b95</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>aliPay</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>alipay2017071707787463</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
@@ -73,6 +79,18 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>use camera to start video call</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>为您提供更智能化的奖品推荐</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>为您提供更智能化的奖品推荐</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>use microphone to start video call</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
 	<key>UIMainStoryboardFile</key>
 	<string></string>
 	<key>UIRequiredDeviceCapabilities</key>

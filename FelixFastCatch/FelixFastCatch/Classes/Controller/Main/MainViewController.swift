@@ -55,6 +55,18 @@ class MainViewController: UIViewController {
     /// 快速登录
     fileprivate var fastLoginDialog:FastLoginDialog!
     
+    /// 购买钻石
+    fileprivate var payGemDialog:PayListDialog!
+    
+    /// 用户信息
+    fileprivate var userInfoDialog:UserInfoDialog!
+    
+    /// 我的礼物
+    fileprivate var myGift:MyGiftDialog!
+    
+    // 设置按钮的集合view
+    fileprivate var settingsGroupView:UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -65,7 +77,6 @@ class MainViewController: UIViewController {
         view.addSubview(backgroundImage)
         
         setupUI()
-    
     }
 
     /// 在加载显示完首页的viewcontroller之后，需要调用该方法来成功获取系统的window
@@ -76,31 +87,48 @@ class MainViewController: UIViewController {
             fastLoginDialog.createView()
             fastLoginDialog.show()
         }
+        
+        /// 购买钻石的dialog
+        payGemDialog = PayListDialog(frame: UIScreen.main.bounds)
+        
+        /// 用户信息
+        userInfoDialog = UserInfoDialog(frame: UIScreen.main.bounds)
+        
+        /// 我的礼物
+        myGift = MyGiftDialog(frame: UIScreen.main.bounds)
+        
     }
     
     func test() -> () {
         SVProgressHUD.setDefaultStyle(.dark)
         SVProgressHUD.show(withStatus: "正在下单……")
-        Alamofire.request(Constants.Network.WECHAT_PAY_URL + "?rp=1").responseJSON { (response) in
-            
-            if response.error != nil{
-                print("error: \(String(describing: response.error))")
-                ToastUtils.showErrorToast(msg: "网络错误，请稍后重试")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { 
-                    SVProgressHUD.dismiss()
-                })
-                return
-            }
-            
-            if let data = response.data {
-                let json = JSON(data: data)
-                WeChatShared.pay(to: "main", json["data"], resultHandle: { (result, identifier) in
-                    print("result:\(result)")
-                    print("indentifier:\(identifier)")
-                })
-            }
-            SVProgressHUD.dismiss()
+        
+        var params = NetWorkUtils.createBaseParams()
+        params["rp"] = "1"
+        
+        Alamofire.request(Constants.Network.ALIPAY_URL, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            print("result:\(response.result.value)")
         }
+//        Alamofire.request(Constants.Network.WECHAT_PAY_URL + "?rp=1").responseJSON { (response) in
+//            
+//            if response.error != nil{
+//                print("error: \(String(describing: response.error))")
+//                ToastUtils.showErrorToast(msg: "网络错误，请稍后重试")
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { 
+//                    SVProgressHUD.dismiss()
+//                })
+//                return
+//            }
+//            
+//            if let data = response.data {
+//                let json = JSON(data: data)
+//                WeChatShared.pay(to: "main", json["data"], resultHandle: { (result, identifier) in
+//                    print("result:\(result)")
+//                    print("indentifier:\(identifier)")
+//                })
+//            }
+//            SVProgressHUD.dismiss()
+//        }
     }
     
     /// 初始化
@@ -312,6 +340,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let playView = PlayViewController()
         playView.deviceId = String(sender.tag)
         navigationController?.pushViewController(playView, animated: true)
+        
+//        test()
     }
 
 }
@@ -401,16 +431,94 @@ extension MainViewController{
     
     // 创建首页的按钮
     func createMainBtns() -> () {
+        // 设置按钮
         let settingImage = UIImageView(image: UIImage(named: "Settings-btn"))
-        let settingsBtn = MainFloatMenu(frame: CGRect(x: 10, y: UIScreen.main.bounds.height - 80, width: settingImage.bounds.width, height: 80), image: settingImage.image, actionTitle: "设置")
-        view.addSubview(settingsBtn)
         
-        settingsBtn.addBtnClickAction(target: self, action: #selector(testLogin))
+        setupSettings(testImage: settingImage)
+        
+        let settingsBtn = MainFloatMenu(frame: CGRect(x: 10, y: UIScreen.main.bounds.height - 80, width: settingImage.bounds.width, height: 80), image: settingImage.image, actionTitle: "设置")
+        view.addSubview(settingsBtn)  
+        
+        settingsBtn.addBtnClickAction(target: self, action: #selector(settingsClick))
+        
+        /// 礼物按钮
+        let giftBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 - settingsBtn.bounds.width, y: UIScreen.main.bounds.height - 80, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Leaderboard-btn"), actionTitle: "礼物")
+        view.addSubview(giftBtn)
+        giftBtn.addBtnClickAction(target: self, action: #selector(showMyGift))
+        
+        /// 购买钻石按钮
+        let payGemBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 - settingsBtn.bounds.width * 2, y: UIScreen.main.bounds.height - 80, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Plus-btn"), actionTitle: "购钻")
+        view.addSubview(payGemBtn)
+        
+        payGemBtn.addBtnClickAction(target: self, action: #selector(showPayDialog))
+        
     }
     
-    func testLogin() -> () {
+    /// 显示我的礼物
+    func showMyGift() -> () {
+        myGift.createView()
+        myGift.show()
+    }
+    
+    func showFastLogin() -> () {
         fastLoginDialog.createView()
         fastLoginDialog.show()
+    }
+    
+    /// 显示购买的dialog
+    func showPayDialog() -> () {
+        payGemDialog.createView()
+        payGemDialog.show()
+    }
+    
+    // 点击展开隐藏设置按钮
+    @objc fileprivate func settingsClick() -> () {
+        if settingsGroupView.isHidden {
+            settingsGroupView.isHidden = false
+        }else {
+            settingsGroupView.isHidden = true
+        }
+    }
+    
+    // 装载弹出的设置按钮
+    func setupSettings(testImage:UIImageView) {
+        
+        let testUserIconImage = UIImageView(image: UIImage(named: "daeva_profile"))
+        let testInfoIconImage = UIImageView(image: UIImage(named: "Info-icon"))
+        
+        
+        let settingsY = UIScreen.main.bounds.height - (80 - testImage.bounds.height) - 150 - 10
+        let settingsWidth = testImage.bounds.width - 10
+        
+        settingsGroupView = UIView(frame: CGRect(x: 15, y: settingsY, width: settingsWidth, height: 150))
+        settingsGroupView.layer.cornerRadius = 25
+        settingsGroupView.layer.masksToBounds = true
+        settingsGroupView.backgroundColor = UIColor(red: 99/255.0, green: 168/255.0, blue: 205/255.0, alpha: 1)
+        view.addSubview(settingsGroupView)
+        
+        let userIcon = UIButton(type: .custom)
+        userIcon.frame = CGRect(x: settingsWidth/2-testUserIconImage.bounds.width/2, y: 10, width: 0, height: 0)
+        userIcon.setBackgroundImage(UIImage(named: "daeva_profile"), for: .normal)
+        userIcon.sizeToFit()
+        settingsGroupView.addSubview(userIcon)
+        userIcon.addTarget(self, action: #selector(showUserInfoDialog), for: .touchUpInside)
+        
+        let infoIcon = UIImageView(frame: CGRect(x: settingsWidth/2-testInfoIconImage.bounds.width/2, y: 20 + testUserIconImage.bounds.height, width: 0, height: 0))
+        infoIcon.image = UIImage(named: "Info-icon")
+        infoIcon.sizeToFit()
+        settingsGroupView.addSubview(infoIcon)
+        
+        settingsGroupView.isHidden = true
+    }
+    
+    /// 显示用户信息
+    func showUserInfoDialog() -> () {
+        if Constants.User.USER_ID == "" {
+            showFastLogin()
+            return
+        }
+        userInfoDialog.createView()
+        userInfoDialog.show()
     }
     
 }

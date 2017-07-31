@@ -18,6 +18,8 @@
 		4D18ACCF1F260846005363A4 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACCE1F260846005363A4 /* libstdc++.tbd */; };
 		4D18ACD11F26084E005363A4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACD01F26084E005363A4 /* libz.tbd */; };
 		4D18ACD41F261378005363A4 /* TencentShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D18ACD31F261378005363A4 /* TencentShared.swift */; };
+		4D1DA0F41F2F4C4300B1138D /* FCHasBennMailedProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1DA0F31F2F4C4300B1138D /* FCHasBennMailedProductCell.swift */; };
+		4D1DA0F61F2F4C7000B1138D /* FCMailedConfirmDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1DA0F51F2F4C7000B1138D /* FCMailedConfirmDialog.swift */; };
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
 		4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D56251C1F2605A700515C98 /* Assets.xcassets */; };
 		4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8921F287FB9002A9BFD /* PlayViewController.swift */; };
@@ -33,6 +35,28 @@
 		4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */; };
 		4D9EBB961F276822002674DE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB951F276822002674DE /* Constants.swift */; };
 		4DCD39B71F2DA5FC002B7F35 /* CustomerControllerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39B61F2DA5FC002B7F35 /* CustomerControllerButton.swift */; };
+		4DCD39BA1F2DBEEB002B7F35 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39B91F2DBEEB002B7F35 /* CoreMedia.framework */; };
+		4DCD39BC1F2DBEF8002B7F35 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39BB1F2DBEF8002B7F35 /* CoreMotion.framework */; };
+		4DCD39BE1F2DBF09002B7F35 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39BD1F2DBF09002B7F35 /* VideoToolbox.framework */; };
+		4DCD39C01F2DBF16002B7F35 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39BF1F2DBF16002B7F35 /* AudioToolbox.framework */; };
+		4DCD39C21F2DBF35002B7F35 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39C11F2DBF35002B7F35 /* AVFoundation.framework */; };
+		4DCD39CB1F2F0D59002B7F35 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39C91F2F0D58002B7F35 /* AlipaySDK.framework */; };
+		4DCD39CC1F2F0D59002B7F35 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4DCD39CA1F2F0D59002B7F35 /* AlipaySDK.bundle */; };
+		4DCD39CE1F2F0D86002B7F35 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39CD1F2F0D86002B7F35 /* QuartzCore.framework */; };
+		4DCD39D01F2F0D9E002B7F35 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39CF1F2F0D9E002B7F35 /* CoreText.framework */; };
+		4DCD39D21F2F0DBB002B7F35 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39D11F2F0DBB002B7F35 /* CFNetwork.framework */; };
+		4DCD39D41F2F0DC8002B7F35 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39D31F2F0DC8002B7F35 /* UIKit.framework */; };
+		4DCD39D61F2F0DDE002B7F35 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39D51F2F0DDE002B7F35 /* Foundation.framework */; };
+		4DCD39D81F2F12E9002B7F35 /* PayListDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39D71F2F12E9002B7F35 /* PayListDialog.swift */; };
+		4DCD39DB1F2F31C6002B7F35 /* PayItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39DA1F2F31C6002B7F35 /* PayItemTableViewCell.swift */; };
+		4DCD39DD1F2F3CD5002B7F35 /* UserInfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39DC1F2F3CD5002B7F35 /* UserInfoDialog.swift */; };
+		4DCD39E11F2F4A2B002B7F35 /* MyGiftDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39E01F2F4A2B002B7F35 /* MyGiftDialog.swift */; };
+		4DCD39E81F2F4B2C002B7F35 /* FCMyGiftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39E21F2F4B2C002B7F35 /* FCMyGiftCell.swift */; };
+		4DCD39E91F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39E31F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedCell.swift */; };
+		4DCD39EA1F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedTabViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39E41F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedTabViewDelegate.swift */; };
+		4DCD39EB1F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39E51F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift */; };
+		4DCD39EC1F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39E61F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift */; };
+		4DCD39ED1F2F4B2C002B7F35 /* FCMyGiftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39E71F2F4B2C002B7F35 /* FCMyGiftView.swift */; };
 		4DDD2B7C1F283F3D00102A0F /* ToastUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B7B1F283F3D00102A0F /* ToastUtils.swift */; };
 		4DDD2B7F1F2848FC00102A0F /* MainCustomerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B7E1F2848FC00102A0F /* MainCustomerLabel.swift */; };
 		4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B811F2849DC00102A0F /* NetWorkUtils.swift */; };
@@ -53,6 +77,8 @@
 		4D18ACD01F26084E005363A4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		4D18ACD21F2608F3005363A4 /* Login-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Login-header.h"; sourceTree = "<group>"; };
 		4D18ACD31F261378005363A4 /* TencentShared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TencentShared.swift; sourceTree = "<group>"; };
+		4D1DA0F31F2F4C4300B1138D /* FCHasBennMailedProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCHasBennMailedProductCell.swift; sourceTree = "<group>"; };
+		4D1DA0F51F2F4C7000B1138D /* FCMailedConfirmDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMailedConfirmDialog.swift; sourceTree = "<group>"; };
 		4D5625121F2605A700515C98 /* FelixFastCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FelixFastCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5625151F2605A700515C98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D56251C1F2605A700515C98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -70,6 +96,28 @@
 		4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
 		4D9EBB951F276822002674DE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4DCD39B61F2DA5FC002B7F35 /* CustomerControllerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerControllerButton.swift; sourceTree = "<group>"; };
+		4DCD39B91F2DBEEB002B7F35 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		4DCD39BB1F2DBEF8002B7F35 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		4DCD39BD1F2DBF09002B7F35 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		4DCD39BF1F2DBF16002B7F35 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		4DCD39C11F2DBF35002B7F35 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		4DCD39C91F2F0D58002B7F35 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		4DCD39CA1F2F0D59002B7F35 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		4DCD39CD1F2F0D86002B7F35 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		4DCD39CF1F2F0D9E002B7F35 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		4DCD39D11F2F0DBB002B7F35 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		4DCD39D31F2F0DC8002B7F35 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		4DCD39D51F2F0DDE002B7F35 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4DCD39D71F2F12E9002B7F35 /* PayListDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayListDialog.swift; sourceTree = "<group>"; };
+		4DCD39DA1F2F31C6002B7F35 /* PayItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayItemTableViewCell.swift; sourceTree = "<group>"; };
+		4DCD39DC1F2F3CD5002B7F35 /* UserInfoDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoDialog.swift; sourceTree = "<group>"; };
+		4DCD39E01F2F4A2B002B7F35 /* MyGiftDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyGiftDialog.swift; sourceTree = "<group>"; };
+		4DCD39E21F2F4B2C002B7F35 /* FCMyGiftCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMyGiftCell.swift; sourceTree = "<group>"; };
+		4DCD39E31F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMyGiftHasBeenMailedCell.swift; sourceTree = "<group>"; };
+		4DCD39E41F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedTabViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMyGiftHasBeenMailedTabViewDelegate.swift; sourceTree = "<group>"; };
+		4DCD39E51F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMyGiftHasBeenProductsDelegate.swift; sourceTree = "<group>"; };
+		4DCD39E61F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMyGiftToBeMailedTabViewDelegate.swift; sourceTree = "<group>"; };
+		4DCD39E71F2F4B2C002B7F35 /* FCMyGiftView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMyGiftView.swift; sourceTree = "<group>"; };
 		4DDD2B7B1F283F3D00102A0F /* ToastUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastUtils.swift; sourceTree = "<group>"; };
 		4DDD2B7E1F2848FC00102A0F /* MainCustomerLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCustomerLabel.swift; sourceTree = "<group>"; };
 		4DDD2B811F2849DC00102A0F /* NetWorkUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetWorkUtils.swift; sourceTree = "<group>"; };
@@ -84,6 +132,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DCD39D61F2F0DDE002B7F35 /* Foundation.framework in Frameworks */,
+				4DCD39D41F2F0DC8002B7F35 /* UIKit.framework in Frameworks */,
+				4DCD39D21F2F0DBB002B7F35 /* CFNetwork.framework in Frameworks */,
+				4DCD39D01F2F0D9E002B7F35 /* CoreText.framework in Frameworks */,
+				4DCD39CE1F2F0D86002B7F35 /* QuartzCore.framework in Frameworks */,
+				4DCD39C21F2DBF35002B7F35 /* AVFoundation.framework in Frameworks */,
+				4DCD39CB1F2F0D59002B7F35 /* AlipaySDK.framework in Frameworks */,
+				4DCD39C01F2DBF16002B7F35 /* AudioToolbox.framework in Frameworks */,
+				4DCD39BE1F2DBF09002B7F35 /* VideoToolbox.framework in Frameworks */,
+				4DCD39BC1F2DBEF8002B7F35 /* CoreMotion.framework in Frameworks */,
+				4DCD39BA1F2DBEEB002B7F35 /* CoreMedia.framework in Frameworks */,
 				4D18ACD11F26084E005363A4 /* libz.tbd in Frameworks */,
 				4D18ACCF1F260846005363A4 /* libstdc++.tbd in Frameworks */,
 				4D18ACCD1F26083E005363A4 /* libsqlite3.tbd in Frameworks */,
@@ -103,6 +162,16 @@
 		4D18ACC11F260816005363A4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4DCD39D51F2F0DDE002B7F35 /* Foundation.framework */,
+				4DCD39D31F2F0DC8002B7F35 /* UIKit.framework */,
+				4DCD39D11F2F0DBB002B7F35 /* CFNetwork.framework */,
+				4DCD39CF1F2F0D9E002B7F35 /* CoreText.framework */,
+				4DCD39CD1F2F0D86002B7F35 /* QuartzCore.framework */,
+				4DCD39C11F2DBF35002B7F35 /* AVFoundation.framework */,
+				4DCD39BF1F2DBF16002B7F35 /* AudioToolbox.framework */,
+				4DCD39BD1F2DBF09002B7F35 /* VideoToolbox.framework */,
+				4DCD39BB1F2DBEF8002B7F35 /* CoreMotion.framework */,
+				4DCD39B91F2DBEEB002B7F35 /* CoreMedia.framework */,
 				4D18ACD01F26084E005363A4 /* libz.tbd */,
 				4D18ACCE1F260846005363A4 /* libstdc++.tbd */,
 				4D18ACCC1F26083E005363A4 /* libsqlite3.tbd */,
@@ -137,6 +206,8 @@
 		4D5625141F2605A700515C98 /* FelixFastCatch */ = {
 			isa = PBXGroup;
 			children = (
+				4DCD39C91F2F0D58002B7F35 /* AlipaySDK.framework */,
+				4DCD39CA1F2F0D59002B7F35 /* AlipaySDK.bundle */,
 				4D18ACBD1F260801005363A4 /* TencentOpenAPI.framework */,
 				4D18ACBE1F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle */,
 				4D5625151F2605A700515C98 /* AppDelegate.swift */,
@@ -203,6 +274,8 @@
 		4D9EBB871F271C3A002674DE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4DCD39DF1F2F4A19002B7F35 /* Gift */,
+				4DCD39DE1F2F48DB002B7F35 /* Address */,
 				4D9EBB8C1F271CD8002674DE /* Main */,
 				4D9EBB8D1F271CD8002674DE /* Pay */,
 				4D9EBB8E1F271CD8002674DE /* PlayInfo */,
@@ -238,6 +311,7 @@
 		4D9EBB8D1F271CD8002674DE /* Pay */ = {
 			isa = PBXGroup;
 			children = (
+				4DCD39D71F2F12E9002B7F35 /* PayListDialog.swift */,
 			);
 			path = Pay;
 			sourceTree = "<group>";
@@ -254,6 +328,7 @@
 			children = (
 				4D64B89B1F29D984002A9BFD /* FastLoginDialog.swift */,
 				4D64B89D1F29D9C7002A9BFD /* PhoneNumberDialog.swift */,
+				4DCD39DC1F2F3CD5002B7F35 /* UserInfoDialog.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -261,6 +336,7 @@
 		4D9EBB901F274563002674DE /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				4DCD39D91F2F31AB002B7F35 /* Pay */,
 				4D9EBB911F274563002674DE /* Address */,
 				4D9EBB921F274563002674DE /* Main */,
 			);
@@ -270,6 +346,13 @@
 		4D9EBB911F274563002674DE /* Address */ = {
 			isa = PBXGroup;
 			children = (
+				4D1DA0F31F2F4C4300B1138D /* FCHasBennMailedProductCell.swift */,
+				4DCD39E21F2F4B2C002B7F35 /* FCMyGiftCell.swift */,
+				4DCD39E31F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedCell.swift */,
+				4DCD39E41F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedTabViewDelegate.swift */,
+				4DCD39E51F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift */,
+				4DCD39E61F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift */,
+				4DCD39E71F2F4B2C002B7F35 /* FCMyGiftView.swift */,
 			);
 			path = Address;
 			sourceTree = "<group>";
@@ -280,6 +363,30 @@
 				4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		4DCD39D91F2F31AB002B7F35 /* Pay */ = {
+			isa = PBXGroup;
+			children = (
+				4DCD39DA1F2F31C6002B7F35 /* PayItemTableViewCell.swift */,
+			);
+			path = Pay;
+			sourceTree = "<group>";
+		};
+		4DCD39DE1F2F48DB002B7F35 /* Address */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
+		4DCD39DF1F2F4A19002B7F35 /* Gift */ = {
+			isa = PBXGroup;
+			children = (
+				4D1DA0F51F2F4C7000B1138D /* FCMailedConfirmDialog.swift */,
+				4DCD39E01F2F4A2B002B7F35 /* MyGiftDialog.swift */,
+			);
+			path = Gift;
 			sourceTree = "<group>";
 		};
 		4DDD2B7D1F2848E600102A0F /* widget */ = {
@@ -347,6 +454,11 @@
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = 69R7EJL9NK;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -373,6 +485,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DCD39CC1F2F0D59002B7F35 /* AlipaySDK.bundle in Resources */,
 				4D18ACC01F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */,
 			);
@@ -433,6 +546,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DCD39EB1F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift in Sources */,
 				4DDD2B7C1F283F3D00102A0F /* ToastUtils.swift in Sources */,
 				4DDD2B861F286BC000102A0F /* DeviceTools.swift in Sources */,
 				4D64B8951F2885AA002A9BFD /* MainFloatMenu.swift in Sources */,
@@ -440,15 +554,26 @@
 				4DDD2B7F1F2848FC00102A0F /* MainCustomerLabel.swift in Sources */,
 				4D64B89E1F29D9C7002A9BFD /* PhoneNumberDialog.swift in Sources */,
 				4D9EBB811F26F163002674DE /* WeChatShared.swift in Sources */,
+				4D1DA0F41F2F4C4300B1138D /* FCHasBennMailedProductCell.swift in Sources */,
+				4DCD39EA1F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedTabViewDelegate.swift in Sources */,
 				4D64B8A01F29D9DA002A9BFD /* BaseDialog.swift in Sources */,
 				4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */,
 				4D18ACD41F261378005363A4 /* TencentShared.swift in Sources */,
+				4DCD39DB1F2F31C6002B7F35 /* PayItemTableViewCell.swift in Sources */,
 				4D64B8981F29B549002A9BFD /* MainBanner.swift in Sources */,
 				4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */,
+				4DCD39D81F2F12E9002B7F35 /* PayListDialog.swift in Sources */,
+				4DCD39E81F2F4B2C002B7F35 /* FCMyGiftCell.swift in Sources */,
 				4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */,
+				4DCD39E11F2F4A2B002B7F35 /* MyGiftDialog.swift in Sources */,
+				4D1DA0F61F2F4C7000B1138D /* FCMailedConfirmDialog.swift in Sources */,
 				4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */,
+				4DCD39DD1F2F3CD5002B7F35 /* UserInfoDialog.swift in Sources */,
 				4D64B89C1F29D984002A9BFD /* FastLoginDialog.swift in Sources */,
+				4DCD39EC1F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift in Sources */,
+				4DCD39ED1F2F4B2C002B7F35 /* FCMyGiftView.swift in Sources */,
 				4DCD39B71F2DA5FC002B7F35 /* CustomerControllerButton.swift in Sources */,
+				4DCD39E91F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedCell.swift in Sources */,
 				4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */,
 				4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */,
 				4D9EBB961F276822002674DE /* Constants.swift in Sources */,
@@ -560,6 +685,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 69R7EJL9NK;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FelixFastCatch",
@@ -587,6 +713,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 69R7EJL9NK;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FelixFastCatch",

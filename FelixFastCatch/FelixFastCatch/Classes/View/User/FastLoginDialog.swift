@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import SVProgressHUD
 
 /// 快速登录的悬浮窗
 class FastLoginDialog: BaseDialog {
@@ -88,18 +91,64 @@ class FastLoginDialog: BaseDialog {
             phoneNumberLogin.createView(fastLogin:self)
             phoneNumberLogin.show()
         }else if sender == wechatLoginBtn {
-            WeChatShared.login({ (info) in
+            ToastUtils.showLoadingToast(msg: "正在加载中")
+            WeChatShared.login({ [weak self] (info) in
                 print("微信登录成功:\(info)")
+                self?.wechatLogin(wechatCode:info["code"] as! String)
             }, failsure: { (error) in
                 print("微信登录失败:\(error)")
+                SVProgressHUD.dismiss()
             })
         }else{
-            TencentShared.login({ (info) in
+            ToastUtils.showLoadingToast(msg: "正在加载中")
+            TencentShared.login({ [weak self] (info) in
                 print("qq登录成功:\(info)")
+                self?.qqLogin(qqInfo: info)
             }, failsure: { (error) in
                 print("qq登录失败:\(error)")
+                SVProgressHUD.dismiss()
             })
         }
     }
-
+    
+    /// 微信登录
+    func wechatLogin(wechatCode:String) -> () {
+        var params = NetWorkUtils.createBaseParams()
+        params["code"] = wechatCode
+        
+        Alamofire.request(Constants.Network.User.WECHAT_LOGIN, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            let resultJson = JSON(data: response.data!)
+            print("result:\(resultJson)")
+            if NetWorkUtils.checkReponse(response: response) {
+                print("response:\(String(describing: response.response?.allHeaderFields))")
+                LocalDataUtils.updateLocalUserData(resultData: resultJson, dataResponse:response)
+                ToastUtils.showSuccessToast(msg: "登录成功")
+                self.hide()
+            }
+        }
+    }
+    
+    /// qq登录
+    ///
+    /// - Parameter qqInfo: qq返回的数据
+    func qqLogin(qqInfo:[String:Any]) -> () {
+        var params = NetWorkUtils.createBaseParams()
+        params["openid"] = qqInfo["uid"] as? String
+        params["nickname"] = qqInfo["nickName"] as? String
+        params["gender"] = qqInfo["sex"] as? String
+        params["figureurl_qq_1"] = qqInfo["advatarStr"] as? String
+        
+        Alamofire.request(Constants.Network.User.QQ_LOGIN, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            let resultJson = JSON(data: response.data!)
+            if NetWorkUtils.checkReponse(response: response) {
+                print("response:\(String(describing: response.response?.allHeaderFields))")
+                LocalDataUtils.updateLocalUserData(resultData: resultJson, dataResponse:response)
+                ToastUtils.showSuccessToast(msg: "登录成功")
+                self.hide()
+            }else {
+                SVProgressHUD.dismiss()
+            }
+        }
+    }
+    
 }

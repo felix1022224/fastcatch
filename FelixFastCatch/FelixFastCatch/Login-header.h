@@ -17,4 +17,11 @@
 #import <TencentOpenAPI/QQApiInterfaceObject.h>
 #import <TencentOpenAPI/QQApiInterface.h>
 
+#import <AgoraRtcEngineKit/AgoraRtcEngineKit.h>
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <AlipaySDK/AlipaySDK.h>
+#import <CommonCrypto/CommonCrypto.h>
+
 #endif /* Login_header_h */
