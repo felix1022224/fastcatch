@@ -81,6 +81,18 @@ class PlayViewController: UIViewController {
     /// 直播kit
     var agoraKit: AgoraRtcEngineKit!
     
+    /// 视频id数组
+    var liveVideoIds = [UInt]()
+    
+    /// 默认的id数组
+    var defaultVideoIds = [UInt]()
+    
+    /// 是否是直播间
+    var isLive = true
+    
+    /// 当前默认模式下的镜头id
+    var nowDefaultVideoId:UInt!
+    
     /// 摄像头按钮
     fileprivate lazy var lensBtn:UIButton = UIButton(type: UIButtonType.custom)
     
@@ -306,29 +318,34 @@ extension PlayViewController{
         let hostingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         hostingView.translatesAutoresizingMaskIntoConstraints = false
         
-//        let code = agoraKit.joinChannel(byKey: nil, channelName: "test3", info: nil, uid: 0, joinSuccess: nil)
-//        
-//        if code != 0 {
-//            DispatchQueue.main.async(execute: {
-//                print("Join channel failed: \(code)")
-//            })
-//        }else {
-//            print("进入房间成功:\(code)")
-//        }
+        let code = agoraKit.joinChannel(byKey: nil, channelName: "test4", info: nil, uid: 0, joinSuccess: nil)
         
-        switchVideoChannelToDefault(lensCode: 3)
+        if code != 0 {
+            DispatchQueue.main.async(execute: {
+                print("Join channel failed: \(code)")
+            })
+        }else {
+            isLive = true
+            print("进入直播房间成功:\(code)")
+        }
         
         // 在没有游戏时，隐藏摄像头的按钮
-//        lensBtn.isHidden = true
+        lensBtn.isHidden = true
     }
     
     /// 切换视频的房间到一对一聊天界面
-    func switchVideoChannelToDefault(lensCode:Int) -> () {
+    func switchVideoChannelToDefault() -> () {
+        
+        /// 首次切换，清空ID
+        defaultVideoIds.removeAll()
+        
+        agoraKit.leaveChannel { (starts) in
+            print("在进入前，先离开上一个房间")
+        }
         
         agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_Communication)
         
-        lensBtn.tag = lensCode
-        let code = agoraKit.joinChannel(byKey: nil, channelName: "test" + String(lensCode), info: nil, uid: 0, joinSuccess: nil)
+        let code = agoraKit.joinChannel(byKey: nil, channelName: "test3", info: nil, uid: 0, joinSuccess: nil)
         
         if code != 0 {
             DispatchQueue.main.async(execute: {
@@ -337,22 +354,47 @@ extension PlayViewController{
         }else {
             print("进入房间成功:\(code)")
             lensBtn.isHidden = false
+            isLive = false
         }
     }
     
     // 切换镜头
     func changeLens(sender:UIButton) -> () {
-        if sender.tag == 3 {
-            agoraKit.leaveChannel({ (start) in
-                print("离开")
-            })
-            switchVideoChannelToDefault(lensCode: 4)
-        }else if sender.tag == 4 {
-            agoraKit.leaveChannel({ (start) in
-                print("离开")
-            })
-            switchVideoChannelToDefault(lensCode: 3)
+        if !isLive {
+            lensBtn.isEnabled = false
+            //不是直播模式，就是在游戏中
+            for item in defaultVideoIds {
+                if item != nowDefaultVideoId {
+                    switchLens(uid: item)
+                    break
+                }
+            }
         }
+//        if sender.tag == 3 {
+//            agoraKit.leaveChannel({ (start) in
+//                print("离开")
+//            })
+//            switchVideoChannelToDefault(lensCode: 4)
+//        }else if sender.tag == 4 {
+//            agoraKit.leaveChannel({ (start) in
+//                print("离开")
+//            })
+//            switchVideoChannelToDefault(lensCode: 3)
+//        }
+    }
+    
+    func switchLens(uid:UInt) -> () {
+        /// 暂停上一个镜头
+        agoraKit.setupRemoteVideo(nil)
+        let canvas = AgoraRtcVideoCanvas()
+        canvas.view = videoView
+        canvas.uid = uid
+        canvas.renderMode = .render_Hidden
+        /// 切换到当前id
+        nowDefaultVideoId = uid
+        agoraKit.setupRemoteVideo(canvas)
+        
+        lensBtn.isEnabled = true
     }
     
     /// 切换视频到直播界面
@@ -368,13 +410,28 @@ extension PlayViewController{
 extension PlayViewController: AgoraRtcEngineDelegate {
     func rtcEngine(_ engine: AgoraRtcEngineKit!, firstRemoteVideoDecodedOfUid uid: UInt, size: CGSize, elapsed: Int) {
         // 初始化成功
-        print("成功")
+        print("成功\(uid)")
+        if isLive {
+            liveVideoIds.append(uid)
+        }else {
+            defaultVideoIds.append(uid)
+        }
+        agoraKit.setupRemoteVideo(nil)
         let canvas = AgoraRtcVideoCanvas()
         canvas.view = videoView
         canvas.uid = uid
         canvas.renderMode = .render_Hidden
+        
+        /// 对当前的镜头id进行赋值
+        nowDefaultVideoId = uid
+        
         agoraKit.setRemoteVideoStream(UInt(uid), type: .videoStream_High)
         agoraKit.setupRemoteVideo(canvas)
+        
+//        if !isLive {
+//            /// 游戏状态先把镜头切换到第一个
+//            switchLens(uid: defaultVideoIds[0])
+//        }
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit!, firstLocalVideoFrameWith size: CGSize, elapsed: Int) {
@@ -384,6 +441,9 @@ extension PlayViewController: AgoraRtcEngineDelegate {
     func rtcEngine(_ engine: AgoraRtcEngineKit!, didOfflineOfUid uid: UInt, reason: AgoraRtcUserOfflineReason) {
     
     }
+    
+    
+    
 }
 
 
@@ -611,6 +671,8 @@ extension PlayViewController{
         playGroupView.isHidden = false
         isGrab = false
         isCounting = true
+        /// 切换到另一个房间
+        switchVideoChannelToDefault()
     }
     
     func hidePlayGroup() -> () {
