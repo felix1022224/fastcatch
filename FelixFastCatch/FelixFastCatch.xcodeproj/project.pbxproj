@@ -18,6 +18,10 @@
 		4D18ACCF1F260846005363A4 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACCE1F260846005363A4 /* libstdc++.tbd */; };
 		4D18ACD11F26084E005363A4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACD01F26084E005363A4 /* libz.tbd */; };
 		4D18ACD41F261378005363A4 /* TencentShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D18ACD31F261378005363A4 /* TencentShared.swift */; };
+		4D1D86131F306307005210CA /* TobeGiftModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1D86121F306307005210CA /* TobeGiftModel.swift */; };
+		4D1D86151F31BA9C005210CA /* EditAddressDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1D86141F31BA9C005210CA /* EditAddressDialog.swift */; };
+		4D1D86171F31D1FE005210CA /* EditUserInfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1D86161F31D1FE005210CA /* EditUserInfoDialog.swift */; };
+		4D1D86191F31DA17005210CA /* PlayResultDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1D86181F31DA17005210CA /* PlayResultDialog.swift */; };
 		4D1DA0F41F2F4C4300B1138D /* FCHasBennMailedProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1DA0F31F2F4C4300B1138D /* FCHasBennMailedProductCell.swift */; };
 		4D1DA0F61F2F4C7000B1138D /* FCMailedConfirmDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1DA0F51F2F4C7000B1138D /* FCMailedConfirmDialog.swift */; };
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
@@ -56,7 +60,6 @@
 		4DCD39EA1F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedTabViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39E41F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedTabViewDelegate.swift */; };
 		4DCD39EB1F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39E51F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift */; };
 		4DCD39EC1F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39E61F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift */; };
-		4DCD39ED1F2F4B2C002B7F35 /* FCMyGiftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39E71F2F4B2C002B7F35 /* FCMyGiftView.swift */; };
 		4DDD2B7C1F283F3D00102A0F /* ToastUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B7B1F283F3D00102A0F /* ToastUtils.swift */; };
 		4DDD2B7F1F2848FC00102A0F /* MainCustomerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B7E1F2848FC00102A0F /* MainCustomerLabel.swift */; };
 		4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B811F2849DC00102A0F /* NetWorkUtils.swift */; };
@@ -77,6 +80,10 @@
 		4D18ACD01F26084E005363A4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		4D18ACD21F2608F3005363A4 /* Login-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Login-header.h"; sourceTree = "<group>"; };
 		4D18ACD31F261378005363A4 /* TencentShared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TencentShared.swift; sourceTree = "<group>"; };
+		4D1D86121F306307005210CA /* TobeGiftModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TobeGiftModel.swift; sourceTree = "<group>"; };
+		4D1D86141F31BA9C005210CA /* EditAddressDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAddressDialog.swift; sourceTree = "<group>"; };
+		4D1D86161F31D1FE005210CA /* EditUserInfoDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserInfoDialog.swift; sourceTree = "<group>"; };
+		4D1D86181F31DA17005210CA /* PlayResultDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayResultDialog.swift; sourceTree = "<group>"; };
 		4D1DA0F31F2F4C4300B1138D /* FCHasBennMailedProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCHasBennMailedProductCell.swift; sourceTree = "<group>"; };
 		4D1DA0F51F2F4C7000B1138D /* FCMailedConfirmDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMailedConfirmDialog.swift; sourceTree = "<group>"; };
 		4D5625121F2605A700515C98 /* FelixFastCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FelixFastCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,7 +124,6 @@
 		4DCD39E41F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedTabViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMyGiftHasBeenMailedTabViewDelegate.swift; sourceTree = "<group>"; };
 		4DCD39E51F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMyGiftHasBeenProductsDelegate.swift; sourceTree = "<group>"; };
 		4DCD39E61F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMyGiftToBeMailedTabViewDelegate.swift; sourceTree = "<group>"; };
-		4DCD39E71F2F4B2C002B7F35 /* FCMyGiftView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMyGiftView.swift; sourceTree = "<group>"; };
 		4DDD2B7B1F283F3D00102A0F /* ToastUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastUtils.swift; sourceTree = "<group>"; };
 		4DDD2B7E1F2848FC00102A0F /* MainCustomerLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCustomerLabel.swift; sourceTree = "<group>"; };
 		4DDD2B811F2849DC00102A0F /* NetWorkUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetWorkUtils.swift; sourceTree = "<group>"; };
@@ -183,6 +189,14 @@
 				D7E009E5610C1572048261D2 /* Pods_FelixFastCatch.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4D1D86111F3062F2005210CA /* TobeGift */ = {
+			isa = PBXGroup;
+			children = (
+				4D1D86121F306307005210CA /* TobeGiftModel.swift */,
+			);
+			path = TobeGift;
 			sourceTree = "<group>";
 		};
 		4D5625091F2605A700515C98 = {
@@ -253,6 +267,7 @@
 		4D9EBB851F271C3A002674DE /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4D1D86111F3062F2005210CA /* TobeGift */,
 				4D64B8961F29B53D002A9BFD /* Main */,
 			);
 			path = Model;
@@ -312,6 +327,7 @@
 			isa = PBXGroup;
 			children = (
 				4DCD39D71F2F12E9002B7F35 /* PayListDialog.swift */,
+				4D1D86181F31DA17005210CA /* PlayResultDialog.swift */,
 			);
 			path = Pay;
 			sourceTree = "<group>";
@@ -329,6 +345,7 @@
 				4D64B89B1F29D984002A9BFD /* FastLoginDialog.swift */,
 				4D64B89D1F29D9C7002A9BFD /* PhoneNumberDialog.swift */,
 				4DCD39DC1F2F3CD5002B7F35 /* UserInfoDialog.swift */,
+				4D1D86161F31D1FE005210CA /* EditUserInfoDialog.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -352,7 +369,6 @@
 				4DCD39E41F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedTabViewDelegate.swift */,
 				4DCD39E51F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift */,
 				4DCD39E61F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift */,
-				4DCD39E71F2F4B2C002B7F35 /* FCMyGiftView.swift */,
 			);
 			path = Address;
 			sourceTree = "<group>";
@@ -385,6 +401,7 @@
 			children = (
 				4D1DA0F51F2F4C7000B1138D /* FCMailedConfirmDialog.swift */,
 				4DCD39E01F2F4A2B002B7F35 /* MyGiftDialog.swift */,
+				4D1D86141F31BA9C005210CA /* EditAddressDialog.swift */,
 			);
 			path = Gift;
 			sourceTree = "<group>";
@@ -548,6 +565,7 @@
 			files = (
 				4DCD39EB1F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift in Sources */,
 				4DDD2B7C1F283F3D00102A0F /* ToastUtils.swift in Sources */,
+				4D1D86191F31DA17005210CA /* PlayResultDialog.swift in Sources */,
 				4DDD2B861F286BC000102A0F /* DeviceTools.swift in Sources */,
 				4D64B8951F2885AA002A9BFD /* MainFloatMenu.swift in Sources */,
 				4D64B8A21F2ADC50002A9BFD /* MainCustomerTextField.swift in Sources */,
@@ -560,18 +578,20 @@
 				4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */,
 				4D18ACD41F261378005363A4 /* TencentShared.swift in Sources */,
 				4DCD39DB1F2F31C6002B7F35 /* PayItemTableViewCell.swift in Sources */,
+				4D1D86151F31BA9C005210CA /* EditAddressDialog.swift in Sources */,
 				4D64B8981F29B549002A9BFD /* MainBanner.swift in Sources */,
 				4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */,
 				4DCD39D81F2F12E9002B7F35 /* PayListDialog.swift in Sources */,
 				4DCD39E81F2F4B2C002B7F35 /* FCMyGiftCell.swift in Sources */,
 				4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */,
+				4D1D86131F306307005210CA /* TobeGiftModel.swift in Sources */,
 				4DCD39E11F2F4A2B002B7F35 /* MyGiftDialog.swift in Sources */,
+				4D1D86171F31D1FE005210CA /* EditUserInfoDialog.swift in Sources */,
 				4D1DA0F61F2F4C7000B1138D /* FCMailedConfirmDialog.swift in Sources */,
 				4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */,
 				4DCD39DD1F2F3CD5002B7F35 /* UserInfoDialog.swift in Sources */,
 				4D64B89C1F29D984002A9BFD /* FastLoginDialog.swift in Sources */,
 				4DCD39EC1F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift in Sources */,
-				4DCD39ED1F2F4B2C002B7F35 /* FCMyGiftView.swift in Sources */,
 				4DCD39B71F2DA5FC002B7F35 /* CustomerControllerButton.swift in Sources */,
 				4DCD39E91F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedCell.swift in Sources */,
 				4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */,

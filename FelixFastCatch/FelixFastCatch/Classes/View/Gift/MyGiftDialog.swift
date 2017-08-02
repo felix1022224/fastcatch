@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class MyGiftDialog: BaseDialog {
 
@@ -41,8 +43,16 @@ class MyGiftDialog: BaseDialog {
     // 邮件确认
     fileprivate var mailedConfirmDialog:FCMailedConfirmDialog!
     
+    /// 地址数据
+    fileprivate var addressData = ""
+    
+    /// 编辑地址
+    fileprivate var editAddressDialog:EditAddressDialog!
+    
     override func createView() {
         createBackgroundImage(imageName: "待邮寄背景")
+        
+        editAddressDialog = EditAddressDialog(frame: UIScreen.main.bounds)
         
         // 关闭按钮
         closeBtn = UIButton(type: .custom)
@@ -109,9 +119,53 @@ class MyGiftDialog: BaseDialog {
     
     // 展示邮件信息确认页面
     func showMailedConfirmDialog() -> () {
+        if tobeMailedDelegate.selectList.count <= 0 {
+            ToastUtils.showErrorToast(msg: "请选择要邮寄的产品")
+            return
+        }
+        if addressData == "" {
+            editAddressDialog.createView(dialog:self)
+            editAddressDialog.show()
+            return
+        }
+        /// 组装数据
+        var sendData = [JSON]()
+        for key in Array(tobeMailedDelegate.selectList.keys) {
+            sendData.append(tobeMailedDelegate.dataSource[key])
+        }
+        
+        let json = JSON(addressData)
+        
+        mailedConfirmDialog.userInfoData = json["name"].stringValue
+        mailedConfirmDialog.phoneNumberData = json["phone"].stringValue
+        mailedConfirmDialog.addressData = json["addr"].stringValue
+        
+        mailedConfirmDialog.sendData.removeAll()
+        mailedConfirmDialog.sendData = sendData
         mailedConfirmDialog.createView()
         mailedConfirmDialog.show()
     }
+    
+    func reBackShowMailedConfirm(userInfo:String, phoneNumber:String, address:String) -> () {
+        /// 组装数据
+        var sendData = [JSON]()
+        for key in Array(tobeMailedDelegate.selectList.keys) {
+            sendData.append(tobeMailedDelegate.dataSource[key])
+        }
+        
+        mailedConfirmDialog.userInfoData = userInfo
+        mailedConfirmDialog.phoneNumberData = phoneNumber
+        mailedConfirmDialog.addressData = address
+        
+        mailedConfirmDialog.sendData.removeAll()
+        mailedConfirmDialog.sendData = sendData
+        mailedConfirmDialog.createView()
+        mailedConfirmDialog.show()
+
+    }
+    
+    /// 未邮寄数据
+    fileprivate var tobeMailedListData = [JSON]()
     
 }
 
@@ -192,6 +246,59 @@ extension MyGiftDialog{
         
         hasbeenMailedTabView.isHidden = true
         
+        getTobeMailedGiftList()
     }
-
 }
+
+// MARK: - 获取未邮寄礼物列表
+extension MyGiftDialog{
+    
+    func getTobeMailedGiftList() -> () {
+        getUserAddress()
+        
+        var params = NetWorkUtils.createBaseParams()
+        params["size"] = "10"
+        params["page"] = "0"
+        
+        Alamofire.request(Constants.Network.Gift.GET_TOBE_MAILED_GIFT_LIST, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            if NetWorkUtils.checkReponse(response: response) {
+                let json = JSON(response.result.value!)
+                self.tobeMailedDelegate.dataSource = json["data"]["content"].array!
+                self.tobeMailedTabView.reloadData()
+            }
+        }
+    }
+    
+    func setupTobeMailedGiftListData() -> () {
+        
+    }
+    
+}
+
+// MARK: - 获取用户的地址信息
+extension MyGiftDialog{
+    
+    func getUserAddress() -> () {
+        ToastUtils.showLoadingToast(msg: "请稍后……")
+        Alamofire.request(Constants.Network.Gift.GET_USER_ADDRESS, method: .post, parameters: NetWorkUtils.createBaseParams(), encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            let json = JSON(response.result.value!)
+            self.addressData = json["data"].stringValue
+            print("result:\(response.result.value)")
+            ToastUtils.hide()
+        }
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

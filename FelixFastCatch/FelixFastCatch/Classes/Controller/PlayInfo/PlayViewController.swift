@@ -93,12 +93,20 @@ class PlayViewController: UIViewController {
     /// 当前默认模式下的镜头id
     var nowDefaultVideoId:UInt!
     
+    /// 当前直播模式下的镜头id
+    var nowLiveVideoId:UInt!
+    
     /// 摄像头按钮
     fileprivate lazy var lensBtn:UIButton = UIButton(type: UIButtonType.custom)
+    
+    /// 游戏结果
+    fileprivate var playResultDialog:PlayResultDialog!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        playResultDialog = PlayResultDialog(frame: UIScreen.main.bounds)
+        
         self.navigationController?.navigationBar.isHidden = true
         
         view.backgroundColor = UIColor.white
@@ -106,6 +114,7 @@ class PlayViewController: UIViewController {
         enter()
         
         setupUI()
+        
     }
 
     deinit {
@@ -330,7 +339,7 @@ extension PlayViewController{
         }
         
         // 在没有游戏时，隐藏摄像头的按钮
-        lensBtn.isHidden = true
+//        lensBtn.isHidden = true
     }
     
     /// 切换视频的房间到一对一聊天界面
@@ -353,7 +362,6 @@ extension PlayViewController{
             })
         }else {
             print("进入房间成功:\(code)")
-            lensBtn.isHidden = false
             isLive = false
         }
     }
@@ -369,18 +377,20 @@ extension PlayViewController{
                     break
                 }
             }
+        }else{
+            lensBtn.isEnabled = false
+            if liveVideoIds.count <= 1 {
+                /// 镜头小于2，不切换
+                return
+            }
+            //直播模式
+            for item in liveVideoIds {
+                if item != nowDefaultVideoId {
+                    switchLens(uid: item)
+                    break
+                }
+            }
         }
-//        if sender.tag == 3 {
-//            agoraKit.leaveChannel({ (start) in
-//                print("离开")
-//            })
-//            switchVideoChannelToDefault(lensCode: 4)
-//        }else if sender.tag == 4 {
-//            agoraKit.leaveChannel({ (start) in
-//                print("离开")
-//            })
-//            switchVideoChannelToDefault(lensCode: 3)
-//        }
     }
     
     func switchLens(uid:UInt) -> () {
@@ -399,9 +409,25 @@ extension PlayViewController{
     
     /// 切换视频到直播界面
     func swichVideoChannerlToLive() -> () {
+        /// 首次切换，清空ID
+        liveVideoIds.removeAll()
+        
+        agoraKit.leaveChannel { (starts) in
+            print("在进入前，先离开上一个房间")
+        }
+        
         agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_LiveBroadcasting)
         
-    
+        let code = agoraKit.joinChannel(byKey: nil, channelName: "test3", info: nil, uid: 0, joinSuccess: nil)
+        
+        if code != 0 {
+            DispatchQueue.main.async(execute: {
+                print("Join channel failed: \(code)")
+            })
+        }else {
+            print("进入房间成功:\(code)")
+            isLive = true
+        }
     }
     
     
@@ -413,7 +439,11 @@ extension PlayViewController: AgoraRtcEngineDelegate {
         print("成功\(uid)")
         if isLive {
             liveVideoIds.append(uid)
+            /// 对当前镜头id进行赋值
+            nowLiveVideoId = uid
         }else {
+            /// 对当前的镜头id进行赋值
+            nowDefaultVideoId = uid
             defaultVideoIds.append(uid)
         }
         agoraKit.setupRemoteVideo(nil)
@@ -422,16 +452,9 @@ extension PlayViewController: AgoraRtcEngineDelegate {
         canvas.uid = uid
         canvas.renderMode = .render_Hidden
         
-        /// 对当前的镜头id进行赋值
-        nowDefaultVideoId = uid
-        
         agoraKit.setRemoteVideoStream(UInt(uid), type: .videoStream_High)
         agoraKit.setupRemoteVideo(canvas)
-        
-//        if !isLive {
-//            /// 游戏状态先把镜头切换到第一个
-//            switchLens(uid: defaultVideoIds[0])
-//        }
+
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit!, firstLocalVideoFrameWith size: CGSize, elapsed: Int) {
@@ -840,10 +863,13 @@ extension PlayViewController{
             return
         }
         
-        /// 调用接口超过十次，默认失败
-        if getWardCodeNumber >= 10 {
+        /// 调用接口超过5次，默认失败
+        if getWardCodeNumber >= 5 {
             getWardCodeNumber = 0
             wardCode = ""
+            playResultDialog.isSuccess = false
+            playResultDialog.createView()
+            playResultDialog.show()
             return
         }
         
@@ -857,6 +883,9 @@ extension PlayViewController{
                     self.getWardCodeNumber = 0
                     print("抓取成功")
                     self.wardCode = ""
+                    self.playResultDialog.isSuccess = true
+                    self.playResultDialog.createView()
+                    self.playResultDialog.show()
                 }else {
                     print("抓取失败")
                     self.getWardCodeNumber = self.getWardCodeNumber + 1

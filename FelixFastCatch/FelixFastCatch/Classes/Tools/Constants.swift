@@ -61,6 +61,23 @@ class Constants: NSObject {
 //            static let END_PALY = BASE_URL + ""
         }
         
+        /// 礼物相关
+        struct Gift {
+            
+            /// 获取未邮寄的列表
+            static let GET_TOBE_MAILED_GIFT_LIST = BASE_URL + "draworder/unpostagelist"
+            
+            /// 创建邮寄订单
+            static let CREATE_POSTAGE = BASE_URL + "draworder/createpostage"
+            
+            /// 获取用户的地址信息
+            static let GET_USER_ADDRESS = BASE_URL + "postage/get"
+            
+            /// 保存用户地址信息
+            static let SAVE_USER_ADDRESS = BASE_URL + "postage/create"
+            
+        }
+        
         /// 用户相关
         struct User {
             
@@ -72,6 +89,9 @@ class Constants: NSObject {
             
             /// 退出登录
             static let LOGOUT_URL = BASE_URL + "user/logout"
+            
+            /// 更新用户信息
+            static let UPDATE_USER_INFO = BASE_URL + "user/update"
             
         }
     }

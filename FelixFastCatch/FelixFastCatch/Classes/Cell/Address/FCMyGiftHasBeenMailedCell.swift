@@ -85,7 +85,7 @@ class FCMyGiftHasBeenMailedCell: UITableViewCell {
         // 設置每個 cell 的尺寸
         layout.itemSize = CGSize(width: CGFloat(((hasBeenContentBackgroundImage?.size.width)! - 20) / 4 - 8), height: CGFloat((hasBeenProductBackground?.size.height)! + 10))
         
-        productsGroup = UICollectionView(frame: CGRect(x: 10, y: timeLabel.bounds.height + 20, width: hasBeenContentBackgroundImage!.size.width - 20, height: (hasBeenProductBackground?.size.height)! + 10), collectionViewLayout: layout)
+        productsGroup = UICollectionView(frame: CGRect(x: 10, y: timeLabel.bounds.height + 20, width: hasBeenContentBackgroundImage!.size.width - 20, height: (hasBeenProductBackground?.size.height)! * 2 + 10 + 10), collectionViewLayout: layout)
         productsGroup.backgroundColor = UIColor.clear
         
         hasbeenProductsDelegate = FCMyGiftHasBeenProductsDelegate()

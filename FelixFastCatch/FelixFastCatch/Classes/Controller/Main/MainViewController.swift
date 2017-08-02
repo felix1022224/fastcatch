@@ -447,7 +447,7 @@ extension MainViewController{
         giftBtn.addBtnClickAction(target: self, action: #selector(showMyGift))
         
         /// 购买钻石按钮
-        let payGemBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 - settingsBtn.bounds.width * 2, y: UIScreen.main.bounds.height - 80, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Plus-btn"), actionTitle: "购钻")
+        let payGemBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 2 - settingsBtn.bounds.width * 2, y: UIScreen.main.bounds.height - 80, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Plus-btn"), actionTitle: "购钻")
         view.addSubview(payGemBtn)
         
         payGemBtn.addBtnClickAction(target: self, action: #selector(showPayDialog))
@@ -456,6 +456,10 @@ extension MainViewController{
     
     /// 显示我的礼物
     func showMyGift() -> () {
+        if Constants.User.USER_ID == "" {
+            showFastLogin()
+            return
+        }
         myGift.createView()
         myGift.show()
     }
@@ -467,6 +471,10 @@ extension MainViewController{
     
     /// 显示购买的dialog
     func showPayDialog() -> () {
+        if Constants.User.USER_ID == "" {
+            showFastLogin()
+            return
+        }
         payGemDialog.createView()
         payGemDialog.show()
     }

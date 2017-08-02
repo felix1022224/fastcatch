@@ -38,7 +38,12 @@ class UserInfoDialog: BaseDialog {
     // 用户头像背景图
     fileprivate var userFaceImageBackground:UIImageView!
     
+    /// 编辑用户资料
+    fileprivate var editUserInfoDialog:EditUserInfoDialog!
+    
     override func createView() {
+        editUserInfoDialog = EditUserInfoDialog(frame: UIScreen.main.bounds)
+        
         let bgImage = UIImage(named: "bg_user_info")
         
         backgroundImage = UIImageView()
@@ -47,6 +52,8 @@ class UserInfoDialog: BaseDialog {
         backgroundImage.center = self.center
         backgroundImage.frame = CGRect(x: self.bounds.width/2 - (bgImage?.size.width)! * 1.3 / 2, y: self.bounds.height/2 - (bgImage?.size.height)! * 1.3 / 2, width: (bgImage?.size.width)! * 1.3, height: (bgImage?.size.height)! * 1.3)
         addSubview(backgroundImage)
+        
+        createCloseBtn()
         
         // 背景图
         let userFaceBorderImage = UIImage(named: "user_face_border")
@@ -145,7 +152,7 @@ class UserInfoDialog: BaseDialog {
         changeInfoBtn.setBackgroundImage(changeUserInfoImage, for: .normal)
         changeInfoBtn.frame = CGRect(x: self.bounds.width/2 + 5, y: self.bounds.height/2 + backgroundImage.bounds.height/2 - (changeUserInfoImage?.size.height)! / 2, width: (changeUserInfoImage?.size.width)!, height: (changeUserInfoImage?.size.height)!)
         addSubview(changeInfoBtn)
-//        changeInfoBtn.addTarget(self, action: #selector(showChangeUserInfo), for: .touchUpInside)
+        changeInfoBtn.addTarget(self, action: #selector(editUserInfo), for: .touchUpInside)
         
         addDialogToWindow()
     }
@@ -164,6 +171,11 @@ class UserInfoDialog: BaseDialog {
                 ToastUtils.showErrorToast(msg: "登出失败")
             }
         }
+    }
+    
+    func editUserInfo() -> () {
+        editUserInfoDialog.createView()
+        editUserInfoDialog.show()
     }
     
 }

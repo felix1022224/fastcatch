@@ -17,13 +17,13 @@ class FCMyGiftCell: UITableViewCell {
     fileprivate var productBackgroundImage:UIImageView!
     
     // 产品图
-    fileprivate var productImage:UIImageView!
+    var productImage:UIImageView!
     
     // 选择按钮
-    fileprivate var selectBtn:UIButton!
+    var selectBtn:UIButton!
     
     // 产品名称
-    fileprivate var productTitleLabel:MainCustomerLabel!
+    var productTitleLabel:MainCustomerLabel!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -68,7 +68,7 @@ extension FCMyGiftCell{
         
         // 产品图
         productImage = UIImageView()
-        productImage.backgroundColor = UIColor.red
+        productImage.backgroundColor = UIColor.white
         productImage.layer.cornerRadius = 3
         productImage.layer.masksToBounds = true
         addSubview(productImage)
@@ -78,8 +78,6 @@ extension FCMyGiftCell{
             make.height.equalTo(productBackgroundImage.bounds.height * 0.85)
             make.center.equalTo(productBackgroundImage)
         }
-        
-        productImage.kf.setImage(with: URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUsro2esrMSlorHn0yuKOAwa743gOyvqbQ4lvzMQJABCPRUyVWTg"))
         
         // 选择按钮
         selectBtn = UIButton()
