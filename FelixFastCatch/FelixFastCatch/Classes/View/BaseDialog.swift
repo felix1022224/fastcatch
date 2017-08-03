@@ -10,10 +10,10 @@ import UIKit
 
 class BaseDialog: UIView {
 
-    private var keyWindow:UIWindow!
+    var keyWindow:UIWindow!
     
     // 背景透明色
-    private var shadow:UIControl!
+    var shadow:UIControl!
     
     // 背景图片
     var backgroundImage:UIImageView!
@@ -50,6 +50,10 @@ class BaseDialog: UIView {
         self.isHidden = true
     }
     
+    func addDidalogToWindowNoShadow() {
+        keyWindow?.addSubview(self)
+    }
+    
     // 显示
     func show() -> () {
         self.transform = CGAffineTransform(scaleX: 1.2,y: 1.2);
@@ -62,11 +66,15 @@ class BaseDialog: UIView {
     
     // 隐藏
     func hide() -> () {
-        UIView.animate(withDuration: 0.2) { [weak self] in
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.shadow.alpha = 0.0
+            self?.transform = CGAffineTransform(scaleX: 0.0,y: 0.0)
+        }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.31) { [weak self] in
             self?.shadow.removeFromSuperview()
-            self?.shadow = nil
             self?.removeFromSuperview()
         }
+        
     }
     
     func addOnClickListener(toView:UIView, target: AnyObject, action: Selector) {

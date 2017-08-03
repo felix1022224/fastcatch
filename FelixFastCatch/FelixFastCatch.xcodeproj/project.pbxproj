@@ -22,6 +22,9 @@
 		4D1D86151F31BA9C005210CA /* EditAddressDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1D86141F31BA9C005210CA /* EditAddressDialog.swift */; };
 		4D1D86171F31D1FE005210CA /* EditUserInfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1D86161F31D1FE005210CA /* EditUserInfoDialog.swift */; };
 		4D1D86191F31DA17005210CA /* PlayResultDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1D86181F31DA17005210CA /* PlayResultDialog.swift */; };
+		4D1D861B1F32F78F005210CA /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1D861A1F32F78F005210CA /* SelectDateView.swift */; };
+		4D1D861D1F333299005210CA /* HideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1D861C1F333299005210CA /* HideView.swift */; };
+		4D1D861F1F334461005210CA /* ConstellationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1D861E1F334461005210CA /* ConstellationUtils.swift */; };
 		4D1DA0F41F2F4C4300B1138D /* FCHasBennMailedProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1DA0F31F2F4C4300B1138D /* FCHasBennMailedProductCell.swift */; };
 		4D1DA0F61F2F4C7000B1138D /* FCMailedConfirmDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1DA0F51F2F4C7000B1138D /* FCMailedConfirmDialog.swift */; };
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
@@ -84,6 +87,9 @@
 		4D1D86141F31BA9C005210CA /* EditAddressDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAddressDialog.swift; sourceTree = "<group>"; };
 		4D1D86161F31D1FE005210CA /* EditUserInfoDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserInfoDialog.swift; sourceTree = "<group>"; };
 		4D1D86181F31DA17005210CA /* PlayResultDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayResultDialog.swift; sourceTree = "<group>"; };
+		4D1D861A1F32F78F005210CA /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
+		4D1D861C1F333299005210CA /* HideView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HideView.swift; sourceTree = "<group>"; };
+		4D1D861E1F334461005210CA /* ConstellationUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstellationUtils.swift; sourceTree = "<group>"; };
 		4D1DA0F31F2F4C4300B1138D /* FCHasBennMailedProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCHasBennMailedProductCell.swift; sourceTree = "<group>"; };
 		4D1DA0F51F2F4C7000B1138D /* FCMailedConfirmDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMailedConfirmDialog.swift; sourceTree = "<group>"; };
 		4D5625121F2605A700515C98 /* FelixFastCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FelixFastCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -282,6 +288,7 @@
 				4DDD2B7B1F283F3D00102A0F /* ToastUtils.swift */,
 				4DDD2B851F286BC000102A0F /* DeviceTools.swift */,
 				4D64B8A31F2B079E002A9BFD /* LocalDataUtils.swift */,
+				4D1D861E1F334461005210CA /* ConstellationUtils.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -296,6 +303,7 @@
 				4D9EBB8E1F271CD8002674DE /* PlayInfo */,
 				4D9EBB8F1F271CD8002674DE /* User */,
 				4D64B89F1F29D9DA002A9BFD /* BaseDialog.swift */,
+				4D1D861C1F333299005210CA /* HideView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -304,6 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				4D9EBB8A1F271C80002674DE /* MainViewController.swift */,
+				4D1D861A1F32F78F005210CA /* SelectDateView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -578,6 +587,7 @@
 				4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */,
 				4D18ACD41F261378005363A4 /* TencentShared.swift in Sources */,
 				4DCD39DB1F2F31C6002B7F35 /* PayItemTableViewCell.swift in Sources */,
+				4D1D861B1F32F78F005210CA /* SelectDateView.swift in Sources */,
 				4D1D86151F31BA9C005210CA /* EditAddressDialog.swift in Sources */,
 				4D64B8981F29B549002A9BFD /* MainBanner.swift in Sources */,
 				4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */,
@@ -593,9 +603,11 @@
 				4D64B89C1F29D984002A9BFD /* FastLoginDialog.swift in Sources */,
 				4DCD39EC1F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift in Sources */,
 				4DCD39B71F2DA5FC002B7F35 /* CustomerControllerButton.swift in Sources */,
+				4D1D861F1F334461005210CA /* ConstellationUtils.swift in Sources */,
 				4DCD39E91F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedCell.swift in Sources */,
 				4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */,
 				4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */,
+				4D1D861D1F333299005210CA /* HideView.swift in Sources */,
 				4D9EBB961F276822002674DE /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

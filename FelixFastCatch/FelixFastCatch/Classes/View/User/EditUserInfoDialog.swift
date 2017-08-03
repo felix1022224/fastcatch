@@ -30,7 +30,7 @@ class EditUserInfoDialog: BaseDialog {
     fileprivate var brithdayTipsLabel:MainCustomerLabel!
     
     // 生日选择
-    fileprivate var brithdaySelectGroup:MainCustomerTextField!
+    fileprivate var brithdaySelectGroup:MainCustomerLabel!
     
     // 生日文字
     fileprivate var brithdaySelectLabel:MainCustomerLabel!
@@ -40,8 +40,13 @@ class EditUserInfoDialog: BaseDialog {
     
     fileprivate var isSelectMan:Bool = false
     
+    fileprivate var selectDateTime:SelectDateView!
+    
     override func createView() {
         createBackgroundImage(imageName: "bg_change_userinfo")
+        
+        selectDateTime = SelectDateView(frame: self.bounds)
+        
         
         // 取消按钮
         let cancelImage = UIImage(named: "icon_cancel")
@@ -159,7 +164,7 @@ class EditUserInfoDialog: BaseDialog {
         brithdayTipsLabel.outTextColor = UIColor.white
         brithdayTipsLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         brithdayTipsLabel.font = UIFont.systemFont(ofSize: CGFloat(14))
-        brithdayTipsLabel.text = "性别:"
+        brithdayTipsLabel.text = "生日:"
         brithdayTipsLabel.sizeToFit()
         addSubview(brithdayTipsLabel)
         
@@ -168,29 +173,60 @@ class EditUserInfoDialog: BaseDialog {
             make.left.equalTo(sexLabel)
         }
         
-        // 生日背景
-        brithdaySelectGroup = MainCustomerTextField()
-        brithdaySelectGroup.background = UIImage(named: "bg_username")
-        brithdaySelectGroup.sizeToFit()
-        brithdaySelectGroup.outLineWidth = 3
-        brithdaySelectGroup.outTextColor = UIColor.white
-        brithdaySelectGroup.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        addSubview(brithdaySelectGroup)
-        brithdaySelectGroup.tintColor = UIColor.clear
-//        brithdaySelectGroup.isUserInteractionEnabled = false
-        brithdaySelectGroup.text = "1994年12月26日"
-        brithdaySelectGroup.font = UIFont.systemFont(ofSize: CGFloat(12))
+        /// 生日背景
+        let brithdyBackgroundImage = UIImageView(image: UIImage(named: "bg_username"))
+        addSubview(brithdyBackgroundImage)
         
-        brithdaySelectGroup.snp.makeConstraints { (make) in
+        brithdyBackgroundImage.snp.makeConstraints { (make) in
             make.left.equalTo(manBtn)
             make.centerY.equalTo(brithdayTipsLabel)
             make.height.equalTo(brithdayTipsLabel).offset(10)
             make.right.equalTo(ladyBtn)
         }
         
-//        brithdaySelectGroup.addTarget(self, action: #selector(method), for: .touchUpInside)
+        // 生日背景
+        brithdaySelectGroup = MainCustomerLabel()
+        brithdaySelectGroup.sizeToFit()
+        brithdaySelectGroup.outLineWidth = 3
+        brithdaySelectGroup.outTextColor = UIColor.white
+        brithdaySelectGroup.outLienTextColor = Constants.UI.OUT_LINE_COLOR
+        addSubview(brithdaySelectGroup)
+        brithdaySelectGroup.tintColor = UIColor.clear
+        brithdaySelectGroup.text = "1994年12月26日"
+        brithdaySelectGroup.font = UIFont.systemFont(ofSize: CGFloat(12))
+        brithdaySelectGroup.isUserInteractionEnabled = true
+        
+        brithdaySelectGroup.snp.makeConstraints { (make) in
+            make.left.equalTo(manBtn).offset(20)
+            make.centerY.equalTo(brithdayTipsLabel)
+            make.height.equalTo(brithdayTipsLabel).offset(10)
+            make.right.equalTo(ladyBtn)
+        }
+        
+        //点击事件
+        let tap = UITapGestureRecognizer.init(target: self, action: #selector(selectDate))
+        
+        //绑定tap
+        brithdaySelectGroup.addGestureRecognizer(tap)
         
     }
+    
+    func selectDate() -> () {
+        selectDateTime.createView()
+        selectDateTime.show2()
+    }
+    
+//    //返回该view所在VC
+//    func firstViewController() -> UIViewController? {
+//        for view in sequence(first: self.superview, next: { $0?.superview }) {
+//            if let responder = view?.next {
+//                if responder.isKind(of: UIViewController.self){
+//                    return responder as? UIViewController
+//                }
+//            }
+//        }
+//        return nil
+//    }
     
     func changeSex() -> () {
         if isSelectMan {
