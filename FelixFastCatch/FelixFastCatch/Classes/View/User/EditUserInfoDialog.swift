@@ -42,6 +42,8 @@ class EditUserInfoDialog: BaseDialog {
     
     fileprivate var selectDateTime:SelectDateView!
     
+    var callback:((_ nick:String, _ sex:String, _ brithday:String)->())? = nil
+    
     override func createView() {
         createBackgroundImage(imageName: "bg_change_userinfo")
         
@@ -65,6 +67,8 @@ class EditUserInfoDialog: BaseDialog {
         saveBtn.setBackgroundImage(saveImage, for: .normal)
         saveBtn.frame = CGRect(x: self.bounds.width/2 + 20, y: self.bounds.height/2 + backgroundImage.bounds.height/2 - (saveImage?.size.height)! / 2, width: (saveImage?.size.width)!, height: (saveImage?.size.height)!)
         addSubview(saveBtn)
+        
+        saveBtn.addTarget(self, action: #selector(saveUserInfo), for: .touchUpInside)
         
         // 用户昵称
         nickNameLabel = MainCustomerLabel()
@@ -192,7 +196,12 @@ class EditUserInfoDialog: BaseDialog {
         brithdaySelectGroup.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         addSubview(brithdaySelectGroup)
         brithdaySelectGroup.tintColor = UIColor.clear
-        brithdaySelectGroup.text = "1994年12月26日"
+        if Constants.User.USER_BRITHDAY == "" {
+            brithdaySelectGroup.text = "请选择生日"
+        }else{
+            brithdaySelectGroup.text = Constants.User.USER_BRITHDAY
+        }
+        
         brithdaySelectGroup.font = UIFont.systemFont(ofSize: CGFloat(12))
         brithdaySelectGroup.isUserInteractionEnabled = true
         
@@ -212,8 +221,12 @@ class EditUserInfoDialog: BaseDialog {
     }
     
     func selectDate() -> () {
+        endEditing(true)
         selectDateTime.createView()
-        selectDateTime.show2()
+        selectDateTime.show2 { [weak self] in
+            // 选择了时间
+            self?.brithdaySelectGroup.text = self?.selectDateTime.selectTime
+        }
     }
     
 //    //返回该view所在VC
@@ -244,6 +257,11 @@ class EditUserInfoDialog: BaseDialog {
         }
     }
 
+    func show2(action:@escaping (_ nick:String, _ sex:String, _ brithday:String)->()) {
+        super.show()
+        callback = action
+    }
+    
     /// 保存用户信息
     func saveUserInfo() -> () {
         if !checkUserInfo() {
@@ -261,7 +279,13 @@ class EditUserInfoDialog: BaseDialog {
         params["birthday"] = brithdaySelectGroup.text
         
         Alamofire.request(Constants.Network.User.UPDATE_USER_INFO, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
-            print("result:\(response.result.value)")
+            print("result:\(String(describing: response.result.value))")
+            if NetWorkUtils.checkReponse(response: response) {
+                if self.callback != nil {
+                    self.callback!(params["nick"]!, params["gender"]!, params["birthday"]!)
+                }
+                self.hide()
+            }
         }
         
     }
@@ -270,6 +294,10 @@ class EditUserInfoDialog: BaseDialog {
     func checkUserInfo() -> Bool {
         if (nickNameEdit.text?.characters.count)! <= 0 {
             ToastUtils.showErrorToast(msg: "请输入昵称")
+            return false
+        }
+        if (brithdaySelectGroup.text == "请选择生日") {
+            ToastUtils.showErrorToast(msg: "请选择生日")
             return false
         }
         return true

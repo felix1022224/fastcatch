@@ -175,7 +175,29 @@ class UserInfoDialog: BaseDialog {
     
     func editUserInfo() -> () {
         editUserInfoDialog.createView()
-        editUserInfoDialog.show()
+        editUserInfoDialog.show2(action: { [weak self] (nick, sex, birthday) in
+            self?.userNickName.text = nick
+            if sex == "0" {
+                self?.sexLabel.text = "女"
+            }else {
+                self?.sexLabel.text = "男"
+            }
+            let df = DateFormatter()
+            df.dateFormat = "yyy-MM-dd"
+            let con = ConstellationUtils.calculateWithDate(date: df.date(from: birthday)!)
+            self?.constellationLabel.text = con
+            
+            self?.updateLocalUserInfo(nick: nick, sex: sex, birthday: birthday)
+        })
+    }
+    
+    func updateLocalUserInfo(nick:String, sex:String, birthday:String) -> () {
+        Constants.User.USER_NICK_NAME = nick
+        Constants.User.USER_SEX = sex
+        Constants.User.USER_BRITHDAY = birthday
+        UserDefaults.standard.set(nick, forKey: Constants.User.USER_NICK_NAME_KEY)
+        UserDefaults.standard.set(sex, forKey: Constants.User.USER_SEX_KEY)
+        UserDefaults.standard.set(birthday, forKey: Constants.User.USER_BRITHDAY_KEY)
     }
     
 }

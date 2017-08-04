@@ -19,7 +19,13 @@ class SelectDateView: BaseDialog {
     
     private var navigationView:UIView!
     
+    var selectTime:String!
+    
+    var hideAction:(()->())? = nil
+    
     override func createView() {
+        
+        selectTime = ""
         
         rootView = UIView(frame: CGRect(x: 0, y: self.bounds.height, width: self.bounds.width, height: 200))
         rootView.backgroundColor = UIColor.white
@@ -66,8 +72,14 @@ class SelectDateView: BaseDialog {
     }
     
     func okTime() -> () {
-        let con = ConstellationUtils.calculateWithDate(date: datePicker.date)
-        ToastUtils.showSuccessToast(msg: "你的星座是:\(con)")
+//        let con = ConstellationUtils.calculateWithDate(date: datePicker.date)
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "yyyy-MM-dd"
+        selectTime = dateformatter.string(from: datePicker.date)
+        if hideAction != nil {
+            hideAction!()
+        }
+        hide()
     }
     
     override func hide() {
@@ -85,14 +97,15 @@ class SelectDateView: BaseDialog {
     }
     
     // 显示
-    func show2() -> () {
+    func show2(action:@escaping ()->()) -> () {
 //        rootView.transform = CGAffineTransform(translationX: 0, y: self.bounds.height - 200)
         UIView.animate(withDuration: 0.4) { [weak self] in
             self?.shadow.alpha = 0.5
             self?.isHidden = false
             self?.rootView.transform = CGAffineTransform(translationX: 0, y: -200)
             self?.navigationView.transform = CGAffineTransform(translationX: 0, y: -240)
-    }
+        }
+        hideAction = action
         
 //        let duration: TimeInterval = 3 // 动画持续时间
 //        let delay: TimeInterval = 0 // 动画延迟时间
