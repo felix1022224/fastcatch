@@ -43,11 +43,12 @@ class PayItemTableViewCell: UITableViewCell {
         }
         
         // 钻石描述
-        gemInfo.font = UIFont.systemFont(ofSize: CGFloat(10))
-        gemInfo.outLineWidth = 2
+        gemInfo.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        gemInfo.outLineWidth = 1
         gemInfo.outTextColor = UIColor.white
         gemInfo.outLienTextColor = UIColor.black
         gemInfo.numberOfLines = 1
+        
         addSubview(gemInfo)
         
         // 购买按钮

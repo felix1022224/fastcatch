@@ -86,9 +86,9 @@ class BaseDialog: UIView {
     func createCloseBtn() -> () {
         // 关闭按钮
         closeBtn = UIButton(type: .custom)
-        let closeImage = UIImage(named: "close_icon")
+        let closeImage = UIImage(named: "icon_close")
         closeBtn.setBackgroundImage(closeImage, for: .normal)
-        closeBtn.frame = CGRect(x: self.bounds.width/2 + backgroundImage.bounds.width/2 - (closeImage?.size.width)!/2 - 10, y: self.bounds.height/2 - backgroundImage.bounds.height/2 + (closeImage?.size.height)!/2 + 5, width: (closeImage?.size.width)!, height: (closeImage?.size.height)!)
+        closeBtn.frame = CGRect(x: self.bounds.width/2 + backgroundImage.bounds.width/2 - 18, y: self.bounds.height/2 - backgroundImage.bounds.height/2 + 18, width:27, height: 27)
         addSubview(closeBtn)
         closeBtn.addTarget(self, action: #selector(hide), for: .touchUpInside)
     }

@@ -49,8 +49,9 @@ class UserInfoDialog: BaseDialog {
         backgroundImage = UIImageView()
         backgroundImage.image = bgImage
         backgroundImage.sizeToFit()
+//        backgroundImage.frame = CGRect(x: self.bounds.width/2 - (bgImage?.size.width)! * 1.3 / 2, y: self.bounds.height/2 - (bgImage?.size.height)! * 1.3 / 2, width: (bgImage?.size.width)! * 1.3, height: (bgImage?.size.height)! * 1.3)
+        backgroundImage.frame.size = CGSize(width: 290, height: 218)
         backgroundImage.center = self.center
-        backgroundImage.frame = CGRect(x: self.bounds.width/2 - (bgImage?.size.width)! * 1.3 / 2, y: self.bounds.height/2 - (bgImage?.size.height)! * 1.3 / 2, width: (bgImage?.size.width)! * 1.3, height: (bgImage?.size.height)! * 1.3)
         addSubview(backgroundImage)
         
         createCloseBtn()
@@ -59,25 +60,31 @@ class UserInfoDialog: BaseDialog {
         let userFaceBorderImage = UIImage(named: "user_face_border")
         userFaceImageBackground = UIImageView()
         userFaceImageBackground.image = userFaceBorderImage
-        userFaceImageBackground.frame = CGRect(x: self.bounds.width/2 - backgroundImage.bounds.width/2 + 54, y: self.bounds.height/2 - backgroundImage.bounds.height/2 + 70, width: (userFaceBorderImage?.size.width)!, height: (userFaceBorderImage?.size.height)!)
+        userFaceImageBackground.frame = CGRect(x: self.bounds.width/2 - backgroundImage.bounds.width/2 + 54, y: self.bounds.height/2 - backgroundImage.bounds.height/2 + 80, width: 61, height: 61)
         addSubview(userFaceImageBackground)
         
         //头像
         userFaceImageView = UIImageView()
-        userFaceImageView.layer.cornerRadius = (userFaceBorderImage?.size.width)! * 0.8 / 2
+        userFaceImageView.layer.cornerRadius = 61 * 0.8 / 2
         userFaceImageView.layer.masksToBounds = true
         userFaceImageView.backgroundColor = UIColor.white
         
-        if Constants.User.USER_FACE_IMAGE != "" {
-            userFaceImageView.kf.setImage(with: URL(string: Constants.User.USER_FACE_IMAGE))
-        }
+        userFaceImageView.kf.setImage(with: URL(string: Constants.User.USER_FACE_IMAGE), placeholder: UIImage(named: "default_user_face"), options: nil, progressBlock: nil, completionHandler: nil)
         
-        userFaceImageView.frame = CGRect(x: self.bounds.width/2 - backgroundImage.bounds.width/2 + 54 + userFaceImageBackground.bounds.width/2 - (userFaceBorderImage?.size.width)! * 0.8 / 2, y: self.bounds.height/2 - backgroundImage.bounds.height/2 + 70 + userFaceImageBackground.bounds.height/2 - (userFaceBorderImage?.size.height)! * 0.8 / 2, width: (userFaceBorderImage?.size.width)! * 0.8, height: (userFaceBorderImage?.size.height)! * 0.8)
+//        userFaceImageView.frame = CGRect(x: self.bounds.width/2 - backgroundImage.bounds.width/2 + 54 + userFaceImageBackground.bounds.width/2 - (userFaceBorderImage?.size.width)! * 0.8 / 2, y: self.bounds.height/2 - backgroundImage.bounds.height/2 + 80 + userFaceImageBackground.bounds.height/2 - (userFaceBorderImage?.size.height)! * 0.8 / 2, width: (userFaceBorderImage?.size.width)! * 0.8, height: (userFaceBorderImage?.size.height)! * 0.8)
+        
+        userFaceImageView.frame.size = CGSize(width: 58, height: 58)
         
         addSubview(userFaceImageView)
         
+        userFaceImageView.snp.makeConstraints { (make) in
+            make.width.equalTo(50)
+            make.height.equalTo(50)
+            make.center.equalTo(userFaceImageBackground)
+        }
+        
         // 用户id
-        userIdLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
+        userIdLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         let index = Constants.User.USER_ID.index(Constants.User.USER_ID.endIndex, offsetBy: -5)
         userIdLabel.text = "ID:\(Constants.User.USER_ID.substring(from: index))"
         userIdLabel.outLineWidth = 2
@@ -92,7 +99,7 @@ class UserInfoDialog: BaseDialog {
         }
         
         // 用户昵称
-        userNickName.font = UIFont.systemFont(ofSize: CGFloat(14))
+        userNickName.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         userNickName.text = "昵称: \(Constants.User.USER_NICK_NAME)"
         userNickName.outLineWidth = 3
         userNickName.outTextColor = UIColor.white
@@ -106,7 +113,7 @@ class UserInfoDialog: BaseDialog {
         }
         
         // 用户星座
-        constellationLabel.font = UIFont.systemFont(ofSize: CGFloat(14))
+        constellationLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         constellationLabel.text = "星座: 水瓶座"
         constellationLabel.outLineWidth = 3
         constellationLabel.outTextColor = UIColor.white
@@ -120,11 +127,11 @@ class UserInfoDialog: BaseDialog {
         }
         
         // 用户性别
-        sexLabel.font = UIFont.systemFont(ofSize: CGFloat(14))
+        sexLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         if Constants.User.USER_SEX == "0" {
-            sexLabel.text = "性别: 女"
-        }else {
             sexLabel.text = "性别: 男"
+        }else {
+            sexLabel.text = "性别: 女"
         }
         sexLabel.outLineWidth = 3
         sexLabel.outTextColor = UIColor.white
@@ -176,16 +183,16 @@ class UserInfoDialog: BaseDialog {
     func editUserInfo() -> () {
         editUserInfoDialog.createView()
         editUserInfoDialog.show2(action: { [weak self] (nick, sex, birthday) in
-            self?.userNickName.text = nick
+            self?.userNickName.text = "昵称:" + nick
             if sex == "0" {
-                self?.sexLabel.text = "女"
+                self?.sexLabel.text = "性别:女"
             }else {
-                self?.sexLabel.text = "男"
+                self?.sexLabel.text = "性别:男"
             }
             let df = DateFormatter()
             df.dateFormat = "yyy-MM-dd"
             let con = ConstellationUtils.calculateWithDate(date: df.date(from: birthday)!)
-            self?.constellationLabel.text = con
+            self?.constellationLabel.text = "星座:" + con
             
             self?.updateLocalUserInfo(nick: nick, sex: sex, birthday: birthday)
         })

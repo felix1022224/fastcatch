@@ -48,7 +48,7 @@ class EditAddressDialog: BaseDialog {
         userNameLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         userNameLabel.outTextColor = UIColor.white
         userNameLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        userNameLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
+        userNameLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         userNameLabel.text = "姓名:"
         userNameLabel.textAlignment = .right
         userNameLabel.sizeToFit()
@@ -63,7 +63,7 @@ class EditAddressDialog: BaseDialog {
         userNameTextField.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         userNameTextField.outTextColor = UIColor.white
         userNameTextField.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        userNameTextField.font = UIFont.systemFont(ofSize: CGFloat(12))
+        userNameTextField.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         userNameTextField.placeholder = "请输入姓名"
         userNameTextField.background = UIImage(named: "邮寄地址输入框")
         userNameTextField.textColor = UIColor.white
@@ -81,7 +81,7 @@ class EditAddressDialog: BaseDialog {
         phoneNumberLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         phoneNumberLabel.outTextColor = UIColor.white
         phoneNumberLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        phoneNumberLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
+        phoneNumberLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         phoneNumberLabel.text = "手机:"
         phoneNumberLabel.sizeToFit()
         addSubview(phoneNumberLabel)
@@ -97,7 +97,7 @@ class EditAddressDialog: BaseDialog {
         phoneNumberTextField.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         phoneNumberTextField.outTextColor = UIColor.white
         phoneNumberTextField.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        phoneNumberTextField.font = UIFont.systemFont(ofSize: CGFloat(12))
+        phoneNumberTextField.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         phoneNumberTextField.placeholder = "请输入手机"
         phoneNumberTextField.background = UIImage(named: "邮寄地址输入框")
         phoneNumberTextField.textColor = UIColor.white
@@ -116,7 +116,7 @@ class EditAddressDialog: BaseDialog {
         addressLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         addressLabel.outTextColor = UIColor.white
         addressLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        addressLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
+        addressLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         addressLabel.text = "地址:"
         addressLabel.sizeToFit()
         addSubview(addressLabel)
@@ -132,7 +132,7 @@ class EditAddressDialog: BaseDialog {
         addressTextFiled.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         addressTextFiled.outTextColor = UIColor.white
         addressTextFiled.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        addressTextFiled.font = UIFont.systemFont(ofSize: CGFloat(12))
+        addressTextFiled.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         addressTextFiled.placeholder = "请输入地址"
         addressTextFiled.background = UIImage(named: "邮寄地址输入框")
         addressTextFiled.textColor = UIColor.white
@@ -221,7 +221,7 @@ extension EditAddressDialog{
         params["name"] = userNameTextField.text
         params["phone"] = phoneNumberTextField.text
         
-        Alamofire.request(Constants.Network.Gift.CREATE_POSTAGE, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.Gift.SAVE_USER_ADDRESS, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 ToastUtils.showSuccessToast(msg: "保存成功!")
                 
@@ -229,8 +229,14 @@ extension EditAddressDialog{
                     self.myGiftDialog.reBackShowMailedConfirm(userInfo: self.userNameTextField.text!, phoneNumber: self.phoneNumberTextField.text!, address: self.addressTextFiled.text!)
                 }
                 
+                /// 更新内存中的数据
+                Constants.User.addrName = params["name"]!
+                Constants.User.addrPhone = params["phone"]!
+                Constants.User.addr = params["addr"]!
+                
                 self.hide()
             }else{
+                print("reult:\(String(describing: response.result.value))")
                 ToastUtils.showErrorToast(msg: "保存失败!")
             }
         }
@@ -255,16 +261,16 @@ extension EditAddressDialog{
     
     /// 首次进入界面，填充信息
     func initAddressInfo() -> () {
-        if userName != "" {
-            userNameTextField.text = userName
+        if Constants.User.addrName != "" {
+            userNameTextField.text = Constants.User.addrName
         }
         
-        if phoneNumber != "" {
-            phoneNumberTextField.text = phoneNumber
+        if Constants.User.addrPhone != "" {
+            phoneNumberTextField.text = Constants.User.addrPhone
         }
         
-        if address != "" {
-            addressTextFiled.text = address
+        if Constants.User.addr != "" {
+            addressTextFiled.text = Constants.User.addr
         }
     }
     

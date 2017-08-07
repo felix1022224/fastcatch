@@ -67,6 +67,12 @@ class MainViewController: UIViewController {
     // 设置按钮的集合view
     fileprivate var settingsGroupView:UIView!
     
+    /// 签到界面
+    fileprivate var checkInDialog:CheckInDialog!
+    
+    /// 邀请界面
+    fileprivate var inviteDialog:InviteDialog!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -77,6 +83,14 @@ class MainViewController: UIViewController {
         view.addSubview(backgroundImage)
         
         setupUI()
+        
+//        let familyNames = UIFont.familyNames;
+//        for item in familyNames{
+//            let fontNames = UIFont.fontNames(forFamilyName: item)
+//            for item2 in fontNames{
+//                print( "\tFont: \(item2) \n");
+//            }
+//        }
     }
 
     /// 在加载显示完首页的viewcontroller之后，需要调用该方法来成功获取系统的window
@@ -86,6 +100,8 @@ class MainViewController: UIViewController {
         if Constants.User.USER_ID == "" {
             fastLoginDialog.createView()
             fastLoginDialog.show()
+        }else {
+            getsUserInfo()
         }
         
         /// 购买钻石的dialog
@@ -97,18 +113,27 @@ class MainViewController: UIViewController {
         /// 我的礼物
         myGift = MyGiftDialog(frame: UIScreen.main.bounds)
         
+        /// 签到
+        checkInDialog = CheckInDialog(frame: UIScreen.main.bounds)
+        
+        /// 邀请
+        inviteDialog = InviteDialog(frame: UIScreen.main.bounds)
     }
     
     func test() -> () {
-        SVProgressHUD.setDefaultStyle(.dark)
-        SVProgressHUD.show(withStatus: "正在下单……")
+//        SVProgressHUD.setDefaultStyle(.dark)
+//        SVProgressHUD.show(withStatus: "正在下单……")
         
-        var params = NetWorkUtils.createBaseParams()
-        params["rp"] = "1"
-        
-        Alamofire.request(Constants.Network.ALIPAY_URL, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
-            print("result:\(response.result.value)")
-        }
+//        var params = NetWorkUtils.createBaseParams()
+//        params["rp"] = "1"
+//   
+//        Alamofire.request(Constants.Network.ALIPAY_URL, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+//            print("result:\(response.result.value)")
+//            let json = JSON(response.result.value)
+//            AlipaySDK.defaultService().payOrder(json["data"]["orderBody"].string, fromScheme: "alipay2017071707787463", callback: { (result) in
+//                print("result:\(result)")
+//            })
+//        }
 //        Alamofire.request(Constants.Network.WECHAT_PAY_URL + "?rp=1").responseJSON { (response) in
 //            
 //            if response.error != nil{
@@ -138,6 +163,7 @@ class MainViewController: UIViewController {
         createDataList()
         
         createMainBtns()
+    
     }
     
     override func removeFromParentViewController() {
@@ -156,7 +182,7 @@ extension MainViewController:UIScrollViewDelegate{
     func createBannerView() -> () {
         //设置banner图view的属性
         bannerView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: getBannerHeight())
-        bannerView.contentSize = CGSize(width: CGFloat(4) * self.view.bounds.width, height: getBannerHeight())
+        bannerView.contentSize = CGSize(width: self.view.bounds.width, height: getBannerHeight())
         bannerView.backgroundColor = UIColor.gray
         bannerView.bounces = false
         bannerView.isPagingEnabled = true
@@ -184,7 +210,7 @@ extension MainViewController:UIScrollViewDelegate{
     ///
     /// - Returns: banner图的高度是整体view的高的20%
     func getBannerHeight() -> CGFloat {
-        return UIScreen.main.bounds.height * 0.22
+        return UIScreen.main.bounds.height * 0.25
     }
     
     //创建轮播图定时器
@@ -210,6 +236,9 @@ extension MainViewController:UIScrollViewDelegate{
     }
     
     func setupImages() -> () {
+        if mainBannersData == nil {
+            return
+        }
         //循环增加图片到scrollview当中
         for i:Int in 0..<mainBannersData.count{
             let iv = UIImageView()
@@ -218,6 +247,8 @@ extension MainViewController:UIScrollViewDelegate{
             iv.contentMode = .scaleAspectFill
             iv.kf.setImage(with: URL(string: mainBannersData[i]["bannerBigImg"].string!))
         }
+        
+        bannerView.contentSize = CGSize(width: self.view.bounds.width * CGFloat(mainBannersData.count), height: getBannerHeight())
         
         // 设置指示器的属性
         pageControl.numberOfPages = mainBannersData.count
@@ -364,7 +395,8 @@ extension MainViewController{
                     self.mainListData.removeAll()
                     self.isRefresh = false
                 }
-                self.mainListData = self.mainListData + jsonObject["data"]["content"].array!
+                self.mainListData = self.mainListData + jsonObject["data"]["content"].arrayValue
+
                 
                 self.dataList.delegate = self
                 self.dataList.dataSource = self
@@ -436,18 +468,27 @@ extension MainViewController{
         
         setupSettings(testImage: settingImage)
         
-        let settingsBtn = MainFloatMenu(frame: CGRect(x: 10, y: UIScreen.main.bounds.height - 80, width: settingImage.bounds.width, height: 80), image: settingImage.image, actionTitle: "设置")
+        let settingsBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 - settingImage.bounds.width, y: UIScreen.main.bounds.height - 80, width: settingImage.bounds.width, height: settingImage.bounds.height), image: settingImage.image, actionTitle: "设置")
         view.addSubview(settingsBtn)  
         
         settingsBtn.addBtnClickAction(target: self, action: #selector(settingsClick))
         
+        /// 邀请按钮
+        let inviteBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 2 - settingsBtn.bounds.width * 2, y: UIScreen.main.bounds.height - 80, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Store-btn"), actionTitle: "邀请")
+        view.addSubview(inviteBtn)
+        
+        /// 签到
+        let checkInBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 3 - settingsBtn.bounds.width * 3, y: UIScreen.main.bounds.height - 80, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Achievements-btn"), actionTitle: "签到")
+        view.addSubview(checkInBtn)
+        checkInBtn.addBtnClickAction(target: self, action: #selector(showCheckInDialog))
+        
         /// 礼物按钮
-        let giftBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 - settingsBtn.bounds.width, y: UIScreen.main.bounds.height - 80, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Leaderboard-btn"), actionTitle: "礼物")
+        let giftBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 4 - settingsBtn.bounds.width * 4, y: UIScreen.main.bounds.height - 80, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Leaderboard-btn"), actionTitle: "礼物")
         view.addSubview(giftBtn)
         giftBtn.addBtnClickAction(target: self, action: #selector(showMyGift))
         
         /// 购买钻石按钮
-        let payGemBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 2 - settingsBtn.bounds.width * 2, y: UIScreen.main.bounds.height - 80, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Plus-btn"), actionTitle: "购钻")
+        let payGemBtn = MainFloatMenu(frame: CGRect(x: 10, y: UIScreen.main.bounds.height - 80, width: settingImage.bounds.width, height: 80), image: UIImage(named: "Plus-btn"), actionTitle: "100")
         view.addSubview(payGemBtn)
         
         payGemBtn.addBtnClickAction(target: self, action: #selector(showPayDialog))
@@ -467,6 +508,26 @@ extension MainViewController{
     func showFastLogin() -> () {
         fastLoginDialog.createView()
         fastLoginDialog.show()
+    }
+    
+    
+    /// 显示签到的dialog
+    func showCheckInDialog() -> () {
+        if Constants.User.USER_ID == "" {
+            showFastLogin()
+            return
+        }
+        checkInDialog.createView()
+        checkInDialog.show()
+    }
+    
+    func showInviteDialog() -> () {
+        if Constants.User.USER_ID == "" {
+            showFastLogin()
+            return
+        }
+        inviteDialog.createView()
+        inviteDialog.show()
     }
     
     /// 显示购买的dialog
@@ -498,7 +559,7 @@ extension MainViewController{
         let settingsY = UIScreen.main.bounds.height - (80 - testImage.bounds.height) - 150 - 10
         let settingsWidth = testImage.bounds.width - 10
         
-        settingsGroupView = UIView(frame: CGRect(x: 15, y: settingsY, width: settingsWidth, height: 150))
+        settingsGroupView = UIView(frame: CGRect(x: self.view.bounds.width - testImage.bounds.width - 5, y: settingsY, width: settingsWidth, height: 150))
         settingsGroupView.layer.cornerRadius = 25
         settingsGroupView.layer.masksToBounds = true
         settingsGroupView.backgroundColor = UIColor(red: 99/255.0, green: 168/255.0, blue: 205/255.0, alpha: 1)
@@ -531,7 +592,14 @@ extension MainViewController{
     
 }
 
-
+extension MainViewController{
+    
+    /// 来到首页的时候，读取用户信息
+    func getsUserInfo() -> () {
+        UserTools.getUserInfo()
+    }
+    
+}
 
 
 

@@ -35,6 +35,10 @@ class PhoneNumberDialog: BaseDialog {
         self.fastLoginDialog = fastLogin
         
         createBackgroundImage(imageName: "register_login_background")
+        
+        backgroundImage.frame.size = CGSize(width: 290, height: 225)
+        backgroundImage.center = self.center
+        
         createCloseBtn()
         
         // 手机号的label
@@ -48,8 +52,8 @@ class PhoneNumberDialog: BaseDialog {
         addSubview(phoneNumberLabel)
         
         phoneNumberLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(backgroundImage).offset(75)
-            make.left.equalTo(backgroundImage).offset(30)
+            make.top.equalTo(backgroundImage).offset(85)
+            make.left.equalTo(backgroundImage).offset(35)
         }
         
         // 手机号输入框
@@ -72,7 +76,7 @@ class PhoneNumberDialog: BaseDialog {
             make.centerY.equalTo(phoneNumberLabel)
             make.height.equalTo(phoneNumberLabel).offset(20)
             make.left.equalTo(phoneNumberLabel).offset(phoneNumberLabel.bounds.width + 5)
-            make.right.equalTo(backgroundImage).offset(-20)
+            make.right.equalTo(backgroundImage).offset(-30)
         }
         
         // 验证码文字
@@ -128,12 +132,14 @@ class PhoneNumberDialog: BaseDialog {
         }
         
         // login 按钮
-        loginBtn.setImage(UIImage(named: "now_login"), for: .normal)
+        loginBtn.setBackgroundImage(UIImage(named: "now_login"), for: .normal)
         loginBtn.sizeToFit()
         addSubview(loginBtn)
         
         loginBtn.snp.makeConstraints { (make) in
-            make.bottom.equalTo(backgroundImage).offset(loginBtn.bounds.height/2)
+            make.width.equalTo(120)
+            make.height.equalTo(35)
+            make.bottom.equalTo(backgroundImage).offset(35/2)
             make.centerX.equalTo(backgroundImage)
         }
         

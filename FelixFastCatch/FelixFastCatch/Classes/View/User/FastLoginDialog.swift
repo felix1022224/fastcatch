@@ -26,42 +26,55 @@ class FastLoginDialog: BaseDialog {
     /// qq登录按钮
     fileprivate var qqLoginBtn:UIButton!
     
+    private let btnSize = 73
+    
     override func createView() {
         createBackgroundImage(imageName: "login_background")
+        
+        backgroundImage.frame.size = CGSize(width: 290, height: 304)
+        
+        backgroundImage.center = self.center
         
         phoneNumberLogin = PhoneNumberDialog(frame: self.bounds)
         
         // 手机号登录
         phoneNumberLoginBtn = UIButton(type: .custom)
-        phoneNumberLoginBtn.setImage(UIImage(named: "icon_phone"), for: .normal)
-        phoneNumberLoginBtn.sizeToFit()
+        phoneNumberLoginBtn.setBackgroundImage(UIImage(named: "icon_phone"), for: .normal)
         addSubview(phoneNumberLoginBtn)
         
         phoneNumberLoginBtn.snp.makeConstraints { (make) in
+            make.width.equalTo(btnSize)
+            make.height.equalTo(btnSize)
+        }
+        
+        phoneNumberLoginBtn.snp.makeConstraints { (make) in
             make.centerX.equalTo(backgroundImage)
-            make.centerY.equalTo(backgroundImage).offset(-phoneNumberLoginBtn.bounds.height/2)
+            make.centerY.equalTo(backgroundImage).offset(-btnSize/2)
         }
         
         // 微信
         wechatLoginBtn = UIButton(type: .custom)
-        wechatLoginBtn.setImage(UIImage(named: "icon_weixin"), for: .normal)
-        wechatLoginBtn.sizeToFit()
+        wechatLoginBtn.setBackgroundImage(UIImage(named: "icon_weixin"), for: .normal)
         addSubview(wechatLoginBtn)
         
         wechatLoginBtn.snp.makeConstraints { (make) in
-            make.centerX.equalTo(backgroundImage).offset(-wechatLoginBtn.bounds.width)
-            make.centerY.equalTo(backgroundImage).offset(wechatLoginBtn.bounds.height/1.5)
+            make.width.equalTo(btnSize)
+            make.height.equalTo(btnSize)
+            make.centerX.equalTo(backgroundImage).offset(-btnSize)
+            make.centerY.equalTo(backgroundImage).offset(CGFloat(btnSize)/1.5)
         }
         
         
         // qq
         qqLoginBtn = UIButton(type: .custom)
-        qqLoginBtn.setImage(UIImage(named: "icon_qq"), for: .normal)
-        qqLoginBtn.sizeToFit()
+        qqLoginBtn.setBackgroundImage(UIImage(named: "icon_qq"), for: .normal)
+//        qqLoginBtn.sizeToFit()
         addSubview(qqLoginBtn)
         
         qqLoginBtn.snp.makeConstraints { (make) in
-            make.centerX.equalTo(backgroundImage).offset(qqLoginBtn.bounds.width)
+            make.width.equalTo(btnSize)
+            make.height.equalTo(btnSize)
+            make.centerX.equalTo(backgroundImage).offset(btnSize)
             make.centerY.equalTo(wechatLoginBtn)
         }
 
@@ -71,13 +84,15 @@ class FastLoginDialog: BaseDialog {
         
         /// 关闭按钮
         let close_btn = UIButton(type: .custom)
-        close_btn.setImage(UIImage(named: "fast_login_close_btn"), for: .normal)
+        close_btn.setBackgroundImage(UIImage(named: "fast_login_close_btn"), for: .normal)
         close_btn.sizeToFit()
         addSubview(close_btn)
         
         close_btn.snp.makeConstraints { (make) in
+            make.width.equalTo(50)
+            make.height.equalTo(50)
             make.centerX.equalTo(self)
-            make.bottom.equalTo(backgroundImage).offset(close_btn.bounds.height/2)
+            make.bottom.equalTo(backgroundImage).offset(50/2)
         }
         
         close_btn.addTarget(self, action: #selector(hide), for: .touchUpInside)
@@ -135,11 +150,18 @@ class FastLoginDialog: BaseDialog {
         var params = NetWorkUtils.createBaseParams()
         params["openid"] = qqInfo["uid"] as? String
         params["nickname"] = qqInfo["nickName"] as? String
-        params["gender"] = qqInfo["sex"] as? String
+        if qqInfo["sex"] as? String == "男" {
+            params["gender"] = "0"
+        }else {
+            params["gender"] = "1"
+        }
         params["figureurl_qq_1"] = qqInfo["advatarStr"] as? String
+        
+        print("params:\(params)")
         
         Alamofire.request(Constants.Network.User.QQ_LOGIN, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             let resultJson = JSON(data: response.data!)
+            print("result:\(String(describing: response.result.value))")
             if NetWorkUtils.checkReponse(response: response) {
                 print("response:\(String(describing: response.response?.allHeaderFields))")
                 LocalDataUtils.updateLocalUserData(resultData: resultJson, dataResponse:response)

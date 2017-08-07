@@ -43,8 +43,8 @@ class MyGiftDialog: BaseDialog {
     // 邮件确认
     fileprivate var mailedConfirmDialog:FCMailedConfirmDialog!
     
-    /// 地址数据
-    fileprivate var addressData = ""
+//    /// 地址数据
+//    fileprivate var addressData = ""
     
     /// 编辑地址
     fileprivate var editAddressDialog:EditAddressDialog!
@@ -52,15 +52,20 @@ class MyGiftDialog: BaseDialog {
     override func createView() {
         createBackgroundImage(imageName: "待邮寄背景")
         
+        backgroundImage.frame.size = CGSize(width: 288, height: 388)
+        backgroundImage.center = self.center
+        
+        createCloseBtn()
+        
         editAddressDialog = EditAddressDialog(frame: UIScreen.main.bounds)
         
-        // 关闭按钮
-        closeBtn = UIButton(type: .custom)
-        let closeImage = UIImage(named: "关闭我的奖品")
-        closeBtn.setBackgroundImage(closeImage, for: .normal)
-        closeBtn.frame = CGRect(x: self.bounds.width/2 + backgroundImage.bounds.width/2 - (closeImage?.size.width)!/2 - 5, y: self.bounds.height/2 - backgroundImage.bounds.height/2 + (closeImage?.size.height)!/2 + 5, width: (closeImage?.size.width)!, height: (closeImage?.size.height)!)
-        addSubview(closeBtn)
-        closeBtn.addTarget(self, action: #selector(hide), for: .touchUpInside)
+//        // 关闭按钮
+//        closeBtn = UIButton(type: .custom)
+//        let closeImage = UIImage(named: "关闭我的奖品")
+//        closeBtn.setBackgroundImage(closeImage, for: .normal)
+//        closeBtn.frame = CGRect(x: self.bounds.width/2 + backgroundImage.bounds.width/2 - (closeImage?.size.width)!/2 - 5, y: self.bounds.height/2 - backgroundImage.bounds.height/2 + (closeImage?.size.height)!/2 + 5, width: (closeImage?.size.width)!, height: (closeImage?.size.height)!)
+//        addSubview(closeBtn)
+//        closeBtn.addTarget(self, action: #selector(hide), for: .touchUpInside)
         
         // 切换tab背景
         tabBackground = UIImageView(image: UIImage(named: "点击背景"))
@@ -123,22 +128,22 @@ class MyGiftDialog: BaseDialog {
             ToastUtils.showErrorToast(msg: "请选择要邮寄的产品")
             return
         }
-        if addressData == "" {
-            editAddressDialog.createView(dialog:self)
-            editAddressDialog.show()
-            return
-        }
+//        if addressData == "" {
+//            editAddressDialog.createView(dialog:self)
+//            editAddressDialog.show()
+//            return
+//        }
         /// 组装数据
         var sendData = [JSON]()
         for key in Array(tobeMailedDelegate.selectList.keys) {
             sendData.append(tobeMailedDelegate.dataSource[key])
         }
         
-        let json = JSON(addressData)
+//        let json = JSON(addressData)
         
-        mailedConfirmDialog.userInfoData = json["name"].stringValue
-        mailedConfirmDialog.phoneNumberData = json["phone"].stringValue
-        mailedConfirmDialog.addressData = json["addr"].stringValue
+//        mailedConfirmDialog.userInfoData = json["name"].stringValue
+//        mailedConfirmDialog.phoneNumberData = json["phone"].stringValue
+//        mailedConfirmDialog.addressData = json["addr"].stringValue
         
         mailedConfirmDialog.sendData.removeAll()
         mailedConfirmDialog.sendData = sendData
@@ -247,6 +252,8 @@ extension MyGiftDialog{
         hasbeenMailedTabView.isHidden = true
         
         getTobeMailedGiftList()
+        
+        getMailedGiftList()
     }
 }
 
@@ -261,6 +268,7 @@ extension MyGiftDialog{
         params["page"] = "0"
         
         Alamofire.request(Constants.Network.Gift.GET_TOBE_MAILED_GIFT_LIST, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            print("result:\(response.result.value)")
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(response.result.value!)
                 self.tobeMailedDelegate.dataSource = json["data"]["content"].array!
@@ -272,6 +280,26 @@ extension MyGiftDialog{
     func setupTobeMailedGiftListData() -> () {
         
     }
+}
+
+/// 获取已邮寄的列表
+extension MyGiftDialog{
+    
+    func getMailedGiftList() -> () {
+        var params = NetWorkUtils.createBaseParams()
+        params["size"] = "10"
+        params["page"] = "0"
+        
+        Alamofire.request(Constants.Network.Gift.GET_MAILED_GIFT_LIST, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            print("result:\(response.result.value)")
+            if NetWorkUtils.checkReponse(response: response) {
+                let json = JSON(response.result.value!)
+                self.hasBeenMailedDelegate.dataSource = json["data"]["content"].array!
+                self.hasbeenMailedTabView.reloadData()
+            }
+        }
+
+    }
     
 }
 
@@ -279,13 +307,13 @@ extension MyGiftDialog{
 extension MyGiftDialog{
     
     func getUserAddress() -> () {
-        ToastUtils.showLoadingToast(msg: "请稍后……")
-        Alamofire.request(Constants.Network.Gift.GET_USER_ADDRESS, method: .post, parameters: NetWorkUtils.createBaseParams(), encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
-            let json = JSON(response.result.value!)
-            self.addressData = json["data"].stringValue
-            print("result:\(response.result.value)")
-            ToastUtils.hide()
-        }
+//        ToastUtils.showLoadingToast(msg: "请稍后……")
+//        Alamofire.request(Constants.Network.Gift.GET_USER_ADDRESS, method: .post, parameters: NetWorkUtils.createBaseParams(), encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+//            let json = JSON(response.result.value!)
+//            self.addressData = json["data"].stringValue
+//            print("result:\(response.result.value)")
+//            ToastUtils.hide()
+//        }
     }
     
 }

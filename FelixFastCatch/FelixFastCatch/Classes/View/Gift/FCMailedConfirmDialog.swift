@@ -47,6 +47,10 @@ class FCMailedConfirmDialog: BaseDialog {
     
     override func createView() {
         createBackgroundImage(imageName: "信息确认背景")
+        
+        backgroundImage.frame.size = CGSize(width: 290, height: 388)
+        backgroundImage.center = self.center
+        
         createCloseBtn()
    
         editAddressDialog = EditAddressDialog(frame: UIScreen.main.bounds)
@@ -79,11 +83,11 @@ class FCMailedConfirmDialog: BaseDialog {
         
         // 购买人
         userInfo = MainCustomerLabel()
-        userInfo.outLineWidth = 2
+        userInfo.outLineWidth = 1
         userInfo.outTextColor = UIColor.white
         userInfo.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        userInfo.font = UIFont.systemFont(ofSize: CGFloat(12))
-        userInfo.text = "收货人 : " + userInfoData
+        userInfo.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        userInfo.text = "收货人 : " + Constants.User.addrName
         userInfo.numberOfLines = 1
         userInfo.sizeToFit()
         scrollRootView.addSubview(userInfo)
@@ -91,11 +95,11 @@ class FCMailedConfirmDialog: BaseDialog {
         
         // 手机号
         phoneNumber = MainCustomerLabel()
-        phoneNumber.outLineWidth = 2
+        phoneNumber.outLineWidth = 1
         phoneNumber.outTextColor = UIColor.white
         phoneNumber.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        phoneNumber.font = UIFont.systemFont(ofSize: CGFloat(12))
-        phoneNumber.text = "手机号 : " + phoneNumberData
+        phoneNumber.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        phoneNumber.text = "手机号 : " + Constants.User.addrPhone
         phoneNumber.numberOfLines = 1
         phoneNumber.sizeToFit()
         scrollRootView.addSubview(phoneNumber)
@@ -104,18 +108,18 @@ class FCMailedConfirmDialog: BaseDialog {
         
         // 地址
         address = MainCustomerLabel()
-        address.outLineWidth = 2
+        address.outLineWidth = 1
         address.outTextColor = UIColor.white
         address.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        address.font = UIFont.systemFont(ofSize: CGFloat(12))
-        address.text = "地址 : " + addressData
+        address.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        address.text = "地址 : " + Constants.User.addr
         address.numberOfLines = 2
         let paraph = NSMutableParagraphStyle()
         //行间距
         paraph.lineSpacing = 5
         paraph.alignment = .left
         //样式属性集合
-        let attributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 12),
+        let attributes = [
                           NSParagraphStyleAttributeName: paraph]
         address.attributedText = NSAttributedString(string: address.text!, attributes: attributes)
         address.sizeToFit()
@@ -139,10 +143,10 @@ class FCMailedConfirmDialog: BaseDialog {
         
         // 邮费标题
         let postageTitleLabel = MainCustomerLabel()
-        postageTitleLabel.outLineWidth = 2
+        postageTitleLabel.outLineWidth = 1
         postageTitleLabel.outTextColor = UIColor.white
         postageTitleLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        postageTitleLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
+        postageTitleLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         postageTitleLabel.text = "邮费"
         postageTitleLabel.sizeToFit()
         scrollRootView.addSubview(postageTitleLabel)
@@ -153,10 +157,10 @@ class FCMailedConfirmDialog: BaseDialog {
         }
         
         //邮费
-        postageLabel.outLineWidth = 2
+        postageLabel.outLineWidth = 1
         postageLabel.outTextColor = UIColor.white
         postageLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        postageLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
+        postageLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         postageLabel.text = "免邮"
         postageLabel.textAlignment = .right
         postageLabel.sizeToFit()
@@ -165,10 +169,10 @@ class FCMailedConfirmDialog: BaseDialog {
         postageLabel.frame = CGRect(x: 0, y: postageHelperY + 2, width: scrollRootView.bounds.width, height: postageLabel.bounds.height)
         
         // 免邮
-        freemailNumberLabel.outLineWidth = 2
+        freemailNumberLabel.outLineWidth = 1
         freemailNumberLabel.outTextColor = UIColor.white
         freemailNumberLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        freemailNumberLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
+        freemailNumberLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         freemailNumberLabel.text = "本月剩余免邮次数:1次"
         freemailNumberLabel.sizeToFit()
         scrollRootView.addSubview(freemailNumberLabel)
@@ -177,7 +181,7 @@ class FCMailedConfirmDialog: BaseDialog {
         
         let rootHeightSize = postageHelperY + postageHelper.bounds.height + 10 + freemailNumberLabel.bounds.height
         
-        scrollRootView.contentSize = CGSize(width: backgroundImage.bounds.width - 35, height: rootHeightSize)
+        scrollRootView.contentSize = CGSize(width: backgroundImage.bounds.width - 40, height: rootHeightSize)
         
         /// 编辑地址
         let changeAddressBtn = UIButton(type: .custom)
@@ -248,18 +252,22 @@ extension FCMailedConfirmDialog:UICollectionViewDelegate, UICollectionViewDataSo
         // 設置每個 cell 的尺寸
         layout.itemSize = CGSize(width: CGFloat((scrollRootView.bounds.width - 20)/4-12), height: CGFloat((hasBeenProductBackground?.size.height)!))
         
+        let headerHeight = userInfo.bounds.height + 10
+        layout.headerReferenceSize = CGSize(width: scrollRootView.bounds.width, height: headerHeight)
+        
         let groupY = userInfo.bounds.height + phoneNumber.bounds.height + address.bounds.height + 10 + 2
-        productsGroup = UICollectionView(frame: CGRect(x: 10, y: groupY, width: scrollRootView.bounds.width - 20, height: (hasBeenProductBackground?.size.height)! * CGFloat(contentImagesLine) + CGFloat(4 * contentImagesLine) + 4), collectionViewLayout: layout)
+        productsGroup = UICollectionView(frame: CGRect(x: 10, y: groupY, width: scrollRootView.bounds.width - 20, height: (hasBeenProductBackground?.size.height)! * CGFloat(contentImagesLine) + CGFloat(4 * contentImagesLine) + 4 + headerHeight), collectionViewLayout: layout)
         productsGroup.backgroundColor = UIColor.clear
         
         productsGroup.delegate = self
         productsGroup.dataSource = self
         
+        productsGroup.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "header")
         productsGroup.register(FCHasBennMailedProductCell.self, forCellWithReuseIdentifier: "cellId")
         
         productsGroup.isScrollEnabled = false
         
-        contentBacngroundImage.frame = CGRect(x: 0, y: groupY, width: scrollRootView.bounds.width, height: productsGroup.bounds.height)
+        contentBacngroundImage.frame = CGRect(x: 0, y: groupY, width: scrollRootView.bounds.width, height: productsGroup.bounds.height + 2)
         
         scrollRootView.addSubview(productsGroup)
     }
@@ -271,6 +279,25 @@ extension FCMailedConfirmDialog:UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as? FCHasBennMailedProductCell
         return cell!
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        var reusable = UICollectionReusableView()
+        
+        if kind == UICollectionElementKindSectionHeader {
+            reusable = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "header", for: indexPath)
+            let titleLabel = MainCustomerLabel()
+            titleLabel.text = "邮寄奖品共（\(sendData.count)）件"
+            titleLabel.outLineWidth = 1
+            titleLabel.outTextColor = UIColor.white
+            titleLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
+            titleLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+            titleLabel.sizeToFit()
+            titleLabel.frame = CGRect(x: 0, y: 10, width: titleLabel.bounds.width, height: titleLabel.bounds.height)
+            reusable.addSubview(titleLabel)
+        }
+        
+        return reusable
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -287,18 +314,24 @@ extension FCMailedConfirmDialog{
         ToastUtils.showLoadingToast(msg: "请稍后……")
         
         var ids = ""
-        for item in sendData {
-            ids.append("id=" + String(item["id"].stringValue) + "&")
+        for i in 0..<sendData.count {
+            let item = sendData[i]
+            ids.append("id=" + String(item["id"].stringValue))
+            if i != sendData.count - 1 {
+                ids.append("&")
+            }
         }
         
         var params = NetWorkUtils.createBaseParams()
         params["id"] = ids
         
-        Alamofire.request(Constants.Network.Gift.CREATE_POSTAGE, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        print("params:\(Constants.Network.Gift.CREATE_POSTAGE + "?" + ids)")
+        
+        Alamofire.request(Constants.Network.Gift.CREATE_POSTAGE + "?" + ids, method: .get, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
-//                print("result:\(response.result.value)")
+                ToastUtils.showSuccessToast(msg: "邮寄成功")
+                self.hide()
             }
-            ToastUtils.hide()
         }
     }
     

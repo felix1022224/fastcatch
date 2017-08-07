@@ -47,7 +47,7 @@ class FCMyGiftHasBeenMailedCell: UITableViewCell {
         
         // 时间标签
         timeLabel = MainCustomerLabel()
-        timeLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
+        timeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         timeLabel.outLineWidth = 2
         timeLabel.outTextColor = UIColor.white
         timeLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -115,7 +115,7 @@ class FCMyGiftHasBeenMailedCell: UITableViewCell {
         statusLabel.outTextColor = UIColor.white
         statusLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         statusLabel.text = "邮寄状态: 已寄出"
-        statusLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
+        statusLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         statusLabel.sizeToFit()
         addSubview(statusLabel)
         
@@ -131,7 +131,7 @@ class FCMyGiftHasBeenMailedCell: UITableViewCell {
         mailedTimeLabel.outTextColor = UIColor.white
         mailedTimeLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         mailedTimeLabel.text = "邮寄时间: 2017.8.9 10:00"
-        mailedTimeLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
+        mailedTimeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         mailedTimeLabel.sizeToFit()
         addSubview(mailedTimeLabel)
         
@@ -148,7 +148,7 @@ class FCMyGiftHasBeenMailedCell: UITableViewCell {
         mailedCodeLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         mailedCodeLabel.text = "邮寄单号: 1231231231231323131"
         mailedCodeLabel.numberOfLines = 1
-        mailedCodeLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
+        mailedCodeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         mailedCodeLabel.sizeToFit()
         addSubview(mailedCodeLabel)
         
@@ -157,7 +157,6 @@ class FCMyGiftHasBeenMailedCell: UITableViewCell {
             make.left.equalTo(statusLabel)
             make.right.equalTo(statusLabel)
         }
-        
         
         contentBacngroundImage.frame = CGRect(x: 0, y: timeLabel.bounds.height + 10 * 2, width: hasBeenContentBackgroundImage!.size.width, height: productsGroup.bounds.height + statusLabel.bounds.height + mailedTimeLabel.bounds.height +
             mailedCodeLabel.bounds.height + 10 * 3 + 10)

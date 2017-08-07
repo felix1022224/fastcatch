@@ -7,15 +7,19 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class FCMyGiftHasBeenMailedTabViewDelegate: NSObject {
 
+    /// 数据
+    var dataSource = [JSON]()
+    
 }
 
 extension FCMyGiftHasBeenMailedTabViewDelegate:UITableViewDelegate, UITableViewDataSource{
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return dataSource.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

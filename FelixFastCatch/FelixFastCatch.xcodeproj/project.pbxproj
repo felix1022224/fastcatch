@@ -29,6 +29,8 @@
 		4D1DA0F61F2F4C7000B1138D /* FCMailedConfirmDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1DA0F51F2F4C7000B1138D /* FCMailedConfirmDialog.swift */; };
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
 		4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D56251C1F2605A700515C98 /* Assets.xcassets */; };
+		4D5BF1BD1F3851570091180B /* CheckInDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5BF1BC1F3851570091180B /* CheckInDialog.swift */; };
+		4D5BF1C01F3853F60091180B /* InviteDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5BF1BF1F3853F60091180B /* InviteDialog.swift */; };
 		4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8921F287FB9002A9BFD /* PlayViewController.swift */; };
 		4D64B8951F2885AA002A9BFD /* MainFloatMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8941F2885AA002A9BFD /* MainFloatMenu.swift */; };
 		4D64B8981F29B549002A9BFD /* MainBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8971F29B549002A9BFD /* MainBanner.swift */; };
@@ -37,6 +39,9 @@
 		4D64B8A01F29D9DA002A9BFD /* BaseDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B89F1F29D9DA002A9BFD /* BaseDialog.swift */; };
 		4D64B8A21F2ADC50002A9BFD /* MainCustomerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8A11F2ADC50002A9BFD /* MainCustomerTextField.swift */; };
 		4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8A31F2B079E002A9BFD /* LocalDataUtils.swift */; };
+		4D82A4521F36C7AD007ADE5C /* UserTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D82A4511F36C7AD007ADE5C /* UserTools.swift */; };
+		4D82A4551F36D33B007ADE5C /* Skranji-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D82A4531F36D18F007ADE5C /* Skranji-Bold.ttf */; };
+		4D82A4591F3721BF007ADE5C /* Fangzhengyuan-cuti.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D82A4581F3721A2007ADE5C /* Fangzhengyuan-cuti.ttf */; };
 		4D9EBB811F26F163002674DE /* WeChatShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB801F26F163002674DE /* WeChatShared.swift */; };
 		4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB8A1F271C80002674DE /* MainViewController.swift */; };
 		4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */; };
@@ -96,6 +101,8 @@
 		4D5625151F2605A700515C98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D56251C1F2605A700515C98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D5625211F2605A700515C98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D5BF1BC1F3851570091180B /* CheckInDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInDialog.swift; sourceTree = "<group>"; };
+		4D5BF1BF1F3853F60091180B /* InviteDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteDialog.swift; sourceTree = "<group>"; };
 		4D64B8921F287FB9002A9BFD /* PlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
 		4D64B8941F2885AA002A9BFD /* MainFloatMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFloatMenu.swift; sourceTree = "<group>"; };
 		4D64B8971F29B549002A9BFD /* MainBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainBanner.swift; sourceTree = "<group>"; };
@@ -104,6 +111,9 @@
 		4D64B89F1F29D9DA002A9BFD /* BaseDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDialog.swift; sourceTree = "<group>"; };
 		4D64B8A11F2ADC50002A9BFD /* MainCustomerTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCustomerTextField.swift; sourceTree = "<group>"; };
 		4D64B8A31F2B079E002A9BFD /* LocalDataUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDataUtils.swift; sourceTree = "<group>"; };
+		4D82A4511F36C7AD007ADE5C /* UserTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTools.swift; sourceTree = "<group>"; };
+		4D82A4531F36D18F007ADE5C /* Skranji-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Skranji-Bold.ttf"; sourceTree = "<group>"; };
+		4D82A4581F3721A2007ADE5C /* Fangzhengyuan-cuti.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fangzhengyuan-cuti.ttf"; sourceTree = "<group>"; };
 		4D9EBB801F26F163002674DE /* WeChatShared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeChatShared.swift; sourceTree = "<group>"; };
 		4D9EBB8A1F271C80002674DE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -226,6 +236,8 @@
 		4D5625141F2605A700515C98 /* FelixFastCatch */ = {
 			isa = PBXGroup;
 			children = (
+				4D82A4581F3721A2007ADE5C /* Fangzhengyuan-cuti.ttf */,
+				4D82A4531F36D18F007ADE5C /* Skranji-Bold.ttf */,
 				4DCD39C91F2F0D58002B7F35 /* AlipaySDK.framework */,
 				4DCD39CA1F2F0D59002B7F35 /* AlipaySDK.bundle */,
 				4D18ACBD1F260801005363A4 /* TencentOpenAPI.framework */,
@@ -239,6 +251,22 @@
 				4D9EBB801F26F163002674DE /* WeChatShared.swift */,
 			);
 			path = FelixFastCatch;
+			sourceTree = "<group>";
+		};
+		4D5BF1BB1F3851460091180B /* CheckIn */ = {
+			isa = PBXGroup;
+			children = (
+				4D5BF1BC1F3851570091180B /* CheckInDialog.swift */,
+			);
+			path = CheckIn;
+			sourceTree = "<group>";
+		};
+		4D5BF1BE1F3853E90091180B /* Invite */ = {
+			isa = PBXGroup;
+			children = (
+				4D5BF1BF1F3853F60091180B /* InviteDialog.swift */,
+			);
+			path = Invite;
 			sourceTree = "<group>";
 		};
 		4D64B8961F29B53D002A9BFD /* Main */ = {
@@ -289,6 +317,7 @@
 				4DDD2B851F286BC000102A0F /* DeviceTools.swift */,
 				4D64B8A31F2B079E002A9BFD /* LocalDataUtils.swift */,
 				4D1D861E1F334461005210CA /* ConstellationUtils.swift */,
+				4D82A4511F36C7AD007ADE5C /* UserTools.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -296,6 +325,8 @@
 		4D9EBB871F271C3A002674DE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4D5BF1BE1F3853E90091180B /* Invite */,
+				4D5BF1BB1F3851460091180B /* CheckIn */,
 				4DCD39DF1F2F4A19002B7F35 /* Gift */,
 				4DCD39DE1F2F48DB002B7F35 /* Address */,
 				4D9EBB8C1F271CD8002674DE /* Main */,
@@ -511,6 +542,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D82A4591F3721BF007ADE5C /* Fangzhengyuan-cuti.ttf in Resources */,
+				4D82A4551F36D33B007ADE5C /* Skranji-Bold.ttf in Resources */,
 				4DCD39CC1F2F0D59002B7F35 /* AlipaySDK.bundle in Resources */,
 				4D18ACC01F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */,
@@ -592,10 +625,12 @@
 				4D64B8981F29B549002A9BFD /* MainBanner.swift in Sources */,
 				4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */,
 				4DCD39D81F2F12E9002B7F35 /* PayListDialog.swift in Sources */,
+				4D5BF1C01F3853F60091180B /* InviteDialog.swift in Sources */,
 				4DCD39E81F2F4B2C002B7F35 /* FCMyGiftCell.swift in Sources */,
 				4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */,
 				4D1D86131F306307005210CA /* TobeGiftModel.swift in Sources */,
 				4DCD39E11F2F4A2B002B7F35 /* MyGiftDialog.swift in Sources */,
+				4D82A4521F36C7AD007ADE5C /* UserTools.swift in Sources */,
 				4D1D86171F31D1FE005210CA /* EditUserInfoDialog.swift in Sources */,
 				4D1DA0F61F2F4C7000B1138D /* FCMailedConfirmDialog.swift in Sources */,
 				4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */,
@@ -604,6 +639,7 @@
 				4DCD39EC1F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift in Sources */,
 				4DCD39B71F2DA5FC002B7F35 /* CustomerControllerButton.swift in Sources */,
 				4D1D861F1F334461005210CA /* ConstellationUtils.swift in Sources */,
+				4D5BF1BD1F3851570091180B /* CheckInDialog.swift in Sources */,
 				4DCD39E91F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedCell.swift in Sources */,
 				4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */,
 				4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */,
@@ -716,6 +752,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 69R7EJL9NK;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -744,6 +781,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 69R7EJL9NK;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

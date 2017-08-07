@@ -29,8 +29,9 @@ class MainFloatMenu: UIView {
         actionLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         actionLabel.outTextColor = UIColor.white
         actionLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        actionLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
+//        actionLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
         actionLabel.textAlignment = .center
+        actionLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         actionLabel.sizeToFit()
         actionLabel.frame = CGRect(x: 0, y: actionBtn.bounds.height + 2, width: actionBtn.bounds.width, height: actionLabel.bounds.height)
         addSubview(actionLabel)

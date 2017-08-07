@@ -39,7 +39,17 @@ class LocalDataUtils: NSObject {
             }
         }
         
+        Constants.User.checkDays = resultData["data"]["checkDays"].intValue
+        Constants.User.diamondsCount = resultData["data"]["diamondsCount"].intValue
+        Constants.User.todayChecked = resultData["data"]["todayChecked"].boolValue
+        
+        Constants.User.addrName = resultData["data"]["name"].stringValue
+        Constants.User.addrPhone = resultData["data"]["phone"].stringValue
+        Constants.User.addr = resultData["data"]["addr"].stringValue
+        
         initUserInfo()
+        
+        UserTools.getUserInfo()
     }
     
     class func initUserInfo() -> () {

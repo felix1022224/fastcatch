@@ -74,7 +74,10 @@ class Constants: NSObject {
             static let GET_USER_ADDRESS = BASE_URL + "postage/get"
             
             /// 保存用户地址信息
-            static let SAVE_USER_ADDRESS = BASE_URL + "postage/create"
+            static let SAVE_USER_ADDRESS = BASE_URL + "user/pscreate"
+            
+            /// 获取已邮寄列表
+            static let GET_MAILED_GIFT_LIST = BASE_URL + "draworder/postagedlist"
             
         }
         
@@ -92,6 +95,9 @@ class Constants: NSObject {
             
             /// 更新用户信息
             static let UPDATE_USER_INFO = BASE_URL + "user/update"
+            
+            /// 获取用户数据
+            static let GET_USER_INFO = BASE_URL + "user/get"
             
         }
     }
@@ -113,7 +119,7 @@ class Constants: NSObject {
         static let OUT_LINE_COLOR:UIColor = UIColor(red: 160/255.0, green: 123/255.0, blue: 80/255.0, alpha: 1)
         
         /// 描边粗细
-        static let OUT_LINE_WIDTH:CGFloat = 4
+        static let OUT_LINE_WIDTH:CGFloat = 2
         
         /// 钻石数量的文字颜色
         static let GEM_TEXT_COLOR:UIColor = UIColor(red: 255/255.0, green: 162/255.0, blue: 0.0, alpha: 1)
@@ -146,6 +152,27 @@ class Constants: NSObject {
         static let USER_BRITHDAY_KEY = "userBrithday"
         static let USER_ID_KEY = "userId"
         static let USER_FACE_IMAGE_KEY = "userFaceImage"
+        
+        /// 钻石数
+        static var diamondsCount = 0
+        
+        /// 今天是否签到了
+        static var todayChecked = false
+        
+        /// 连续签到天数
+        static var checkDays = 0
+        
+        /// 地址收件人
+        static var addrName = ""
+        
+        /// 收件人手机号
+        static var addrPhone = ""
+        
+        /// 地址详情
+        static var addr = ""
+        
+        /// 地址ID
+        static var addressId = ""
     }
     
 }
