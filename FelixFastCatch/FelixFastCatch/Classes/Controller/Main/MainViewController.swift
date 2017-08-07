@@ -195,9 +195,6 @@ extension MainViewController:UIScrollViewDelegate{
         
         view.addSubview(pageControl)
         
-        // 设置指示器的约束
-        pageControl.frame = CGRect(x: self.view.bounds.width/2 - pageControl.bounds.width/2, y: bannerView.bounds.height - pageControl.bounds.height, width: pageControl.bounds.width, height: pageControl.bounds.height)
-        
         getBannerList()
     }
     
@@ -215,7 +212,7 @@ extension MainViewController:UIScrollViewDelegate{
     
     //创建轮播图定时器
     func creatTimer() {
-        timer =  Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.timerManager), userInfo: nil, repeats: true)
+        timer =  Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.timerManager), userInfo: nil, repeats: true)
         
         //这句话实现多线程，如果你的ScrollView是作为TableView的headerView的话，在拖动tableView的时候让轮播图仍然能轮播就需要用到这句话
         RunLoop.current.add(timer, forMode: RunLoopMode.commonModes)
@@ -225,7 +222,9 @@ extension MainViewController:UIScrollViewDelegate{
     //创建定时器管理者
     func timerManager() {
         let contentOffsetX = self.bannerView.contentOffset.x + self.view.frame.size.width
-        let count = CGFloat(mainBannersData.count)
+        let count = CGFloat(mainBannersData.count) - 1
+        
+        print("count:\(count)")
         
         if contentOffsetX > self.view.frame.size.width * CGFloat(count) {
             // 当前视图显示的是第三个的时候，设置bottomView的偏移量为0
@@ -239,6 +238,9 @@ extension MainViewController:UIScrollViewDelegate{
         if mainBannersData == nil {
             return
         }
+        
+        print("banners:\(mainBannersData)")
+        
         //循环增加图片到scrollview当中
         for i:Int in 0..<mainBannersData.count{
             let iv = UIImageView()
@@ -257,6 +259,9 @@ extension MainViewController:UIScrollViewDelegate{
         pageControl.sizeToFit()
         pageControl.currentPageIndicatorTintColor = UIColor.yellow
         pageControl.pageIndicatorTintColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 0.8)
+        
+        // 设置指示器的约束
+        pageControl.frame = CGRect(x: self.view.bounds.width/2 - pageControl.bounds.width/2, y: bannerView.bounds.height - pageControl.bounds.height, width: pageControl.bounds.width, height: pageControl.bounds.height)
         
         if mainBannersData.count <= 1 {
             return

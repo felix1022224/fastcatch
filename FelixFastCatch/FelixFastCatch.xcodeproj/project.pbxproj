@@ -29,6 +29,7 @@
 		4D1DA0F61F2F4C7000B1138D /* FCMailedConfirmDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1DA0F51F2F4C7000B1138D /* FCMailedConfirmDialog.swift */; };
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
 		4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D56251C1F2605A700515C98 /* Assets.xcassets */; };
+		4D589C741F386EB500C8DBC7 /* CheckIn7DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */; };
 		4D5BF1BD1F3851570091180B /* CheckInDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5BF1BC1F3851570091180B /* CheckInDialog.swift */; };
 		4D5BF1C01F3853F60091180B /* InviteDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5BF1BF1F3853F60091180B /* InviteDialog.swift */; };
 		4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8921F287FB9002A9BFD /* PlayViewController.swift */; };
@@ -101,6 +102,7 @@
 		4D5625151F2605A700515C98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D56251C1F2605A700515C98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D5625211F2605A700515C98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIn7DayView.swift; sourceTree = "<group>"; };
 		4D5BF1BC1F3851570091180B /* CheckInDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInDialog.swift; sourceTree = "<group>"; };
 		4D5BF1BF1F3853F60091180B /* InviteDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteDialog.swift; sourceTree = "<group>"; };
 		4D64B8921F287FB9002A9BFD /* PlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 				4D64B8941F2885AA002A9BFD /* MainFloatMenu.swift */,
 				4D64B8A11F2ADC50002A9BFD /* MainCustomerTextField.swift */,
 				4DCD39B61F2DA5FC002B7F35 /* CustomerControllerButton.swift */,
+				4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */,
 			);
 			path = widget;
 			sourceTree = "<group>";
@@ -644,6 +647,7 @@
 				4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */,
 				4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */,
 				4D1D861D1F333299005210CA /* HideView.swift in Sources */,
+				4D589C741F386EB500C8DBC7 /* CheckIn7DayView.swift in Sources */,
 				4D9EBB961F276822002674DE /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

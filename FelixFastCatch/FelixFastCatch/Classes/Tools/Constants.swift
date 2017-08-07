@@ -99,6 +99,9 @@ class Constants: NSObject {
             /// 获取用户数据
             static let GET_USER_INFO = BASE_URL + "user/get"
             
+            /// 用户签到
+            static let USER_CHECKIN = BASE_URL + "user/checkin"
+            
         }
     }
     

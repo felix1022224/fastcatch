@@ -22,6 +22,13 @@ class UserTools: NSObject {
                 Constants.User.addr = json["data"]["pav"]["addr"].stringValue
                 Constants.User.addrPhone = json["data"]["pav"]["phone"].stringValue
                 Constants.User.addressId = json["data"]["pav"]["id"].stringValue
+                
+                Constants.User.checkDays = json["data"]["checkDays"].intValue
+                if json["data"]["todayChecked"].intValue == 1 {
+                    Constants.User.todayChecked = true
+                }else{
+                    Constants.User.todayChecked = false
+                }
             }
             print("result:\(String(describing: response.result.value))")
         }
