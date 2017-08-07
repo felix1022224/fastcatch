@@ -739,7 +739,7 @@ extension PlayViewController{
         params["deviceid"] = deviceId
         
         Alamofire.request(Constants.Network.Machine.WAIT_QUEUE, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
-            print("result:\(response.result.value),error:\(String(describing: response.error))")
+            print("result:\(String(describing: response.result.value)),error:\(String(describing: response.error))")
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(data: response.data!)
                 if json["data"]["tryLock"].bool! == true {

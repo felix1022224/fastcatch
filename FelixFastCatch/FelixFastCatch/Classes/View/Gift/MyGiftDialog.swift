@@ -268,7 +268,7 @@ extension MyGiftDialog{
         params["page"] = "0"
         
         Alamofire.request(Constants.Network.Gift.GET_TOBE_MAILED_GIFT_LIST, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
-            print("result:\(response.result.value)")
+            print("result:\(String(describing: response.result.value))")
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(response.result.value!)
                 self.tobeMailedDelegate.dataSource = json["data"]["content"].array!
@@ -291,7 +291,7 @@ extension MyGiftDialog{
         params["page"] = "0"
         
         Alamofire.request(Constants.Network.Gift.GET_MAILED_GIFT_LIST, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
-            print("result:\(response.result.value)")
+            print("result:\(String(describing: response.result.value))")
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(response.result.value!)
                 self.hasBeenMailedDelegate.dataSource = json["data"]["content"].array!
