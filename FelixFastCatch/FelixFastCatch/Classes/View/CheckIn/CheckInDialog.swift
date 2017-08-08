@@ -29,7 +29,11 @@ class CheckInDialog: BaseDialog {
     
     fileprivate var check7DayViews:[CheckIn7DayView] = [CheckIn7DayView]()
     
+    /// 连续签到赢钻石奖励
+    fileprivate var tipsLabel:MainCustomerLabel!
+    
     override func createView() {
+        
         createBackgroundImage(imageName: "checkin_background")
         
         backgroundImage.frame.size = CGSize(width: 290, height: 200)
@@ -64,6 +68,20 @@ class CheckInDialog: BaseDialog {
             make.height.equalTo(35)
             make.bottom.equalTo(backgroundImage).offset(35/2)
             make.centerX.equalTo(backgroundImage)
+        }
+        
+        tipsLabel = MainCustomerLabel()
+        tipsLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
+        tipsLabel.outTextColor = UIColor.white
+        tipsLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
+        tipsLabel.text = "连续签到赢钻石"
+        tipsLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        tipsLabel.sizeToFit()
+        addSubview(tipsLabel)
+        
+        tipsLabel.snp.makeConstraints { (make) in
+            make.centerX.equalTo(backgroundImage)
+            make.top.equalTo(checkInBtn).offset(-(tipsLabel.bounds.height + 10))
         }
         
         addDialogToWindow()
@@ -144,6 +162,9 @@ extension CheckInDialog{
         check7DayViews.append(check7DayView)
         
         initCheckIn7DayView()
+        
+        
+        
     }
     
     /// 初始化前七天签到样式
@@ -193,6 +214,7 @@ extension CheckInDialog{
     
     func UserCheckIn() -> () {
         Alamofire.request(Constants.Network.User.USER_CHECKIN, method: .post, parameters: NetWorkUtils.createBaseParams(), encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            print("check:\(String(describing: response.result.value))")
             if NetWorkUtils.checkReponse(response: response) {
                 self.checkInBtn.isEnabled = false
                 let json = JSON(response.result.value!)

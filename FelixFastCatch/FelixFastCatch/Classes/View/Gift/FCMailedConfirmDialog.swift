@@ -55,7 +55,7 @@ class FCMailedConfirmDialog: BaseDialog {
    
         editAddressDialog = EditAddressDialog(frame: UIScreen.main.bounds)
         
-        print("sendData:\(sendData)")
+        print("sendData:\(sendData)" + "addrss:\(Constants.User.addressId)")
         
         contentImagesLine = sendData.count/4
         
@@ -83,10 +83,10 @@ class FCMailedConfirmDialog: BaseDialog {
         
         // 购买人
         userInfo = MainCustomerLabel()
-        userInfo.outLineWidth = 1
+        userInfo.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         userInfo.outTextColor = UIColor.white
         userInfo.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        userInfo.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        userInfo.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         userInfo.text = "收货人 : " + Constants.User.addrName
         userInfo.numberOfLines = 1
         userInfo.sizeToFit()
@@ -95,10 +95,10 @@ class FCMailedConfirmDialog: BaseDialog {
         
         // 手机号
         phoneNumber = MainCustomerLabel()
-        phoneNumber.outLineWidth = 1
+        phoneNumber.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         phoneNumber.outTextColor = UIColor.white
         phoneNumber.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        phoneNumber.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        phoneNumber.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         phoneNumber.text = "手机号 : " + Constants.User.addrPhone
         phoneNumber.numberOfLines = 1
         phoneNumber.sizeToFit()
@@ -108,10 +108,10 @@ class FCMailedConfirmDialog: BaseDialog {
         
         // 地址
         address = MainCustomerLabel()
-        address.outLineWidth = 1
+        address.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         address.outTextColor = UIColor.white
         address.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        address.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        address.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         address.text = "地址 : " + Constants.User.addr
         address.numberOfLines = 2
         let paraph = NSMutableParagraphStyle()
@@ -143,10 +143,10 @@ class FCMailedConfirmDialog: BaseDialog {
         
         // 邮费标题
         let postageTitleLabel = MainCustomerLabel()
-        postageTitleLabel.outLineWidth = 1
+        postageTitleLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         postageTitleLabel.outTextColor = UIColor.white
         postageTitleLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        postageTitleLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        postageTitleLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         postageTitleLabel.text = "邮费"
         postageTitleLabel.sizeToFit()
         scrollRootView.addSubview(postageTitleLabel)
@@ -157,10 +157,10 @@ class FCMailedConfirmDialog: BaseDialog {
         }
         
         //邮费
-        postageLabel.outLineWidth = 1
+        postageLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         postageLabel.outTextColor = UIColor.white
         postageLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        postageLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        postageLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         postageLabel.text = "免邮"
         postageLabel.textAlignment = .right
         postageLabel.sizeToFit()
@@ -169,10 +169,10 @@ class FCMailedConfirmDialog: BaseDialog {
         postageLabel.frame = CGRect(x: 0, y: postageHelperY + 2, width: scrollRootView.bounds.width, height: postageLabel.bounds.height)
         
         // 免邮
-        freemailNumberLabel.outLineWidth = 1
+        freemailNumberLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         freemailNumberLabel.outTextColor = UIColor.white
         freemailNumberLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        freemailNumberLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        freemailNumberLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         freemailNumberLabel.text = "本月剩余免邮次数:1次"
         freemailNumberLabel.sizeToFit()
         scrollRootView.addSubview(freemailNumberLabel)
@@ -211,12 +211,18 @@ class FCMailedConfirmDialog: BaseDialog {
         addDialogToWindow()
     }
     
+    func reloadInfo() -> () {
+        userInfo.text = "收货人 : " + Constants.User.addrName
+        phoneNumber.text = "手机号 : " + Constants.User.addrPhone
+        address.text = "地址 : " + Constants.User.addr
+    }
+    
     func editAddress() -> () {
         editAddressDialog.userName = userInfoData
         editAddressDialog.phoneNumber = phoneNumberData
         editAddressDialog.address = addressData
         
-        editAddressDialog.createView()
+        editAddressDialog.createView(mailedConfirm: self)
         editAddressDialog.show()
     }
     
@@ -267,7 +273,7 @@ extension FCMailedConfirmDialog:UICollectionViewDelegate, UICollectionViewDataSo
         
         productsGroup.isScrollEnabled = false
         
-        contentBacngroundImage.frame = CGRect(x: 0, y: groupY, width: scrollRootView.bounds.width, height: productsGroup.bounds.height + 2)
+        contentBacngroundImage.frame = CGRect(x: 0, y: groupY, width: scrollRootView.bounds.width, height: productsGroup.bounds.height + 8)
         
         scrollRootView.addSubview(productsGroup)
     }
@@ -278,6 +284,9 @@ extension FCMailedConfirmDialog:UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as? FCHasBennMailedProductCell
+        
+        cell?.productImage.kf.setImage(with: URL(string: sendData[indexPath.row]["img"].stringValue))
+        
         return cell!
     }
     
@@ -311,6 +320,10 @@ extension FCMailedConfirmDialog{
     
     /// 通知后台，开始邮寄
     func maild() -> () {
+        if !checkAddress() {
+            return
+        }
+        
         ToastUtils.showLoadingToast(msg: "请稍后……")
         
         var ids = ""
@@ -333,6 +346,30 @@ extension FCMailedConfirmDialog{
                 self.hide()
             }
         }
+    }
+    
+    func checkAddress() -> Bool {
+        if Constants.User.addressId == "" {
+            ToastUtils.showErrorToast(msg: "请填写地址")
+            return false
+        }
+        
+        if Constants.User.addrName == "" {
+            ToastUtils.showErrorToast(msg: "请填写收件人")
+            return false
+        }
+        
+        if Constants.User.addrPhone == "" {
+            ToastUtils.showErrorToast(msg: "请填写手机号")
+            return false
+        }
+        
+        if Constants.User.addr == "" {
+            ToastUtils.showErrorToast(msg: "请填写详细地址")
+            return false
+        }
+        
+        return true
     }
     
 }

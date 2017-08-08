@@ -30,6 +30,7 @@
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
 		4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D56251C1F2605A700515C98 /* Assets.xcassets */; };
 		4D589C741F386EB500C8DBC7 /* CheckIn7DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */; };
+		4D589C761F39AC3D00C8DBC7 /* FirstLoginRewardDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D589C751F39AC3D00C8DBC7 /* FirstLoginRewardDialog.swift */; };
 		4D5BF1BD1F3851570091180B /* CheckInDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5BF1BC1F3851570091180B /* CheckInDialog.swift */; };
 		4D5BF1C01F3853F60091180B /* InviteDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5BF1BF1F3853F60091180B /* InviteDialog.swift */; };
 		4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8921F287FB9002A9BFD /* PlayViewController.swift */; };
@@ -73,6 +74,7 @@
 		4DDD2B7F1F2848FC00102A0F /* MainCustomerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B7E1F2848FC00102A0F /* MainCustomerLabel.swift */; };
 		4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B811F2849DC00102A0F /* NetWorkUtils.swift */; };
 		4DDD2B861F286BC000102A0F /* DeviceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B851F286BC000102A0F /* DeviceTools.swift */; };
+		4DE204131F39B8100046B130 /* HasBeenMailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE204121F39B8100046B130 /* HasBeenMailedView.swift */; };
 		958698C56D14F18FE0B94475 /* Pods_FelixFastCatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7E009E5610C1572048261D2 /* Pods_FelixFastCatch.framework */; };
 /* End PBXBuildFile section */
 
@@ -103,6 +105,7 @@
 		4D56251C1F2605A700515C98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D5625211F2605A700515C98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIn7DayView.swift; sourceTree = "<group>"; };
+		4D589C751F39AC3D00C8DBC7 /* FirstLoginRewardDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstLoginRewardDialog.swift; sourceTree = "<group>"; };
 		4D5BF1BC1F3851570091180B /* CheckInDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInDialog.swift; sourceTree = "<group>"; };
 		4D5BF1BF1F3853F60091180B /* InviteDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteDialog.swift; sourceTree = "<group>"; };
 		4D64B8921F287FB9002A9BFD /* PlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +149,7 @@
 		4DDD2B7E1F2848FC00102A0F /* MainCustomerLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCustomerLabel.swift; sourceTree = "<group>"; };
 		4DDD2B811F2849DC00102A0F /* NetWorkUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetWorkUtils.swift; sourceTree = "<group>"; };
 		4DDD2B851F286BC000102A0F /* DeviceTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceTools.swift; sourceTree = "<group>"; };
+		4DE204121F39B8100046B130 /* HasBeenMailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasBeenMailedView.swift; sourceTree = "<group>"; };
 		9DA239CE4A7A8989C9E6EAED /* Pods-FelixFastCatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FelixFastCatch.release.xcconfig"; path = "Pods/Target Support Files/Pods-FelixFastCatch/Pods-FelixFastCatch.release.xcconfig"; sourceTree = "<group>"; };
 		D7E009E5610C1572048261D2 /* Pods_FelixFastCatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FelixFastCatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFC6B4F6BC202EA7BB7FDC1F /* Pods-FelixFastCatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FelixFastCatch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FelixFastCatch/Pods-FelixFastCatch.debug.xcconfig"; sourceTree = "<group>"; };
@@ -327,6 +331,7 @@
 		4D9EBB871F271C3A002674DE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4DE204111F39B42C0046B130 /* Shard */,
 				4D5BF1BE1F3853E90091180B /* Invite */,
 				4D5BF1BB1F3851460091180B /* CheckIn */,
 				4DCD39DF1F2F4A19002B7F35 /* Gift */,
@@ -388,6 +393,7 @@
 				4D64B89D1F29D9C7002A9BFD /* PhoneNumberDialog.swift */,
 				4DCD39DC1F2F3CD5002B7F35 /* UserInfoDialog.swift */,
 				4D1D86161F31D1FE005210CA /* EditUserInfoDialog.swift */,
+				4D589C751F39AC3D00C8DBC7 /* FirstLoginRewardDialog.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -411,6 +417,7 @@
 				4DCD39E41F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedTabViewDelegate.swift */,
 				4DCD39E51F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift */,
 				4DCD39E61F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift */,
+				4DE204121F39B8100046B130 /* HasBeenMailedView.swift */,
 			);
 			path = Address;
 			sourceTree = "<group>";
@@ -434,6 +441,7 @@
 		4DCD39DE1F2F48DB002B7F35 /* Address */ = {
 			isa = PBXGroup;
 			children = (
+				4D1D86141F31BA9C005210CA /* EditAddressDialog.swift */,
 			);
 			path = Address;
 			sourceTree = "<group>";
@@ -443,7 +451,6 @@
 			children = (
 				4D1DA0F51F2F4C7000B1138D /* FCMailedConfirmDialog.swift */,
 				4DCD39E01F2F4A2B002B7F35 /* MyGiftDialog.swift */,
-				4D1D86141F31BA9C005210CA /* EditAddressDialog.swift */,
 			);
 			path = Gift;
 			sourceTree = "<group>";
@@ -466,6 +473,13 @@
 				4DDD2B811F2849DC00102A0F /* NetWorkUtils.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		4DE204111F39B42C0046B130 /* Shard */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Shard;
 			sourceTree = "<group>";
 		};
 		86C29A63B7571C0DB24E59E0 /* Pods */ = {
@@ -615,6 +629,7 @@
 				4D64B8951F2885AA002A9BFD /* MainFloatMenu.swift in Sources */,
 				4D64B8A21F2ADC50002A9BFD /* MainCustomerTextField.swift in Sources */,
 				4DDD2B7F1F2848FC00102A0F /* MainCustomerLabel.swift in Sources */,
+				4DE204131F39B8100046B130 /* HasBeenMailedView.swift in Sources */,
 				4D64B89E1F29D9C7002A9BFD /* PhoneNumberDialog.swift in Sources */,
 				4D9EBB811F26F163002674DE /* WeChatShared.swift in Sources */,
 				4D1DA0F41F2F4C4300B1138D /* FCHasBennMailedProductCell.swift in Sources */,
@@ -637,6 +652,7 @@
 				4D1D86171F31D1FE005210CA /* EditUserInfoDialog.swift in Sources */,
 				4D1DA0F61F2F4C7000B1138D /* FCMailedConfirmDialog.swift in Sources */,
 				4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */,
+				4D589C761F39AC3D00C8DBC7 /* FirstLoginRewardDialog.swift in Sources */,
 				4DCD39DD1F2F3CD5002B7F35 /* UserInfoDialog.swift in Sources */,
 				4D64B89C1F29D984002A9BFD /* FastLoginDialog.swift in Sources */,
 				4DCD39EC1F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift in Sources */,

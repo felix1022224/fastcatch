@@ -18,25 +18,30 @@ class CheckIn7DayView: UIView {
     
     private var isChecked = false
     
+    private var number:Int!
+    
     init(frame: CGRect, number:Int, isChecked:Bool) {
         super.init(frame: frame)
         
+        self.number = number
         self.isChecked = isChecked
         
         checkBackground = UIImageView()
         if isChecked {
-            checkBackground.image = UIImage(named: "8已签")
+            checkBackground.image = UIImage(named: String(number) + "已签")
         }else{
-            checkBackground.image = UIImage(named: "8未签")
+            checkBackground.image = UIImage(named: String(number) + "未签")
         }
         checkBackground.sizeToFit()
         addSubview(checkBackground)
+        
+        checkBackground.frame.size = CGSize(width: 35, height: 39)
         
         self.frame.size = CGSize(width: checkBackground.bounds.width, height: checkBackground.bounds.height)
         
         checkNumber = MainCustomerLabel()
         checkNumber.text = String(number)
-        checkNumber.font = UIFont(name: "Skranji-Bold", size: CGFloat(20))
+        checkNumber.font = UIFont(name: "Skranji-Bold", size: CGFloat(16))
         checkNumber.outLineWidth = 1
         checkNumber.outTextColor = UIColor.white
         checkNumber.outLienTextColor = UIColor.black
@@ -44,15 +49,14 @@ class CheckIn7DayView: UIView {
         addSubview(checkNumber)
         
         checkNumber.frame = CGRect(x: checkBackground.bounds.width/2 - checkNumber.bounds.width/2, y: 5, width: checkNumber.bounds.width, height: checkNumber.bounds.height)
-        
     }
     
     func setChecked(isChecked:Bool) -> () {
         self.isChecked = isChecked
         if isChecked {
-            checkBackground.image = UIImage(named: "8已签")
+            checkBackground.image = UIImage(named: String(number) + "已签")
         }else{
-            checkBackground.image = UIImage(named: "8未签")
+            checkBackground.image = UIImage(named: String(number) + "未签")
         }
     }
     

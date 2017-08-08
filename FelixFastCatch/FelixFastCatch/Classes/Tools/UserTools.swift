@@ -15,6 +15,7 @@ class UserTools: NSObject {
     /// 获取用户信息，刷新本地数据
     class func getUserInfo() -> () {
         Alamofire.request(Constants.Network.User.GET_USER_INFO, method: .post, parameters: NetWorkUtils.createBaseParams(), encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            print("result:\(String(describing: response.result.value))")
             if NetWorkUtils.checkReponse(response: response) {
                 /// 更新用户信息
                 let json = JSON(response.result.value!)

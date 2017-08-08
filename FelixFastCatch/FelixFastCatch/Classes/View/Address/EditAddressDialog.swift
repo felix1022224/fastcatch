@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 class EditAddressDialog: BaseDialog {
 
@@ -37,7 +38,11 @@ class EditAddressDialog: BaseDialog {
     
     fileprivate var myGiftDialog:MyGiftDialog!
     
-    override func createView() {
+    fileprivate var mailedConfirm:FCMailedConfirmDialog!
+    
+    func createView(mailedConfirm:FCMailedConfirmDialog) {
+        
+        self.mailedConfirm = mailedConfirm
         
         createBackgroundImage(imageName: "邮寄地址填写背景")
         
@@ -221,6 +226,10 @@ extension EditAddressDialog{
         params["name"] = userNameTextField.text
         params["phone"] = phoneNumberTextField.text
         
+        if Constants.User.addressId != "" {
+            params["id"] = Constants.User.addressId
+        }
+        
         Alamofire.request(Constants.Network.Gift.SAVE_USER_ADDRESS, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 ToastUtils.showSuccessToast(msg: "保存成功!")
@@ -229,10 +238,16 @@ extension EditAddressDialog{
                     self.myGiftDialog.reBackShowMailedConfirm(userInfo: self.userNameTextField.text!, phoneNumber: self.phoneNumberTextField.text!, address: self.addressTextFiled.text!)
                 }
                 
+                let json = JSON(response.result.value!)
+                
                 /// 更新内存中的数据
                 Constants.User.addrName = params["name"]!
                 Constants.User.addrPhone = params["phone"]!
                 Constants.User.addr = params["addr"]!
+                Constants.User.addressId = json["data"]["id"].stringValue
+                
+                self.mailedConfirm.reloadInfo()
+                self.mailedConfirm = nil
                 
                 self.hide()
             }else{

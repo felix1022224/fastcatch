@@ -224,8 +224,6 @@ extension MainViewController:UIScrollViewDelegate{
         let contentOffsetX = self.bannerView.contentOffset.x + self.view.frame.size.width
         let count = CGFloat(mainBannersData.count) - 1
         
-        print("count:\(count)")
-        
         if contentOffsetX > self.view.frame.size.width * CGFloat(count) {
             // 当前视图显示的是第三个的时候，设置bottomView的偏移量为0
             self.bannerView.setContentOffset(CGPoint(x:0,y:0), animated: true)

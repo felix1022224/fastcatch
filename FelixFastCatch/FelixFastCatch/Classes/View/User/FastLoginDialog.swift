@@ -28,6 +28,9 @@ class FastLoginDialog: BaseDialog {
     
     private let btnSize = 73
     
+    /// 新手奖励弹窗
+    fileprivate var firstLoginReward:FirstLoginRewardDialog!
+    
     override func createView() {
         createBackgroundImage(imageName: "login_background")
         
@@ -139,6 +142,9 @@ class FastLoginDialog: BaseDialog {
                 LocalDataUtils.updateLocalUserData(resultData: resultJson, dataResponse:response)
                 ToastUtils.showSuccessToast(msg: "登录成功")
                 self.hide()
+                if resultJson["data"]["new"].boolValue {
+                    self.showFirstLoginReward()
+                }
             }
         }
     }
@@ -167,10 +173,19 @@ class FastLoginDialog: BaseDialog {
                 LocalDataUtils.updateLocalUserData(resultData: resultJson, dataResponse:response)
                 ToastUtils.showSuccessToast(msg: "登录成功")
                 self.hide()
+                if resultJson["data"]["new"].boolValue {
+                    self.showFirstLoginReward()
+                }
             }else {
                 SVProgressHUD.dismiss()
             }
         }
+    }
+    
+    /// 显示新手第一次登录的奖励
+    func showFirstLoginReward() -> () {
+        firstLoginReward.createView()
+        firstLoginReward.show()
     }
     
 }

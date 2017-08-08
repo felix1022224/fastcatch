@@ -8,19 +8,29 @@
 
 import UIKit
 
+import SwiftyJSON
+
 class FCMyGiftHasBeenProductsDelegate: NSObject {
 
+    var dataSource:[JSON]!
+    
+    init(dataSource:[JSON]) {
+        self.dataSource = dataSource
+    }
+    
 }
 
 extension FCMyGiftHasBeenProductsDelegate: UICollectionViewDelegate, UICollectionViewDataSource{
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return dataSource.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as? FCHasBennMailedProductCell
+        
+        cell?.productImage.kf.setImage(with: URL(string: self.dataSource[indexPath.row]["img"].stringValue))
         
         return cell!
     }

@@ -27,12 +27,17 @@ class PhoneNumberDialog: BaseDialog {
     
     fileprivate var fastLoginDialog:FastLoginDialog!
     
+    /// 新手奖励弹窗
+    fileprivate var firstLoginReward:FirstLoginRewardDialog!
+    
     override func createView() {
         
     }
     
     func createView(fastLogin:FastLoginDialog) {
         self.fastLoginDialog = fastLogin
+        
+        firstLoginReward = FirstLoginRewardDialog(frame: UIScreen.main.bounds)
         
         createBackgroundImage(imageName: "register_login_background")
         
@@ -224,13 +229,23 @@ extension PhoneNumberDialog{
 //                SVProgressHUD.dismiss()
                 let resultJson = JSON(data: response.data!)
                 if NetWorkUtils.checkReponse(response: response) {
-                    print("response:\(String(describing: response.response?.allHeaderFields))")
+                    print("response:\(String(describing: response.result.value))")
                     LocalDataUtils.updateLocalUserData(resultData: resultJson, dataResponse:response)
                     ToastUtils.showSuccessToast(msg: "登录成功")
                     self.hide()
+                    
+                    if resultJson["data"]["new"].boolValue {
+                        self.showFirstLoginReward()
+                    }
                 }
             }
         }
+    }
+    
+    /// 显示新手第一次登录的奖励
+    func showFirstLoginReward() -> () {
+        firstLoginReward.createView()
+        firstLoginReward.show()
     }
     
 }

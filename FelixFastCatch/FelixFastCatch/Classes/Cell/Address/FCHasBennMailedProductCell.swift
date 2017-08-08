@@ -12,7 +12,7 @@ class FCHasBennMailedProductCell: UICollectionViewCell {
     
     private var backgroundImage:UIImageView!
     
-    private var productImage:UIImageView!
+    var productImage:UIImageView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,7 +31,7 @@ class FCHasBennMailedProductCell: UICollectionViewCell {
         }
         
         productImage = UIImageView()
-        productImage.backgroundColor = UIColor.red
+        productImage.backgroundColor = UIColor.white
         addSubview(productImage)
         
         productImage.snp.makeConstraints { (make) in
