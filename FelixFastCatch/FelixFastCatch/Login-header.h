@@ -24,4 +24,6 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import <CommonCrypto/CommonCrypto.h>
 
+#import <AgoraRtcEngineKit/AgoraRtcEngineKit.h>
+
 #endif /* Login_header_h */

@@ -2,11 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Skranji-Bold.ttf</string>
-		<string>Fangzhengyuan-cuti.ttf</string>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -92,12 +87,15 @@
 	<string>为您提供更智能化的奖品推荐</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>use microphone to start video call</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Skranji-Bold.ttf</string>
+		<string>Fangzhengyuan-cuti.ttf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
 	</array>
-	<key>UIMainStoryboardFile</key>
-	<string></string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

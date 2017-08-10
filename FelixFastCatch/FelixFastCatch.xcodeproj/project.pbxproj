@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D17ECF81F3B0355004DD01F /* 镜头切换_音效.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4D17ECF11F3B017B004DD01F /* 镜头切换_音效.wav */; };
+		4D17ECF91F3B0355004DD01F /* 游戏开始_音效.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4D17ECEF1F3B017B004DD01F /* 游戏开始_音效.wav */; };
+		4D17ECFA1F3B0355004DD01F /* background_music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4D17ECEE1F3B017B004DD01F /* background_music.mp3 */; };
+		4D17ECFB1F3B0355004DD01F /* 抓取成功_音效.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4D17ECF21F3B017B004DD01F /* 抓取成功_音效.wav */; };
+		4D17ECFC1F3B0355004DD01F /* 抓取失败_音效.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4D17ECF01F3B017B004DD01F /* 抓取失败_音效.wav */; };
 		4D18ACBF1F260801005363A4 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACBD1F260801005363A4 /* TencentOpenAPI.framework */; };
 		4D18ACC01F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4D18ACBE1F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle */; };
 		4D18ACC31F260817005363A4 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACC21F260817005363A4 /* Security.framework */; };
@@ -27,6 +32,7 @@
 		4D1D861F1F334461005210CA /* ConstellationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1D861E1F334461005210CA /* ConstellationUtils.swift */; };
 		4D1DA0F41F2F4C4300B1138D /* FCHasBennMailedProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1DA0F31F2F4C4300B1138D /* FCHasBennMailedProductCell.swift */; };
 		4D1DA0F61F2F4C7000B1138D /* FCMailedConfirmDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1DA0F51F2F4C7000B1138D /* FCMailedConfirmDialog.swift */; };
+		4D2B800E1F3BFBF40075D390 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2B800D1F3BFBF40075D390 /* libresolv.tbd */; };
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
 		4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D56251C1F2605A700515C98 /* Assets.xcassets */; };
 		4D589C741F386EB500C8DBC7 /* CheckIn7DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */; };
@@ -79,6 +85,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D17ECEE1F3B017B004DD01F /* background_music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background_music.mp3; sourceTree = "<group>"; };
+		4D17ECEF1F3B017B004DD01F /* 游戏开始_音效.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "游戏开始_音效.wav"; sourceTree = "<group>"; };
+		4D17ECF01F3B017B004DD01F /* 抓取失败_音效.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "抓取失败_音效.wav"; sourceTree = "<group>"; };
+		4D17ECF11F3B017B004DD01F /* 镜头切换_音效.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "镜头切换_音效.wav"; sourceTree = "<group>"; };
+		4D17ECF21F3B017B004DD01F /* 抓取成功_音效.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "抓取成功_音效.wav"; sourceTree = "<group>"; };
 		4D18ACBD1F260801005363A4 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		4D18ACBE1F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
 		4D18ACC21F260817005363A4 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -100,6 +111,7 @@
 		4D1D861E1F334461005210CA /* ConstellationUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstellationUtils.swift; sourceTree = "<group>"; };
 		4D1DA0F31F2F4C4300B1138D /* FCHasBennMailedProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCHasBennMailedProductCell.swift; sourceTree = "<group>"; };
 		4D1DA0F51F2F4C7000B1138D /* FCMailedConfirmDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMailedConfirmDialog.swift; sourceTree = "<group>"; };
+		4D2B800D1F3BFBF40075D390 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		4D5625121F2605A700515C98 /* FelixFastCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FelixFastCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5625151F2605A700515C98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D56251C1F2605A700515C98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -160,6 +172,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D2B800E1F3BFBF40075D390 /* libresolv.tbd in Frameworks */,
 				4DCD39D61F2F0DDE002B7F35 /* Foundation.framework in Frameworks */,
 				4DCD39D41F2F0DC8002B7F35 /* UIKit.framework in Frameworks */,
 				4DCD39D21F2F0DBB002B7F35 /* CFNetwork.framework in Frameworks */,
@@ -190,6 +203,7 @@
 		4D18ACC11F260816005363A4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D2B800D1F3BFBF40075D390 /* libresolv.tbd */,
 				4DCD39D51F2F0DDE002B7F35 /* Foundation.framework */,
 				4DCD39D31F2F0DC8002B7F35 /* UIKit.framework */,
 				4DCD39D11F2F0DBB002B7F35 /* CFNetwork.framework */,
@@ -242,6 +256,11 @@
 		4D5625141F2605A700515C98 /* FelixFastCatch */ = {
 			isa = PBXGroup;
 			children = (
+				4D17ECF11F3B017B004DD01F /* 镜头切换_音效.wav */,
+				4D17ECEF1F3B017B004DD01F /* 游戏开始_音效.wav */,
+				4D17ECEE1F3B017B004DD01F /* background_music.mp3 */,
+				4D17ECF21F3B017B004DD01F /* 抓取成功_音效.wav */,
+				4D17ECF01F3B017B004DD01F /* 抓取失败_音效.wav */,
 				4D82A4581F3721A2007ADE5C /* Fangzhengyuan-cuti.ttf */,
 				4D82A4531F36D18F007ADE5C /* Skranji-Bold.ttf */,
 				4DCD39C91F2F0D58002B7F35 /* AlipaySDK.framework */,
@@ -559,6 +578,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D17ECF81F3B0355004DD01F /* 镜头切换_音效.wav in Resources */,
+				4D17ECF91F3B0355004DD01F /* 游戏开始_音效.wav in Resources */,
+				4D17ECFA1F3B0355004DD01F /* background_music.mp3 in Resources */,
+				4D17ECFB1F3B0355004DD01F /* 抓取成功_音效.wav in Resources */,
+				4D17ECFC1F3B0355004DD01F /* 抓取失败_音效.wav in Resources */,
 				4D82A4591F3721BF007ADE5C /* Fangzhengyuan-cuti.ttf in Resources */,
 				4D82A4551F36D33B007ADE5C /* Skranji-Bold.ttf in Resources */,
 				4DCD39CC1F2F0D59002B7F35 /* AlipaySDK.bundle in Resources */,
@@ -792,7 +816,7 @@
 					"$(PROJECT_DIR)/FelixFastCatch",
 				);
 				INFOPLIST_FILE = FelixFastCatch/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -821,7 +845,7 @@
 					"$(PROJECT_DIR)/FelixFastCatch",
 				);
 				INFOPLIST_FILE = FelixFastCatch/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",

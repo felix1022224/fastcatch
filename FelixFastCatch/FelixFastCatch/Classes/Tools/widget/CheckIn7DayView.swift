@@ -53,6 +53,7 @@ class CheckIn7DayView: UIView {
     
     func setChecked(isChecked:Bool) -> () {
         self.isChecked = isChecked
+        print("is:\(isChecked)")
         if isChecked {
             checkBackground.image = UIImage(named: String(number) + "已签")
         }else{

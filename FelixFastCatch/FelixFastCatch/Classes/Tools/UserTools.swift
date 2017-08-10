@@ -30,6 +30,8 @@ class UserTools: NSObject {
                 }else{
                     Constants.User.todayChecked = false
                 }
+                
+                Constants.User.diamondsCount = json["data"]["diamondsCount"].intValue
             }
             print("result:\(String(describing: response.result.value))")
         }

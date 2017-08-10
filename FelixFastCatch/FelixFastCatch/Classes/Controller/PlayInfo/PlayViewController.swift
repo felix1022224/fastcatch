@@ -9,6 +9,8 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import AudioToolbox
+import AVFoundation
 
 class PlayViewController: UIViewController {
 
@@ -102,6 +104,9 @@ class PlayViewController: UIViewController {
     /// 游戏结果
     fileprivate var playResultDialog:PlayResultDialog!
     
+    /// 播放声音
+    var bgMusicPlayer = AVAudioPlayer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -115,6 +120,8 @@ class PlayViewController: UIViewController {
         
         setupUI()
         
+        /// 播放背景音乐
+        playBackgroundMusic()
     }
 
     deinit {
@@ -159,6 +166,10 @@ class PlayViewController: UIViewController {
                 countdownTimer = nil
             }
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print("页面销毁")
     }
     
 }
@@ -224,10 +235,10 @@ extension PlayViewController{
         }
         
         gemLabel.text = ""
-        gemLabel.outLineWidth = 2
+        gemLabel.outLineWidth = 1
         gemLabel.outTextColor = UIColor.white
-        gemLabel.outLienTextColor = UIColor.black
-        gemLabel.font = UIFont.systemFont(ofSize: CGFloat(11))
+        gemLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
+        gemLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
         view.addSubview(gemLabel)
         
         gemLabel.snp.makeConstraints { (make) in
@@ -275,17 +286,18 @@ extension PlayViewController{
     /// 创建开始游戏的按钮
     func createStartBtn() -> () {
         let startBtnImage = UIImage(named: "icon_start")
-        startBtnBackgroundView.backgroundColor = UIColor.orange
+        startBtnBackgroundView.backgroundColor = UIColor(red: 91/255.0, green: 177/255.0, blue: 228/255.0, alpha: 1.0)
         startBtnBackgroundView.frame = CGRect(x: 0, y: videoView.bounds.height, width: self.view.bounds.width, height: startBtnImage!.size.height + 25)
         view.addSubview(startBtnBackgroundView)
         
         startPlayBtn.setImage(startBtnImage, for: .normal)
+        startPlayBtn.setImage(UIImage(named: "正在游戏中"), for: .disabled)
         startPlayBtn.sizeToFit()
         startBtnBackgroundView.addSubview(startPlayBtn)
         
         startPlayBtn.snp.makeConstraints { (make) in
             make.centerY.equalTo(startBtnBackgroundView)
-            make.right.equalTo(self.view).offset(-30)
+            make.right.equalTo(self.view).offset(-10)
         }
         
         startPlayBtn.addTarget(self, action: #selector(waitQueue), for: .touchUpInside)
@@ -319,15 +331,15 @@ extension PlayViewController{
         agoraKit.enableLocalVideo(false)
         agoraKit.enableVideo()
         
-        agoraKit.setVideoProfile(._VideoProfile_1080P, swapWidthAndHeight: false)
+        agoraKit.setVideoProfile(._VideoProfile_360P, swapWidthAndHeight: false)
         agoraKit.setClientRole(AgoraRtcClientRole.clientRole_Audience, withKey: nil)
         
         agoraKit.muteAllRemoteAudioStreams(true)
         
-        let hostingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        hostingView.translatesAutoresizingMaskIntoConstraints = false
+//        let hostingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+//        hostingView.translatesAutoresizingMaskIntoConstraints = false
         
-        let code = agoraKit.joinChannel(byKey: nil, channelName: "test4", info: nil, uid: 0, joinSuccess: nil)
+        let code = agoraKit.joinChannel(byKey: nil, channelName: "test4", info: nil, uid: 878, joinSuccess: nil)
         
         if code != 0 {
             DispatchQueue.main.async(execute: {
@@ -363,6 +375,8 @@ extension PlayViewController{
         }else {
             print("进入房间成功:\(code)")
             isLive = false
+            
+            playStartGame()
         }
     }
     
@@ -391,11 +405,13 @@ extension PlayViewController{
                 }
             }
         }
+        playSwitchMusic()
     }
     
     func switchLens(uid:UInt) -> () {
         /// 暂停上一个镜头
         agoraKit.setupRemoteVideo(nil)
+        
         let canvas = AgoraRtcVideoCanvas()
         canvas.view = videoView
         canvas.uid = uid
@@ -418,7 +434,7 @@ extension PlayViewController{
         
         agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_LiveBroadcasting)
         
-        let code = agoraKit.joinChannel(byKey: nil, channelName: "test3", info: nil, uid: 0, joinSuccess: nil)
+        let code = agoraKit.joinChannel(byKey: nil, channelName: "test4", info: nil, uid: 878, joinSuccess: nil)
         
         if code != 0 {
             DispatchQueue.main.async(execute: {
@@ -479,7 +495,7 @@ extension PlayViewController{
         startBtnBackgroundView.addSubview(playNumberBackground)
         
         playNumberBackground.snp.makeConstraints { (make) in
-            make.top.equalTo(startPlayBtn)
+            make.top.equalTo(startBtnBackgroundView).offset(10)
             make.left.equalTo(10)
         }
         
@@ -488,7 +504,7 @@ extension PlayViewController{
         playNumber.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         playNumber.outTextColor = UIColor.white
         playNumber.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        playNumber.font = UIFont.systemFont(ofSize: CGFloat(12))
+        playNumber.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         playNumber.sizeToFit()
         startBtnBackgroundView.addSubview(playNumber)
         
@@ -504,7 +520,7 @@ extension PlayViewController{
         
         queueNumberBackground.snp.makeConstraints { (make) in
             make.left.equalTo(playNumberBackground)
-            make.bottom.equalTo(startPlayBtn)
+            make.bottom.equalTo(startBtnBackgroundView).offset(-10)
         }
         
         queueNumber = MainCustomerLabel()
@@ -512,7 +528,7 @@ extension PlayViewController{
         queueNumber.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         queueNumber.outTextColor = UIColor.white
         queueNumber.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        queueNumber.font = UIFont.systemFont(ofSize: CGFloat(12))
+        queueNumber.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         queueNumber.sizeToFit()
         startBtnBackgroundView.addSubview(queueNumber)
         
@@ -549,7 +565,8 @@ extension PlayViewController{
         if let queue = resultData["data"]["waitCtlCount"].int {
             queueNumber.text = String(queue) + "人等待"
         }
-        
+        print("result:\(resultData)")
+        gemLabel.text = String(Constants.User.diamondsCount)
     }
     
     /// 退出房间
@@ -572,8 +589,17 @@ extension PlayViewController{
         let topHeight = videoView.bounds.height + startBtnBackgroundView.bounds.height
         
         playGroupView.frame = CGRect(x: 0, y: topHeight, width: self.view.bounds.width, height: self.view.bounds.height - topHeight)
+        playGroupView.backgroundColor = UIColor.clear
         view.addSubview(playGroupView)
-        playGroupView.backgroundColor = UIColor.orange
+        
+        /// 背景图片
+        let backgroundImage = UIImageView()
+        backgroundImage.image = UIImage(named: "play_game_background")
+        backgroundImage.frame.size = CGSize(width: self.view.bounds.width, height: self.view.bounds.height - topHeight)
+        playGroupView.addSubview(backgroundImage)
+        
+        let controllerSize = 50
+        
         
         /// 上
         controllerUp = CustomerControllerButton(frame: CGRect.zero, controllerDown: { [weak self] (button)  in
@@ -584,6 +610,7 @@ extension PlayViewController{
             self?.controllerMove(sender: button)
         })
         controllerUp.setImage(UIImage(named: "controller_up"), for: .normal)
+        controllerUp.setImage(UIImage(named: "controller_up_disabled"), for: .disabled)
         controllerUp.sizeToFit()
         playGroupView.addSubview(controllerUp)
         
@@ -591,7 +618,9 @@ extension PlayViewController{
 //        controllerUp.addTarget(self, action: #selector(controllerPathUp(sender:)), for: .touchUpOutside)
         
         controllerUp.snp.makeConstraints { (make) in
-            make.left.equalTo(self.view).offset(20 + controllerUp.bounds.width)
+            make.width.equalTo(controllerSize)
+            make.height.equalTo(controllerSize)
+            make.left.equalTo(self.view).offset(20 + controllerSize)
             make.top.equalTo(playGroupView).offset(30)
         }
         
@@ -604,12 +633,15 @@ extension PlayViewController{
             self?.controllerMove(sender: button)
         })
         controllerLeft.setImage(UIImage(named: "controller_left"), for: .normal)
+        controllerLeft.setImage(UIImage(named: "controller_left_disabled"), for: .disabled)
         controllerLeft.sizeToFit()
         playGroupView.addSubview(controllerLeft)
         
         controllerLeft.snp.makeConstraints { (make) in
-            make.right.equalTo(controllerUp).offset(-(controllerUp.bounds.width))
-            make.top.equalTo(controllerUp).offset(controllerUp.bounds.height + 5)
+            make.width.equalTo(controllerSize)
+            make.height.equalTo(controllerSize)
+            make.right.equalTo(controllerUp).offset(-(controllerSize))
+            make.top.equalTo(controllerUp).offset(controllerSize + 5)
         }
         
 //        controllerLeft.addTarget(self, action: #selector(controllerPathDown(sender:)), for: .touchUpInside)
@@ -624,11 +656,14 @@ extension PlayViewController{
             self?.controllerMove(sender: button)
         })
         controllerRight.setImage(UIImage(named: "controller_right"), for: .normal)
+        controllerRight.setImage(UIImage(named: "controller_right_disabled"), for: .disabled)
         controllerRight.sizeToFit()
         playGroupView.addSubview(controllerRight)
         
         controllerRight.snp.makeConstraints { (make) in
-            make.left.equalTo(controllerUp).offset(controllerUp.bounds.width)
+            make.width.equalTo(controllerSize)
+            make.height.equalTo(controllerSize)
+            make.left.equalTo(controllerUp).offset(controllerSize)
             make.centerY.equalTo(controllerLeft)
         }
         
@@ -644,12 +679,15 @@ extension PlayViewController{
             self?.controllerMove(sender: button)
         })
         controllerDown.setImage(UIImage(named: "controller_down"), for: .normal)
+        controllerDown.setImage(UIImage(named: "controller_down_disabled"), for: .disabled)
         controllerDown.sizeToFit()
         playGroupView.addSubview(controllerDown)
         
         controllerDown.snp.makeConstraints { (make) in
+            make.width.equalTo(controllerSize)
+            make.height.equalTo(controllerSize)
             make.centerX.equalTo(controllerUp)
-            make.top.equalTo(controllerLeft).offset(controllerUp.bounds.height + 5)
+            make.top.equalTo(controllerLeft).offset(controllerSize + 5)
         }
         
         controllerDown.addTarget(self, action: #selector(controllerPathDown(sender:)), for: .touchUpInside)
@@ -657,13 +695,15 @@ extension PlayViewController{
         
         /// 下爪
         grabBtn.setImage(UIImage(named: "controller_grab"), for: .normal)
+        grabBtn.setImage(UIImage(named: "controller_grab_disabled"), for: .disabled)
         grabBtn.sizeToFit()
         playGroupView.addSubview(grabBtn)
         
         grabBtn.snp.makeConstraints { (make) in
+            make.width.equalTo(86)
+            make.height.equalTo(86)
             make.centerY.equalTo(controllerRight)
-            make.left.equalTo(controllerRight).offset(controllerRight.bounds.width)
-            make.right.equalTo(self.view)
+            make.right.equalTo(self.view).offset(-20)
         }
         
         grabBtn.addTarget(self, action: #selector(controllerGrap), for: .touchUpInside)
@@ -673,7 +713,7 @@ extension PlayViewController{
         playTime.outLineWidth = 1
         playTime.outTextColor = UIColor.white
         playTime.outLienTextColor = UIColor.gray
-        playTime.font = UIFont.systemFont(ofSize: CGFloat(20))
+        playTime.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(20))
         playTime.text = "0:30"
         playTime.sizeToFit()
         playTime.textAlignment = .center
@@ -681,7 +721,7 @@ extension PlayViewController{
         
         playTime.snp.makeConstraints { (make) in
             make.centerX.equalTo(grabBtn)
-            make.top.equalTo(grabBtn).offset(grabBtn.bounds.height + 5)
+            make.top.equalTo(grabBtn).offset(86 + 5)
             make.width.equalTo(100)
         }
         
@@ -690,19 +730,25 @@ extension PlayViewController{
     
     /// 展示游戏界面
     func showPlayGroup() -> () {
-        startPlayBtn.isHidden = true
         playGroupView.isHidden = false
         isGrab = false
         isCounting = true
         /// 切换到另一个房间
         switchVideoChannelToDefault()
+        
+        startPlayBtn.isEnabled = false
+        disableControllerBtns(isEnbled: true)
+        
+        //振动
+        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
     
     func hidePlayGroup() -> () {
-        startPlayBtn.isHidden = false
-        playGroupView.isHidden = true
+//        startPlayBtn.isEnabled = true
+//        playGroupView.isHidden = true
         countdownTimer?.invalidate()
         countdownTimer = nil
+        disableControllerBtns(isEnbled: false)
     }
     
     @objc func updateTime() {
@@ -725,6 +771,7 @@ extension PlayViewController{
                 self.showPlayGroup()
                 let json = JSON(response.result.value!)
                 self.gemLabel.text = String(json["data"]["diamondsCount"].int!)
+                Constants.User.diamondsCount = json["data"]["diamondsCount"].intValue
                 self.wardCode = json["data"]["gTradeNo"].string!
             }else {
                 print("error:\(String(describing: response.error))")
@@ -735,6 +782,8 @@ extension PlayViewController{
     
     /// 开始预约
     func waitQueue(){
+        ToastUtils.showLoadingToast(msg: "请稍后……")
+        
         var params = NetWorkUtils.createBaseParams()
         params["deviceid"] = deviceId
         
@@ -754,6 +803,7 @@ extension PlayViewController{
             }else{
                 /// 当数据data为空的时候，报告异常
             }
+            ToastUtils.hide()
         }
     }
     
@@ -857,6 +907,14 @@ extension PlayViewController{
         }
     }
     
+    func disableControllerBtns(isEnbled:Bool) -> () {
+        controllerUp.isEnabled = isEnbled
+        controllerLeft.isEnabled = isEnbled
+        controllerRight.isEnabled = isEnbled
+        controllerDown.isEnabled = isEnbled
+        grabBtn.isEnabled = isEnbled
+    }
+    
     /// 获取中奖信息
     func getWard() -> () {
         if wardCode == "" {
@@ -870,6 +928,7 @@ extension PlayViewController{
             playResultDialog.isSuccess = false
             playResultDialog.createView()
             playResultDialog.show()
+            self.playGrapFail()
             return
         }
         
@@ -886,6 +945,7 @@ extension PlayViewController{
                     self.playResultDialog.isSuccess = true
                     self.playResultDialog.createView()
                     self.playResultDialog.show()
+                    self.playGrapSuccess()
                 }else {
                     print("抓取失败")
                     self.getWardCodeNumber = self.getWardCodeNumber + 1
@@ -901,6 +961,99 @@ extension PlayViewController{
                 })
             }
         }
+    }
+}
+
+// MARK: - 当前页面播放声音
+extension PlayViewController{
+    
+    /// 播放背景声音
+    func playBackgroundMusic() -> () {
+        
+        do {
+            try AVAudioSession.sharedInstance().overrideOutputAudioPort(AVAudioSessionPortOverride.speaker)
+        } catch _ {
+        }
+        //获取bg.mp3文件地址
+        let bgMusicURL =  Bundle.main.path(forResource: "background_music", ofType: "mp3")!
+        //地址转换
+        let baseURL = URL(fileURLWithPath: bgMusicURL)
+        //根据背景音乐地址生成播放器
+        try? bgMusicPlayer = AVAudioPlayer(contentsOf: baseURL)
+        bgMusicPlayer.volume = 10.0
+        //设置为循环播放
+        bgMusicPlayer.numberOfLoops = -1
+        //准备播放音乐
+        bgMusicPlayer.prepareToPlay()
+        //播放音乐
+        bgMusicPlayer.play()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(pauseSong(notification:)), name:NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(playSong(notification:)), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+    }
+    
+    func pauseSong(notification : NSNotification) {
+        bgMusicPlayer.pause()
+    }
+    
+    func playSong(notification : NSNotification) {
+        bgMusicPlayer.play()
+    }
+    
+    /// 播放开始游戏的音效
+    func playStartGame() -> () {
+        //建立的SystemSoundID对象
+        var soundID:SystemSoundID = 0
+        //获取声音地址
+        let path = Bundle.main.path(forResource: "游戏开始_音效", ofType: "wav")
+        //地址转换
+        let baseURL = NSURL(fileURLWithPath: path!)
+        //赋值
+        AudioServicesCreateSystemSoundID(baseURL, &soundID)
+        //提醒（同上面唯一的一个区别）
+        AudioServicesPlayAlertSound(soundID)
+    }
+    
+    /// 播放抓取成功的音效
+    func playGrapSuccess() -> () {
+        //建立的SystemSoundID对象
+        var soundID:SystemSoundID = 1
+        //获取声音地址
+        let path = Bundle.main.path(forResource: "抓取成功_音效", ofType: "wav")
+        //地址转换
+        let baseURL = NSURL(fileURLWithPath: path!)
+        //赋值
+        AudioServicesCreateSystemSoundID(baseURL, &soundID)
+        //提醒（同上面唯一的一个区别）
+        AudioServicesPlayAlertSound(soundID)
+    }
+    
+    /// 播放抓取失败的音效
+    func playGrapFail() -> () {
+        //建立的SystemSoundID对象
+        var soundID:SystemSoundID = 2
+        //获取声音地址
+        let path = Bundle.main.path(forResource: "抓取失败_音效", ofType: "wav")
+        //地址转换
+        let baseURL = NSURL(fileURLWithPath: path!)
+        //赋值
+        AudioServicesCreateSystemSoundID(baseURL, &soundID)
+        //提醒（同上面唯一的一个区别）
+        AudioServicesPlayAlertSound(soundID)
+    }
+    
+    /// 播放切换镜头的音效
+    func playSwitchMusic() -> () {
+        //建立的SystemSoundID对象
+        var soundID:SystemSoundID = 3
+        //获取声音地址
+        let path = Bundle.main.path(forResource: "镜头切换_音效", ofType: "wav")
+        //地址转换
+        let baseURL = NSURL(fileURLWithPath: path!)
+        //赋值
+        AudioServicesCreateSystemSoundID(baseURL, &soundID)
+        //提醒（同上面唯一的一个区别）
+        AudioServicesPlayAlertSound(soundID)
     }
     
 }

@@ -172,6 +172,16 @@ class MyGiftDialog: BaseDialog {
     /// 未邮寄数据
     fileprivate var tobeMailedListData = [JSON]()
     
+    override func hide() {
+        super.hide()
+        for subView in subviews {
+            subView.removeFromSuperview()
+        }
+        self.tobeMailedDelegate.dataSource.removeAll()
+        self.hasBeenMailedDelegate.dataSource.removeAll()
+        editAddressDialog = nil
+    }
+    
 }
 
 // 顶部tab切换逻辑

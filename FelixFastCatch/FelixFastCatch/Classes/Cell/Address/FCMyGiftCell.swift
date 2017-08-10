@@ -94,12 +94,11 @@ extension FCMyGiftCell{
         
         // 产品名标题
         productTitleLabel = MainCustomerLabel()
-        productTitleLabel.text = "测试测试测试测试测试"
         productTitleLabel.numberOfLines = 1
         productTitleLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
-        productTitleLabel.outLineWidth = 2
+        productTitleLabel.outLineWidth = 1
         productTitleLabel.outTextColor = UIColor.white
-        productTitleLabel.outLienTextColor = UIColor.black
+        productTitleLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         addSubview(productTitleLabel)
         
         productTitleLabel.snp.makeConstraints { (make) in

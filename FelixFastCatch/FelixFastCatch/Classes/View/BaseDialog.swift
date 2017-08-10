@@ -73,6 +73,9 @@ class BaseDialog: UIView {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.31) { [weak self] in
             self?.shadow.removeFromSuperview()
             self?.removeFromSuperview()
+            for subview in (self?.subviews)! {
+                subview.removeFromSuperview()
+            }
         }
         
     }

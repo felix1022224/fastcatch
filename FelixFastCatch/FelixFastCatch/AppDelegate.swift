@@ -12,7 +12,7 @@ import CoreLocation
 import SVProgressHUD
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate, AgoraRtcEngineDelegate{
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate{
 
     var window: UIWindow?
 

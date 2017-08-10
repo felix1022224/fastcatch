@@ -78,13 +78,25 @@ class CheckInDialog: BaseDialog {
         tipsLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         tipsLabel.sizeToFit()
         addSubview(tipsLabel)
-        
+
         tipsLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(backgroundImage)
             make.top.equalTo(checkInBtn).offset(-(tipsLabel.bounds.height + 10))
         }
         
         addDialogToWindow()
+    }
+    
+    override func hide() {
+        self.shadow.removeFromSuperview()
+        self.removeFromSuperview()
+        
+        for subView in subviews {
+            subView.removeFromSuperview()
+        }
+        
+        check7DayViews.removeAll()
+        
     }
 
 }
@@ -162,9 +174,7 @@ extension CheckInDialog{
         check7DayViews.append(check7DayView)
         
         initCheckIn7DayView()
-        
-        
-        
+ 
     }
     
     /// 初始化前七天签到样式
@@ -180,6 +190,7 @@ extension CheckInDialog{
         print("checked:\(Constants.User.checkDays)")
         
         for i in 0..<Constants.User.checkDays {
+            print("i:\(i)")
             check7DayViews[i].setChecked(isChecked: true)
         }
     }
@@ -213,10 +224,10 @@ extension CheckInDialog{
 extension CheckInDialog{
     
     func UserCheckIn() -> () {
-        Alamofire.request(Constants.Network.User.USER_CHECKIN, method: .post, parameters: NetWorkUtils.createBaseParams(), encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.User.USER_CHECKIN, method: .post, parameters: NetWorkUtils.createBaseParams(), encoding: URLEncoding.default, headers: nil).responseJSON { [weak self] (response) in
             print("check:\(String(describing: response.result.value))")
             if NetWorkUtils.checkReponse(response: response) {
-                self.checkInBtn.isEnabled = false
+                self?.checkInBtn.isEnabled = false
                 let json = JSON(response.result.value!)
                 Constants.User.checkDays = json["data"]["checkedDays"].intValue
                 Constants.User.todayChecked = true
@@ -224,7 +235,7 @@ extension CheckInDialog{
                 if Constants.User.checkDays > 8 {
                     
                 }else{
-                    self.initCheckIn7DayView()
+                    self?.initCheckIn7DayView()
                 }
             }
         }

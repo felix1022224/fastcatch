@@ -353,10 +353,10 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let itemData = mainListData[indexPath.row]
         
-        cell?.playBtn.tag = Int(itemData["deviceId"].string!)!
+        cell?.playBtn.tag = indexPath.row
         cell?.addPlayBtnClick(target: self, action: #selector(showPlay))
         
-        cell?.productImage.kf.setImage(with: URL(string: itemData["activity"]["bannerBigImg"].string!))
+        cell?.productImage.kf.setImage(with: URL(string: itemData["award"]["img"].string!))
         cell?.titleLabel.text = itemData["award"]["title"].string!
         cell?.gemNumberLabel.text = String(itemData["perDiamondsCount"].int!) + "钻"
         
@@ -371,13 +371,35 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             fastLoginDialog.show()
             return
         }
+        
+        if !checkDeviceStatus(status: mainListData[sender.tag]["status"].intValue) {
+            return
+        }
+        
         let playView = PlayViewController()
-        playView.deviceId = String(sender.tag)
+        playView.deviceId = mainListData[sender.tag]["deviceId"].stringValue
         navigationController?.pushViewController(playView, animated: true)
         
 //        test()
     }
 
+    func checkDeviceStatus(status:Int) -> Bool {
+        if status == 10 {
+            ToastUtils.showErrorToast(msg: "设备维护中")
+            return false
+        }
+        if status == 20 {
+            ToastUtils.showErrorToast(msg: "设备异常")
+            return false
+        }
+        if status == 30 {
+            ToastUtils.showErrorToast(msg: "设备已下线")
+            return false
+        }
+        
+        return true
+    }
+    
 }
 
 
@@ -392,6 +414,7 @@ extension MainViewController{
         params["page"] = String(page)
         
         Alamofire.request(Constants.Network.MAIN_LIST, method: .post, parameters: params).responseJSON { (response) in
+            print("result:\(String(describing: response.result.value))")
             if response.error == nil {
                 let jsonObject = JSON(response.data!)
                 if self.isRefresh {
@@ -521,6 +544,7 @@ extension MainViewController{
             return
         }
         checkInDialog.createView()
+        checkInDialog.initCheckIn7DayView()
         checkInDialog.show()
     }
     
