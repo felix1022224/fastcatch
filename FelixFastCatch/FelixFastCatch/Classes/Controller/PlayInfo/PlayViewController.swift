@@ -107,6 +107,12 @@ class PlayViewController: UIViewController {
     /// 播放声音
     var bgMusicPlayer = AVAudioPlayer()
     
+    /// 再玩一次
+    var rePlayGameBtn:UIButton!
+    
+    /// 再玩一次的倒计时
+    var rePlayGameTimeLabel:MainCustomerLabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -132,7 +138,7 @@ class PlayViewController: UIViewController {
         }
     }
     
-    /// 倒计时
+    /// 游戏倒计时
     fileprivate var countdownTimer: Timer?
     
     fileprivate var remainingSeconds: Int = 0 {
@@ -168,6 +174,36 @@ class PlayViewController: UIViewController {
         }
     }
     
+    /// 再来一次的倒计时
+    fileprivate var replayCountdownTimer: Timer?
+    
+    fileprivate var replaySeconds: Int = 0 {
+        willSet {
+            if newValue < 10 {
+                rePlayGameTimeLabel.text = "0:0\(newValue)"
+            }else {
+                rePlayGameTimeLabel.text = "0:\(newValue)"
+            }
+            
+            if newValue <= 0 {
+                rePlayGameTimeLabel.text = "0:30"
+                isCounting = false
+            }
+        }
+    }
+    
+    var isReplayCounting = false {
+        willSet {
+            if newValue {
+                replayCountdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateReplayTime), userInfo: nil, repeats: true)
+                replaySeconds = 15
+            } else {
+                replayCountdownTimer?.invalidate()
+                replayCountdownTimer = nil
+            }
+        }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         print("页面销毁")
     }
@@ -187,6 +223,9 @@ extension PlayViewController{
         createBtns()
         
         createPlayControllerView()
+        
+        /// 重新游戏倒计时的view
+        createReStartTimeLabel()
     }
     
     /// 创建背景板
@@ -287,7 +326,7 @@ extension PlayViewController{
     func createStartBtn() -> () {
         let startBtnImage = UIImage(named: "icon_start")
         startBtnBackgroundView.backgroundColor = UIColor(red: 91/255.0, green: 177/255.0, blue: 228/255.0, alpha: 1.0)
-        startBtnBackgroundView.frame = CGRect(x: 0, y: videoView.bounds.height, width: self.view.bounds.width, height: startBtnImage!.size.height + 25)
+        startBtnBackgroundView.frame = CGRect(x: 0, y: videoView.bounds.height, width: self.view.bounds.width, height: startBtnImage!.size.height * 1.5 + 25)
         view.addSubview(startBtnBackgroundView)
         
         startPlayBtn.setImage(startBtnImage, for: .normal)
@@ -739,20 +778,27 @@ extension PlayViewController{
         startPlayBtn.isEnabled = false
         disableControllerBtns(isEnbled: true)
         
+        resetReplayInfo()
+        
         //振动
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
     
     func hidePlayGroup() -> () {
 //        startPlayBtn.isEnabled = true
-//        playGroupView.isHidden = true
+        playGroupView.isHidden = true
         countdownTimer?.invalidate()
         countdownTimer = nil
         disableControllerBtns(isEnbled: false)
+        /// 开始进行再来一局的倒计时
     }
     
     @objc func updateTime() {
         remainingSeconds -= 1
+    }
+    
+    @objc func updateReplayTime(){
+        replaySeconds -= 1
     }
     
     /// 开始游戏
@@ -853,23 +899,7 @@ extension PlayViewController{
     }
     
     func controllerMove(sender:CustomerControllerButton) -> () {
-//        if sender == controllerUp {
-//            // 上
-//            print("按下，上")
-//            controllerNetworkPath(path:"3", status: "1")
-//        }else if sender == controllerDown {
-//            // 下
-//            print("按下，下")
-//            controllerNetworkPath(path:"2", status: "1")
-//        }else if sender == controllerLeft {
-//            // 左
-//            print("按下，左")
-//            controllerNetworkPath(path:"0", status: "1")
-//        }else if sender == controllerRight {
-//            // 右
-//            print("按下，右")
-//            controllerNetworkPath(path:"1", status: "1")
-//        }
+
     }
     
     /// 通过网络操作机器臂的方向
@@ -929,6 +959,9 @@ extension PlayViewController{
             playResultDialog.createView()
             playResultDialog.show()
             self.playGrapFail()
+            hidePlayGroup()
+            /// 展示再来一局的界面
+            showRePlayInfo()
             return
         }
         
@@ -946,6 +979,9 @@ extension PlayViewController{
                     self.playResultDialog.createView()
                     self.playResultDialog.show()
                     self.playGrapSuccess()
+                    self.hidePlayGroup()
+                    /// 展示再来一局的界面
+                    showRePlayInfo()
                 }else {
                     print("抓取失败")
                     self.getWardCodeNumber = self.getWardCodeNumber + 1
@@ -963,6 +999,82 @@ extension PlayViewController{
         }
     }
 }
+
+// MARK: - 再玩一次的逻辑
+extension PlayViewController{
+    
+    /// 创建倒计时的时间文字
+    func createReStartTimeLabel() -> () {
+        rePlayGameTimeLabel = MainCustomerLabel()
+        rePlayGameTimeLabel.text = "0:15"
+        rePlayGameTimeLabel.outTextColor = UIColor.white
+        rePlayGameTimeLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
+        rePlayGameTimeLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
+        rePlayGameTimeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
+        rePlayGameTimeLabel.sizeToFit()
+        view.addSubview(rePlayGameTimeLabel)
+        
+        rePlayGameTimeLabel.snp.makeConstraints { (make) in
+            make.centerX.equalTo(startPlayBtn)
+            make.top.equalTo(startPlayBtn).offset(startPlayBtn.bounds.height + 2)
+        }
+        
+        rePlayGameTimeLabel.isHidden = true
+        
+        createReStartBtn()
+    }
+    
+    /// 创建重新游戏的按钮
+    func createReStartBtn() -> () {
+        rePlayGameBtn = UIButton(type: .custom)
+        rePlayGameBtn.setImage(UIImage(named: "replay_start_game"), for: .normal)
+        rePlayGameBtn.sizeToFit()
+        view.addSubview(rePlayGameBtn)
+        
+        rePlayGameBtn.snp.makeConstraints { (make) in
+            make.center.equalTo(startPlayBtn)
+        }
+        
+        rePlayGameBtn.addTarget(self, action: #selector(replayGame), for: .touchUpInside)
+        
+        rePlayGameBtn.isHidden = true
+    }
+    
+    /// 再来一局
+    func replayGame() -> () {
+        startPlay()
+    }
+    
+    /// 游戏结束，开始进行倒计时15秒
+    func reStartCreateTime() -> () {
+        isReplayCounting = true
+    }
+    
+    /// 重置再来一局的相关设置
+    func resetReplayInfo() -> () {
+        /// 结束倒计时
+        isReplayCounting = false
+        /// 倒计时信息复原
+        rePlayGameTimeLabel.text = "0:15"
+        rePlayGameTimeLabel.isHidden = true
+        /// 隐藏倒计时按钮
+        rePlayGameBtn.isHidden = true
+        
+        replayCountdownTimer?.invalidate()
+        replayCountdownTimer = nil
+    }
+    
+    /// 展示再来一局的信息
+    func showRePlayInfo() -> () {
+        /// 展示界面
+        rePlayGameBtn.isHidden = false
+        rePlayGameTimeLabel.isHidden = false
+        /// 开始倒计时
+        reStartCreateTime()
+    }
+    
+}
+
 
 // MARK: - 当前页面播放声音
 extension PlayViewController{
@@ -1055,7 +1167,6 @@ extension PlayViewController{
         //提醒（同上面唯一的一个区别）
         AudioServicesPlayAlertSound(soundID)
     }
-    
 }
 
 
