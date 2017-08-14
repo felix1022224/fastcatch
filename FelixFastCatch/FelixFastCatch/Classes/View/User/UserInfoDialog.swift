@@ -121,6 +121,8 @@ class UserInfoDialog: BaseDialog {
         constellationLabel.sizeToFit()
         addSubview(constellationLabel)
         
+        
+        
         constellationLabel.snp.makeConstraints { (make) in
             make.top.equalTo(userNickName).offset(userNickName.bounds.height + 5)
             make.left.equalTo(userNickName)
@@ -161,6 +163,8 @@ class UserInfoDialog: BaseDialog {
         addSubview(changeInfoBtn)
         changeInfoBtn.addTarget(self, action: #selector(editUserInfo), for: .touchUpInside)
         
+        initBrithday()
+        
         addDialogToWindow()
     }
 
@@ -190,7 +194,7 @@ class UserInfoDialog: BaseDialog {
                 self?.sexLabel.text = "性别:男"
             }
             let df = DateFormatter()
-            df.dateFormat = "yyy-MM-dd"
+            df.dateFormat = "yyyy-MM-dd"
             let con = ConstellationUtils.calculateWithDate(date: df.date(from: birthday)!)
             self?.constellationLabel.text = "星座:" + con
             
@@ -205,6 +209,17 @@ class UserInfoDialog: BaseDialog {
         UserDefaults.standard.set(nick, forKey: Constants.User.USER_NICK_NAME_KEY)
         UserDefaults.standard.set(sex, forKey: Constants.User.USER_SEX_KEY)
         UserDefaults.standard.set(birthday, forKey: Constants.User.USER_BRITHDAY_KEY)
+    }
+    
+    /// 初始化生日
+    func initBrithday() -> () {
+        if Constants.User.USER_BRITHDAY == "" {
+            constellationLabel.text = "星座:"
+            return
+        }
+        let format = DateFormatter()
+        format.dateFormat = "yyyy-MM-dd"
+        constellationLabel.text = "星座:" + ConstellationUtils.calculateWithDate(date: format.date(from: Constants.User.USER_BRITHDAY)!)
     }
     
 }

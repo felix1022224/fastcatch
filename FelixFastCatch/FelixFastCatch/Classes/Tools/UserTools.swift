@@ -24,6 +24,8 @@ class UserTools: NSObject {
                 Constants.User.addrPhone = json["data"]["pav"]["phone"].stringValue
                 Constants.User.addressId = json["data"]["pav"]["id"].stringValue
                 
+                Constants.User.USER_BRITHDAY = json["data"]["birthday"].stringValue
+                
                 Constants.User.checkDays = json["data"]["checkDays"].intValue
                 if json["data"]["todayChecked"].intValue == 1 {
                     Constants.User.todayChecked = true

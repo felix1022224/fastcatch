@@ -22,6 +22,7 @@ class LocalDataUtils: NSObject {
         UserDefaults.standard.set(String(resultData["data"]["uid"].int!), forKey: Constants.User.USER_ID_KEY)
         UserDefaults.standard.set(resultData["data"]["avatar"].string, forKey: Constants.User.USER_FACE_IMAGE_KEY)
         UserDefaults.standard.set(String(resultData["data"]["gender"].int!), forKey: Constants.User.USER_SEX_KEY)
+        UserDefaults.standard.set(resultData["data"]["birthday"].stringValue, forKey: Constants.User.USER_BRITHDAY_KEY)
         
         let headerFields = dataResponse.response?.allHeaderFields as! [String: String]
         let url = dataResponse.request?.url
@@ -95,6 +96,14 @@ class LocalDataUtils: NSObject {
         }else {
             Constants.User.USER_SEX = userSex!
         }
+        
+        // 用户生日
+        let userBrithday = UserDefaults.standard.string(forKey: Constants.User.USER_BRITHDAY_KEY)
+        if userBrithday == nil {
+            Constants.User.USER_BRITHDAY = ""
+        }else {
+            Constants.User.USER_BRITHDAY = userBrithday!
+        }
     }
     
     
@@ -105,11 +114,13 @@ class LocalDataUtils: NSObject {
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_FACE_IMAGE_KEY)
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_NICK_NAME_KEY)
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_SEX_KEY)
+        UserDefaults.standard.removeObject(forKey: Constants.User.USER_BRITHDAY)
         
         Constants.User.USER_NICK_NAME = ""
         Constants.User.USER_ID = ""
         Constants.User.USER_FACE_IMAGE = ""
         Constants.User.USER_SEX = ""
+        Constants.User.USER_BRITHDAY = ""
     }
     
 }

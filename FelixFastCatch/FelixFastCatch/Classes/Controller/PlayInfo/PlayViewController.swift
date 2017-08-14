@@ -113,14 +113,29 @@ class PlayViewController: UIViewController {
     /// 再玩一次的倒计时
     var rePlayGameTimeLabel:MainCustomerLabel!
     
+    /// 关掉声音
+    var isCloseMusic:Bool = false
+    
+    /// 退出游戏的询问框
+    var outGameDialog:OutGameDialog!
+    
+    /// 是否正在游戏中
+    var isGameing = false
+    
+    var playSuccess:(()->())? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        outGameDialog = OutGameDialog(frame: UIScreen.main.bounds)
+        
         playResultDialog = PlayResultDialog(frame: UIScreen.main.bounds)
         
         self.navigationController?.navigationBar.isHidden = true
         
         view.backgroundColor = UIColor.white
+        
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false;   //禁用侧滑手势
         
         enter()
         
@@ -128,6 +143,7 @@ class PlayViewController: UIViewController {
         
         /// 播放背景音乐
         playBackgroundMusic()
+
     }
 
     deinit {
@@ -186,8 +202,10 @@ class PlayViewController: UIViewController {
             }
             
             if newValue <= 0 {
-                rePlayGameTimeLabel.text = "0:30"
+                rePlayGameTimeLabel.text = "0:15"
                 isCounting = false
+                /// 到时间了，隐藏界面
+                hideReplayView()
             }
         }
     }
@@ -206,6 +224,7 @@ class PlayViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         print("页面销毁")
+        bgMusicPlayer.stop()
     }
     
 }
@@ -344,6 +363,14 @@ extension PlayViewController{
     
     /// 关闭当前页面
     func backBtnClick() -> () {
+        if isGameing {
+            /// 游戏中点击返回键
+            outGameDialog.createView()
+            outGameDialog.show2 {[weak self] in
+                self?.navigationController?.popViewController(animated: true)
+            }
+            return
+        }
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -359,7 +386,7 @@ extension PlayViewController{
         videoView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height * 0.45)
         view.addSubview(videoView)
         
-        agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: "90206f8d680c489d9b7641ba9b0f31ee", delegate: self)
+        agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: "a61c87d429a748cfbdae28178e082289", delegate: self)
         
         /// 默认是直播模式
         agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_LiveBroadcasting)
@@ -610,6 +637,8 @@ extension PlayViewController{
     
     /// 退出房间
     fileprivate func out(deviceId:String){
+        endQueue(deviceId: deviceId)
+        
         var params = NetWorkUtils.createBaseParams()
         params["deviceid"] = deviceId
         Alamofire.request(Constants.Network.Machine.OUT_WATCH, method: .post, parameters: params).responseJSON { (response) in
@@ -618,6 +647,18 @@ extension PlayViewController{
             }
         }
     }
+    
+    /// 取消预约
+    fileprivate func endQueue(deviceId:String){
+        var params = NetWorkUtils.createBaseParams()
+        params["deviceid"] = deviceId
+        Alamofire.request(Constants.Network.Machine.END_PALY, method: .post, parameters: params).responseJSON { (response) in
+            if response.error == nil && response.data != nil {
+                print("result_取消预约:\(response.result.value ?? "")")
+            }
+        }
+    }
+    
 }
 
 // MARK: - 游戏操作界面
@@ -775,6 +816,8 @@ extension PlayViewController{
         /// 切换到另一个房间
         switchVideoChannelToDefault()
         
+        isGameing = true
+        
         startPlayBtn.isEnabled = false
         disableControllerBtns(isEnbled: true)
         
@@ -791,6 +834,8 @@ extension PlayViewController{
         countdownTimer = nil
         disableControllerBtns(isEnbled: false)
         /// 开始进行再来一局的倒计时
+        
+        isGameing = false
     }
     
     @objc func updateTime() {
@@ -981,7 +1026,10 @@ extension PlayViewController{
                     self.playGrapSuccess()
                     self.hidePlayGroup()
                     /// 展示再来一局的界面
-                    showRePlayInfo()
+                    self.showRePlayInfo()
+                    if self.playSuccess != nil {
+                        self.playSuccess!()
+                    }
                 }else {
                     print("抓取失败")
                     self.getWardCodeNumber = self.getWardCodeNumber + 1
@@ -1073,6 +1121,14 @@ extension PlayViewController{
         reStartCreateTime()
     }
     
+    // 隐藏再玩一次的界面
+    func hideReplayView() -> () {
+        resetReplayInfo()
+        
+        startPlayBtn.isEnabled = true
+        
+    }
+    
 }
 
 
@@ -1102,6 +1158,8 @@ extension PlayViewController{
         
         NotificationCenter.default.addObserver(self, selector: #selector(pauseSong(notification:)), name:NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(playSong(notification:)), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        
+        isCloseMusic = false
     }
     
     func pauseSong(notification : NSNotification) {
@@ -1109,11 +1167,16 @@ extension PlayViewController{
     }
     
     func playSong(notification : NSNotification) {
-        bgMusicPlayer.play()
+        if !isCloseMusic {
+            bgMusicPlayer.play()
+        }
     }
     
     /// 播放开始游戏的音效
     func playStartGame() -> () {
+        if isCloseMusic {
+            return
+        }
         //建立的SystemSoundID对象
         var soundID:SystemSoundID = 0
         //获取声音地址
@@ -1128,6 +1191,9 @@ extension PlayViewController{
     
     /// 播放抓取成功的音效
     func playGrapSuccess() -> () {
+        if isCloseMusic {
+            return
+        }
         //建立的SystemSoundID对象
         var soundID:SystemSoundID = 1
         //获取声音地址
@@ -1142,6 +1208,9 @@ extension PlayViewController{
     
     /// 播放抓取失败的音效
     func playGrapFail() -> () {
+        if isCloseMusic {
+            return
+        }
         //建立的SystemSoundID对象
         var soundID:SystemSoundID = 2
         //获取声音地址
@@ -1156,6 +1225,9 @@ extension PlayViewController{
     
     /// 播放切换镜头的音效
     func playSwitchMusic() -> () {
+        if isCloseMusic {
+            return
+        }
         //建立的SystemSoundID对象
         var soundID:SystemSoundID = 3
         //获取声音地址
@@ -1166,6 +1238,12 @@ extension PlayViewController{
         AudioServicesCreateSystemSoundID(baseURL, &soundID)
         //提醒（同上面唯一的一个区别）
         AudioServicesPlayAlertSound(soundID)
+    }
+    
+    /// 关掉声音
+    func closeMusic() -> () {
+        isCloseMusic = true
+        bgMusicPlayer.pause()
     }
 }
 

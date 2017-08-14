@@ -58,7 +58,8 @@ class Constants: NSObject {
             /// 获取中奖信息
             static let GET_WARD = BASE_URL + "machine/getaward"
             
-//            static let END_PALY = BASE_URL + ""
+            /// 取消预约
+            static let END_PALY = BASE_URL + "machine/quitqueue"
         }
         
         /// 礼物相关

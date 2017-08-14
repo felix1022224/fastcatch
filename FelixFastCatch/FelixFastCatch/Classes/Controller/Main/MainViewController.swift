@@ -73,6 +73,9 @@ class MainViewController: UIViewController {
     /// 邀请界面
     fileprivate var inviteDialog:InviteDialog!
     
+    /// 分享战绩
+    fileprivate var showOffRecordDialog:ShowOffRecordDialog!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -118,6 +121,9 @@ class MainViewController: UIViewController {
         
         /// 邀请
         inviteDialog = InviteDialog(frame: UIScreen.main.bounds)
+        
+        /// 分享战绩
+        showOffRecordDialog = ShowOffRecordDialog(frame: UIScreen.main.bounds)
     }
     
     func test() -> () {
@@ -378,6 +384,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let playView = PlayViewController()
         playView.deviceId = mainListData[sender.tag]["deviceId"].stringValue
+        playView.playSuccess = {[weak self] in
+            self?.showShardRecordDialog()
+        }
         navigationController?.pushViewController(playView, animated: true)
         
 //        test()
@@ -503,6 +512,8 @@ extension MainViewController{
         let inviteBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 2 - settingsBtn.bounds.width * 2, y: UIScreen.main.bounds.height - 80, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Store-btn"), actionTitle: "邀请")
         view.addSubview(inviteBtn)
         
+        inviteBtn.addBtnClickAction(target: self, action: #selector(showInviteDialog))
+        
         /// 签到
         let checkInBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 3 - settingsBtn.bounds.width * 3, y: UIScreen.main.bounds.height - 80, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Achievements-btn"), actionTitle: "签到")
         view.addSubview(checkInBtn)
@@ -519,6 +530,16 @@ extension MainViewController{
         
         payGemBtn.addBtnClickAction(target: self, action: #selector(showPayDialog))
         
+    }
+    
+    /// 显示邀请界面
+    func showInviteDialog() -> () {
+        if Constants.User.USER_ID == "" {
+            showFastLogin()
+            return
+        }
+        inviteDialog.createView()
+        inviteDialog.show()
     }
     
     /// 显示我的礼物
@@ -548,15 +569,6 @@ extension MainViewController{
         checkInDialog.show()
     }
     
-    func showInviteDialog() -> () {
-        if Constants.User.USER_ID == "" {
-            showFastLogin()
-            return
-        }
-        inviteDialog.createView()
-        inviteDialog.show()
-    }
-    
     /// 显示购买的dialog
     func showPayDialog() -> () {
         if Constants.User.USER_ID == "" {
@@ -565,6 +577,12 @@ extension MainViewController{
         }
         payGemDialog.createView()
         payGemDialog.show()
+    }
+    
+    /// 显示分享战绩的dialog
+    func showShardRecordDialog() -> () {
+        showOffRecordDialog.createView()
+        showOffRecordDialog.show()
     }
     
     // 点击展开隐藏设置按钮
