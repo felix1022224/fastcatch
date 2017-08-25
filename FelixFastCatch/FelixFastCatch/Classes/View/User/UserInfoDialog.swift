@@ -105,6 +105,7 @@ class UserInfoDialog: BaseDialog {
         userNickName.outTextColor = UIColor.white
         userNickName.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         userNickName.sizeToFit()
+        userNickName.frame = userNickName.frame.insetBy(dx: CGFloat(1), dy: CGFloat(0))
         addSubview(userNickName)
         
         userNickName.snp.makeConstraints { (make) in
@@ -120,8 +121,6 @@ class UserInfoDialog: BaseDialog {
         constellationLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         constellationLabel.sizeToFit()
         addSubview(constellationLabel)
-        
-        
         
         constellationLabel.snp.makeConstraints { (make) in
             make.top.equalTo(userNickName).offset(userNickName.bounds.height + 5)
@@ -173,6 +172,7 @@ class UserInfoDialog: BaseDialog {
         ToastUtils.showLoadingToast(msg: "正在登出")
         
         Alamofire.request(Constants.Network.User.LOGOUT_URL, method: .post, parameters: NetWorkUtils.createBaseParams(), encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            print("result:\(response.result.value!)")
             if NetWorkUtils.checkReponse(response: response) {
                 /// 登出成功
                 ToastUtils.hide()

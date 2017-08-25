@@ -39,10 +39,12 @@ class FastLoginDialog: BaseDialog {
         backgroundImage.center = self.center
         
         phoneNumberLogin = PhoneNumberDialog(frame: self.bounds)
+        firstLoginReward = FirstLoginRewardDialog(frame: self.bounds)
         
         // 手机号登录
         phoneNumberLoginBtn = UIButton(type: .custom)
         phoneNumberLoginBtn.setBackgroundImage(UIImage(named: "icon_phone"), for: .normal)
+        phoneNumberLoginBtn.setBackgroundImage(UIImage(named: "手机登录点击"), for: .highlighted)
         addSubview(phoneNumberLoginBtn)
         
         phoneNumberLoginBtn.snp.makeConstraints { (make) in
@@ -58,6 +60,7 @@ class FastLoginDialog: BaseDialog {
         // 微信
         wechatLoginBtn = UIButton(type: .custom)
         wechatLoginBtn.setBackgroundImage(UIImage(named: "icon_weixin"), for: .normal)
+        wechatLoginBtn.setBackgroundImage(UIImage(named: "weixin点击"), for: .highlighted)
         addSubview(wechatLoginBtn)
         
         wechatLoginBtn.snp.makeConstraints { (make) in
@@ -71,6 +74,7 @@ class FastLoginDialog: BaseDialog {
         // qq
         qqLoginBtn = UIButton(type: .custom)
         qqLoginBtn.setBackgroundImage(UIImage(named: "icon_qq"), for: .normal)
+        qqLoginBtn.setBackgroundImage(UIImage(named: "qq点击"), for: .highlighted)
 //        qqLoginBtn.sizeToFit()
         addSubview(qqLoginBtn)
         
@@ -88,6 +92,7 @@ class FastLoginDialog: BaseDialog {
         /// 关闭按钮
         let close_btn = UIButton(type: .custom)
         close_btn.setBackgroundImage(UIImage(named: "fast_login_close_btn"), for: .normal)
+        close_btn.setBackgroundImage(UIImage(named: "关闭登陆点击"), for: .highlighted)
         close_btn.sizeToFit()
         addSubview(close_btn)
         

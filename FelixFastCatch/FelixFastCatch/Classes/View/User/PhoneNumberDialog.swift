@@ -226,7 +226,6 @@ extension PhoneNumberDialog{
         
         Alamofire.request(Constants.Network.PHONE_NUMBER_LOGIN, method: .post, parameters: params).responseJSON { (response) in
             if response.error == nil && response.data != nil {
-//                SVProgressHUD.dismiss()
                 let resultJson = JSON(data: response.data!)
                 if NetWorkUtils.checkReponse(response: response) {
                     print("response:\(String(describing: response.result.value))")
@@ -237,7 +236,11 @@ extension PhoneNumberDialog{
                     if resultJson["data"]["new"].boolValue {
                         self.showFirstLoginReward()
                     }
+                    return
                 }
+                print("result:\(response.result.value!)")
+                let json = JSON(response.result.value!)
+                ToastUtils.showErrorToast(msg: "登录失败:\(json["msg"].stringValue)")
             }
         }
     }

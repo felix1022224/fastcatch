@@ -29,6 +29,11 @@ class MainCollectionViewCell: UICollectionViewCell{
     // 开始玩的按钮
     var playBtn:UIButton!
     
+    /// 异常的view
+    var errorStatusView:UIView!
+    
+    var errorImage:UIImageView!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -51,6 +56,7 @@ class MainCollectionViewCell: UICollectionViewCell{
         
         setupImage()
         createBottomGroup()
+        createErrorView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -73,8 +79,7 @@ extension MainCollectionViewCell{
         productImage.layer.masksToBounds = true
         productImage.contentMode = .scaleAspectFill
         addSubview(productImage)
-        
-//        productImage.kf.setImage(with: URL(string: "http://image15.poco.cn/mypoco/myphoto/20150105/22/54827367201501052235372969159251560_026.jpg"))
+ 
     }
     
 }
@@ -177,8 +182,61 @@ extension MainCollectionViewCell{
             playBtn.addTarget(target, action: action, for: .touchUpInside)
         }
     }
-
 }
+
+// MARK: - 异常的view
+extension MainCollectionViewCell{
+    
+    func createErrorView() -> () {
+        errorStatusView = UIView()
+        errorStatusView.frame.size = CGSize(width: self.rootView.bounds.width, height: 20)
+        errorStatusView.backgroundColor = UIColor(red: 253/255.0, green: 174/255.0, blue: 29/255.0, alpha: 0.8)
+        
+//        errorStatusView.frame = errorStatusView.frame.insetBy(dx: CGFloat(4), dy: CGFloat(4))
+        
+        let errorStatusLabel = MainCustomerLabel()
+        errorStatusLabel.text = "正在补货中"
+        errorStatusLabel.outLineWidth = 2
+        errorStatusLabel.outTextColor = UIColor.white
+        errorStatusLabel.outLienTextColor = UIColor.yellow
+        errorStatusLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
+        errorStatusLabel.sizeToFit()
+        errorStatusView.addSubview(errorStatusLabel)
+        
+        let errorRoundView = UIView()
+        errorRoundView.frame.size = CGSize(width: errorStatusView.bounds.width, height: errorStatusView.bounds.height + 15)
+        errorRoundView.frame = errorRoundView.frame.insetBy(dx: CGFloat(4), dy: CGFloat(4))
+        errorRoundView.layer.masksToBounds = true
+        errorRoundView.layer.cornerRadius = 5
+        addSubview(errorRoundView)
+        
+        errorRoundView.addSubview(errorStatusView)
+        
+        errorStatusLabel.snp.makeConstraints { (make) in
+            make.center.equalTo(errorStatusView)
+        }
+        
+        errorImage = UIImageView(image: UIImage(named: "Heart-icon"))
+        addSubview(errorImage)
+    }
+    
+    func showErrorView() -> () {
+        errorStatusView.isHidden = false
+        errorImage.isHidden = false
+    }
+    
+    func hideErrorView() -> () {
+        errorStatusView.isHidden = true
+        errorImage.isHidden = true
+    }
+}
+
+
+
+
+
+
+
 
 
 

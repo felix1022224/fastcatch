@@ -383,7 +383,7 @@ extension PlayViewController{
     /// 创建video 的view
     func createVideo() -> () {
         videoView.backgroundColor = UIColor.lightGray
-        videoView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height * 0.45)
+        videoView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height * 0.5)
         view.addSubview(videoView)
         
         agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: "a61c87d429a748cfbdae28178e082289", delegate: self)

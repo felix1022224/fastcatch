@@ -1,7 +1,7 @@
 PODS:
   - AgoraRtcEngine_iOS (1.12.0)
   - Alamofire (4.5.0)
-  - Kingfisher (3.10.4)
+  - Kingfisher (3.11.0)
   - MJRefresh (3.1.12)
   - SnapKit (3.2.0)
   - SVProgressHUD (2.1.2)
@@ -21,7 +21,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AgoraRtcEngine_iOS: 270ef12a883e1f068c3fa4a8f1b85308ab9819c1
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
-  Kingfisher: dc3a4983e86d2dfa89513664983a82340c11a289
+  Kingfisher: c8911a7672c6217dec8c0520fb6e76ec4b7e0780
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994

@@ -87,6 +87,9 @@ class MainViewController: UIViewController {
         
         setupUI()
         
+        /**
+         *
+         */
 //        let familyNames = UIFont.familyNames;
 //        for item in familyNames{
 //            let fontNames = UIFont.fontNames(forFamilyName: item)
@@ -213,7 +216,7 @@ extension MainViewController:UIScrollViewDelegate{
     ///
     /// - Returns: banner图的高度是整体view的高的20%
     func getBannerHeight() -> CGFloat {
-        return UIScreen.main.bounds.height * 0.25
+        return UIScreen.main.bounds.height * 0.25 - 1
     }
     
     //创建轮播图定时器
@@ -248,10 +251,9 @@ extension MainViewController:UIScrollViewDelegate{
         //循环增加图片到scrollview当中
         for i:Int in 0..<mainBannersData.count{
             let iv = UIImageView()
-            iv.frame = CGRect(x: CGFloat(i) * bannerView.bounds.width, y: 0, width: bannerView.bounds.width, height: getBannerHeight())
-            bannerView.addSubview(iv)
-            iv.contentMode = .scaleAspectFill
+            iv.frame = CGRect(x: CGFloat(i) * self.view.bounds.width, y: 0, width: self.view.bounds.width, height: getBannerHeight() + 1)
             iv.kf.setImage(with: URL(string: mainBannersData[i]["bannerBigImg"].string!))
+            bannerView.addSubview(iv)
         }
         
         bannerView.contentSize = CGSize(width: self.view.bounds.width * CGFloat(mainBannersData.count), height: getBannerHeight())
@@ -366,9 +368,14 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell?.titleLabel.text = itemData["award"]["title"].string!
         cell?.gemNumberLabel.text = String(itemData["perDiamondsCount"].int!) + "钻"
         
+        if itemData["status"].intValue != 0 {
+            cell?.showErrorView()
+        }else{
+            cell?.hideErrorView()
+        }
+        
         return cell!
     }
-    
     
     /// 显示游戏界面
     func showPlay(sender: UIButton) -> () {
@@ -436,8 +443,6 @@ extension MainViewController{
                 self.dataList.delegate = self
                 self.dataList.dataSource = self
                 self.dataList.reloadData()
-                
-//                print("result:\(jsonObject)")
                 
                 // 如果数据不等于0 页码+1
                 if self.mainListData.count > 0 {

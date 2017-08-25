@@ -40,12 +40,12 @@ class EditAddressDialog: BaseDialog {
     
     fileprivate var mailedConfirm:FCMailedConfirmDialog!
     
+        
     func createView(mailedConfirm:FCMailedConfirmDialog) {
         
         self.mailedConfirm = mailedConfirm
         
         createBackgroundImage(imageName: "邮寄地址填写背景")
-        
         
         createCloseBtn()
         
@@ -232,7 +232,7 @@ extension EditAddressDialog{
         
         Alamofire.request(Constants.Network.Gift.SAVE_USER_ADDRESS, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
-                ToastUtils.showSuccessToast(msg: "保存成功!")
+                ToastUtils.showSuccessToast(msg: "修改成功")
                 
                 if self.myGiftDialog != nil {
                     self.myGiftDialog.reBackShowMailedConfirm(userInfo: self.userNameTextField.text!, phoneNumber: self.phoneNumberTextField.text!, address: self.addressTextFiled.text!)

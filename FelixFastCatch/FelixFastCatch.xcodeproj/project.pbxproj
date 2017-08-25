@@ -37,6 +37,8 @@
 		4D2B80121F4008060075D390 /* MailedSuccessDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B80111F4008060075D390 /* MailedSuccessDialog.swift */; };
 		4D2B80141F40097E0075D390 /* OutGameDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B80131F40097E0075D390 /* OutGameDialog.swift */; };
 		4D2B80161F40263F0075D390 /* ShowOffRecordDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B80151F40263F0075D390 /* ShowOffRecordDialog.swift */; };
+		4D2B80191F4C05D80075D390 /* ExchangeCodeDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B80181F4C05D80075D390 /* ExchangeCodeDialog.swift */; };
+		4D2B801B1F4C07050075D390 /* SubmitSuccessDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B801A1F4C07050075D390 /* SubmitSuccessDialog.swift */; };
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
 		4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D56251C1F2605A700515C98 /* Assets.xcassets */; };
 		4D589C741F386EB500C8DBC7 /* CheckIn7DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */; };
@@ -120,6 +122,8 @@
 		4D2B80111F4008060075D390 /* MailedSuccessDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailedSuccessDialog.swift; sourceTree = "<group>"; };
 		4D2B80131F40097E0075D390 /* OutGameDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutGameDialog.swift; sourceTree = "<group>"; };
 		4D2B80151F40263F0075D390 /* ShowOffRecordDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowOffRecordDialog.swift; path = ../../Controller/Main/ShowOffRecordDialog.swift; sourceTree = "<group>"; };
+		4D2B80181F4C05D80075D390 /* ExchangeCodeDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeCodeDialog.swift; sourceTree = "<group>"; };
+		4D2B801A1F4C07050075D390 /* SubmitSuccessDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitSuccessDialog.swift; sourceTree = "<group>"; };
 		4D5625121F2605A700515C98 /* FelixFastCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FelixFastCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5625151F2605A700515C98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D56251C1F2605A700515C98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -243,6 +247,14 @@
 			path = TobeGift;
 			sourceTree = "<group>";
 		};
+		4D2B80171F4C05C50075D390 /* Exchange */ = {
+			isa = PBXGroup;
+			children = (
+				4D2B80181F4C05D80075D390 /* ExchangeCodeDialog.swift */,
+			);
+			path = Exchange;
+			sourceTree = "<group>";
+		};
 		4D5625091F2605A700515C98 = {
 			isa = PBXGroup;
 			children = (
@@ -359,6 +371,7 @@
 		4D9EBB871F271C3A002674DE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4D2B80171F4C05C50075D390 /* Exchange */,
 				4DE204111F39B42C0046B130 /* Shard */,
 				4D5BF1BE1F3853E90091180B /* Invite */,
 				4D5BF1BB1F3851460091180B /* CheckIn */,
@@ -472,6 +485,7 @@
 			isa = PBXGroup;
 			children = (
 				4D1D86141F31BA9C005210CA /* EditAddressDialog.swift */,
+				4D2B801A1F4C07050075D390 /* SubmitSuccessDialog.swift */,
 			);
 			path = Address;
 			sourceTree = "<group>";
@@ -557,7 +571,7 @@
 				TargetAttributes = {
 					4D5625111F2605A700515C98 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 69R7EJL9NK;
+						DevelopmentTeam = 2CE55Q4W57;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -659,6 +673,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DCD39EB1F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift in Sources */,
+				4D2B80191F4C05D80075D390 /* ExchangeCodeDialog.swift in Sources */,
 				4DDD2B7C1F283F3D00102A0F /* ToastUtils.swift in Sources */,
 				4D1D86191F31DA17005210CA /* PlayResultDialog.swift in Sources */,
 				4DDD2B861F286BC000102A0F /* DeviceTools.swift in Sources */,
@@ -689,6 +704,7 @@
 				4D82A4521F36C7AD007ADE5C /* UserTools.swift in Sources */,
 				4D1D86171F31D1FE005210CA /* EditUserInfoDialog.swift in Sources */,
 				4D1DA0F61F2F4C7000B1138D /* FCMailedConfirmDialog.swift in Sources */,
+				4D2B801B1F4C07050075D390 /* SubmitSuccessDialog.swift in Sources */,
 				4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */,
 				4D2B80141F40097E0075D390 /* OutGameDialog.swift in Sources */,
 				4D589C761F39AC3D00C8DBC7 /* FirstLoginRewardDialog.swift in Sources */,
@@ -825,7 +841,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 69R7EJL9NK;
+				DEVELOPMENT_TEAM = 2CE55Q4W57;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -840,7 +856,7 @@
 					"-fobjc-arc",
 				);
 				PODS_ROOT = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.fast.catch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.meidaojia.secondcatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/lufan/Developer/ios-git/FelixFastCatch/FelixFastCatch/Login-header.h";
 				SWIFT_VERSION = 3.0;
@@ -854,7 +870,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 69R7EJL9NK;
+				DEVELOPMENT_TEAM = 2CE55Q4W57;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -869,7 +885,7 @@
 					"-fobjc-arc",
 				);
 				PODS_ROOT = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.fast.catch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.meidaojia.secondcatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/lufan/Developer/ios-git/FelixFastCatch/FelixFastCatch/Login-header.h";
 				SWIFT_VERSION = 3.0;

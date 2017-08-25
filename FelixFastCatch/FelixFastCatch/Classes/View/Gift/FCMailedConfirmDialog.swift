@@ -45,6 +45,10 @@ class FCMailedConfirmDialog: BaseDialog {
     
     var editAddressDialog:EditAddressDialog!
     
+    /// 提交成功的dialog
+    fileprivate var successDialog:SubmitSuccessDialog!
+
+    
     override func createView() {
         createBackgroundImage(imageName: "信息确认背景")
         
@@ -224,6 +228,12 @@ class FCMailedConfirmDialog: BaseDialog {
         
         editAddressDialog.createView(mailedConfirm: self)
         editAddressDialog.show()
+    }
+    
+    /// 显示成功的dialog
+    func showSuccessDialog() -> () {
+        successDialog.createView()
+        successDialog.show()
     }
     
     fileprivate var hasBeenContentBackgroundImage:UIImage!
