@@ -13,14 +13,15 @@ import SVProgressHUD
 import Alamofire
 import SwiftyJSON
 import MJRefresh
+import StoreKit
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController{
 
     // 背景图
     fileprivate lazy var backgroundImage:UIImageView = UIImageView()
     
     /// banner images
-    fileprivate lazy var bannerView:UIScrollView = UIScrollView()
+    fileprivate lazy var bannerView:CustomerBannerView = CustomerBannerView()
     
     // banner 指示器
     fileprivate lazy var pageControl:UIPageControl = UIPageControl()
@@ -76,6 +77,9 @@ class MainViewController: UIViewController {
     /// 分享战绩
     fileprivate var showOffRecordDialog:ShowOffRecordDialog!
     
+    /// 钻石btn
+    fileprivate var payGemBtn:MainFloatMenu!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -87,6 +91,16 @@ class MainViewController: UIViewController {
         
         setupUI()
         
+//        let webVC = WebViewController()
+//        webVC.link = "http://www.baidu.com"
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) { 
+//            self.present(webVC, animated: true, completion: nil)
+//        }
+        
+        
+        // 开启内购检测
+//        SKPaymentQueue.default().add(self)
+        
         /**
          *
          */
@@ -97,7 +111,83 @@ class MainViewController: UIViewController {
 //                print( "\tFont: \(item2) \n");
 //            }
 //        }
+        
+//        if checkPay() {
+//            //请求内购商品
+//            reuqestProductData(type: "com.meidaojia.secondcatch.b01")
+//        }
+        
     }
+    
+//    func checkPay() -> Bool {
+//        if(SKPaymentQueue.canMakePayments()){
+//            return true
+//        }
+//        else{
+//            print("请允许付费")
+//            return false
+//        }
+//    }
+//    
+//    private func reuqestProductData(type: String) {
+//        let product = [type]
+//        let set = NSSet(array: product as [AnyObject])
+//        let request = SKProductsRequest(productIdentifiers: set as! Set<String>)
+//        request.delegate = self
+//        request.start()
+//    }
+//    
+//    // 监听购买结果
+//    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+//        
+//        for tran in transactions {
+//            // print(tran.error?.description)
+//            
+//            switch tran.transactionState {
+//            case .purchased:
+//                print("购买成功")
+//                print("tran:\(tran)")
+//                SKPaymentQueue.default().finishTransaction(tran)
+//                
+//            case .purchasing:
+//                print("用户正在购买")
+//                
+//            case .restored:
+//                print("已经购买过商品")
+//                
+//            case .failed:
+//                SKPaymentQueue.default().finishTransaction(tran)
+//                print("失败:\(tran.error.debugDescription)")
+//                
+//            default:
+//                break
+//            }
+//        }
+//    }
+//    
+//    // 收到产品返回的信息
+//    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+//        if response.products.count == 0 {
+//            print("没有商品")
+//        }
+//        var prod: SKProduct?
+//        for pro in response.products {
+//            print("------------------")
+//            print(pro.localizedDescription)
+//            print(pro.localizedTitle)
+//            print(pro.price)
+//            print(pro.productIdentifier)
+//            print("------------------")
+//            if pro.productIdentifier == "com.meidaojia.secondcatch.b01" {
+//                prod = pro
+//            }
+//        }
+//        // 发送购买请求
+//        if let produ = prod {
+//            let payment = SKPayment(product: produ)
+//            SKPaymentQueue.default().add(payment)
+//        }
+//    }
 
     /// 在加载显示完首页的viewcontroller之后，需要调用该方法来成功获取系统的window
     func loadDialogToWindow() -> () {
@@ -180,6 +270,18 @@ class MainViewController: UIViewController {
         timer = nil
         super.removeFromParentViewController()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("appear")
+        //每次显示界面，调用一遍获取用户信息的接口
+        if Constants.User.USER_ID != "" {
+            getsUserInfo()
+            if payGemBtn != nil {
+                payGemBtn.actionLabel.text = String(Constants.User.diamondsCount)
+            }
+        }
+    }
+    
 }
 
 
@@ -192,7 +294,7 @@ extension MainViewController:UIScrollViewDelegate{
         //设置banner图view的属性
         bannerView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: getBannerHeight())
         bannerView.contentSize = CGSize(width: self.view.bounds.width, height: getBannerHeight())
-        bannerView.backgroundColor = UIColor.gray
+        bannerView.backgroundColor = UIColor.white
         bannerView.bounces = false
         bannerView.isPagingEnabled = true
         bannerView.showsHorizontalScrollIndicator = false
@@ -203,9 +305,9 @@ extension MainViewController:UIScrollViewDelegate{
         bannerView.delegate = self
         
         view.addSubview(pageControl)
-        
-        getBannerList()
     }
+    
+    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width + 0.5)
@@ -221,10 +323,25 @@ extension MainViewController:UIScrollViewDelegate{
     
     //创建轮播图定时器
     func creatTimer() {
+        
+        if timer != nil {
+            timer.invalidate()
+            timer = nil
+        }
+        
         timer =  Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.timerManager), userInfo: nil, repeats: true)
         
         //这句话实现多线程，如果你的ScrollView是作为TableView的headerView的话，在拖动tableView的时候让轮播图仍然能轮播就需要用到这句话
         RunLoop.current.add(timer, forMode: RunLoopMode.commonModes)
+        
+        bannerView.touchBeganFunc = {[weak self] in
+            self?.timer.invalidate()
+            self?.timer = nil
+        }
+        
+        bannerView.touchEndFunc = {[weak self] in
+            self?.creatTimer()
+        }
         
     }
     
@@ -246,14 +363,19 @@ extension MainViewController:UIScrollViewDelegate{
             return
         }
         
-        print("banners:\(mainBannersData)")
-        
         //循环增加图片到scrollview当中
         for i:Int in 0..<mainBannersData.count{
             let iv = UIImageView()
             iv.frame = CGRect(x: CGFloat(i) * self.view.bounds.width, y: 0, width: self.view.bounds.width, height: getBannerHeight() + 1)
             iv.kf.setImage(with: URL(string: mainBannersData[i]["bannerBigImg"].string!))
             bannerView.addSubview(iv)
+            iv.tag = i
+            /////设置允许交互属性
+            iv.isUserInteractionEnabled = true
+            
+            /////添加tapGuestureRecognizer手势
+            let tapGR = UITapGestureRecognizer(target: self, action:#selector(bannerTap(sender:)))
+            iv.addGestureRecognizer(tapGR)
         }
         
         bannerView.contentSize = CGSize(width: self.view.bounds.width * CGFloat(mainBannersData.count), height: getBannerHeight())
@@ -275,6 +397,16 @@ extension MainViewController:UIScrollViewDelegate{
         creatTimer()
     }
     
+    func bannerTap(sender:UITapGestureRecognizer) -> () {
+        let link = self.mainBannersData[(sender.view?.tag)!]["scheme"].stringValue
+        if link == "" {
+            return
+        }
+        let webVC = WebViewController()
+        webVC.link = link
+        present(webVC, animated: true, completion: nil)
+    }
+    
 }
 
 // MARK: - 从网络获取banner图数据
@@ -284,6 +416,10 @@ extension MainViewController{
     fileprivate func getBannerList(){
         Alamofire.request(Constants.Network.MAIN_BANNER_LIST, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { (response) in
             if response.error == nil {
+                print("bannerList:\(response.result.value!)")
+                if self.mainBannersData != nil {
+                    self.mainBannersData.removeAll()
+                }
                 
                 let jsonObject = JSON(response.data!)
                 self.mainBannersData = jsonObject["data"].array
@@ -364,17 +500,24 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell?.playBtn.tag = indexPath.row
         cell?.addPlayBtnClick(target: self, action: #selector(showPlay))
         
-        cell?.productImage.kf.setImage(with: URL(string: itemData["award"]["img"].string!))
+        cell?.productImage.kf.setImage(with: URL(string: itemData["img"].stringValue), placeholder: UIImage(named: "main_no_value"), options: nil, progressBlock: nil, completionHandler: nil)
+        
         cell?.titleLabel.text = itemData["award"]["title"].string!
         cell?.gemNumberLabel.text = String(itemData["perDiamondsCount"].int!) + "钻"
         
-        if itemData["status"].intValue != 0 {
+        if itemData["status"].intValue != 1 {
             cell?.showErrorView()
+            cell?.playBtn.setImage(UIImage(named: "维护"), for: .normal)
         }else{
             cell?.hideErrorView()
+            cell?.playBtn.setImage(UIImage(named: "Easy"), for: .normal)
         }
         
         return cell!
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        itemClick(index: indexPath.row)
     }
     
     /// 显示游戏界面
@@ -397,6 +540,25 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         navigationController?.pushViewController(playView, animated: true)
         
 //        test()
+    }
+    
+    func itemClick(index:Int) -> () {
+        if Constants.User.USER_ID == "" {
+            fastLoginDialog.createView()
+            fastLoginDialog.show()
+            return
+        }
+        
+        if !checkDeviceStatus(status: mainListData[index]["status"].intValue) {
+            return
+        }
+        
+        let playView = PlayViewController()
+        playView.deviceId = mainListData[index]["deviceId"].stringValue
+        playView.playSuccess = {[weak self] in
+            self?.showShardRecordDialog()
+        }
+        navigationController?.pushViewController(playView, animated: true)
     }
 
     func checkDeviceStatus(status:Int) -> Bool {
@@ -439,7 +601,6 @@ extension MainViewController{
                 }
                 self.mainListData = self.mainListData + jsonObject["data"]["content"].arrayValue
 
-                
                 self.dataList.delegate = self
                 self.dataList.dataSource = self
                 self.dataList.reloadData()
@@ -465,6 +626,9 @@ extension MainViewController{
             
             SVProgressHUD.dismiss()
         }
+        
+        getBannerList()
+        
     }
     
     /// 没有数据，需要展示没有数据的view
@@ -530,7 +694,7 @@ extension MainViewController{
         giftBtn.addBtnClickAction(target: self, action: #selector(showMyGift))
         
         /// 购买钻石按钮
-        let payGemBtn = MainFloatMenu(frame: CGRect(x: 10, y: UIScreen.main.bounds.height - 80, width: settingImage.bounds.width, height: 80), image: UIImage(named: "Plus-btn"), actionTitle: "100")
+        payGemBtn = MainFloatMenu(frame: CGRect(x: 10, y: UIScreen.main.bounds.height - 80, width: settingImage.bounds.width, height: 80), image: UIImage(named: "Plus-btn"), actionTitle: "100")
         view.addSubview(payGemBtn)
         
         payGemBtn.addBtnClickAction(target: self, action: #selector(showPayDialog))
@@ -622,7 +786,7 @@ extension MainViewController{
         settingsGroupView.addSubview(userIcon)
         userIcon.addTarget(self, action: #selector(showUserInfoDialog), for: .touchUpInside)
         
-        let infoIcon = UIImageView(frame: CGRect(x: settingsWidth/2-testInfoIconImage.bounds.width/2, y: 20 + testUserIconImage.bounds.height, width: 0, height: 0))
+        let infoIcon = UIImageView(frame: CGRect(x: settingsWidth/2-testInfoIconImage.bounds.width/2, y: 30 + testUserIconImage.bounds.height, width: 0, height: 0))
         infoIcon.image = UIImage(named: "Info-icon")
         infoIcon.sizeToFit()
         settingsGroupView.addSubview(infoIcon)
@@ -646,7 +810,11 @@ extension MainViewController{
     
     /// 来到首页的时候，读取用户信息
     func getsUserInfo() -> () {
-        UserTools.getUserInfo()
+        UserTools.getUserInfo(callback: { [weak self] in
+            if self?.payGemBtn != nil {
+                self?.payGemBtn.actionLabel.text = String(Constants.User.diamondsCount)
+            }
+        })
     }
     
 }

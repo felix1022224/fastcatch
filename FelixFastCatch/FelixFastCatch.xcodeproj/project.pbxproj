@@ -39,6 +39,7 @@
 		4D2B80161F40263F0075D390 /* ShowOffRecordDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B80151F40263F0075D390 /* ShowOffRecordDialog.swift */; };
 		4D2B80191F4C05D80075D390 /* ExchangeCodeDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B80181F4C05D80075D390 /* ExchangeCodeDialog.swift */; };
 		4D2B801B1F4C07050075D390 /* SubmitSuccessDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B801A1F4C07050075D390 /* SubmitSuccessDialog.swift */; };
+		4D2EC3D71F5005380008F96E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2EC3D61F5005380008F96E /* StoreKit.framework */; };
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
 		4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D56251C1F2605A700515C98 /* Assets.xcassets */; };
 		4D589C741F386EB500C8DBC7 /* CheckIn7DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */; };
@@ -60,6 +61,8 @@
 		4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB8A1F271C80002674DE /* MainViewController.swift */; };
 		4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */; };
 		4D9EBB961F276822002674DE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB951F276822002674DE /* Constants.swift */; };
+		4DAD03321F51629B00D7E72F /* CustomerBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAD03311F51629B00D7E72F /* CustomerBannerView.swift */; };
+		4DAD03341F51777200D7E72F /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAD03331F51777200D7E72F /* WebViewController.swift */; };
 		4DCD39B71F2DA5FC002B7F35 /* CustomerControllerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39B61F2DA5FC002B7F35 /* CustomerControllerButton.swift */; };
 		4DCD39BA1F2DBEEB002B7F35 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39B91F2DBEEB002B7F35 /* CoreMedia.framework */; };
 		4DCD39BC1F2DBEF8002B7F35 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39BB1F2DBEF8002B7F35 /* CoreMotion.framework */; };
@@ -124,6 +127,7 @@
 		4D2B80151F40263F0075D390 /* ShowOffRecordDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowOffRecordDialog.swift; path = ../../Controller/Main/ShowOffRecordDialog.swift; sourceTree = "<group>"; };
 		4D2B80181F4C05D80075D390 /* ExchangeCodeDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeCodeDialog.swift; sourceTree = "<group>"; };
 		4D2B801A1F4C07050075D390 /* SubmitSuccessDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitSuccessDialog.swift; sourceTree = "<group>"; };
+		4D2EC3D61F5005380008F96E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		4D5625121F2605A700515C98 /* FelixFastCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FelixFastCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5625151F2605A700515C98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D56251C1F2605A700515C98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -147,6 +151,9 @@
 		4D9EBB8A1F271C80002674DE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
 		4D9EBB951F276822002674DE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4DAD03311F51629B00D7E72F /* CustomerBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerBannerView.swift; sourceTree = "<group>"; };
+		4DAD03331F51777200D7E72F /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		4DAD03351F518AD700D7E72F /* FelixFastCatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FelixFastCatch.entitlements; sourceTree = "<group>"; };
 		4DCD39B61F2DA5FC002B7F35 /* CustomerControllerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerControllerButton.swift; sourceTree = "<group>"; };
 		4DCD39B91F2DBEEB002B7F35 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		4DCD39BB1F2DBEF8002B7F35 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -184,6 +191,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D2EC3D71F5005380008F96E /* StoreKit.framework in Frameworks */,
 				4D2B800E1F3BFBF40075D390 /* libresolv.tbd in Frameworks */,
 				4DCD39D61F2F0DDE002B7F35 /* Foundation.framework in Frameworks */,
 				4DCD39D41F2F0DC8002B7F35 /* UIKit.framework in Frameworks */,
@@ -215,6 +223,7 @@
 		4D18ACC11F260816005363A4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D2EC3D61F5005380008F96E /* StoreKit.framework */,
 				4D2B800D1F3BFBF40075D390 /* libresolv.tbd */,
 				4DCD39D51F2F0DDE002B7F35 /* Foundation.framework */,
 				4DCD39D31F2F0DC8002B7F35 /* UIKit.framework */,
@@ -276,6 +285,7 @@
 		4D5625141F2605A700515C98 /* FelixFastCatch */ = {
 			isa = PBXGroup;
 			children = (
+				4DAD03351F518AD700D7E72F /* FelixFastCatch.entitlements */,
 				4D17ECF11F3B017B004DD01F /* 镜头切换_音效.wav */,
 				4D17ECEF1F3B017B004DD01F /* 游戏开始_音效.wav */,
 				4D17ECEE1F3B017B004DD01F /* background_music.mp3 */,
@@ -392,6 +402,7 @@
 			children = (
 				4D9EBB8A1F271C80002674DE /* MainViewController.swift */,
 				4D1D861A1F32F78F005210CA /* SelectDateView.swift */,
+				4DAD03331F51777200D7E72F /* WebViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -508,6 +519,7 @@
 				4D64B8A11F2ADC50002A9BFD /* MainCustomerTextField.swift */,
 				4DCD39B61F2DA5FC002B7F35 /* CustomerControllerButton.swift */,
 				4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */,
+				4DAD03311F51629B00D7E72F /* CustomerBannerView.swift */,
 			);
 			path = widget;
 			sourceTree = "<group>";
@@ -571,10 +583,13 @@
 				TargetAttributes = {
 					4D5625111F2605A700515C98 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 2CE55Q4W57;
+						DevelopmentTeam = U7BV5BW6M7;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -690,6 +705,7 @@
 				4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */,
 				4D18ACD41F261378005363A4 /* TencentShared.swift in Sources */,
 				4DCD39DB1F2F31C6002B7F35 /* PayItemTableViewCell.swift in Sources */,
+				4DAD03321F51629B00D7E72F /* CustomerBannerView.swift in Sources */,
 				4D1D861B1F32F78F005210CA /* SelectDateView.swift in Sources */,
 				4D1D86151F31BA9C005210CA /* EditAddressDialog.swift in Sources */,
 				4D64B8981F29B549002A9BFD /* MainBanner.swift in Sources */,
@@ -717,6 +733,7 @@
 				4DCD39E91F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedCell.swift in Sources */,
 				4D2B80161F40263F0075D390 /* ShowOffRecordDialog.swift in Sources */,
 				4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */,
+				4DAD03341F51777200D7E72F /* WebViewController.swift in Sources */,
 				4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */,
 				4D1D861D1F333299005210CA /* HideView.swift in Sources */,
 				4D589C741F386EB500C8DBC7 /* CheckIn7DayView.swift in Sources */,
@@ -840,8 +857,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = FelixFastCatch/FelixFastCatch.entitlements;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 2CE55Q4W57;
+				DEVELOPMENT_TEAM = U7BV5BW6M7;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -869,8 +887,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = FelixFastCatch/FelixFastCatch.entitlements;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 2CE55Q4W57;
+				DEVELOPMENT_TEAM = U7BV5BW6M7;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

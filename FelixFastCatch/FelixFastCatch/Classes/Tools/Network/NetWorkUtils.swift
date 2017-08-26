@@ -43,6 +43,15 @@ class NetWorkUtils: NSObject , CLLocationManagerDelegate{
             let jsonData = JSON(data: response.data!)
             if jsonData["code"].int! == 0 {
                  return true
+            }else if jsonData["code"].int! == -421 {
+                print("用户身份异常，重新登录")
+                if !Constants.isFastLoginShow {
+                    let loginDialog = FastLoginDialog(frame: UIScreen.main.bounds)
+                    loginDialog.createView()
+                    loginDialog.show()
+                }
+                LocalDataUtils.clearLoaclData()
+                return false
             }
             return false
         }else{

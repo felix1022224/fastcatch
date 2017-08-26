@@ -14,7 +14,7 @@ class MainFloatMenu: UIView {
     private var actionBtn:UIButton!
     
     // 动作文字
-    private var actionLabel:MainCustomerLabel!
+    var actionLabel:MainCustomerLabel!
     
     init(frame: CGRect, image:UIImage?, actionTitle:String) {
         super.init(frame: frame)

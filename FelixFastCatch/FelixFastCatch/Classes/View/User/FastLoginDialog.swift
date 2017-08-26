@@ -144,7 +144,7 @@ class FastLoginDialog: BaseDialog {
             print("result:\(resultJson)")
             if NetWorkUtils.checkReponse(response: response) {
                 print("response:\(String(describing: response.response?.allHeaderFields))")
-                LocalDataUtils.updateLocalUserData(resultData: resultJson, dataResponse:response)
+                LocalDataUtils.updateLocalUserData(resultData: resultJson, response)
                 ToastUtils.showSuccessToast(msg: "登录成功")
                 self.hide()
                 if resultJson["data"]["new"].boolValue {
@@ -175,7 +175,7 @@ class FastLoginDialog: BaseDialog {
             print("result:\(String(describing: response.result.value))")
             if NetWorkUtils.checkReponse(response: response) {
                 print("response:\(String(describing: response.response?.allHeaderFields))")
-                LocalDataUtils.updateLocalUserData(resultData: resultJson, dataResponse:response)
+                LocalDataUtils.updateLocalUserData(resultData: resultJson, response)
                 ToastUtils.showSuccessToast(msg: "登录成功")
                 self.hide()
                 if resultJson["data"]["new"].boolValue {
@@ -191,6 +191,16 @@ class FastLoginDialog: BaseDialog {
     func showFirstLoginReward() -> () {
         firstLoginReward.createView()
         firstLoginReward.show()
+    }
+    
+    override func show() {
+        super.show()
+        Constants.isFastLoginShow = true
+    }
+    
+    override func hide() {
+        super.hide()
+        Constants.isFastLoginShow = false
     }
     
 }

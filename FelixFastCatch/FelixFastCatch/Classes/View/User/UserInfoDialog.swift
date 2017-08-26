@@ -169,17 +169,18 @@ class UserInfoDialog: BaseDialog {
 
     /// 退出登录
     func logOut() -> () {
-        ToastUtils.showLoadingToast(msg: "正在登出")
+//        ToastUtils.showLoadingToast(msg: "正在登出")
+        
+        LocalDataUtils.clearLoaclData()
+        self.hide()
         
         Alamofire.request(Constants.Network.User.LOGOUT_URL, method: .post, parameters: NetWorkUtils.createBaseParams(), encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             print("result:\(response.result.value!)")
             if NetWorkUtils.checkReponse(response: response) {
                 /// 登出成功
-                ToastUtils.hide()
-                LocalDataUtils.clearLoaclData()
-                self.hide()
+//                ToastUtils.hide()
             }else{
-                ToastUtils.showErrorToast(msg: "登出失败")
+//                ToastUtils.showErrorToast(msg: "登出失败")
             }
         }
     }

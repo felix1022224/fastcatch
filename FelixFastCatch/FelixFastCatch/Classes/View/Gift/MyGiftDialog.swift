@@ -49,6 +49,9 @@ class MyGiftDialog: BaseDialog {
     /// 编辑地址
     fileprivate var editAddressDialog:EditAddressDialog!
     
+    /// 没有数据时候的view
+    fileprivate var noValueImageView:UIImageView!
+    
     override func createView() {
         createBackgroundImage(imageName: "待邮寄背景")
         
@@ -117,6 +120,15 @@ class MyGiftDialog: BaseDialog {
         
         mailedConfirmDialog = FCMailedConfirmDialog(frame: self.bounds)
         
+        /// 没数据的view
+        noValueImageView = UIImageView(image: UIImage(named: "没奖品"))
+        noValueImageView.sizeToFit()
+        addSubview(noValueImageView)
+        
+        noValueImageView.center = backgroundImage.center
+        
+        noValueImageView.isHidden = true
+        
         setupTabViews()
         
         addDialogToWindow()
@@ -144,6 +156,13 @@ class MyGiftDialog: BaseDialog {
 //        mailedConfirmDialog.userInfoData = json["name"].stringValue
 //        mailedConfirmDialog.phoneNumberData = json["phone"].stringValue
 //        mailedConfirmDialog.addressData = json["addr"].stringValue
+        
+        mailedConfirmDialog.mailedSuccessCallback = {[weak self] in
+            self?.tobeMailedDelegate.dataSource.removeAll()
+            self?.hasBeenMailedDelegate.dataSource.removeAll()
+            self?.getMailedGiftList()
+            self?.getTobeMailedGiftList()
+        }
         
         mailedConfirmDialog.sendData.removeAll()
         mailedConfirmDialog.sendData = sendData
@@ -198,6 +217,12 @@ extension MyGiftDialog{
             tobeMailedTabView.isHidden = true
             hasbeenMailedTabView.isHidden = false
             
+            if hasBeenMailedDelegate.dataSource.count <= 0 {
+                noValueImageView.isHidden = false
+            }else{
+                noValueImageView.isHidden = true
+            }
+            
         }else {
             isSelectTobe = true
             tobeMailedBtn.isUserInteractionEnabled = false
@@ -207,6 +232,12 @@ extension MyGiftDialog{
             
             tobeMailedTabView.isHidden = false
             hasbeenMailedTabView.isHidden = true
+            
+            if tobeMailedDelegate.dataSource.count <= 0 {
+                noValueImageView.isHidden = false
+            }else{
+                noValueImageView.isHidden = true
+            }
             
         }
     }
@@ -283,7 +314,25 @@ extension MyGiftDialog{
                 let json = JSON(response.result.value!)
                 self.tobeMailedDelegate.dataSource = json["data"]["content"].array!
                 self.tobeMailedTabView.reloadData()
+                
+                self.showTobeMailedNoValue()
+                
+            }else{
+                self.showTobeMailedNoValue()
             }
+        }
+    }
+    
+    func showTobeMailedNoValue() -> () {
+        /// 如果list是隐藏状态，就不用继续进行操作了
+        if tobeMailedTabView.isHidden != false {
+            return
+        }
+        
+        if self.tobeMailedDelegate.dataSource.count <= 0 {
+            self.noValueImageView.isHidden = false
+        }else{
+            self.noValueImageView.isHidden = true
         }
     }
     
@@ -306,9 +355,23 @@ extension MyGiftDialog{
                 let json = JSON(response.result.value!)
                 self.hasBeenMailedDelegate.dataSource = json["data"]["content"].array!
                 self.hasbeenMailedTabView.reloadData()
+                self.showHasBeenNoValue()
+            }else{
+                self.showHasBeenNoValue()
             }
         }
-
+    }
+    
+    func showHasBeenNoValue() -> () {
+        if hasbeenMailedTabView.isHidden != false {
+            return
+        }
+        
+        if hasBeenMailedDelegate.dataSource.count <= 0 {
+            noValueImageView.isHidden = false
+        }else{
+            noValueImageView.isHidden = true
+        }
     }
     
 }

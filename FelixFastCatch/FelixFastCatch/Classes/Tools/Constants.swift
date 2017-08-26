@@ -150,12 +150,16 @@ class Constants: NSObject {
         /// 用户头像
         static var USER_FACE_IMAGE = ""
         
+        /// 用户邀请码
+        static var USER_TAG = ""
+        
         static let USER_SESSION_KEY = "userSessionId"
         static let USER_NICK_NAME_KEY = "userNickName"
         static let USER_SEX_KEY = "userSex"
         static let USER_BRITHDAY_KEY = "userBrithday"
         static let USER_ID_KEY = "userId"
         static let USER_FACE_IMAGE_KEY = "userFaceImage"
+        static let USER_TAG_KEY = "userTag"
         
         /// 钻石数
         static var diamondsCount = 0
@@ -178,5 +182,8 @@ class Constants: NSObject {
         /// 地址ID
         static var addressId = ""
     }
+    
+    ///是否显示了login界面
+    public static var isFastLoginShow = false
     
 }

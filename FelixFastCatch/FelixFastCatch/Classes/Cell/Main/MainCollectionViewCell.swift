@@ -126,7 +126,7 @@ extension MainCollectionViewCell{
         bottomGroup.addSubview(titleLabel)
         
         titleLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(bottomGroup).offset(2)
+            make.top.equalTo(bottomGroup).offset(4)
             make.left.equalTo(bottomGroup).offset(2)
             make.right.equalTo(bottomGroup).offset(-2)
             make.bottom.equalTo(playBtn).offset(-(playBtn.bounds.height + 2))
@@ -139,11 +139,6 @@ extension MainCollectionViewCell{
         gem.sizeToFit()
         bottomGroup.addSubview(gem)
         
-        gem.snp.makeConstraints { (make) in
-            make.left.equalTo(bottomGroup).offset(2)
-            make.bottom.equalTo(bottomGroup).offset(-2)
-        }
-        
         gemNumberLabel = UILabel()
         gemNumberLabel.textColor = Constants.UI.GEM_TEXT_COLOR
         gemNumberLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
@@ -151,12 +146,17 @@ extension MainCollectionViewCell{
         gemNumberLabel.text = "30钻"
         bottomGroup.addSubview(gemNumberLabel)
         
+        createPlayBtn()
+        
+        gem.snp.makeConstraints { (make) in
+            make.left.equalTo(bottomGroup).offset(2)
+            make.centerY.equalTo(playBtn)
+        }
+        
         gemNumberLabel.snp.makeConstraints { (make) in
             make.centerY.equalTo(gem)
             make.left.equalTo(gem).offset(gem.bounds.width + 5)
         }
-        
-        createPlayBtn()
     }
     
     // 创建开始游戏的按钮
@@ -168,7 +168,7 @@ extension MainCollectionViewCell{
         
         playBtn.snp.makeConstraints { (make) in
             make.right.equalTo(bottomGroup).offset(-2)
-            make.centerY.equalTo(gemNumberLabel)
+            make.bottom.equalTo(bottomGroup).offset(-5)
         }
     }
     
@@ -196,7 +196,7 @@ extension MainCollectionViewCell{
         
         let errorStatusLabel = MainCustomerLabel()
         errorStatusLabel.text = "正在补货中"
-        errorStatusLabel.outLineWidth = 2
+        errorStatusLabel.outLineWidth = 1
         errorStatusLabel.outTextColor = UIColor.white
         errorStatusLabel.outLienTextColor = UIColor.yellow
         errorStatusLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
@@ -218,6 +218,8 @@ extension MainCollectionViewCell{
         
         errorImage = UIImageView(image: UIImage(named: "Heart-icon"))
         addSubview(errorImage)
+        
+        hideErrorView()
     }
     
     func showErrorView() -> () {

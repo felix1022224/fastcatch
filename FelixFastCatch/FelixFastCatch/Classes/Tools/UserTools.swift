@@ -13,9 +13,9 @@ import SwiftyJSON
 class UserTools: NSObject {
 
     /// 获取用户信息，刷新本地数据
-    class func getUserInfo() -> () {
+    class func getUserInfo(callback:(()->())?) -> () {
         Alamofire.request(Constants.Network.User.GET_USER_INFO, method: .post, parameters: NetWorkUtils.createBaseParams(), encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
-            print("result:\(String(describing: response.result.value))")
+//            print("result:\(String(describing: response.result.value))")
             if NetWorkUtils.checkReponse(response: response) {
                 /// 更新用户信息
                 let json = JSON(response.result.value!)
@@ -23,6 +23,8 @@ class UserTools: NSObject {
                 Constants.User.addr = json["data"]["pav"]["addr"].stringValue
                 Constants.User.addrPhone = json["data"]["pav"]["phone"].stringValue
                 Constants.User.addressId = json["data"]["pav"]["id"].stringValue
+                
+                Constants.User.USER_TAG = json["data"]["tag"].stringValue
                 
                 Constants.User.USER_BRITHDAY = json["data"]["birthday"].stringValue
                 
@@ -34,6 +36,11 @@ class UserTools: NSObject {
                 }
                 
                 Constants.User.diamondsCount = json["data"]["diamondsCount"].intValue
+                
+                LocalDataUtils.updateLocalUserData(resultData: json, nil)
+                if callback != nil {
+                    callback?()
+                }
             }
             print("result:\(String(describing: response.result.value))")
         }

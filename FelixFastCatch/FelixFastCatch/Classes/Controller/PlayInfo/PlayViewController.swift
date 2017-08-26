@@ -339,6 +339,8 @@ extension PlayViewController{
             make.centerY.equalTo(helpBtn)
             make.right.equalTo(self.view).offset(-10)
         }
+        
+        lensBtn.isHidden = true
     }
     
     /// 创建开始游戏的按钮
@@ -349,6 +351,7 @@ extension PlayViewController{
         view.addSubview(startBtnBackgroundView)
         
         startPlayBtn.setImage(startBtnImage, for: .normal)
+        startPlayBtn.setImage(UIImage(named: "icon_start_h"), for: .highlighted)
         startPlayBtn.setImage(UIImage(named: "正在游戏中"), for: .disabled)
         startPlayBtn.sizeToFit()
         startBtnBackgroundView.addSubview(startPlayBtn)
@@ -417,7 +420,7 @@ extension PlayViewController{
         }
         
         // 在没有游戏时，隐藏摄像头的按钮
-//        lensBtn.isHidden = true
+        lensBtn.isHidden = true
     }
     
     /// 切换视频的房间到一对一聊天界面
@@ -680,7 +683,6 @@ extension PlayViewController{
         
         let controllerSize = 50
         
-        
         /// 上
         controllerUp = CustomerControllerButton(frame: CGRect.zero, controllerDown: { [weak self] (button)  in
             self?.controllerPathDown(sender: button)
@@ -690,6 +692,7 @@ extension PlayViewController{
             self?.controllerMove(sender: button)
         })
         controllerUp.setImage(UIImage(named: "controller_up"), for: .normal)
+        controllerUp.setImage(UIImage(named: "controller_up_h"), for: .highlighted)
         controllerUp.setImage(UIImage(named: "controller_up_disabled"), for: .disabled)
         controllerUp.sizeToFit()
         playGroupView.addSubview(controllerUp)
@@ -713,6 +716,7 @@ extension PlayViewController{
             self?.controllerMove(sender: button)
         })
         controllerLeft.setImage(UIImage(named: "controller_left"), for: .normal)
+        controllerLeft.setImage(UIImage(named: "controller_left_h"), for: .highlighted)
         controllerLeft.setImage(UIImage(named: "controller_left_disabled"), for: .disabled)
         controllerLeft.sizeToFit()
         playGroupView.addSubview(controllerLeft)
@@ -736,6 +740,7 @@ extension PlayViewController{
             self?.controllerMove(sender: button)
         })
         controllerRight.setImage(UIImage(named: "controller_right"), for: .normal)
+        controllerRight.setImage(UIImage(named: "controller_right_h"), for: .highlighted)
         controllerRight.setImage(UIImage(named: "controller_right_disabled"), for: .disabled)
         controllerRight.sizeToFit()
         playGroupView.addSubview(controllerRight)
@@ -759,6 +764,7 @@ extension PlayViewController{
             self?.controllerMove(sender: button)
         })
         controllerDown.setImage(UIImage(named: "controller_down"), for: .normal)
+        controllerDown.setImage(UIImage(named: "controller_down_h"), for: .highlighted)
         controllerDown.setImage(UIImage(named: "controller_down_disabled"), for: .disabled)
         controllerDown.sizeToFit()
         playGroupView.addSubview(controllerDown)
@@ -775,6 +781,7 @@ extension PlayViewController{
         
         /// 下爪
         grabBtn.setImage(UIImage(named: "controller_grab"), for: .normal)
+        grabBtn.setImage(UIImage(named: "controller_grab_h"), for: .highlighted)
         grabBtn.setImage(UIImage(named: "controller_grab_disabled"), for: .disabled)
         grabBtn.sizeToFit()
         playGroupView.addSubview(grabBtn)
@@ -823,6 +830,8 @@ extension PlayViewController{
         
         resetReplayInfo()
         
+        lensBtn.isHidden = false
+        
         //振动
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
@@ -834,6 +843,8 @@ extension PlayViewController{
         countdownTimer = nil
         disableControllerBtns(isEnbled: false)
         /// 开始进行再来一局的倒计时
+        
+        lensBtn.isHidden = true
         
         isGameing = false
     }
@@ -1076,6 +1087,7 @@ extension PlayViewController{
     func createReStartBtn() -> () {
         rePlayGameBtn = UIButton(type: .custom)
         rePlayGameBtn.setImage(UIImage(named: "replay_start_game"), for: .normal)
+        rePlayGameBtn.setImage(UIImage(named: "replay_start_game_h"), for: .highlighted)
         rePlayGameBtn.sizeToFit()
         view.addSubview(rePlayGameBtn)
         

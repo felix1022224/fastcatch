@@ -48,6 +48,8 @@ class FCMailedConfirmDialog: BaseDialog {
     /// 提交成功的dialog
     fileprivate var successDialog:SubmitSuccessDialog!
 
+    /// 邮寄成功的回调，回调上一个接口刷新list
+    var mailedSuccessCallback:(()->())? = nil
     
     override func createView() {
         createBackgroundImage(imageName: "信息确认背景")
@@ -354,6 +356,9 @@ extension FCMailedConfirmDialog{
             if NetWorkUtils.checkReponse(response: response) {
                 ToastUtils.showSuccessToast(msg: "邮寄成功")
                 self.hide()
+                if self.mailedSuccessCallback != nil {
+                    self.mailedSuccessCallback?()
+                }
             }
         }
     }

@@ -70,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             locationManager.startUpdatingLocation()
             print("定位开始")
         }
-
+        
         return true
     }
     

@@ -32,7 +32,7 @@ class ShowOffRecordDialog: BaseDialog {
         sharedInfo.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         sharedInfo.outTextColor = UIColor.white
         sharedInfo.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        sharedInfo.text = "和好友分享你的战绩\n奖励20钻"
+        sharedInfo.text = "和好友分享你的战绩"
         sharedInfo.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         sharedInfo.textAlignment = .center
         sharedInfo.lineBreakMode = NSLineBreakMode.byWordWrapping

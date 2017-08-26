@@ -47,6 +47,9 @@ class EditAddressDialog: BaseDialog {
         
         createBackgroundImage(imageName: "邮寄地址填写背景")
         
+        backgroundImage.frame.size = CGSize(width: 300, height: 230)
+        backgroundImage.center = self.center
+        
         createCloseBtn()
         
         /// 收件人填写
@@ -55,7 +58,7 @@ class EditAddressDialog: BaseDialog {
         userNameLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         userNameLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         userNameLabel.text = "姓名:"
-        userNameLabel.textAlignment = .right
+        userNameLabel.textAlignment = .left
         userNameLabel.sizeToFit()
         addSubview(userNameLabel)
         
@@ -77,7 +80,7 @@ class EditAddressDialog: BaseDialog {
         
         userNameTextField.snp.makeConstraints { (make) in
             make.centerY.equalTo(userNameLabel)
-            make.left.equalTo(userNameLabel).offset(userNameLabel.bounds.width + 5)
+            make.left.equalTo(userNameLabel).offset(userNameLabel.bounds.width)
             make.right.equalTo(backgroundImage).offset(-20)
             make.height.equalTo(userNameLabel).offset(20)
         }

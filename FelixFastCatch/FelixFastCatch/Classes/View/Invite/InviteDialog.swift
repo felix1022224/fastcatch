@@ -92,7 +92,7 @@ class InviteDialog: BaseDialog {
         myInviteCode.outTextColor = UIColor.white
         myInviteCode.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         myInviteCode.textAlignment = .center
-        myInviteCode.text = "我的邀请码:YTSUISDAUDI"
+        myInviteCode.text = "我的邀请码:" + Constants.User.USER_TAG
         myInviteCode.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
         myInviteCode.sizeToFit()
         addSubview(myInviteCode)

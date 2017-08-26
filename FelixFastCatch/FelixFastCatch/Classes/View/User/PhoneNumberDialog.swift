@@ -192,9 +192,9 @@ class PhoneNumberDialog: BaseDialog {
     override func hide() {
         super.hide()
         isCounting = false
-        if self.fastLoginDialog != nil {
-            self.fastLoginDialog.hide()
-        }
+//        if self.fastLoginDialog != nil {
+//            self.fastLoginDialog.hide()
+//        }
     }
     
     @objc private func updateTime() {
@@ -228,14 +228,16 @@ extension PhoneNumberDialog{
             if response.error == nil && response.data != nil {
                 let resultJson = JSON(data: response.data!)
                 if NetWorkUtils.checkReponse(response: response) {
-                    print("response:\(String(describing: response.result.value))")
-                    LocalDataUtils.updateLocalUserData(resultData: resultJson, dataResponse:response)
+                    print("response:\(String(describing: resultJson))")
+                    LocalDataUtils.updateLocalUserData(resultData: resultJson, response)
                     ToastUtils.showSuccessToast(msg: "登录成功")
                     self.hide()
                     
                     if resultJson["data"]["new"].boolValue {
                         self.showFirstLoginReward()
                     }
+                    
+                    self.fastLoginDialog.hide()
                     return
                 }
                 print("result:\(response.result.value!)")

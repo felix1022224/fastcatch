@@ -34,7 +34,7 @@ class MainCustomerLabel: UILabel {
         
         self.textColor = outTextColor;
         
-        c!.setTextDrawingMode(CGTextDrawingMode.fillClip)
+        c!.setTextDrawingMode(CGTextDrawingMode.fill)
         
         super.drawText(in: rect)
     }

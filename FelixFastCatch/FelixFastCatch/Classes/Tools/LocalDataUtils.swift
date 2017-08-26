@@ -16,41 +16,46 @@ class LocalDataUtils: NSObject {
     /// 更新本地数据
     ///
     /// - Parameter resultData: 网络返回的用户数据
-    class func updateLocalUserData(resultData:JSON, dataResponse:DataResponse<Any>){
+    class func updateLocalUserData(resultData:JSON, _ dataResponse:DataResponse<Any>?){
         
         UserDefaults.standard.set(resultData["data"]["nick"].string!, forKey: Constants.User.USER_NICK_NAME_KEY)
         UserDefaults.standard.set(String(resultData["data"]["uid"].int!), forKey: Constants.User.USER_ID_KEY)
         UserDefaults.standard.set(resultData["data"]["avatar"].string, forKey: Constants.User.USER_FACE_IMAGE_KEY)
         UserDefaults.standard.set(String(resultData["data"]["gender"].int!), forKey: Constants.User.USER_SEX_KEY)
         UserDefaults.standard.set(resultData["data"]["birthday"].stringValue, forKey: Constants.User.USER_BRITHDAY_KEY)
+        UserDefaults.standard.set(resultData["data"]["tag"].stringValue, forKey: Constants.User.USER_TAG_KEY)
         
-        let headerFields = dataResponse.response?.allHeaderFields as! [String: String]
-        let url = dataResponse.request?.url
-        let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: url!)
-        var cookieArray = [ [HTTPCookiePropertyKey : Any ] ]()
-        for cookie in cookies {
-            cookieArray.append(cookie.properties!)
-        }
-        UserDefaults.standard.set(cookieArray, forKey: Constants.User.USER_SESSION_KEY)
-        
-        // 设置到当前的cookie
-        for cookieData in cookieArray {
-            if let cookie = HTTPCookie.init(properties : cookieData) {
-                HTTPCookieStorage.shared.setCookie(cookie)
+        if dataResponse != nil {
+            let headerFields = dataResponse?.response?.allHeaderFields as! [String: String]
+            let url = dataResponse?.request?.url
+            let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: url!)
+            var cookieArray = [ [HTTPCookiePropertyKey : Any ] ]()
+            for cookie in cookies {
+                cookieArray.append(cookie.properties!)
+            }
+            UserDefaults.standard.set(cookieArray, forKey: Constants.User.USER_SESSION_KEY)
+            
+            // 设置到当前的cookie
+            for cookieData in cookieArray {
+                if let cookie = HTTPCookie.init(properties : cookieData) {
+                    HTTPCookieStorage.shared.setCookie(cookie)
+                }
             }
         }
+        
         
         Constants.User.checkDays = resultData["data"]["checkDays"].intValue
         Constants.User.diamondsCount = resultData["data"]["diamondsCount"].intValue
         Constants.User.todayChecked = resultData["data"]["todayChecked"].boolValue
         
-        Constants.User.addrName = resultData["data"]["name"].stringValue
-        Constants.User.addrPhone = resultData["data"]["phone"].stringValue
-        Constants.User.addr = resultData["data"]["addr"].stringValue
+        Constants.User.addrName = resultData["data"]["pav"]["name"].stringValue
+        Constants.User.addrPhone = resultData["data"]["pav"]["phone"].stringValue
+        Constants.User.addr = resultData["data"]["pav"]["addr"].stringValue
+        Constants.User.addressId = String(resultData["data"]["pav"]["id"].intValue)
         
         initUserInfo()
         
-        UserTools.getUserInfo()
+//        UserTools.getUserInfo()
     }
     
     class func initUserInfo() -> () {
@@ -104,6 +109,17 @@ class LocalDataUtils: NSObject {
         }else {
             Constants.User.USER_BRITHDAY = userBrithday!
         }
+        
+        // 用户邀请码
+        let userTag = UserDefaults.standard.string(forKey: Constants.User.USER_TAG_KEY)
+        if userTag == nil {
+            Constants.User.USER_TAG = ""
+        }else {
+            Constants.User.USER_TAG = userTag!
+        }
+        
+        print("初始化完毕")
+        
     }
     
     
@@ -115,12 +131,14 @@ class LocalDataUtils: NSObject {
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_NICK_NAME_KEY)
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_SEX_KEY)
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_BRITHDAY)
+        UserDefaults.standard.removeObject(forKey: Constants.User.USER_TAG_KEY)
         
         Constants.User.USER_NICK_NAME = ""
         Constants.User.USER_ID = ""
         Constants.User.USER_FACE_IMAGE = ""
         Constants.User.USER_SEX = ""
         Constants.User.USER_BRITHDAY = ""
+        Constants.User.USER_TAG = ""
     }
     
 }
