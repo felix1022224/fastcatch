@@ -103,6 +103,12 @@ class Constants: NSObject {
             /// 用户签到
             static let USER_CHECKIN = BASE_URL + "user/checkin"
             
+            /// 邀请码
+            static let USER_INVITE = BASE_URL + "user/invreg"
+            
+            /// 使用兑换码
+            static let USER_EXCHANGE_CODE = BASE_URL + "user/exchange"
+            
         }
     }
     

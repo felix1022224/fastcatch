@@ -29,10 +29,12 @@ class CustomerControllerButton: UIButton {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.controllerDown(self)
+        self.isHighlighted = true
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.controllerUp(self)
+        self.isHighlighted = false
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -25,6 +25,10 @@ class PayListDialog: BaseDialog {
     
     var wechatBtn = UIButton(type: .custom)
     
+    var exchangeCode = UIButton(type: .custom)
+    
+    fileprivate var exchangeCodeDialog:ExchangeCodeDialog!
+    
     override func createView() {
         createBackgroundImage(imageName: "pay_background")
         
@@ -180,6 +184,25 @@ extension PayListDialog{
         }
         
         wechatBtn.addTarget(self, action: #selector(payBtnClick(sender:)), for: .touchUpInside)
+        
+        exchangeCode.setBackgroundImage(UIImage(named: "兑换码"), for: .normal)
+        exchangeCode.frame.size = CGSize(width: 36, height: 36)
+        addSubview(exchangeCode)
+        
+        exchangeCode.snp.makeConstraints { (make) in
+            make.left.equalTo(backgroundImage).offset(16)
+            make.centerY.equalTo(wechatBtn)
+        }
+        
+        exchangeCode.addTarget(self, action: #selector(showExchangeDialog), for: .touchUpInside)
+    }
+    
+    func showExchangeDialog() -> () {
+        if exchangeCodeDialog == nil {
+            exchangeCodeDialog = ExchangeCodeDialog(frame: UIScreen.main.bounds)
+        }
+        exchangeCodeDialog.createView()
+        exchangeCodeDialog.show()
     }
     
     func payBtnClick(sender:UIButton) -> () {

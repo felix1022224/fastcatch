@@ -71,7 +71,6 @@ class PhoneNumberDialog: BaseDialog {
         phoneNumberEdit.keyboardType = .phonePad
         phoneNumberEdit.textAlignment = NSTextAlignment.left
         phoneNumberEdit.textColor = UIColor.white
-        phoneNumberEdit.tintColor = UIColor.clear
         phoneNumberEdit.delegate = self
         phoneNumberEdit.clearButtonMode = .unlessEditing
         phoneNumberEdit.text = "17600860082"
@@ -123,7 +122,6 @@ class PhoneNumberDialog: BaseDialog {
         verifyCodeEdit.keyboardType = .numberPad
         verifyCodeEdit.textAlignment = NSTextAlignment.left
         verifyCodeEdit.textColor = UIColor.white
-        verifyCodeEdit.tintColor = UIColor.clear
         verifyCodeEdit.clearButtonMode = .unlessEditing
         verifyCodeEdit.delegate = self
         verifyCodeEdit.text = "888888"

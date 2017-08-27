@@ -124,6 +124,33 @@ class PlayViewController: UIViewController {
     
     var playSuccess:(()->())? = nil
     
+    /// 底部的view
+    var bottomGroupView:UIView!
+    
+    /// 底部奖品的card
+    var bottomAwardCard:UIView!
+    
+    /// 底部的banner的card
+    var bottomBannerCard:UIView!
+    
+    var bottomAwardCardImagePath:String!
+    var bottomAwardCardScheme:String!
+    var bootomAwardDescription:String!
+    var bottomAwardTitle:String!
+    
+    var bootomBannerCardImagePath:String!
+    var bottomBannerCardScheme:String!
+    
+    /// banner详情
+    var bottomBannerDialog:PlayInfoBannerDialog!
+    
+    /// 奖品详情
+    var bottomAwardDialog:PlayInfoAwardDialog!
+    
+    /// 正在排队中的view
+    fileprivate var playQueueNumberStatus:UIView!
+    fileprivate var playQueueStausNumber:MainCustomerLabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -241,6 +268,9 @@ extension PlayViewController{
         
         createBtns()
         
+        /// 创建底部展示的奖品
+        createBottomGroup()
+        
         createPlayControllerView()
         
         /// 重新游戏倒计时的view
@@ -256,6 +286,11 @@ extension PlayViewController{
         let backgroundImageView = UIImageView(image: UIImage(named: "main_background"))
         backgroundImageView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
         view.addSubview(backgroundImageView)
+        
+        let playGameBackgroundImage = UIImageView(image: UIImage(named: "play_game_background_blue"))
+        playGameBackgroundImage.sizeToFit()
+        playGameBackgroundImage.frame = CGRect(x: 0, y: UIScreen.main.bounds.height/2, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/2)
+        view.addSubview(playGameBackgroundImage)
         
     }
     
@@ -346,7 +381,7 @@ extension PlayViewController{
     /// 创建开始游戏的按钮
     func createStartBtn() -> () {
         let startBtnImage = UIImage(named: "icon_start")
-        startBtnBackgroundView.backgroundColor = UIColor(red: 91/255.0, green: 177/255.0, blue: 228/255.0, alpha: 1.0)
+//        startBtnBackgroundView.backgroundColor = UIColor(red: 91/255.0, green: 177/255.0, blue: 228/255.0, alpha: 1.0)
         startBtnBackgroundView.frame = CGRect(x: 0, y: videoView.bounds.height, width: self.view.bounds.width, height: startBtnImage!.size.height * 1.5 + 25)
         view.addSubview(startBtnBackgroundView)
         
@@ -362,6 +397,42 @@ extension PlayViewController{
         }
         
         startPlayBtn.addTarget(self, action: #selector(waitQueue), for: .touchUpInside)
+        
+        createQueueNumber()
+    }
+    
+    func createQueueNumber() -> () {
+        playQueueNumberStatus = UIView()
+        view.addSubview(playQueueNumberStatus)
+        
+        let backgroundImage = UIImageView(image: UIImage(named: "正在排队图标"))
+        backgroundImage.sizeToFit()
+        playQueueNumberStatus.addSubview(backgroundImage)
+        
+        playQueueStausNumber = MainCustomerLabel()
+        playQueueStausNumber.outLineWidth = Constants.UI.OUT_LINE_WIDTH
+        playQueueStausNumber.outTextColor = UIColor.white
+        playQueueStausNumber.outLienTextColor = UIColor.gray
+        playQueueStausNumber.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
+        playQueueStausNumber.text = "预约第\(1)位"
+        playQueueStausNumber.sizeToFit()
+        playQueueNumberStatus.addSubview(playQueueStausNumber)
+        
+        playQueueNumberStatus.isHidden = true
+        
+        playQueueStausNumber.snp.makeConstraints { (make) in
+            make.center.equalTo(startPlayBtn)
+        }
+        
+        backgroundImage.snp.makeConstraints { (make) in
+            make.center.equalTo(startPlayBtn)
+        }
+        
+        playQueueNumberStatus.snp.makeConstraints { (make) in
+            make.center.equalTo(startPlayBtn)
+        }
+        
+        
     }
     
     /// 关闭当前页面
@@ -669,6 +740,7 @@ extension PlayViewController{
     
     /// 创建操作界面
     func createPlayControllerView() -> () {
+        
         let topHeight = videoView.bounds.height + startBtnBackgroundView.bounds.height
         
         playGroupView.frame = CGRect(x: 0, y: topHeight, width: self.view.bounds.width, height: self.view.bounds.height - topHeight)
@@ -870,12 +942,22 @@ extension PlayViewController{
         Alamofire.request(Constants.Network.Machine.START_PLAY, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 print("开始游戏回调:\(String(describing: response.result.value))")
-                self.showPlayGroup()
                 let json = JSON(response.result.value!)
-                self.gemLabel.text = String(json["data"]["diamondsCount"].int!)
-                Constants.User.diamondsCount = json["data"]["diamondsCount"].intValue
-                self.wardCode = json["data"]["gTradeNo"].string!
+                
+                if json["data"]["errcode"].intValue == 0 {
+                    ///成功
+                    self.showPlayGroup()
+                    
+                    self.gemLabel.text = String(json["data"]["diamondsCount"].int!)
+                    Constants.User.diamondsCount = json["data"]["diamondsCount"].intValue
+                    self.wardCode = json["data"]["gTradeNo"].string!
+                }else if json["data"]["errcode"].intValue == 2 {
+                    ///钻石不足
+                    ToastUtils.showErrorToast(msg: "钻石不足")
+                }
+                
             }else {
+//                ToastUtils.showErrorToast(msg: response.error.debugDescription)
                 print("error:\(String(describing: response.error))")
             }
             self.isStartClick = false
@@ -896,8 +978,15 @@ extension PlayViewController{
                 if json["data"]["tryLock"].bool! == true {
                     // 可以开始游戏了
                     self.startPlay()
+                    self.playQueueNumberStatus.isHidden = true
                 }else{
                     print("已经有\(String(describing: json["data"]["waitCtlCount"].int!))人在游戏中，请等候")
+                    
+                    self.playQueueStausNumber.text = "预约第\(json["data"]["waitCtlCount"].intValue)位"
+                    self.queueNumber.text = String(json["data"]["waitCtlCount"].intValue)
+                    
+                    self.playQueueNumberStatus.isHidden = false
+                    
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: {
                         self.waitQueue()
                     })
@@ -1139,6 +1228,8 @@ extension PlayViewController{
         
         startPlayBtn.isEnabled = true
         
+        /// 把直播的镜头切回去
+        swichVideoChannerlToLive()
     }
     
 }
@@ -1257,6 +1348,99 @@ extension PlayViewController{
         isCloseMusic = true
         bgMusicPlayer.pause()
     }
+}
+
+/// 底部介绍
+extension PlayViewController{
+    
+    /// 底部展示奖品的view
+    func createBottomGroup() -> () {
+        let topHeight = videoView.bounds.height + startBtnBackgroundView.bounds.height
+        bottomGroupView = UIView(frame: CGRect(x: 0, y: topHeight, width: self.view.bounds.width, height: self.view.bounds.height - topHeight))
+        view.addSubview(bottomGroupView)
+        
+        let cardWidth = (bottomGroupView.bounds.width - 15*2 - 20)/2
+        
+        ///奖品card
+        bottomAwardCard = UIView()
+        bottomAwardCard.backgroundColor = UIColor.white
+        bottomAwardCard.layer.masksToBounds = true
+        bottomAwardCard.layer.cornerRadius = 4
+        bottomGroupView.addSubview(bottomAwardCard)
+        
+        bottomAwardCard.snp.makeConstraints { (make) in
+            make.width.equalTo(cardWidth)
+            make.height.equalTo(cardWidth)
+            make.centerY.equalTo(bottomGroupView)
+            make.left.equalTo(bottomGroupView).offset(15)
+        }
+        
+        let bottomAwardImage = UIImageView()
+        bottomAwardImage.layer.cornerRadius = 3
+        bottomAwardImage.layer.masksToBounds = true
+        bottomAwardImage.backgroundColor = UIColor.red
+        bottomAwardCard.addSubview(bottomAwardImage)
+        
+        bottomAwardImage.snp.makeConstraints { (make) in
+            make.width.equalTo(cardWidth*0.95)
+            make.height.equalTo(cardWidth*0.95)
+            make.center.equalTo(bottomAwardCard)
+        }
+        
+        bottomAwardImage.kf.setImage(with: URL(string: bottomAwardCardImagePath), placeholder: UIImage(named: "main_no_value"), options: nil, progressBlock: nil, completionHandler: nil)
+        
+        let awardTap = UITapGestureRecognizer(target: self, action: #selector(showAwardInfo))
+        bottomAwardCard.addGestureRecognizer(awardTap)
+        
+        /// banner card
+        bottomBannerCard = UIView()
+        bottomBannerCard.backgroundColor = UIColor.white
+        bottomBannerCard.layer.masksToBounds = true
+        bottomBannerCard.layer.cornerRadius = 4
+        view.addSubview(bottomBannerCard)
+        
+        bottomBannerCard.snp.makeConstraints { (make) in
+            make.width.equalTo(cardWidth)
+            make.height.equalTo(cardWidth)
+            make.centerY.equalTo(bottomGroupView)
+            make.right.equalTo(bottomGroupView).offset(-15)
+        }
+        
+        let bottomBannerImage = UIImageView()
+        bottomBannerImage.layer.cornerRadius = 3
+        bottomBannerImage.layer.masksToBounds = true
+        bottomBannerImage.backgroundColor = UIColor.red
+        bottomBannerCard.addSubview(bottomBannerImage)
+        
+        bottomBannerImage.snp.makeConstraints { (make) in
+            make.width.equalTo(cardWidth*0.95)
+            make.height.equalTo(cardWidth*0.95)
+            make.center.equalTo(bottomBannerCard)
+        }
+        
+        bottomBannerImage.kf.setImage(with: URL(string: bootomBannerCardImagePath), placeholder: UIImage(named: "main_no_value"), options: nil, progressBlock: nil, completionHandler: nil)
+        
+        let bannerTap = UITapGestureRecognizer(target: self, action: #selector(showBannerInfo))
+        bottomBannerCard.addGestureRecognizer(bannerTap)
+        
+    }
+    
+    func showBannerInfo() -> () {
+        if bottomBannerDialog == nil {
+            bottomBannerDialog = PlayInfoBannerDialog(frame: UIScreen.main.bounds)
+        }
+        bottomBannerDialog.createView()
+        bottomBannerDialog.showUrl(link:bottomBannerCardScheme)
+    }
+    
+    func showAwardInfo() -> () {
+        if bottomAwardDialog == nil {
+            bottomAwardDialog = PlayInfoAwardDialog(frame: UIScreen.main.bounds)
+        }
+        bottomAwardDialog.createView()
+        bottomAwardDialog.showInfo(title: bottomAwardTitle, description: bootomAwardDescription, imagePath: bottomAwardCardImagePath)
+    }
+    
 }
 
 

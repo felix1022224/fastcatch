@@ -8,8 +8,13 @@
 
 import UIKit
 
-class InviteListDialog: UIView {
+class InviteListDialog: BaseDialog {
 
-    
+    override func createView() {
+        createBackgroundImage(imageName: "")
+        
+        
+        addDialogToWindow()
+    }
 
 }

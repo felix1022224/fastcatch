@@ -168,7 +168,7 @@ extension MainCollectionViewCell{
         
         playBtn.snp.makeConstraints { (make) in
             make.right.equalTo(bottomGroup).offset(-2)
-            make.bottom.equalTo(bottomGroup).offset(-5)
+            make.bottom.equalTo(bottomGroup)
         }
     }
     

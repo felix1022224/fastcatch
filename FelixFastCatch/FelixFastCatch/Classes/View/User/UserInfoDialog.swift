@@ -171,6 +171,10 @@ class UserInfoDialog: BaseDialog {
     func logOut() -> () {
 //        ToastUtils.showLoadingToast(msg: "正在登出")
         
+        if mainVC != nil {
+            mainVC.clearGemNumber()
+        }
+        
         LocalDataUtils.clearLoaclData()
         self.hide()
         
@@ -221,6 +225,13 @@ class UserInfoDialog: BaseDialog {
         let format = DateFormatter()
         format.dateFormat = "yyyy-MM-dd"
         constellationLabel.text = "星座:" + ConstellationUtils.calculateWithDate(date: format.date(from: Constants.User.USER_BRITHDAY)!)
+    }
+    
+    private var mainVC:MainViewController!
+    
+    func show2(mainViewController:MainViewController) -> () {
+        mainVC = mainViewController
+        show()
     }
     
 }

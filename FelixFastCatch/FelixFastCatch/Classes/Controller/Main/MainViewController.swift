@@ -505,7 +505,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell?.titleLabel.text = itemData["award"]["title"].string!
         cell?.gemNumberLabel.text = String(itemData["perDiamondsCount"].int!) + "钻"
         
-        if itemData["status"].intValue != 1 {
+        if itemData["status"].intValue != 0 {
             cell?.showErrorView()
             cell?.playBtn.setImage(UIImage(named: "维护"), for: .normal)
         }else{
@@ -537,6 +537,14 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         playView.playSuccess = {[weak self] in
             self?.showShardRecordDialog()
         }
+        
+        playView.bottomAwardCardImagePath = mainListData[sender.tag]["award"]["img"].stringValue
+        playView.bootomAwardDescription = mainListData[sender.tag]["award"]["description"].stringValue
+        playView.bottomAwardTitle = mainListData[sender.tag]["award"]["title"].stringValue
+        
+        playView.bootomBannerCardImagePath = mainListData[sender.tag]["activity"]["bannerSmallImg"].stringValue
+        playView.bottomBannerCardScheme = mainListData[sender.tag]["activity"]["scheme"].stringValue
+        
         navigationController?.pushViewController(playView, animated: true)
         
 //        test()
@@ -558,6 +566,15 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         playView.playSuccess = {[weak self] in
             self?.showShardRecordDialog()
         }
+        
+        playView.bottomAwardCardImagePath = mainListData[index]["award"]["img"].stringValue
+        playView.bootomAwardDescription = mainListData[index]["award"]["description"].stringValue
+        playView.bottomAwardTitle = mainListData[index]["award"]["title"].stringValue
+        
+        playView.bootomBannerCardImagePath = mainListData[index]["activity"]["bannerSmallImg"].stringValue
+        playView.bottomBannerCardScheme = mainListData[index]["activity"]["scheme"].stringValue
+
+        
         navigationController?.pushViewController(playView, animated: true)
     }
 
@@ -708,7 +725,7 @@ extension MainViewController{
             return
         }
         inviteDialog.createView()
-        inviteDialog.show()
+        inviteDialog.show2(mainController: self)
     }
     
     /// 显示我的礼物
@@ -815,6 +832,11 @@ extension MainViewController{
                 self?.payGemBtn.actionLabel.text = String(Constants.User.diamondsCount)
             }
         })
+    }
+    
+    /// 清除钻石数量
+    func clearGemNumber() -> () {
+        payGemBtn.actionLabel.text = String(0)
     }
     
 }

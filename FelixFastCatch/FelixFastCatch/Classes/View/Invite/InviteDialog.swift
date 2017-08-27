@@ -22,6 +22,12 @@ class InviteDialog: BaseDialog {
     /// 我的邀请码
     fileprivate var myInviteCode:MainCustomerLabel!
     
+    /// 输入邀请码
+    fileprivate var editInviteCodeDialog:EditInviteCode!
+    
+    /// 已邀请好友的列表
+    fileprivate var inviteListDialog:InviteListDialog!
+    
     override func createView() {
         createBackgroundImage(imageName: "bg_invite")
         
@@ -81,6 +87,8 @@ class InviteDialog: BaseDialog {
         lookInviteList.frame.size = CGSize(width: 94, height: 26)
         addSubview(lookInviteList)
         
+        lookInviteList.addTarget(self, action: #selector(showMyInviteDialog), for: .touchUpInside)
+        
         lookInviteList.snp.makeConstraints { (make) in
             make.top.equalTo(rule2).offset(rule2.bounds.height + 20)
             make.centerX.equalTo(backgroundImage)
@@ -120,6 +128,8 @@ class InviteDialog: BaseDialog {
             make.bottom.equalTo(backgroundImage).offset(editInviteCode.bounds.height/2)
         }
         
+        editInviteCode.addTarget(self, action: #selector(showEditInviteCode), for: .touchUpInside)
+        
         nowInvite = UIButton(type: .custom)
         nowInvite.setImage(UIImage(named: "now_invite"), for: .normal)
         nowInvite.frame.size = CGSize(width: 118, height: 34)
@@ -129,7 +139,29 @@ class InviteDialog: BaseDialog {
             make.left.equalTo(backgroundImage).offset(backgroundImage.bounds.width/2 + 6.5)
             make.bottom.equalTo(backgroundImage).offset(nowInvite.bounds.height/2)
         }
-        
+    }
+    
+    func showEditInviteCode() -> () {
+        if editInviteCodeDialog == nil {
+            editInviteCodeDialog = EditInviteCode(frame: UIScreen.main.bounds)
+        }
+        editInviteCodeDialog.createView()
+        editInviteCodeDialog.show2(mainViewController: self.mainController)
+    }
+    
+    func showMyInviteDialog() -> () {
+        if inviteListDialog == nil {
+            inviteListDialog = InviteListDialog(frame: UIScreen.main.bounds)
+        }
+        inviteListDialog.createView()
+        inviteListDialog.show()
+    }
+    
+    private var mainController:MainViewController!
+    
+    func show2(mainController:MainViewController) -> () {
+        self.mainController = mainController
+        show()
     }
     
 }
