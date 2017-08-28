@@ -46,7 +46,7 @@ class FCMailedConfirmDialog: BaseDialog {
     var editAddressDialog:EditAddressDialog!
     
     /// 提交成功的dialog
-    fileprivate var successDialog:SubmitSuccessDialog!
+    fileprivate var successDialog:MailedSuccessDialog!
 
     /// 邮寄成功的回调，回调上一个接口刷新list
     var mailedSuccessCallback:(()->())? = nil
@@ -234,6 +234,9 @@ class FCMailedConfirmDialog: BaseDialog {
     
     /// 显示成功的dialog
     func showSuccessDialog() -> () {
+        if successDialog == nil {
+            successDialog = MailedSuccessDialog(frame: UIScreen.main.bounds)
+        }
         successDialog.createView()
         successDialog.show()
     }
@@ -354,11 +357,14 @@ extension FCMailedConfirmDialog{
         
         Alamofire.request(Constants.Network.Gift.CREATE_POSTAGE + "?" + ids, method: .get, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
-                ToastUtils.showSuccessToast(msg: "邮寄成功")
-                self.hide()
+//                ToastUtils.showSuccessToast(msg: "邮寄成功")
+                ToastUtils.hide()
                 if self.mailedSuccessCallback != nil {
+                    print("1231231231231231123123121231231")
                     self.mailedSuccessCallback?()
                 }
+                self.hide()
+                self.showSuccessDialog()
             }
         }
     }

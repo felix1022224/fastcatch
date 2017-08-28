@@ -505,12 +505,12 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell?.titleLabel.text = itemData["award"]["title"].string!
         cell?.gemNumberLabel.text = String(itemData["perDiamondsCount"].int!) + "钻"
         
-        if itemData["status"].intValue != 0 {
-            cell?.showErrorView()
-            cell?.playBtn.setImage(UIImage(named: "维护"), for: .normal)
-        }else{
+        if itemData["status"].intValue == 0 || itemData["status"].intValue == 1 {
             cell?.hideErrorView()
             cell?.playBtn.setImage(UIImage(named: "Easy"), for: .normal)
+        }else{
+            cell?.showErrorView()
+            cell?.playBtn.setImage(UIImage(named: "维护"), for: .normal)
         }
         
         return cell!

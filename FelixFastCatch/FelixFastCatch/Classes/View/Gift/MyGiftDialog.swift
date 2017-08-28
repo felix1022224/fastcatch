@@ -160,8 +160,8 @@ class MyGiftDialog: BaseDialog {
         mailedConfirmDialog.mailedSuccessCallback = {[weak self] in
             self?.tobeMailedDelegate.dataSource.removeAll()
             self?.hasBeenMailedDelegate.dataSource.removeAll()
-            self?.getMailedGiftList()
-            self?.getTobeMailedGiftList()
+            self?.getMailedGiftList(isRefresh: true)
+            self?.getTobeMailedGiftList(isRefresh: true)
         }
         
         mailedConfirmDialog.sendData.removeAll()
@@ -183,6 +183,13 @@ class MyGiftDialog: BaseDialog {
         
         mailedConfirmDialog.sendData.removeAll()
         mailedConfirmDialog.sendData = sendData
+        
+        mailedConfirmDialog.mailedSuccessCallback = { [weak self] in
+            print("重新加载数据")
+            self?.getTobeMailedGiftList(isRefresh: true)
+            self?.getMailedGiftList(isRefresh: true)
+        }
+        
         mailedConfirmDialog.createView()
         mailedConfirmDialog.show()
 
@@ -292,16 +299,16 @@ extension MyGiftDialog{
         
         hasbeenMailedTabView.isHidden = true
         
-        getTobeMailedGiftList()
+        getTobeMailedGiftList(isRefresh: true)
         
-        getMailedGiftList()
+        getMailedGiftList(isRefresh: true)
     }
 }
 
 // MARK: - 获取未邮寄礼物列表
 extension MyGiftDialog{
     
-    func getTobeMailedGiftList() -> () {
+    func getTobeMailedGiftList(isRefresh:Bool) -> () {
         getUserAddress()
         
         var params = NetWorkUtils.createBaseParams()
@@ -312,7 +319,11 @@ extension MyGiftDialog{
             print("result:\(String(describing: response.result.value))")
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(response.result.value!)
-                self.tobeMailedDelegate.dataSource = json["data"]["content"].array!
+                if isRefresh {
+                    self.tobeMailedDelegate.selectList.removeAll()
+                    self.tobeMailedDelegate.dataSource.removeAll()
+                }
+                self.tobeMailedDelegate.dataSource += json["data"]["content"].array!
                 self.tobeMailedTabView.reloadData()
                 
                 self.showTobeMailedNoValue()
@@ -344,7 +355,7 @@ extension MyGiftDialog{
 /// 获取已邮寄的列表
 extension MyGiftDialog{
     
-    func getMailedGiftList() -> () {
+    func getMailedGiftList(isRefresh:Bool) -> () {
         var params = NetWorkUtils.createBaseParams()
         params["size"] = "10"
         params["page"] = "0"
@@ -353,7 +364,10 @@ extension MyGiftDialog{
             print("result:\(String(describing: response.result.value))")
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(response.result.value!)
-                self.hasBeenMailedDelegate.dataSource = json["data"]["content"].array!
+                if isRefresh {
+                    self.hasBeenMailedDelegate.dataSource.removeAll()
+                }
+                self.hasBeenMailedDelegate.dataSource += json["data"]["content"].array!
                 self.hasbeenMailedTabView.reloadData()
                 self.showHasBeenNoValue()
             }else{
