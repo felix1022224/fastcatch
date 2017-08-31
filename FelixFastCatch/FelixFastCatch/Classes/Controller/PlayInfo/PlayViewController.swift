@@ -95,6 +95,9 @@ class PlayViewController: UIViewController {
     /// 当前默认模式下的镜头id
     var nowDefaultVideoId:UInt!
     
+    /// 当前游戏中的视频id
+    var nowVideoId:UInt = UInt(2)
+    
     /// 当前直播模式下的镜头id
     var nowLiveVideoId:UInt!
     
@@ -151,6 +154,15 @@ class PlayViewController: UIViewController {
     fileprivate var playQueueNumberStatus:UIView!
     fileprivate var playQueueStausNumber:MainCustomerLabel!
     
+    /// 被抓取的次数
+    var darwCount = 0
+    
+    /// 被抓去次数的label
+    var darwCountLabel:UILabel!
+    
+    /// 音频按钮
+    var audioBtn:UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -170,11 +182,13 @@ class PlayViewController: UIViewController {
         
         /// 播放背景音乐
         playBackgroundMusic()
+        
+        ToastUtils.showLoadingToast(msg: "正在加入房间")
 
     }
 
     deinit {
-        out(deviceId: deviceId)
+//        out(deviceId: deviceId)
         agoraKit.leaveChannel { (starts) in
             // 离开
             print("离开")
@@ -252,6 +266,7 @@ class PlayViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         print("页面销毁")
         bgMusicPlayer.stop()
+        wardCode = ""
     }
     
 }
@@ -349,12 +364,12 @@ extension PlayViewController{
         view.addSubview(helpBtn)
         
         helpBtn.snp.makeConstraints { (make) in
-            make.bottom.equalTo(videoView).offset(-10)
+            make.bottom.equalTo(videoView).offset(-40)
             make.left.equalTo(self.view).offset(10)
         }
         
         /// 音频按钮
-        let audioBtn = UIButton(type: .custom)
+        audioBtn = UIButton(type: .custom)
         audioBtn.setImage(UIImage(named: "icon_audio"), for: .normal)
         audioBtn.sizeToFit()
         view.addSubview(audioBtn)
@@ -376,6 +391,26 @@ extension PlayViewController{
         }
         
         lensBtn.isHidden = true
+        
+        darwCountLabel = UILabel()
+        darwCountLabel.text = "已被抓取了" + String(darwCount) + "次"
+        darwCountLabel.textColor = UIColor.white
+        darwCountLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        darwCountLabel.sizeToFit()
+        
+        let darwCountBgView = UIView()
+        darwCountBgView.frame.size = CGSize(width: darwCountLabel.bounds.width * 2, height: darwCountLabel.bounds.height * 1.5)
+        darwCountBgView.backgroundColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.7)
+        darwCountBgView.layer.cornerRadius = (darwCountLabel.bounds.height * 1.5)/2
+        darwCountBgView.layer.masksToBounds = true
+        view.addSubview(darwCountBgView)
+    
+        view.addSubview(darwCountLabel)
+        
+        darwCountBgView.frame = CGRect(x: self.view.bounds.width - darwCountBgView.bounds.width - 10, y: self.view.bounds.height * 0.5 - darwCountBgView.bounds.height - 5, width: darwCountBgView.bounds.width, height: darwCountBgView.bounds.height)
+        
+        darwCountLabel.center = darwCountBgView.center
+        
     }
     
     /// 创建开始游戏的按钮
@@ -431,8 +466,6 @@ extension PlayViewController{
         playQueueNumberStatus.snp.makeConstraints { (make) in
             make.center.equalTo(startPlayBtn)
         }
-        
-        
     }
     
     /// 关闭当前页面
@@ -445,7 +478,9 @@ extension PlayViewController{
             }
             return
         }
+        out(deviceId: deviceId)
         self.navigationController?.popViewController(animated: true)
+        ToastUtils.hide()
     }
     
 }
@@ -456,7 +491,7 @@ extension PlayViewController{
     
     /// 创建video 的view
     func createVideo() -> () {
-        videoView.backgroundColor = UIColor.lightGray
+        videoView.backgroundColor = UIColor.white
         videoView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height * 0.5)
         view.addSubview(videoView)
         
@@ -471,7 +506,7 @@ extension PlayViewController{
         agoraKit.enableLocalVideo(false)
         agoraKit.enableVideo()
         
-        agoraKit.setVideoProfile(._VideoProfile_360P, swapWidthAndHeight: false)
+        agoraKit.setVideoProfile(._VideoProfile_480P_3, swapWidthAndHeight: false)
         agoraKit.setClientRole(AgoraRtcClientRole.clientRole_Audience, withKey: nil)
         
         agoraKit.muteAllRemoteAudioStreams(true)
@@ -479,7 +514,7 @@ extension PlayViewController{
 //        let hostingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
 //        hostingView.translatesAutoresizingMaskIntoConstraints = false
         
-        let code = agoraKit.joinChannel(byKey: nil, channelName: "test4", info: nil, uid: 878, joinSuccess: nil)
+        let code = agoraKit.joinChannel(byKey: nil, channelName: deviceId + "live", info: nil, uid: 878, joinSuccess: nil)
         
         if code != 0 {
             DispatchQueue.main.async(execute: {
@@ -497,8 +532,12 @@ extension PlayViewController{
     /// 切换视频的房间到一对一聊天界面
     func switchVideoChannelToDefault() -> () {
         
+        ToastUtils.showLoadingToast(msg: "进入游戏房间")
+        
         /// 首次切换，清空ID
         defaultVideoIds.removeAll()
+        
+        isLive = false
         
         agoraKit.leaveChannel { (starts) in
             print("在进入前，先离开上一个房间")
@@ -506,7 +545,7 @@ extension PlayViewController{
         
         agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_Communication)
         
-        let code = agoraKit.joinChannel(byKey: nil, channelName: "test3", info: nil, uid: 0, joinSuccess: nil)
+        let code = agoraKit.joinChannel(byKey: nil, channelName: deviceId + "", info: nil, uid: 0, joinSuccess: nil)
         
         if code != 0 {
             DispatchQueue.main.async(execute: {
@@ -514,10 +553,19 @@ extension PlayViewController{
             })
         }else {
             print("进入房间成功:\(code)")
-            isLive = false
+            
             
             playStartGame()
         }
+        
+        agoraKit.setupRemoteVideo(nil)
+        let canvas = AgoraRtcVideoCanvas()
+        canvas.view = videoView
+        canvas.uid = 2
+        canvas.renderMode = .render_Hidden
+        
+        agoraKit.setRemoteVideoStream(UInt(2), type: .videoStream_High)
+        agoraKit.setupRemoteVideo(canvas)
     }
     
     // 切换镜头
@@ -525,11 +573,19 @@ extension PlayViewController{
         if !isLive {
             lensBtn.isEnabled = false
             //不是直播模式，就是在游戏中
-            for item in defaultVideoIds {
-                if item != nowDefaultVideoId {
-                    switchLens(uid: item)
-                    break
-                }
+//            for item in defaultVideoIds {
+//                if item != nowDefaultVideoId {
+//                    switchLens(uid: item)
+//                    break
+//                }
+//            }
+            /// 判断一下镜头
+            if nowVideoId == 2 {
+                switchLens(uid: 1)
+                nowVideoId = 1
+            }else{
+                switchLens(uid: 2)
+                nowVideoId = 2
             }
         }else{
             lensBtn.isEnabled = false
@@ -565,6 +621,12 @@ extension PlayViewController{
     
     /// 切换视频到直播界面
     func swichVideoChannerlToLive() -> () {
+        
+        ToastUtils.showLoadingToast(msg: "退出游戏房间")
+        
+        /// 把video的id切回去
+        nowVideoId = UInt(1)
+        
         /// 首次切换，清空ID
         liveVideoIds.removeAll()
         
@@ -574,7 +636,7 @@ extension PlayViewController{
         
         agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_LiveBroadcasting)
         
-        let code = agoraKit.joinChannel(byKey: nil, channelName: "test4", info: nil, uid: 878, joinSuccess: nil)
+        let code = agoraKit.joinChannel(byKey: nil, channelName: deviceId + "live", info: nil, uid: 878, joinSuccess: nil)
         
         if code != 0 {
             DispatchQueue.main.async(execute: {
@@ -584,6 +646,7 @@ extension PlayViewController{
             print("进入房间成功:\(code)")
             isLive = true
         }
+        
     }
     
     
@@ -593,24 +656,29 @@ extension PlayViewController: AgoraRtcEngineDelegate {
     func rtcEngine(_ engine: AgoraRtcEngineKit!, firstRemoteVideoDecodedOfUid uid: UInt, size: CGSize, elapsed: Int) {
         // 初始化成功
         print("成功\(uid)")
+//        if isLive {
+//            liveVideoIds.append(uid)
+//            /// 对当前镜头id进行赋值
+//            nowLiveVideoId = uid
+//        }else {
+//            /// 对当前的镜头id进行赋值
+//            nowDefaultVideoId = uid
+//            defaultVideoIds.append(uid)
+//        }
         if isLive {
-            liveVideoIds.append(uid)
-            /// 对当前镜头id进行赋值
-            nowLiveVideoId = uid
-        }else {
-            /// 对当前的镜头id进行赋值
-            nowDefaultVideoId = uid
-            defaultVideoIds.append(uid)
+            agoraKit.setupRemoteVideo(nil)
+            let canvas = AgoraRtcVideoCanvas()
+            canvas.view = videoView
+            canvas.uid = uid
+            canvas.renderMode = .render_Hidden
+            
+            agoraKit.setRemoteVideoStream(UInt(uid), type: .videoStream_High)
+            agoraKit.setupRemoteVideo(canvas)
+        }else{
+            ///成功
+            self.showPlayGroup()
         }
-        agoraKit.setupRemoteVideo(nil)
-        let canvas = AgoraRtcVideoCanvas()
-        canvas.view = videoView
-        canvas.uid = uid
-        canvas.renderMode = .render_Hidden
-        
-        agoraKit.setRemoteVideoStream(UInt(uid), type: .videoStream_High)
-        agoraKit.setupRemoteVideo(canvas)
-
+        ToastUtils.hide()
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit!, firstLocalVideoFrameWith size: CGSize, elapsed: Int) {
@@ -889,11 +957,9 @@ extension PlayViewController{
     
     /// 展示游戏界面
     func showPlayGroup() -> () {
+        
         playGroupView.isHidden = false
         isGrab = false
-        isCounting = true
-        /// 切换到另一个房间
-        switchVideoChannelToDefault()
         
         isGameing = true
         
@@ -906,6 +972,11 @@ extension PlayViewController{
         
         //振动
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+        
+        countdownTimer?.invalidate()
+        countdownTimer = nil
+        
+        isCounting = true
     }
     
     func hidePlayGroup() -> () {
@@ -945,8 +1016,8 @@ extension PlayViewController{
                 let json = JSON(response.result.value!)
                 
                 if json["data"]["errcode"].intValue == 0 {
-                    ///成功
-                    self.showPlayGroup()
+                    /// 切换到另一个房间
+                    self.switchVideoChannelToDefault()
                     
                     self.gemLabel.text = String(json["data"]["diamondsCount"].int!)
                     Constants.User.diamondsCount = json["data"]["diamondsCount"].intValue
@@ -966,7 +1037,7 @@ extension PlayViewController{
     
     /// 开始预约
     func waitQueue(){
-        ToastUtils.showLoadingToast(msg: "请稍后……")
+//        ToastUtils.showLoadingToast(msg: "请稍后……")
         
         var params = NetWorkUtils.createBaseParams()
         params["deviceid"] = deviceId
@@ -976,6 +1047,7 @@ extension PlayViewController{
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(data: response.data!)
                 if json["data"]["tryLock"].bool! == true {
+                    print("进来了")
                     // 可以开始游戏了
                     self.startPlay()
                     self.playQueueNumberStatus.isHidden = true
@@ -987,14 +1059,14 @@ extension PlayViewController{
                     
                     self.playQueueNumberStatus.isHidden = false
                     
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: {
-                        self.waitQueue()
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: {[weak self] in
+                        self?.waitQueue()
                     })
                 }
             }else{
                 /// 当数据data为空的时候，报告异常
             }
-            ToastUtils.hide()
+//            ToastUtils.hide()
         }
     }
     
@@ -1006,19 +1078,32 @@ extension PlayViewController{
         }
         if sender == controllerUp {
             // 上
-//            print("按下，上")
-            controllerNetworkPath(path:"3", status: "1")
+            if nowVideoId == 2 {
+                controllerNetworkPath(path:"3", status: "1")
+            }else{
+                controllerNetworkPath(path:"0", status: "1")
+            }
         }else if sender == controllerDown {
             // 下
-//            print("按下，下")
-            controllerNetworkPath(path:"2", status: "1")
+            if nowVideoId == 2 {
+                controllerNetworkPath(path:"2", status: "1")
+            }else{
+                controllerNetworkPath(path:"1", status: "1")
+            }
         }else if sender == controllerLeft {
             // 左
-//            print("按下，左")
-            controllerNetworkPath(path:"0", status: "1")
+            if nowVideoId == 2 {
+                controllerNetworkPath(path:"0", status: "1")
+            }else{
+                controllerNetworkPath(path:"2", status: "1")
+            }
         }else if sender == controllerRight {
             // 右
-            controllerNetworkPath(path:"1", status: "1")
+            if nowVideoId == 2 {
+                controllerNetworkPath(path:"1", status: "1")
+            }else{
+                controllerNetworkPath(path:"3", status: "1")
+            }
         }
     }
     
@@ -1030,16 +1115,32 @@ extension PlayViewController{
         }
         if sender == controllerUp {
             // 上
-            controllerNetworkPath(path:"3", status: "0")
+            if nowVideoId == 2 {
+                controllerNetworkPath(path:"3", status: "0")
+            }else{
+                controllerNetworkPath(path:"0", status: "0")
+            }
         }else if sender == controllerDown {
             // 下
-            controllerNetworkPath(path:"2", status: "0")
+            if nowVideoId == 2 {
+                controllerNetworkPath(path:"2", status: "0")
+            }else{
+                controllerNetworkPath(path:"1", status: "0")
+            }
         }else if sender == controllerLeft {
             // 左
-            controllerNetworkPath(path:"0", status: "0")
+            if nowVideoId == 2 {
+                controllerNetworkPath(path:"0", status: "0")
+            }else{
+                controllerNetworkPath(path:"2", status: "0")
+            }
         }else if sender == controllerRight {
             // 右
-            controllerNetworkPath(path:"1", status: "0")
+            if nowVideoId == 2 {
+                controllerNetworkPath(path:"1", status: "0")
+            }else{
+                controllerNetworkPath(path:"3", status: "0")
+            }
         }
     }
     
@@ -1120,9 +1221,9 @@ extension PlayViewController{
                     self.getWardCodeNumber = 0
                     print("抓取成功")
                     self.wardCode = ""
-                    self.playResultDialog.isSuccess = true
-                    self.playResultDialog.createView()
-                    self.playResultDialog.show()
+//                    self.playResultDialog.isSuccess = true
+//                    self.playResultDialog.createView()
+//                    self.playResultDialog.show()
                     self.playGrapSuccess()
                     self.hidePlayGroup()
                     /// 展示再来一局的界面
@@ -1133,15 +1234,15 @@ extension PlayViewController{
                 }else {
                     print("抓取失败")
                     self.getWardCodeNumber = self.getWardCodeNumber + 1
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: { 
-                        self.getWard()
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: { [weak self] in
+                        self?.getWard()
                     })
                 }
             }else{
                 print("抓取失败")
                 self.getWardCodeNumber = self.getWardCodeNumber + 1
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
-                    self.getWard()
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: { [weak self] in
+                    self?.getWard()
                 })
             }
         }
@@ -1227,6 +1328,8 @@ extension PlayViewController{
         resetReplayInfo()
         
         startPlayBtn.isEnabled = true
+        
+        isLive = true
         
         /// 把直播的镜头切回去
         swichVideoChannerlToLive()

@@ -51,7 +51,7 @@ class PhoneNumberDialog: BaseDialog {
         phoneNumberLabel.outTextColor = UIColor.white
         phoneNumberLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         phoneNumberLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        phoneNumberLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
+        phoneNumberLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         phoneNumberLabel.text = "手机号:"
         phoneNumberLabel.sizeToFit()
         addSubview(phoneNumberLabel)
@@ -67,13 +67,12 @@ class PhoneNumberDialog: BaseDialog {
         phoneNumberEdit.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         phoneNumberEdit.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         phoneNumberEdit.placeholder = "请输入手机号码"
-        phoneNumberEdit.font = UIFont.systemFont(ofSize: CGFloat(12))
+        phoneNumberEdit.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         phoneNumberEdit.keyboardType = .phonePad
         phoneNumberEdit.textAlignment = NSTextAlignment.left
         phoneNumberEdit.textColor = UIColor.white
         phoneNumberEdit.delegate = self
         phoneNumberEdit.clearButtonMode = .unlessEditing
-        phoneNumberEdit.text = "17600860082"
         addSubview(phoneNumberEdit)
         
         phoneNumberEdit.snp.makeConstraints { (make) in
@@ -88,7 +87,7 @@ class PhoneNumberDialog: BaseDialog {
         verifyLabel.outTextColor = UIColor.white
         verifyLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         verifyLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        verifyLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
+        verifyLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         verifyLabel.text = "验证码:"
         verifyLabel.sizeToFit()
         addSubview(verifyLabel)
@@ -101,7 +100,7 @@ class PhoneNumberDialog: BaseDialog {
         // 验证码发送按钮
         verifySendBtn.setBackgroundImage(UIImage(named: "login_send"), for: .normal)
         verifySendBtn.setTitle("发送", for: .normal)
-        verifySendBtn.titleLabel?.font = UIFont.systemFont(ofSize: CGFloat(12))
+        verifySendBtn.titleLabel?.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         verifySendBtn.sizeToFit()
         addSubview(verifySendBtn)
         
@@ -118,13 +117,12 @@ class PhoneNumberDialog: BaseDialog {
         verifyCodeEdit.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         verifyCodeEdit.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         verifyCodeEdit.placeholder = "验证码"
-        verifyCodeEdit.font = UIFont.systemFont(ofSize: CGFloat(12))
+        verifyCodeEdit.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         verifyCodeEdit.keyboardType = .numberPad
         verifyCodeEdit.textAlignment = NSTextAlignment.left
         verifyCodeEdit.textColor = UIColor.white
         verifyCodeEdit.clearButtonMode = .unlessEditing
         verifyCodeEdit.delegate = self
-        verifyCodeEdit.text = "888888"
         addSubview(verifyCodeEdit)
         
         verifyCodeEdit.snp.makeConstraints { (make) in

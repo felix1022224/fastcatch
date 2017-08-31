@@ -73,10 +73,11 @@ class ExchangeCodeDialog: BaseDialog {
         editInviteCodeTextFiled.frame.size = CGSize(width: backgroundImage.bounds.width * 0.8, height: 40)
         editInviteCodeTextFiled.center = backgroundImage.center
         editInviteCodeTextFiled.placeholder = "请输入兑换码码"
+        editInviteCodeTextFiled.textColor = UIColor.white
         addSubview(editInviteCodeTextFiled)
         
         errorLabel = MainCustomerLabel()
-        errorLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
+        errorLabel.outLineWidth = 1
         errorLabel.outTextColor = UIColor.white
         errorLabel.outLienTextColor = UIColor.red
         errorLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
@@ -99,26 +100,26 @@ class ExchangeCodeDialog: BaseDialog {
     func useInviteCode() -> () {
         ToastUtils.showLoadingToast(msg: "正在请求数据")
         
+        self.endEditing(true)
+        
         var params = NetWorkUtils.createBaseParams()
         params["code"] = editInviteCodeTextFiled.text
         
         Alamofire.request(Constants.Network.User.USER_EXCHANGE_CODE, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            print("\(String(describing: response.result.value))")
+            let resultJson = JSON(data: response.data!)
             if NetWorkUtils.checkReponse(response: response) {
-                print("\(String(describing: response.result.value))")
-                let resultJson = JSON(data: response.data!)
-                if resultJson["data"]["errcode"].intValue == 0 {
-                    self.errorLabel.isHidden = true
-                    self.showInviteSuccessDialog()
-                    ToastUtils.hide()
-                    if self.mainvc != nil {
-                        self.mainvc.getsUserInfo()
-                    }
-                    self.hide()
-                }else{
-                    ToastUtils.showErrorToast(msg: resultJson["data"]["errmsg"].stringValue)
+                self.errorLabel.isHidden = true
+                self.showInviteSuccessDialog(gemCount: resultJson["data"].stringValue)
+                ToastUtils.hide()
+                if self.mainvc != nil {
+                    self.mainvc.getsUserInfo()
                 }
+                self.hide()
             }else{
+                self.errorLabel.text = resultJson["msg"].stringValue
                 self.errorLabel.isHidden = false
+                ToastUtils.hide()
             }
         }
     }
@@ -135,10 +136,13 @@ class ExchangeCodeDialog: BaseDialog {
         self.mainvc = nil
     }
     
-    func showInviteSuccessDialog() -> () {
-        hide()
+    func showInviteSuccessDialog(gemCount:String) -> () {
         inviteSuccessDialog.createView()
-        inviteSuccessDialog.show()
+        inviteSuccessDialog.show2(gemNumber: gemCount)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.endEditing(true)
     }
     
 }

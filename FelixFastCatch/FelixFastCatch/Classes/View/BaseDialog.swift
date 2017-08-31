@@ -19,7 +19,7 @@ class BaseDialog: UIView {
     var backgroundImage:UIImageView!
     
     // 关闭按钮
-    fileprivate var closeBtn:UIButton!
+    var closeBtn:UIButton!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

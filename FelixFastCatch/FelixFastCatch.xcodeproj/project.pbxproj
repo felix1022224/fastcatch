@@ -120,7 +120,7 @@
 		4D1D86121F306307005210CA /* TobeGiftModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TobeGiftModel.swift; sourceTree = "<group>"; };
 		4D1D86141F31BA9C005210CA /* EditAddressDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAddressDialog.swift; sourceTree = "<group>"; };
 		4D1D86161F31D1FE005210CA /* EditUserInfoDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserInfoDialog.swift; sourceTree = "<group>"; };
-		4D1D86181F31DA17005210CA /* PlayResultDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayResultDialog.swift; sourceTree = "<group>"; };
+		4D1D86181F31DA17005210CA /* PlayResultDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayResultDialog.swift; path = ../Pay/PlayResultDialog.swift; sourceTree = "<group>"; };
 		4D1D861A1F32F78F005210CA /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
 		4D1D861C1F333299005210CA /* HideView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HideView.swift; sourceTree = "<group>"; };
 		4D1D861E1F334461005210CA /* ConstellationUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstellationUtils.swift; sourceTree = "<group>"; };
@@ -442,7 +442,6 @@
 			isa = PBXGroup;
 			children = (
 				4DCD39D71F2F12E9002B7F35 /* PayListDialog.swift */,
-				4D1D86181F31DA17005210CA /* PlayResultDialog.swift */,
 				4D4ACE761F51CE410011E7F7 /* GemLackDialog.swift */,
 			);
 			path = Pay;
@@ -451,6 +450,7 @@
 		4D9EBB8E1F271CD8002674DE /* PlayInfo */ = {
 			isa = PBXGroup;
 			children = (
+				4D1D86181F31DA17005210CA /* PlayResultDialog.swift */,
 				4D4ACE741F51CA0D0011E7F7 /* ProductinfoDialog.swift */,
 				4DCC49C91F52A65F0017D4A4 /* PlayInfoBannerDialog.swift */,
 				4DCC49CB1F52E0110017D4A4 /* PlayInfoAwardDialog.swift */,
@@ -902,6 +902,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/lufan/Developer/ios-git/FelixFastCatch/FelixFastCatch/Login-header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -932,6 +933,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/lufan/Developer/ios-git/FelixFastCatch/FelixFastCatch/Login-header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

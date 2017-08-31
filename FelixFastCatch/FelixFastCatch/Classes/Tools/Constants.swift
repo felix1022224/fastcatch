@@ -34,6 +34,9 @@ class Constants: NSObject {
         /// 手机号登录
         static let PHONE_NUMBER_LOGIN = BASE_URL + "user/phonelogin"
         
+        /// 获取支付列表
+        static let GET_PAY_LIST = BASE_URL + "rp/list"
+        
         /// 游戏房间相关
         struct Machine {
             

@@ -21,16 +21,24 @@ class PlayInfoBannerDialog: BaseDialog {
     private var webview:UIWebView!
     
     override func createView() {
-        createBackgroundImage(imageName: "抓中了背景")
+        createBackgroundImage(imageName: "商品详情背景")
         
         backgroundImage.frame.size = CGSize(width: 298, height: 366)
         backgroundImage.center = self.center
         
-        createCloseBtn()
+        // 关闭按钮
+        closeBtn = UIButton(type: .custom)
+        let closeImage = UIImage(named: "icon_close")
+        closeBtn.setBackgroundImage(closeImage, for: .normal)
+        closeBtn.frame = CGRect(x: self.bounds.width/2 + backgroundImage.bounds.width/2 - 18, y: self.bounds.height/2 - backgroundImage.bounds.height/2 - 5, width:27, height: 27)
+        addSubview(closeBtn)
+        closeBtn.addTarget(self, action: #selector(hide), for: .touchUpInside)
         
         webview = UIWebView()
-        webview.frame.size = CGSize(width: backgroundImage.bounds.width * 0.8, height: backgroundImage.bounds.height * 0.8)
+        webview.frame.size = CGSize(width: backgroundImage.bounds.width * 0.88, height: backgroundImage.bounds.height * 0.88)
         webview.center = backgroundImage.center
+        webview.layer.masksToBounds = true
+        webview.layer.cornerRadius = 5
         addSubview(webview)
         
         

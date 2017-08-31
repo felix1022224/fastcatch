@@ -30,8 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         TencentShared.registeApp("101417288", appKey: "2cf4d8fd277a91f2ecd788611fa39755")
         WeChatShared.registeApp("wxb119161278966b95", appSecret: "2d54a9c60554787ea2a2d9c4f67eebb1")
         
-        
-        
         /// 取得用户授权 显示通知（上方提示条/声音/badgeNumber）
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .sound, .alert, .carPlay]) { (success, error) in

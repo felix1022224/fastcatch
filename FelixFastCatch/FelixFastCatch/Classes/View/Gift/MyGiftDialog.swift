@@ -12,8 +12,8 @@ import SwiftyJSON
 
 class MyGiftDialog: BaseDialog {
 
-    // 关闭按钮
-    fileprivate var closeBtn:UIButton!
+//    // 关闭按钮
+//    fileprivate var closeBtn:UIButton!
     
     // 切换tab的北京
     fileprivate var tabBackground:UIImageView!

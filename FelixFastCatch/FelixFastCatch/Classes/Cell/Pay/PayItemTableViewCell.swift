@@ -52,7 +52,9 @@ class PayItemTableViewCell: UITableViewCell {
         addSubview(gemInfo)
         
         // 购买按钮
-        payBtn.setImage(UIImage(named: "pay_10"), for: .normal)
+        payBtn.setBackgroundImage(UIImage(named: "pay_number"), for: .normal)
+        payBtn.titleLabel?.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(13))
+        payBtn.titleLabel?.textColor = UIColor.white
         payBtn.sizeToFit()
         addSubview(payBtn)
         payBtn.frame = CGRect(x: self.bounds.width/2 + topContentBackground.bounds.width/2 - payBtn.bounds.width * 2 + 10 , y: topContentBackground.bounds.height / 2 - payBtn.bounds.height/2, width: payBtn.bounds.width, height: payBtn.bounds.height)

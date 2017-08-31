@@ -66,7 +66,7 @@ class InviteSuccessDialog: BaseDialog {
     }
     
     func show2(gemNumber:String) -> () {
-        gemInfo.text = gemNumber
+        gemInfo.text = "+ " + gemNumber
         show()
     }
 

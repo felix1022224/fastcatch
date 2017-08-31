@@ -534,6 +534,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let playView = PlayViewController()
         playView.deviceId = mainListData[sender.tag]["deviceId"].stringValue
+        playView.darwCount = mainListData[sender.tag]["darwCount"].intValue
         playView.playSuccess = {[weak self] in
             self?.showShardRecordDialog()
         }
@@ -547,6 +548,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         navigationController?.pushViewController(playView, animated: true)
         
+//        print("123123123123123131231231231231")
+//        
+//        playView.setDarwCount(count: mainListData[sender.tag]["darwCount"].intValue)
 //        test()
     }
     
@@ -563,6 +567,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let playView = PlayViewController()
         playView.deviceId = mainListData[index]["deviceId"].stringValue
+        playView.darwCount = mainListData[index]["darwCount"].intValue
         playView.playSuccess = {[weak self] in
             self?.showShardRecordDialog()
         }
@@ -711,8 +716,9 @@ extension MainViewController{
         giftBtn.addBtnClickAction(target: self, action: #selector(showMyGift))
         
         /// 购买钻石按钮
-        payGemBtn = MainFloatMenu(frame: CGRect(x: 10, y: UIScreen.main.bounds.height - 80, width: settingImage.bounds.width, height: 80), image: UIImage(named: "Plus-btn"), actionTitle: "100")
+        payGemBtn = MainFloatMenu(frame: CGRect(x: 10, y: UIScreen.main.bounds.height - 80, width: settingImage.bounds.width, height: 80), image: UIImage(named: "Plus-btn"), actionTitle: "0")
         view.addSubview(payGemBtn)
+//        payGemBtn.isHidden = true
         
         payGemBtn.addBtnClickAction(target: self, action: #selector(showPayDialog))
         
@@ -762,7 +768,7 @@ extension MainViewController{
             return
         }
         payGemDialog.createView()
-        payGemDialog.show()
+        payGemDialog.show2(mainViewController: self)
     }
     
     /// 显示分享战绩的dialog
@@ -827,6 +833,7 @@ extension MainViewController{
     
     /// 来到首页的时候，读取用户信息
     func getsUserInfo() -> () {
+        print("获取用户信息")
         UserTools.getUserInfo(callback: { [weak self] in
             if self?.payGemBtn != nil {
                 self?.payGemBtn.actionLabel.text = String(Constants.User.diamondsCount)

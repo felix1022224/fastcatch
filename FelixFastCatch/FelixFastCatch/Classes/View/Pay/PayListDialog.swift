@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class PayListDialog: BaseDialog {
 
@@ -14,10 +16,7 @@ class PayListDialog: BaseDialog {
     fileprivate lazy var payList:UITableView = UITableView()
     
     /// 购买列表的数据
-    fileprivate lazy var payListDataSource = [["rp":"1","pay_info":"70钻送20钻","pay_btn_image_named": "pay_10"],
-                                              ["rp":"2","pay_info":"150钻送20钻","pay_btn_image_named": "pay_20"],
-                                              ["rp":"3","pay_info":"420钻送120钻","pay_btn_image_named": "pay_50"],
-                                              ["rp":"4","pay_info":"900钻送420钻","pay_btn_image_named": "pay_100"]]
+    fileprivate var payListDataSource = [JSON]()
     
     var scrollHand:UIImageView!
     
@@ -100,6 +99,14 @@ class PayListDialog: BaseDialog {
         
         scrollHand.image = UIImage(named: "scroll_hand")?.resizableImage(withCapInsets: UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0), resizingMode: UIImageResizingMode.stretch)
         
+        getPayList()
+    }
+    
+    fileprivate var mainVC:MainViewController!
+    
+    func show2(mainViewController:MainViewController) -> () {
+        mainVC = mainViewController
+        show()
     }
     
 }
@@ -116,11 +123,12 @@ extension PayListDialog:UITableViewDelegate, UITableViewDataSource{
         
         let dataItem = payListDataSource[indexPath.row]
         
-        cell?.payBtn.tag = Int(dataItem["rp"]!)!
+        cell?.payBtn.tag = dataItem["id"].intValue
         
-        cell?.gemInfo.text = dataItem["pay_info"]
-        cell?.payBtn.setImage(UIImage(named: dataItem["pay_btn_image_named"]!), for: .normal)
-        
+        cell?.gemInfo.text = dataItem["name"].stringValue
+//        cell?.payBtn.setImage(UIImage(named: dataItem["pay_btn_image_named"]!), for: .normal)
+//        cell?.payBtn.titleLabel?.text = "\(dataItem["value"].stringValue)"
+        cell?.payBtn.setTitle("  \(dataItem["value"].stringValue)", for: .normal)
         cell?.payBtn.addTarget(self, action: #selector(payClick(sender:)), for: .touchUpInside)
         
         return cell!
@@ -137,6 +145,7 @@ extension PayListDialog:UITableViewDelegate, UITableViewDataSource{
     /// - Parameter sender: 按钮
     func payClick(sender:UIButton) -> () {
         print("rp:\(sender.tag)")
+        wechatPay(rp: sender.tag)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -190,11 +199,15 @@ extension PayListDialog{
         addSubview(exchangeCode)
         
         exchangeCode.snp.makeConstraints { (make) in
-            make.left.equalTo(backgroundImage).offset(16)
+            make.left.equalTo(backgroundImage).offset(20)
             make.centerY.equalTo(wechatBtn)
         }
         
         exchangeCode.addTarget(self, action: #selector(showExchangeDialog), for: .touchUpInside)
+        
+        aliPayBtn.isHidden = true
+        wechatBtn.isHidden = true
+        
     }
     
     func showExchangeDialog() -> () {
@@ -202,7 +215,7 @@ extension PayListDialog{
             exchangeCodeDialog = ExchangeCodeDialog(frame: UIScreen.main.bounds)
         }
         exchangeCodeDialog.createView()
-        exchangeCodeDialog.show()
+        exchangeCodeDialog.show2(mainViewController: mainVC)
     }
     
     func payBtnClick(sender:UIButton) -> () {
@@ -226,6 +239,62 @@ extension PayListDialog{
         }else {
             aliPayBtn.isSelected = true
             wechatBtn.isSelected = false
+        }
+    }
+    
+    /// 微信支付
+    func wechatPay(rp:Int) -> () {
+        ToastUtils.showLoadingToast(msg: "正在下单")
+        var params = NetWorkUtils.createBaseParams()
+        params["rp"] = String(rp)
+        
+        Alamofire.request(Constants.Network.WECHAT_PAY_URL, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            if NetWorkUtils.checkReponse(response: response) {
+                ToastUtils.hide()
+                let json = JSON(data: response.data!)
+                WeChatShared.pay(to: "main", json["data"], resultHandle: { (result, identifier) in
+                    print("result:\(result)")
+                    print("indentifier:\(identifier)")
+                    switch(result){
+                        case .Success:
+                            ToastUtils.showSuccessToast(msg: "支付成功")
+                            if self.mainVC != nil {
+                                self.mainVC.getsUserInfo()
+                            }
+                            break;
+                        case .Failed:
+                            ToastUtils.showErrorToast(msg: "支付失败")
+                            break;
+                        case .Cancel:
+                            ToastUtils.showInfoToast(msg: "取消支付")
+                            break;
+//                        default:
+//                            ToastUtils.showInfoToast(msg: "发生异常")
+//                            break
+                    }
+                })
+            }else{
+                ToastUtils.showErrorToast(msg: "错误，请稍后重试")
+            }
+        }
+    }
+}
+
+// MARK: - 获取支付的列表
+extension PayListDialog{
+
+    /// 获取支付的列表
+    func getPayList() -> () {
+        Alamofire.request(Constants.Network.GET_PAY_LIST, method: .post, parameters: NetWorkUtils.createBaseParams(), encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            if NetWorkUtils.checkReponse(response: response) {
+                let json = JSON(data: response.data!)
+                /// 获取数据成功，重新加载数据
+                print("data\(json)")
+                self.payListDataSource = json["data"].arrayValue
+                self.payList.reloadData()
+            }else{
+                ToastUtils.showErrorToast(msg: "获取套餐列表失败")
+            }
         }
     }
     
