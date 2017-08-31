@@ -746,7 +746,7 @@ extension MainViewController{
     
     func showFastLogin() -> () {
         fastLoginDialog.createView()
-        fastLoginDialog.show()
+        fastLoginDialog.show2(mainViewController: self)
     }
     
     
@@ -824,7 +824,7 @@ extension MainViewController{
             return
         }
         userInfoDialog.createView()
-        userInfoDialog.show()
+        userInfoDialog.show2(mainViewController: self)
     }
     
 }
@@ -833,6 +833,9 @@ extension MainViewController{
     
     /// 来到首页的时候，读取用户信息
     func getsUserInfo() -> () {
+        if Constants.User.USER_ID == "" {
+            return
+        }
         print("获取用户信息")
         UserTools.getUserInfo(callback: { [weak self] in
             if self?.payGemBtn != nil {
@@ -843,7 +846,7 @@ extension MainViewController{
     
     /// 清除钻石数量
     func clearGemNumber() -> () {
-        payGemBtn.actionLabel.text = String(0)
+        payGemBtn.actionLabel.text = "0"
     }
     
 }

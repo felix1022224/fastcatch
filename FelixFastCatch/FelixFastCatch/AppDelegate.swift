@@ -86,7 +86,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        let urlKey: String = options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String
+        var urlKey: String = "";
+        if #available(iOS 9.0, *) {
+            urlKey = options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String
+        } else {
+            // Fallback on earlier versions
+        }
         
         if urlKey == "com.tencent.mqq" {
             // QQ 的回调

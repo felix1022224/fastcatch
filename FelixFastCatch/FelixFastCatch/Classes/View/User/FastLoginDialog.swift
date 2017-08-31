@@ -198,9 +198,19 @@ class FastLoginDialog: BaseDialog {
         Constants.isFastLoginShow = true
     }
     
+    fileprivate var mainVC:MainViewController!
+    
+    func show2(mainViewController:MainViewController) -> () {
+        mainVC = mainViewController
+        show()
+    }
+    
     override func hide() {
         super.hide()
         Constants.isFastLoginShow = false
+        if mainVC != nil {
+            mainVC.getsUserInfo()
+        }
     }
     
 }
