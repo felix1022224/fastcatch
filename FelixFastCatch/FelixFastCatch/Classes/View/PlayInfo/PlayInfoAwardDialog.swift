@@ -93,5 +93,9 @@ class PlayInfoAwardDialog: BaseDialog {
         awardImage.kf.setImage(with: URL(string: imagePath), placeholder: UIImage(named: "main_no_value"), options: nil, progressBlock: nil, completionHandler: nil)
         show()
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        hide()
+    }
 
 }

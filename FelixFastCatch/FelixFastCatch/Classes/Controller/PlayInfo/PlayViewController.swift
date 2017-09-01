@@ -110,6 +110,9 @@ class PlayViewController: UIViewController {
     /// 播放声音
     var bgMusicPlayer = AVAudioPlayer()
     
+    /// 播放音效
+    var soundEffect = AVAudioPlayer()
+    
     /// 再玩一次
     var rePlayGameBtn:UIButton!
     
@@ -163,9 +166,14 @@ class PlayViewController: UIViewController {
     /// 音频按钮
     var audioBtn:UIButton!
     
+    /// 是否显示了反馈页面
+    var isShowFeedbackView = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        UIApplication.shared.isIdleTimerDisabled = true
+        
         outGameDialog = OutGameDialog(frame: UIScreen.main.bounds)
         
         playResultDialog = PlayResultDialog(frame: UIScreen.main.bounds)
@@ -188,6 +196,7 @@ class PlayViewController: UIViewController {
     }
 
     deinit {
+        UIApplication.shared.isIdleTimerDisabled = false
 //        out(deviceId: deviceId)
         agoraKit.leaveChannel { (starts) in
             // 离开
@@ -267,6 +276,7 @@ class PlayViewController: UIViewController {
         print("页面销毁")
         bgMusicPlayer.stop()
         wardCode = ""
+        UIApplication.shared.isIdleTimerDisabled = false
     }
     
 }
@@ -363,6 +373,8 @@ extension PlayViewController{
         helpBtn.sizeToFit()
         view.addSubview(helpBtn)
         
+        helpBtn.addTarget(self, action: #selector(showFeecbackView), for: .touchUpInside)
+        
         helpBtn.snp.makeConstraints { (make) in
             make.bottom.equalTo(videoView).offset(-40)
             make.left.equalTo(self.view).offset(10)
@@ -407,10 +419,32 @@ extension PlayViewController{
     
         view.addSubview(darwCountLabel)
         
-        darwCountBgView.frame = CGRect(x: self.view.bounds.width - darwCountBgView.bounds.width - 10, y: self.view.bounds.height * 0.5 - darwCountBgView.bounds.height - 5, width: darwCountBgView.bounds.width, height: darwCountBgView.bounds.height)
+        darwCountBgView.frame = CGRect(x: self.view.bounds.width - darwCountBgView.bounds.width - 10, y: videoView.bounds.height - darwCountBgView.bounds.height - 5, width: darwCountBgView.bounds.width, height: darwCountBgView.bounds.height)
         
         darwCountLabel.center = darwCountBgView.center
         
+    }
+    
+    func showFeecbackView() -> () {
+        if isShowFeedbackView {
+            return
+        }
+        ToastUtils.showLoadingToast(msg: "请稍后……")
+        let feecback = BCFeedbackKit.init(appKey: "24593910", appSecret: "dc313e3a0bf8a0cbcd4288e26e0adc73")
+        feecback?.defaultCloseButtonTitleFont = UIFont.systemFont(ofSize: 18)
+        feecback?.makeFeedbackViewController(completionBlock: { (vc, error) in
+            if vc != nil {
+                self.isShowFeedbackView = true
+                self.navigationController?.navigationBar.isHidden = false
+                vc?.closeBlock = { (feedbackVc) in
+                    self.isShowFeedbackView = false
+                    self.navigationController?.navigationBar.isHidden = true
+                    vc?.navigationController?.popViewController(animated: true)
+                }
+                self.navigationController?.pushViewController(vc!, animated: true)
+                ToastUtils.hide()
+            }
+        })
     }
     
     /// 创建开始游戏的按钮
@@ -478,11 +512,13 @@ extension PlayViewController{
             }
             return
         }
+        UIApplication.shared.isIdleTimerDisabled = false
+        /// 取消再来一次的倒计时
+        isReplayCounting = false
         out(deviceId: deviceId)
         self.navigationController?.popViewController(animated: true)
         ToastUtils.hide()
     }
-    
 }
 
 
@@ -492,7 +528,7 @@ extension PlayViewController{
     /// 创建video 的view
     func createVideo() -> () {
         videoView.backgroundColor = UIColor.white
-        videoView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height * 0.5)
+        videoView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height * 0.5  + UIApplication.shared.statusBarFrame.height * 2)
         view.addSubview(videoView)
         
         agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: "a61c87d429a748cfbdae28178e082289", delegate: self)
@@ -532,6 +568,12 @@ extension PlayViewController{
     /// 切换视频的房间到一对一聊天界面
     func switchVideoChannelToDefault() -> () {
         
+        if !isLive {
+            /// 已经是游戏中了，直接展示游戏界面
+            showPlayGroup()
+            return
+        }
+        
         ToastUtils.showLoadingToast(msg: "进入游戏房间")
         
         /// 首次切换，清空ID
@@ -563,6 +605,8 @@ extension PlayViewController{
         canvas.view = videoView
         canvas.uid = 2
         canvas.renderMode = .render_Hidden
+        
+        nowVideoId = 2
         
         agoraKit.setRemoteVideoStream(UInt(2), type: .videoStream_High)
         agoraKit.setupRemoteVideo(canvas)
@@ -636,7 +680,7 @@ extension PlayViewController{
         
         agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_LiveBroadcasting)
         
-        let code = agoraKit.joinChannel(byKey: nil, channelName: deviceId + "live", info: nil, uid: 878, joinSuccess: nil)
+        let code = agoraKit.joinChannel(byKey: nil, channelName: deviceId + "live", info: nil, uid: 0, joinSuccess: nil)
         
         if code != 0 {
             DispatchQueue.main.async(execute: {
@@ -989,7 +1033,7 @@ extension PlayViewController{
         
         lensBtn.isHidden = true
         
-        isGameing = false
+//        isGameing = false
     }
     
     @objc func updateTime() {
@@ -1024,7 +1068,7 @@ extension PlayViewController{
                     self.wardCode = json["data"]["gTradeNo"].string!
                 }else if json["data"]["errcode"].intValue == 2 {
                     ///钻石不足
-                    ToastUtils.showErrorToast(msg: "钻石不足")
+                    ToastUtils.showErrorToast(msg: "代币不足")
                 }
                 
             }else {
@@ -1054,8 +1098,8 @@ extension PlayViewController{
                 }else{
                     print("已经有\(String(describing: json["data"]["waitCtlCount"].int!))人在游戏中，请等候")
                     
-                    self.playQueueStausNumber.text = "预约第\(json["data"]["waitCtlCount"].intValue)位"
-                    self.queueNumber.text = String(json["data"]["waitCtlCount"].intValue)
+                    self.playQueueStausNumber.text = "预约第\(json["data"]["waitCtlIndex"].intValue)位"
+                    self.queueNumber.text = String(json["data"]["waitCtlCount"].intValue) + "人等待"
                     
                     self.playQueueNumberStatus.isHidden = false
                     
@@ -1064,6 +1108,11 @@ extension PlayViewController{
                     })
                 }
             }else{
+                let json = JSON(data: response.data!)
+                if json["code"].intValue == -520 {
+                    self.endQueue(deviceId: self.deviceId)
+                    ToastUtils.showErrorToast(msg: "设备维护中")
+                }
                 /// 当数据data为空的时候，报告异常
             }
 //            ToastUtils.hide()
@@ -1312,6 +1361,8 @@ extension PlayViewController{
         
         replayCountdownTimer?.invalidate()
         replayCountdownTimer = nil
+        
+        isGameing = false
     }
     
     /// 展示再来一局的信息
@@ -1333,10 +1384,10 @@ extension PlayViewController{
         
         /// 把直播的镜头切回去
         swichVideoChannerlToLive()
+        
+        endQueue(deviceId: deviceId)
     }
-    
 }
-
 
 // MARK: - 当前页面播放声音
 extension PlayViewController{
@@ -1383,16 +1434,31 @@ extension PlayViewController{
         if isCloseMusic {
             return
         }
-        //建立的SystemSoundID对象
-        var soundID:SystemSoundID = 0
-        //获取声音地址
-        let path = Bundle.main.path(forResource: "游戏开始_音效", ofType: "wav")
-        //地址转换
-        let baseURL = NSURL(fileURLWithPath: path!)
-        //赋值
-        AudioServicesCreateSystemSoundID(baseURL, &soundID)
-        //提醒（同上面唯一的一个区别）
-        AudioServicesPlayAlertSound(soundID)
+        
+        // 建立播放器
+        let soundPath = Bundle.main.path(forResource: "游戏开始_音效", ofType: "wav")
+        do {
+            soundEffect = try AVAudioPlayer(
+                contentsOf: NSURL.fileURL(withPath: soundPath!))
+            
+            // 重複播放次數 設為 0 則是只播放一次 不重複
+            soundEffect.numberOfLoops = 0
+            
+            soundEffect.play()
+        } catch {
+            print("开始音效，error")
+        }
+        
+//        //建立的SystemSoundID对象
+//        var soundID:SystemSoundID = 0
+//        //获取声音地址
+//        let path = Bundle.main.path(forResource: "游戏开始_音效", ofType: "wav")
+//        //地址转换
+//        let baseURL = NSURL(fileURLWithPath: path!)
+//        //赋值
+//        AudioServicesCreateSystemSoundID(baseURL, &soundID)
+//        //提醒（同上面唯一的一个区别）
+//        AudioServicesPlayAlertSound(soundID)
     }
     
     /// 播放抓取成功的音效
@@ -1400,16 +1466,31 @@ extension PlayViewController{
         if isCloseMusic {
             return
         }
-        //建立的SystemSoundID对象
-        var soundID:SystemSoundID = 1
-        //获取声音地址
-        let path = Bundle.main.path(forResource: "抓取成功_音效", ofType: "wav")
-        //地址转换
-        let baseURL = NSURL(fileURLWithPath: path!)
-        //赋值
-        AudioServicesCreateSystemSoundID(baseURL, &soundID)
-        //提醒（同上面唯一的一个区别）
-        AudioServicesPlayAlertSound(soundID)
+        
+        // 建立播放器
+        let soundPath = Bundle.main.path(forResource: "抓取成功_音效", ofType: "wav")
+        do {
+            soundEffect = try AVAudioPlayer(
+                contentsOf: NSURL.fileURL(withPath: soundPath!))
+            
+            // 重複播放次數 設為 0 則是只播放一次 不重複
+            soundEffect.numberOfLoops = 0
+            
+            soundEffect.play()
+        } catch {
+            print("抓取成功音效，error")
+        }
+        
+//        //建立的SystemSoundID对象
+//        var soundID:SystemSoundID = 1
+//        //获取声音地址
+//        let path = Bundle.main.path(forResource: "抓取成功_音效", ofType: "wav")
+//        //地址转换
+//        let baseURL = NSURL(fileURLWithPath: path!)
+//        //赋值
+//        AudioServicesCreateSystemSoundID(baseURL, &soundID)
+//        //提醒（同上面唯一的一个区别）
+//        AudioServicesPlayAlertSound(soundID)
     }
     
     /// 播放抓取失败的音效
@@ -1417,16 +1498,31 @@ extension PlayViewController{
         if isCloseMusic {
             return
         }
-        //建立的SystemSoundID对象
-        var soundID:SystemSoundID = 2
-        //获取声音地址
-        let path = Bundle.main.path(forResource: "抓取失败_音效", ofType: "wav")
-        //地址转换
-        let baseURL = NSURL(fileURLWithPath: path!)
-        //赋值
-        AudioServicesCreateSystemSoundID(baseURL, &soundID)
-        //提醒（同上面唯一的一个区别）
-        AudioServicesPlayAlertSound(soundID)
+        
+        // 建立播放器
+        let soundPath = Bundle.main.path(forResource: "抓取失败_音效", ofType: "wav")
+        do {
+            soundEffect = try AVAudioPlayer(
+                contentsOf: NSURL.fileURL(withPath: soundPath!))
+            
+            // 重複播放次數 設為 0 則是只播放一次 不重複
+            soundEffect.numberOfLoops = 0
+            
+            soundEffect.play()
+        } catch {
+            print("抓取失败音效，error")
+        }
+        
+//        //建立的SystemSoundID对象
+//        var soundID:SystemSoundID = 2
+//        //获取声音地址
+//        let path = Bundle.main.path(forResource: "抓取失败_音效", ofType: "wav")
+//        //地址转换
+//        let baseURL = NSURL(fileURLWithPath: path!)
+//        //赋值
+//        AudioServicesCreateSystemSoundID(baseURL, &soundID)
+//        //提醒（同上面唯一的一个区别）
+//        AudioServicesPlayAlertSound(soundID)
     }
     
     /// 播放切换镜头的音效
@@ -1434,16 +1530,31 @@ extension PlayViewController{
         if isCloseMusic {
             return
         }
-        //建立的SystemSoundID对象
-        var soundID:SystemSoundID = 3
-        //获取声音地址
-        let path = Bundle.main.path(forResource: "镜头切换_音效", ofType: "wav")
-        //地址转换
-        let baseURL = NSURL(fileURLWithPath: path!)
-        //赋值
-        AudioServicesCreateSystemSoundID(baseURL, &soundID)
-        //提醒（同上面唯一的一个区别）
-        AudioServicesPlayAlertSound(soundID)
+        
+        // 建立播放器
+        let soundPath = Bundle.main.path(forResource: "镜头切换_音效", ofType: "wav")
+        do {
+            soundEffect = try AVAudioPlayer(
+                contentsOf: NSURL.fileURL(withPath: soundPath!))
+            
+            // 重複播放次數 設為 0 則是只播放一次 不重複
+            soundEffect.numberOfLoops = 0
+            
+            soundEffect.play()
+        } catch {
+            print("镜头切换音效，error")
+        }
+        
+//        //建立的SystemSoundID对象
+//        var soundID:SystemSoundID = 3
+//        //获取声音地址
+//        let path = Bundle.main.path(forResource: "镜头切换_音效", ofType: "wav")
+//        //地址转换
+//        let baseURL = NSURL(fileURLWithPath: path!)
+//        //赋值
+//        AudioServicesCreateSystemSoundID(baseURL, &soundID)
+//        //提醒（同上面唯一的一个区别）
+//        AudioServicesPlayAlertSound(soundID)
     }
     
     /// 关掉声音

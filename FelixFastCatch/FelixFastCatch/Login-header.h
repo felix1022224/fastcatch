@@ -26,4 +26,7 @@
 
 #import <AgoraRtcEngineKit/AgoraRtcEngineKit.h>
 
+#import <YWFeedbackFMWK/YWFeedbackKit.h>
+#import <YWFeedbackFMWK/YWFeedbackViewController.h>
+
 #endif /* Login_header_h */

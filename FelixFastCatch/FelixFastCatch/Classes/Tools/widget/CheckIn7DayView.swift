@@ -35,7 +35,7 @@ class CheckIn7DayView: UIView {
         checkBackground.sizeToFit()
         addSubview(checkBackground)
         
-        checkBackground.frame.size = CGSize(width: 35, height: 39)
+        checkBackground.frame.size = CGSize(width: 40, height: 46)
         
         self.frame.size = CGSize(width: checkBackground.bounds.width, height: checkBackground.bounds.height)
         
@@ -48,7 +48,7 @@ class CheckIn7DayView: UIView {
         checkNumber.sizeToFit()
         addSubview(checkNumber)
         
-        checkNumber.frame = CGRect(x: checkBackground.bounds.width/2 - checkNumber.bounds.width/2, y: 5, width: checkNumber.bounds.width, height: checkNumber.bounds.height)
+        checkNumber.frame = CGRect(x: checkBackground.bounds.width/2 - checkNumber.bounds.width/2 + 4, y: 5, width: checkNumber.bounds.width, height: checkNumber.bounds.height)
     }
     
     func setChecked(isChecked:Bool) -> () {

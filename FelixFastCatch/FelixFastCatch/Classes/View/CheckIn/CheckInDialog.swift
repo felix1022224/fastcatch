@@ -36,7 +36,7 @@ class CheckInDialog: BaseDialog {
         
         createBackgroundImage(imageName: "checkin_background")
         
-        backgroundImage.frame.size = CGSize(width: 290, height: 200)
+        backgroundImage.frame.size = CGSize(width: 300, height: 210)
         backgroundImage.center = self.center
         
         createCloseBtn()
@@ -74,7 +74,7 @@ class CheckInDialog: BaseDialog {
         tipsLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         tipsLabel.outTextColor = UIColor.white
         tipsLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        tipsLabel.text = "连续签到赢钻石"
+        tipsLabel.text = "连续签到赢代币"
         tipsLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         tipsLabel.sizeToFit()
         addSubview(tipsLabel)
@@ -96,7 +96,10 @@ class CheckInDialog: BaseDialog {
         }
         
         check7DayViews.removeAll()
-        
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        hide()
     }
 
 }

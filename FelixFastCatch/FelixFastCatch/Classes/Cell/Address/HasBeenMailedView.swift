@@ -97,7 +97,7 @@ class HasBeenMailedView: UIView {
             line = 1
         }
         
-        productsGroup = UICollectionView(frame: CGRect(x: 10, y: timeLabel.bounds.height + 20, width: hasBeenContentBackgroundImage!.size.width - 20, height: (hasBeenProductBackground?.size.height)! * CGFloat(line) + 10*CGFloat(line)), collectionViewLayout: layout)
+        productsGroup = UICollectionView(frame: CGRect(x: 10, y: timeLabel.bounds.height + 24, width: hasBeenContentBackgroundImage!.size.width - 20, height: (hasBeenProductBackground?.size.height)! * CGFloat(line) + 10 * CGFloat(line)), collectionViewLayout: layout)
         productsGroup.backgroundColor = UIColor.clear
         
         hasbeenProductsDelegate = FCMyGiftHasBeenProductsDelegate(dataSource: itemData["awards"].array!)
@@ -141,6 +141,8 @@ class HasBeenMailedView: UIView {
         mailedTimeLabel.sizeToFit()
         addSubview(mailedTimeLabel)
         
+//        mailedTimeLabel.isHidden = true
+        
         mailedTimeLabel.snp.makeConstraints { (make) in
             make.top.equalTo(statusLabel).offset(statusLabel.bounds.height + 10)
             make.left.equalTo(statusLabel)
@@ -157,6 +159,8 @@ class HasBeenMailedView: UIView {
         mailedCodeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         mailedCodeLabel.sizeToFit()
         addSubview(mailedCodeLabel)
+        
+//        mailedCodeLabel.isHidden = true
         
         mailedCodeLabel.snp.makeConstraints { (make) in
             make.top.equalTo(mailedTimeLabel).offset(mailedTimeLabel.bounds.height + 10)

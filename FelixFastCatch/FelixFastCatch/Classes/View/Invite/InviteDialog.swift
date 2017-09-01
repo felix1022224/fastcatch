@@ -53,7 +53,7 @@ class InviteDialog: BaseDialog {
         rule1.outTextColor = UIColor.white
         rule1.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         rule1.textAlignment = .center
-        rule1.text = "每邀请一个新用户双方各奖励50钻（上限10人)"
+        rule1.text = "每邀请一个新用户双方各奖励50（上限10人)"
         rule1.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         rule1.sizeToFit()
         addSubview(rule1)
@@ -70,7 +70,7 @@ class InviteDialog: BaseDialog {
         rule2.outTextColor = UIColor.white
         rule2.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         rule2.textAlignment = .center
-        rule2.text = "邀满10个好友额外奖励200钻"
+        rule2.text = "邀满10个好友额外奖励200"
         rule2.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         rule2.sizeToFit()
         addSubview(rule2)
@@ -102,6 +102,7 @@ class InviteDialog: BaseDialog {
         myInviteCode.textAlignment = .center
         myInviteCode.text = "我的邀请码:" + Constants.User.USER_TAG
         myInviteCode.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
+        myInviteCode.setup()
         myInviteCode.sizeToFit()
         addSubview(myInviteCode)
 
@@ -139,6 +140,8 @@ class InviteDialog: BaseDialog {
             make.left.equalTo(backgroundImage).offset(backgroundImage.bounds.width/2 + 6.5)
             make.bottom.equalTo(backgroundImage).offset(nowInvite.bounds.height/2)
         }
+        
+        nowInvite.addTarget(self, action: #selector(showNowShared), for: .touchUpInside)
     }
     
     func showEditInviteCode() -> () {
@@ -155,6 +158,21 @@ class InviteDialog: BaseDialog {
         }
         inviteListDialog.createView()
         inviteListDialog.show()
+    }
+    
+    /// 立即分享
+    func showNowShared() -> () {
+        if WeChatShared.isInstall() == false {
+            ToastUtils.showErrorToast(msg: "无法分享")
+            return
+        }
+        WeChatShared.shareURL("https://meizhe.meidaojia.com/makeup/activity/activity_banner/view_8292?code=" + Constants.User.USER_TAG, title: "免费抓娃娃啦，快来领游戏币！", description: "今年最火爆的明星和网红疯狂在抓的互联网实景娃娃机！", thumbImg: UIImage(named: "shared_logo"), to: LDWechatScene.Timeline) { (isSuccess, desc) in
+            if isSuccess == true {
+                ToastUtils.showSuccessToast(msg: "分享成功")
+            }else{
+                ToastUtils.showErrorToast(msg: "分享失败")
+            }
+        }
     }
     
     private var mainController:MainViewController!

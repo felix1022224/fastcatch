@@ -128,8 +128,10 @@ extension PayListDialog:UITableViewDelegate, UITableViewDataSource{
         cell?.gemInfo.text = dataItem["name"].stringValue
 //        cell?.payBtn.setImage(UIImage(named: dataItem["pay_btn_image_named"]!), for: .normal)
 //        cell?.payBtn.titleLabel?.text = "\(dataItem["value"].stringValue)"
-        cell?.payBtn.setTitle("  \(dataItem["value"].stringValue)", for: .normal)
+//        cell?.payBtn.setTitle("  \(dataItem["value"].stringValue)", for: .normal)
         cell?.payBtn.addTarget(self, action: #selector(payClick(sender:)), for: .touchUpInside)
+        
+        cell?.payNumberLabel.text = dataItem["value"].stringValue
         
         return cell!
     }

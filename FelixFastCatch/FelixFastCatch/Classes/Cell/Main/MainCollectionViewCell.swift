@@ -72,7 +72,7 @@ extension MainCollectionViewCell{
     // 装载图片
     fileprivate func setupImage() -> () {
         productImage = UIImageView()
-        productImage.frame = CGRect(x: 0, y: 0, width: rootView.bounds.width, height: rootView.bounds.height * 0.8)
+        productImage.frame = CGRect(x: 0, y: 0, width: rootView.bounds.width, height: rootView.bounds.height * 0.75)
         productImage.backgroundColor = UIColor.lightGray
         productImage.frame = productImage.frame.insetBy(dx: CGFloat(4), dy: CGFloat(4))
         productImage.layer.cornerRadius = 5
@@ -143,7 +143,7 @@ extension MainCollectionViewCell{
         gemNumberLabel.textColor = Constants.UI.GEM_TEXT_COLOR
         gemNumberLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
         gemNumberLabel.sizeToFit()
-        gemNumberLabel.text = "30钻"
+        gemNumberLabel.text = "30"
         bottomGroup.addSubview(gemNumberLabel)
         
         createPlayBtn()
@@ -154,7 +154,7 @@ extension MainCollectionViewCell{
         }
         
         gemNumberLabel.snp.makeConstraints { (make) in
-            make.centerY.equalTo(gem)
+            make.centerY.equalTo(gem).offset(2)
             make.left.equalTo(gem).offset(gem.bounds.width + 5)
         }
     }

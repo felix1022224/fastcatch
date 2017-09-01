@@ -19,6 +19,9 @@ class PayItemTableViewCell: UITableViewCell {
     // 购买按钮
     lazy var payBtn:UIButton = UIButton(type: .custom)
     
+    // 购买价格
+    lazy var payNumberLabel:MainCustomerLabel = MainCustomerLabel()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -43,17 +46,17 @@ class PayItemTableViewCell: UITableViewCell {
         }
         
         // 钻石描述
-        gemInfo.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        gemInfo.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
         gemInfo.outLineWidth = 1
         gemInfo.outTextColor = UIColor.white
-        gemInfo.outLienTextColor = UIColor.black
+        gemInfo.outLienTextColor = UIColor.gray
         gemInfo.numberOfLines = 1
         
         addSubview(gemInfo)
         
         // 购买按钮
         payBtn.setBackgroundImage(UIImage(named: "pay_number"), for: .normal)
-        payBtn.titleLabel?.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(13))
+        payBtn.titleLabel?.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
         payBtn.titleLabel?.textColor = UIColor.white
         payBtn.sizeToFit()
         addSubview(payBtn)
@@ -63,6 +66,18 @@ class PayItemTableViewCell: UITableViewCell {
             make.centerY.equalTo(topContentBackground)
             make.left.equalTo(gem).offset(gem.bounds.width + 5)
             make.right.equalTo(payBtn).offset(-(payBtn.bounds.width + 5))
+        }
+        
+        payNumberLabel.outLineWidth = 1
+        payNumberLabel.outTextColor = UIColor.white
+        payNumberLabel.outLienTextColor = UIColor.gray
+        payNumberLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(10))
+        payNumberLabel.sizeToFit()
+        addSubview(payNumberLabel)
+        
+        payNumberLabel.snp.makeConstraints { (make) in
+            make.centerX.equalTo(payBtn).offset(8)
+            make.centerY.equalTo(payBtn).offset(-1)
         }
         
     }

@@ -73,6 +73,7 @@ class EditInviteCode: BaseDialog {
         editInviteCodeTextFiled.frame.size = CGSize(width: backgroundImage.bounds.width * 0.8, height: 40)
         editInviteCodeTextFiled.center = backgroundImage.center
         editInviteCodeTextFiled.placeholder = "请输入邀请码"
+        editInviteCodeTextFiled.textColor = UIColor.white
         addSubview(editInviteCodeTextFiled)
         
         errorLabel = MainCustomerLabel()

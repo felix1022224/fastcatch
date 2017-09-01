@@ -85,8 +85,9 @@ class UserInfoDialog: BaseDialog {
         
         // 用户id
         userIdLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
-        let index = Constants.User.USER_ID.index(Constants.User.USER_ID.endIndex, offsetBy: -5)
-        userIdLabel.text = "ID:\(Constants.User.USER_ID.substring(from: index))"
+//        let index = Constants.User.USER_ID.index(Constants.User.USER_ID.endIndex, offsetBy: -5)
+//        userIdLabel.text = "ID:\(Constants.User.USER_ID.substring(from: index))"
+        userIdLabel.text = "ID: " + Constants.User.USER_ID
         userIdLabel.outLineWidth = 2
         userIdLabel.outTextColor = UIColor.white
         userIdLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR

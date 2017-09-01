@@ -11,8 +11,12 @@ import UIKit
 class InviteListDialog: BaseDialog {
 
     override func createView() {
-        createBackgroundImage(imageName: "")
+        createBackgroundImage(imageName: "好友背景")
         
+        backgroundImage.frame.size = CGSize(width: 290, height: 400)
+        backgroundImage.center = self.center
+        
+        createCloseBtn()
         
         addDialogToWindow()
     }

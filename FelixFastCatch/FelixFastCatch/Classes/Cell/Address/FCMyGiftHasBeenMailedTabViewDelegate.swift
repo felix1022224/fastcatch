@@ -31,11 +31,15 @@ extension FCMyGiftHasBeenMailedTabViewDelegate:UITableViewDelegate, UITableViewD
         
         cell?.hasBeenMailedView.timeLabel.text = "申请时间: 2017.7.8 12:30"
         
-        cell?.hasBeenMailedView.statusLabel.text = "邮寄状态: 已寄出"
-        
         cell?.hasBeenMailedView.mailedTimeLabel.text = "邮寄时间: 2017.8.9 10:00"
         
         cell?.hasBeenMailedView.mailedCodeLabel.text = "邮寄单号:" + itemData["oid"].stringValue
+        
+        if itemData["status"].intValue == 1 {
+            cell?.hasBeenMailedView.statusLabel.text = "邮寄状态: 已寄出"
+        }else{
+            cell?.hasBeenMailedView.statusLabel.text = "邮寄状态: 未寄出"
+        }
         
         return cell!
     }

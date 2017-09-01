@@ -50,4 +50,8 @@ class PlayInfoBannerDialog: BaseDialog {
         show()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        hide()
+    }
+    
 }

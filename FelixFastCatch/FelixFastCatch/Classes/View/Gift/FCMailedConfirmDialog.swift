@@ -69,7 +69,7 @@ class FCMailedConfirmDialog: BaseDialog {
             contentImagesLine = 1
         }
         
-        scrollRootView.frame = CGRect(x: self.bounds.width/2 - backgroundImage.bounds.width/2 + 20, y: self.bounds.height/2 - backgroundImage.bounds.height/2 + 70, width: backgroundImage.bounds.width - 40, height:  backgroundImage.bounds.height - 85)
+        scrollRootView.frame = CGRect(x: self.bounds.width/2 - backgroundImage.bounds.width/2 + 20, y: self.bounds.height/2 - backgroundImage.bounds.height/2 + 70, width: backgroundImage.bounds.width - 40, height:  backgroundImage.bounds.height - 105)
         
         scrollRootView.alwaysBounceHorizontal = false
         addSubview(scrollRootView)
@@ -241,6 +241,17 @@ class FCMailedConfirmDialog: BaseDialog {
         successDialog.show()
     }
     
+    override func hide() {
+        super.hide()
+        scrollRootView.removeFromSuperview()
+        for subview in scrollRootView.subviews {
+            subview.removeFromSuperview()
+        }
+        for subview in (self.subviews) {
+            subview.removeFromSuperview()
+        }
+    }
+    
     fileprivate var hasBeenContentBackgroundImage:UIImage!
     
     // 主要内容的背景图
@@ -357,10 +368,8 @@ extension FCMailedConfirmDialog{
         
         Alamofire.request(Constants.Network.Gift.CREATE_POSTAGE + "?" + ids, method: .get, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
-//                ToastUtils.showSuccessToast(msg: "邮寄成功")
                 ToastUtils.hide()
                 if self.mailedSuccessCallback != nil {
-                    print("1231231231231231123123121231231")
                     self.mailedSuccessCallback?()
                 }
                 self.hide()

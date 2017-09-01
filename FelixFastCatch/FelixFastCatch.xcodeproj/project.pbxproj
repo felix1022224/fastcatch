@@ -55,9 +55,12 @@
 		4D64B8A01F29D9DA002A9BFD /* BaseDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B89F1F29D9DA002A9BFD /* BaseDialog.swift */; };
 		4D64B8A21F2ADC50002A9BFD /* MainCustomerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8A11F2ADC50002A9BFD /* MainCustomerTextField.swift */; };
 		4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8A31F2B079E002A9BFD /* LocalDataUtils.swift */; };
+		4D7FF4BC1F596FEC00396C00 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7FF4BA1F596FEC00396C00 /* AlipaySDK.framework */; };
+		4D7FF4BD1F596FEC00396C00 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4D7FF4BB1F596FEC00396C00 /* AlipaySDK.bundle */; };
 		4D82A4521F36C7AD007ADE5C /* UserTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D82A4511F36C7AD007ADE5C /* UserTools.swift */; };
 		4D82A4551F36D33B007ADE5C /* Skranji-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D82A4531F36D18F007ADE5C /* Skranji-Bold.ttf */; };
 		4D82A4591F3721BF007ADE5C /* Fangzhengyuan-cuti.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D82A4581F3721A2007ADE5C /* Fangzhengyuan-cuti.ttf */; };
+		4D96D3981F59824600E614CD /* Customized.YWFeedbackBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4D96D3971F59824600E614CD /* Customized.YWFeedbackBundle.bundle */; };
 		4D9EBB811F26F163002674DE /* WeChatShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB801F26F163002674DE /* WeChatShared.swift */; };
 		4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB8A1F271C80002674DE /* MainViewController.swift */; };
 		4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */; };
@@ -75,8 +78,6 @@
 		4DCD39BE1F2DBF09002B7F35 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39BD1F2DBF09002B7F35 /* VideoToolbox.framework */; };
 		4DCD39C01F2DBF16002B7F35 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39BF1F2DBF16002B7F35 /* AudioToolbox.framework */; };
 		4DCD39C21F2DBF35002B7F35 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39C11F2DBF35002B7F35 /* AVFoundation.framework */; };
-		4DCD39CB1F2F0D59002B7F35 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39C91F2F0D58002B7F35 /* AlipaySDK.framework */; };
-		4DCD39CC1F2F0D59002B7F35 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4DCD39CA1F2F0D59002B7F35 /* AlipaySDK.bundle */; };
 		4DCD39CE1F2F0D86002B7F35 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39CD1F2F0D86002B7F35 /* QuartzCore.framework */; };
 		4DCD39D01F2F0D9E002B7F35 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39CF1F2F0D9E002B7F35 /* CoreText.framework */; };
 		4DCD39D21F2F0DBB002B7F35 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCD39D11F2F0DBB002B7F35 /* CFNetwork.framework */; };
@@ -151,9 +152,12 @@
 		4D64B89F1F29D9DA002A9BFD /* BaseDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDialog.swift; sourceTree = "<group>"; };
 		4D64B8A11F2ADC50002A9BFD /* MainCustomerTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCustomerTextField.swift; sourceTree = "<group>"; };
 		4D64B8A31F2B079E002A9BFD /* LocalDataUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDataUtils.swift; sourceTree = "<group>"; };
+		4D7FF4BA1F596FEC00396C00 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		4D7FF4BB1F596FEC00396C00 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		4D82A4511F36C7AD007ADE5C /* UserTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTools.swift; sourceTree = "<group>"; };
 		4D82A4531F36D18F007ADE5C /* Skranji-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Skranji-Bold.ttf"; sourceTree = "<group>"; };
 		4D82A4581F3721A2007ADE5C /* Fangzhengyuan-cuti.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fangzhengyuan-cuti.ttf"; sourceTree = "<group>"; };
+		4D96D3971F59824600E614CD /* Customized.YWFeedbackBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Customized.YWFeedbackBundle.bundle; sourceTree = "<group>"; };
 		4D9EBB801F26F163002674DE /* WeChatShared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeChatShared.swift; sourceTree = "<group>"; };
 		4D9EBB8A1F271C80002674DE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -172,8 +176,6 @@
 		4DCD39BD1F2DBF09002B7F35 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		4DCD39BF1F2DBF16002B7F35 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4DCD39C11F2DBF35002B7F35 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		4DCD39C91F2F0D58002B7F35 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
-		4DCD39CA1F2F0D59002B7F35 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		4DCD39CD1F2F0D86002B7F35 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4DCD39CF1F2F0D9E002B7F35 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		4DCD39D11F2F0DBB002B7F35 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -205,13 +207,13 @@
 			files = (
 				4D2EC3D71F5005380008F96E /* StoreKit.framework in Frameworks */,
 				4D2B800E1F3BFBF40075D390 /* libresolv.tbd in Frameworks */,
+				4D7FF4BC1F596FEC00396C00 /* AlipaySDK.framework in Frameworks */,
 				4DCD39D61F2F0DDE002B7F35 /* Foundation.framework in Frameworks */,
 				4DCD39D41F2F0DC8002B7F35 /* UIKit.framework in Frameworks */,
 				4DCD39D21F2F0DBB002B7F35 /* CFNetwork.framework in Frameworks */,
 				4DCD39D01F2F0D9E002B7F35 /* CoreText.framework in Frameworks */,
 				4DCD39CE1F2F0D86002B7F35 /* QuartzCore.framework in Frameworks */,
 				4DCD39C21F2DBF35002B7F35 /* AVFoundation.framework in Frameworks */,
-				4DCD39CB1F2F0D59002B7F35 /* AlipaySDK.framework in Frameworks */,
 				4DCD39C01F2DBF16002B7F35 /* AudioToolbox.framework in Frameworks */,
 				4DCD39BE1F2DBF09002B7F35 /* VideoToolbox.framework in Frameworks */,
 				4DCD39BC1F2DBEF8002B7F35 /* CoreMotion.framework in Frameworks */,
@@ -297,6 +299,9 @@
 		4D5625141F2605A700515C98 /* FelixFastCatch */ = {
 			isa = PBXGroup;
 			children = (
+				4D96D3971F59824600E614CD /* Customized.YWFeedbackBundle.bundle */,
+				4D7FF4BA1F596FEC00396C00 /* AlipaySDK.framework */,
+				4D7FF4BB1F596FEC00396C00 /* AlipaySDK.bundle */,
 				4DAD03351F518AD700D7E72F /* FelixFastCatch.entitlements */,
 				4D17ECF11F3B017B004DD01F /* 镜头切换_音效.wav */,
 				4D17ECEF1F3B017B004DD01F /* 游戏开始_音效.wav */,
@@ -305,8 +310,6 @@
 				4D17ECF01F3B017B004DD01F /* 抓取失败_音效.wav */,
 				4D82A4581F3721A2007ADE5C /* Fangzhengyuan-cuti.ttf */,
 				4D82A4531F36D18F007ADE5C /* Skranji-Bold.ttf */,
-				4DCD39C91F2F0D58002B7F35 /* AlipaySDK.framework */,
-				4DCD39CA1F2F0D59002B7F35 /* AlipaySDK.bundle */,
 				4D18ACBD1F260801005363A4 /* TencentOpenAPI.framework */,
 				4D18ACBE1F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle */,
 				4D5625151F2605A700515C98 /* AppDelegate.swift */,
@@ -637,6 +640,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D96D3981F59824600E614CD /* Customized.YWFeedbackBundle.bundle in Resources */,
+				4D7FF4BD1F596FEC00396C00 /* AlipaySDK.bundle in Resources */,
 				4D17ECF81F3B0355004DD01F /* 镜头切换_音效.wav in Resources */,
 				4D17ECF91F3B0355004DD01F /* 游戏开始_音效.wav in Resources */,
 				4D17ECFA1F3B0355004DD01F /* background_music.mp3 in Resources */,
@@ -644,7 +649,6 @@
 				4D17ECFC1F3B0355004DD01F /* 抓取失败_音效.wav in Resources */,
 				4D82A4591F3721BF007ADE5C /* Fangzhengyuan-cuti.ttf in Resources */,
 				4D82A4551F36D33B007ADE5C /* Skranji-Bold.ttf in Resources */,
-				4DCD39CC1F2F0D59002B7F35 /* AlipaySDK.bundle in Resources */,
 				4D18ACC01F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */,
 			);
@@ -888,13 +892,14 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FelixFastCatch",
+					"$(PROJECT_DIR)/FelixFastCatch/feedback",
 				);
 				INFOPLIST_FILE = FelixFastCatch/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
+					"-ObjC",
 					"$(inherited)",
-					"-Objc",
 					"-fobjc-arc",
 				);
 				PODS_ROOT = "$(inherited)";
@@ -919,13 +924,14 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FelixFastCatch",
+					"$(PROJECT_DIR)/FelixFastCatch/feedback",
 				);
 				INFOPLIST_FILE = FelixFastCatch/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
+					"-ObjC",
 					"$(inherited)",
-					"-Objc",
 					"-fobjc-arc",
 				);
 				PODS_ROOT = "$(inherited)";

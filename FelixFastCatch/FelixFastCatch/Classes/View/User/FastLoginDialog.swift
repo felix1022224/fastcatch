@@ -105,6 +105,16 @@ class FastLoginDialog: BaseDialog {
         
         close_btn.addTarget(self, action: #selector(hide), for: .touchUpInside)
         
+        /// 没有安装微信，或者不支持，隐藏微信登录按钮
+        if WeChatShared.isInstall() == false || WeChatShared.isSupportApi() == false {
+            wechatLoginBtn.isHidden = true
+        }
+        
+        /// 没有安装qq 隐藏qq登录按钮
+        if TencentShared.isQQInstall() == false {
+            qqLoginBtn.isHidden = true
+        }
+        
         addDialogToWindow()
     }
     
@@ -114,7 +124,7 @@ class FastLoginDialog: BaseDialog {
             phoneNumberLogin.createView(fastLogin:self)
             phoneNumberLogin.show()
         }else if sender == wechatLoginBtn {
-            ToastUtils.showLoadingToast(msg: "正在加载中")
+//            ToastUtils.showLoadingToast(msg: "正在加载中")
             WeChatShared.login({ [weak self] (info) in
                 print("微信登录成功:\(info)")
                 self?.wechatLogin(wechatCode:info["code"] as! String)
@@ -123,7 +133,7 @@ class FastLoginDialog: BaseDialog {
                 SVProgressHUD.dismiss()
             })
         }else{
-            ToastUtils.showLoadingToast(msg: "正在加载中")
+//            ToastUtils.showLoadingToast(msg: "正在加载中")
             TencentShared.login({ [weak self] (info) in
                 print("qq登录成功:\(info)")
                 self?.qqLogin(qqInfo: info)
@@ -176,7 +186,7 @@ class FastLoginDialog: BaseDialog {
             if NetWorkUtils.checkReponse(response: response) {
                 print("response:\(String(describing: response.response?.allHeaderFields))")
                 LocalDataUtils.updateLocalUserData(resultData: resultJson, response)
-                ToastUtils.showSuccessToast(msg: "登录成功")
+//                ToastUtils.showSuccessToast(msg: "登录成功")
                 self.hide()
                 if resultJson["data"]["new"].boolValue {
                     self.showFirstLoginReward()

@@ -80,6 +80,9 @@ class MainViewController: UIViewController{
     /// 钻石btn
     fileprivate var payGemBtn:MainFloatMenu!
     
+    /// 是否正在加载更多
+    fileprivate var isLoadingMore = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -464,6 +467,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         view.addSubview(dataList)
         
         dataList.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: "CellId")
+        dataList.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "footer")
         
         //下拉刷新相关设置
         header.setRefreshingTarget(self, refreshingAction: #selector(headerRefresh))
@@ -503,7 +507,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell?.productImage.kf.setImage(with: URL(string: itemData["img"].stringValue), placeholder: UIImage(named: "main_no_value"), options: nil, progressBlock: nil, completionHandler: nil)
         
         cell?.titleLabel.text = itemData["award"]["title"].string!
-        cell?.gemNumberLabel.text = String(itemData["perDiamondsCount"].int!) + "钻"
+        cell?.gemNumberLabel.text = String(itemData["perDiamondsCount"].int!)
         
         if itemData["status"].intValue == 0 || itemData["status"].intValue == 1 {
             cell?.hideErrorView()
@@ -514,6 +518,26 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         return cell!
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        print("kind\(indexPath.row)")
+        
+        var footer = UICollectionReusableView()
+        
+        if kind == UICollectionElementKindSectionFooter {
+            footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "footer", for: indexPath)
+            loadMore()
+        }
+        
+        return footer
+    }
+    
+    func loadMore() -> () {
+        if isLoadingMore == false {
+            isLoadingMore = true
+            getMainListData()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -547,6 +571,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         playView.bottomBannerCardScheme = mainListData[sender.tag]["activity"]["scheme"].stringValue
         
         navigationController?.pushViewController(playView, animated: true)
+        
+        
         
 //        print("123123123123123131231231231231")
 //        
@@ -615,8 +641,14 @@ extension MainViewController{
         
         Alamofire.request(Constants.Network.MAIN_LIST, method: .post, parameters: params).responseJSON { (response) in
             print("result:\(String(describing: response.result.value))")
+            self.isLoadingMore = false
             if response.error == nil {
                 let jsonObject = JSON(response.data!)
+                
+                if jsonObject["data"]["content"].arrayValue.count <= 0 {
+                    return
+                }
+                
                 if self.isRefresh {
                     self.mainListData.removeAll()
                     self.isRefresh = false
@@ -711,7 +743,7 @@ extension MainViewController{
         checkInBtn.addBtnClickAction(target: self, action: #selector(showCheckInDialog))
         
         /// 礼物按钮
-        let giftBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 4 - settingsBtn.bounds.width * 4, y: UIScreen.main.bounds.height - 80, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Leaderboard-btn"), actionTitle: "礼物")
+        let giftBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 4 - settingsBtn.bounds.width * 4, y: UIScreen.main.bounds.height - 80, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Leaderboard-btn"), actionTitle: "奖品")
         view.addSubview(giftBtn)
         giftBtn.addBtnClickAction(target: self, action: #selector(showMyGift))
         

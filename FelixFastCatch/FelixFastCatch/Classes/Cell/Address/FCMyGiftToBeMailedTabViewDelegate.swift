@@ -33,7 +33,7 @@ extension FCMyGiftToBeMailedTabViewDelegate : UITableViewDelegate, UITableViewDa
         
         cell?.selectBtn.tag = indexPath.row
         
-        if selectList[indexPath.row] ?? false {
+        if selectList[indexPath.row] ?? true {
            cell?.selectBtn.isSelected = true
         }else {
            cell?.selectBtn.isSelected = false

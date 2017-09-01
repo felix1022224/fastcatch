@@ -148,7 +148,9 @@ class MyGiftDialog: BaseDialog {
         /// 组装数据
         var sendData = [JSON]()
         for key in Array(tobeMailedDelegate.selectList.keys) {
-            sendData.append(tobeMailedDelegate.dataSource[key])
+            if tobeMailedDelegate.selectList[key] == true {
+                sendData.append(tobeMailedDelegate.dataSource[key])
+            }
         }
         
 //        let json = JSON(addressData)
@@ -312,7 +314,7 @@ extension MyGiftDialog{
         getUserAddress()
         
         var params = NetWorkUtils.createBaseParams()
-        params["size"] = "10"
+        params["size"] = "150"
         params["page"] = "0"
         
         Alamofire.request(Constants.Network.Gift.GET_TOBE_MAILED_GIFT_LIST, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
@@ -324,7 +326,14 @@ extension MyGiftDialog{
                     self.tobeMailedDelegate.dataSource.removeAll()
                 }
                 self.tobeMailedDelegate.dataSource += json["data"]["content"].array!
+                
+                for i in 0...self.tobeMailedDelegate.dataSource.count-1 {
+                    self.tobeMailedDelegate.selectList[i] = true
+                }
+                
                 self.tobeMailedTabView.reloadData()
+                
+                
                 
                 self.showTobeMailedNoValue()
                 
@@ -357,7 +366,7 @@ extension MyGiftDialog{
     
     func getMailedGiftList(isRefresh:Bool) -> () {
         var params = NetWorkUtils.createBaseParams()
-        params["size"] = "10"
+        params["size"] = "150"
         params["page"] = "0"
         
         Alamofire.request(Constants.Network.Gift.GET_MAILED_GIFT_LIST, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
