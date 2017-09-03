@@ -61,6 +61,9 @@
 		4D82A4551F36D33B007ADE5C /* Skranji-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D82A4531F36D18F007ADE5C /* Skranji-Bold.ttf */; };
 		4D82A4591F3721BF007ADE5C /* Fangzhengyuan-cuti.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D82A4581F3721A2007ADE5C /* Fangzhengyuan-cuti.ttf */; };
 		4D96D3981F59824600E614CD /* Customized.YWFeedbackBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4D96D3971F59824600E614CD /* Customized.YWFeedbackBundle.bundle */; };
+		4D96D39D1F5BD7CE00E614CD /* InviteFirendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D96D39C1F5BD7CE00E614CD /* InviteFirendsCell.swift */; };
+		4D96D3BD1F5BDE2000E614CD /* HelpDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D96D3BC1F5BDE2000E614CD /* HelpDialog.swift */; };
+		4D96D3BF1F5BE14200E614CD /* ProtocolInfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D96D3BE1F5BE14200E614CD /* ProtocolInfoDialog.swift */; };
 		4D9EBB811F26F163002674DE /* WeChatShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB801F26F163002674DE /* WeChatShared.swift */; };
 		4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB8A1F271C80002674DE /* MainViewController.swift */; };
 		4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */; };
@@ -158,6 +161,9 @@
 		4D82A4531F36D18F007ADE5C /* Skranji-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Skranji-Bold.ttf"; sourceTree = "<group>"; };
 		4D82A4581F3721A2007ADE5C /* Fangzhengyuan-cuti.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fangzhengyuan-cuti.ttf"; sourceTree = "<group>"; };
 		4D96D3971F59824600E614CD /* Customized.YWFeedbackBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Customized.YWFeedbackBundle.bundle; sourceTree = "<group>"; };
+		4D96D39C1F5BD7CE00E614CD /* InviteFirendsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFirendsCell.swift; sourceTree = "<group>"; };
+		4D96D3BC1F5BDE2000E614CD /* HelpDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpDialog.swift; sourceTree = "<group>"; };
+		4D96D3BE1F5BE14200E614CD /* ProtocolInfoDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolInfoDialog.swift; sourceTree = "<group>"; };
 		4D9EBB801F26F163002674DE /* WeChatShared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeChatShared.swift; sourceTree = "<group>"; };
 		4D9EBB8A1F271C80002674DE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -350,6 +356,14 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		4D96D39B1F5BD7B600E614CD /* Invite */ = {
+			isa = PBXGroup;
+			children = (
+				4D96D39C1F5BD7CE00E614CD /* InviteFirendsCell.swift */,
+			);
+			path = Invite;
+			sourceTree = "<group>";
+		};
 		4D9EBB831F271BD2002674DE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -437,6 +451,7 @@
 			children = (
 				4D2B80151F40263F0075D390 /* ShowOffRecordDialog.swift */,
 				4D2B80131F40097E0075D390 /* OutGameDialog.swift */,
+				4D96D3BC1F5BDE2000E614CD /* HelpDialog.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -469,6 +484,7 @@
 				4DCD39DC1F2F3CD5002B7F35 /* UserInfoDialog.swift */,
 				4D1D86161F31D1FE005210CA /* EditUserInfoDialog.swift */,
 				4D589C751F39AC3D00C8DBC7 /* FirstLoginRewardDialog.swift */,
+				4D96D3BE1F5BE14200E614CD /* ProtocolInfoDialog.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -476,6 +492,7 @@
 		4D9EBB901F274563002674DE /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				4D96D39B1F5BD7B600E614CD /* Invite */,
 				4DCD39D91F2F31AB002B7F35 /* Pay */,
 				4D9EBB911F274563002674DE /* Address */,
 				4D9EBB921F274563002674DE /* Main */,
@@ -710,6 +727,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DCC49CC1F52E0110017D4A4 /* PlayInfoAwardDialog.swift in Sources */,
+				4D96D3BF1F5BE14200E614CD /* ProtocolInfoDialog.swift in Sources */,
 				4DCD39EB1F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift in Sources */,
 				4DDD2B7C1F283F3D00102A0F /* ToastUtils.swift in Sources */,
 				4D1D86191F31DA17005210CA /* PlayResultDialog.swift in Sources */,
@@ -733,6 +751,7 @@
 				4D64B8981F29B549002A9BFD /* MainBanner.swift in Sources */,
 				4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */,
 				4DCD39D81F2F12E9002B7F35 /* PayListDialog.swift in Sources */,
+				4D96D3BD1F5BDE2000E614CD /* HelpDialog.swift in Sources */,
 				4D5BF1C01F3853F60091180B /* InviteDialog.swift in Sources */,
 				4D2B80121F4008060075D390 /* MailedSuccessDialog.swift in Sources */,
 				4DCD39E81F2F4B2C002B7F35 /* FCMyGiftCell.swift in Sources */,
@@ -743,6 +762,7 @@
 				4D82A4521F36C7AD007ADE5C /* UserTools.swift in Sources */,
 				4D1D86171F31D1FE005210CA /* EditUserInfoDialog.swift in Sources */,
 				4D1DA0F61F2F4C7000B1138D /* FCMailedConfirmDialog.swift in Sources */,
+				4D96D39D1F5BD7CE00E614CD /* InviteFirendsCell.swift in Sources */,
 				4D2B801B1F4C07050075D390 /* SubmitSuccessDialog.swift in Sources */,
 				4DCC49CA1F52A65F0017D4A4 /* PlayInfoBannerDialog.swift in Sources */,
 				4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */,

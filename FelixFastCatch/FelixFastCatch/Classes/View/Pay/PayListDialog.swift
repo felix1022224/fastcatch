@@ -28,6 +28,8 @@ class PayListDialog: BaseDialog {
     
     fileprivate var exchangeCodeDialog:ExchangeCodeDialog!
     
+    var paySuccessCallback:(()->())? = nil
+    
     override func createView() {
         createBackgroundImage(imageName: "pay_background")
         
@@ -262,6 +264,9 @@ extension PayListDialog{
                             ToastUtils.showSuccessToast(msg: "支付成功")
                             if self.mainVC != nil {
                                 self.mainVC.getsUserInfo()
+                            }
+                            if self.paySuccessCallback != nil {
+                                self.paySuccessCallback!()
                             }
                             break;
                         case .Failed:

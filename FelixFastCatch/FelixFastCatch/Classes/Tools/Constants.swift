@@ -112,6 +112,8 @@ class Constants: NSObject {
             /// 使用兑换码
             static let USER_EXCHANGE_CODE = BASE_URL + "user/exchange"
             
+            /// 获取邀请好友列表
+            static let GET_INVITE_LIST = BASE_URL + "user/invreglist"
         }
     }
     

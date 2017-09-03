@@ -16,6 +16,10 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     /// 加载url
     private var webview:UIWebView!
     
+    var actionTitle: String?
+    
+    lazy var actionTitleLabel = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,15 +32,26 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         let headView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIApplication.shared.statusBarFrame.height + backImageView.bounds.height + 15))
         headView.backgroundColor = UIColor.white
         view.addSubview(headView)
-        
+
         /////设置允许交互属性
         backImageView.isUserInteractionEnabled = true
-        
         /////添加tapGuestureRecognizer手势
         let tapGR = UITapGestureRecognizer(target: self, action:#selector(back))
         backImageView.addGestureRecognizer(tapGR)
-        
         headView.addSubview(backImageView)
+        
+        let shardBtn = UIImageView(image: UIImage(named: "banner_more"))
+        shardBtn.sizeToFit()
+        headView.addSubview(shardBtn)
+        
+        shardBtn.isUserInteractionEnabled = true
+        let tapMore = UITapGestureRecognizer(target: self, action:#selector(shared))
+        shardBtn.addGestureRecognizer(tapMore)
+        
+        shardBtn.snp.makeConstraints { (make) in
+            make.centerY.equalTo(backImageView)
+            make.right.equalTo(headView).offset(-15)
+        }
         
         let lineView = UIView(frame: CGRect(x: 0, y: headView.bounds.height, width: UIScreen.main.bounds.width, height: 0.5))
         lineView.backgroundColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 0.8)
@@ -47,10 +62,30 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         view.addSubview(webview)
         
         webview.loadRequest(URLRequest(url: URL(string: link)!))
+        
+        /// title
+        actionTitleLabel.font = UIFont.systemFont(ofSize: 16)
+        actionTitleLabel.text = actionTitle
+        actionTitleLabel.textColor = UIColor.black
+        headView.addSubview(actionTitleLabel)
+        actionTitleLabel.snp.makeConstraints { (make) in
+            make.centerY.equalTo(backImageView)
+            make.centerX.equalTo(headView)
+        }
     }
 
     func back() -> () {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func shared() -> () {
+        WeChatShared.shareURL(link, title: actionTitle, description: actionTitle, thumbImg: UIImage(named: "shared_logo"), to: LDWechatScene.Timeline) { (isSuccess, info) in
+            if isSuccess {
+                ToastUtils.showSuccessToast(msg: "分享成功")
+            }else{
+                ToastUtils.showErrorToast(msg: "分享失败")
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {

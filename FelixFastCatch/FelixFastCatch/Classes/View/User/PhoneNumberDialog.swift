@@ -30,6 +30,9 @@ class PhoneNumberDialog: BaseDialog {
     /// 新手奖励弹窗
     fileprivate var firstLoginReward:FirstLoginRewardDialog!
     
+    /// 用户协议
+    fileprivate var protocolInfoDialog:ProtocolInfoDialog!
+    
     override func createView() {
         
     }
@@ -38,6 +41,7 @@ class PhoneNumberDialog: BaseDialog {
         self.fastLoginDialog = fastLogin
         
         firstLoginReward = FirstLoginRewardDialog(frame: UIScreen.main.bounds)
+        protocolInfoDialog = ProtocolInfoDialog(frame: UIScreen.main.bounds)
         
         createBackgroundImage(imageName: "register_login_background")
         
@@ -146,9 +150,33 @@ class PhoneNumberDialog: BaseDialog {
         
         loginBtn.addTarget(self, action: #selector(loginByPhoneNumber), for: .touchUpInside)
         
+        let pactInfoLabel = UIButton(type: .custom)
+        pactInfoLabel.titleLabel?.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        pactInfoLabel.titleLabel?.textColor = UIColor.gray
+        pactInfoLabel.titleLabel?.textAlignment = .right
+        let str1 = NSMutableAttributedString(string: "登录即同意《秒抓APP用户协议》")
+        let range1 = NSRange(location: 0, length: str1.length)
+        let number = NSNumber(value:NSUnderlineStyle.styleSingle.rawValue)//此处需要转换为NSNumber 不然不对,rawValue转换为integer
+        str1.addAttribute(NSUnderlineStyleAttributeName, value: number, range: range1)
+        str1.addAttribute(NSForegroundColorAttributeName, value: UIColor.gray, range: range1)
+        pactInfoLabel.setAttributedTitle(str1, for: UIControlState.normal)
+        addSubview(pactInfoLabel)
+        
+        pactInfoLabel.snp.makeConstraints { (make) in
+            make.right.equalTo(self.verifySendBtn)
+            make.top.equalTo(self.verifySendBtn).offset(verifySendBtn.bounds.height + 10)
+        }
+        
+        pactInfoLabel.addTarget(self, action: #selector(showProtocolInfoDialog), for: .touchUpInside)
+        
         addDialogToWindow()
     }
 
+    func showProtocolInfoDialog() -> () {
+        protocolInfoDialog.createView()
+        protocolInfoDialog.show()
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         endEditing(true)
     }
@@ -258,6 +286,11 @@ extension PhoneNumberDialog{
     func sendVerifyCode() -> () {
         if (phoneNumberEdit.text?.characters.count)! <= 0 {
             ToastUtils.showErrorToast(msg: "请输入手机号")
+            return
+        }
+        
+        if (phoneNumberEdit.text?.characters.count)! < 11 {
+            ToastUtils.showErrorToast(msg: "请输入正确长度的手机号")
             return
         }
         var params = NetWorkUtils.createBaseParams()

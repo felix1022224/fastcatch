@@ -77,7 +77,7 @@ class EditUserInfoDialog: BaseDialog {
         nickNameLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         nickNameLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         nickNameLabel.text = "昵称:"
-        nickNameLabel.frame = CGRect(x: self.bounds.width/2 - backgroundImage.bounds.width/2 + 35, y: self.bounds.height/2 - backgroundImage.bounds.height/2 + 65, width: 0, height: 0)
+        nickNameLabel.frame = CGRect(x: self.bounds.width/2 - backgroundImage.bounds.width/2 + 35, y: self.bounds.height/2 - backgroundImage.bounds.height/2 + 55, width: 0, height: 0)
         nickNameLabel.sizeToFit()
         addSubview(nickNameLabel)
         

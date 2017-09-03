@@ -169,6 +169,12 @@ class PlayViewController: UIViewController {
     /// 是否显示了反馈页面
     var isShowFeedbackView = false
     
+    /// 支付的dialog
+    var payDialog:PayListDialog!
+    
+    /// 主页
+    var mainVC:MainViewController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -363,6 +369,10 @@ extension PlayViewController{
             make.right.equalTo(gemBackground).offset(-28)
             make.centerY.equalTo(gemBackground).offset(2)
         }
+        
+        gemBackground.isUserInteractionEnabled = true
+        let payTap = UITapGestureRecognizer(target: self, action: #selector(showPayDialog))
+        gemBackground.addGestureRecognizer(payTap)
     }
     
     /// 创建游戏相关按钮
@@ -385,6 +395,8 @@ extension PlayViewController{
         audioBtn.setImage(UIImage(named: "icon_audio"), for: .normal)
         audioBtn.sizeToFit()
         view.addSubview(audioBtn)
+        
+        audioBtn.addTarget(self, action: #selector(switchAudio), for: .touchUpInside)
         
         audioBtn.snp.makeConstraints { (make) in
             make.bottom.equalTo(helpBtn).offset(-(helpBtn.bounds.height + 10))
@@ -423,6 +435,19 @@ extension PlayViewController{
         
         darwCountLabel.center = darwCountBgView.center
         
+    }
+
+    /// 切换音频按钮
+    func switchAudio() -> () {
+        if isCloseMusic {
+            bgMusicPlayer.play()
+            isCloseMusic = false
+            audioBtn.setImage(UIImage(named: "icon_audio"), for: .normal)
+        }else{
+            bgMusicPlayer.pause()
+            isCloseMusic = true
+            audioBtn.setImage(UIImage(named: "audio_close"), for: .normal)
+        }
     }
     
     func showFeecbackView() -> () {
@@ -545,7 +570,7 @@ extension PlayViewController{
         agoraKit.setVideoProfile(._VideoProfile_480P_3, swapWidthAndHeight: false)
         agoraKit.setClientRole(AgoraRtcClientRole.clientRole_Audience, withKey: nil)
         
-        agoraKit.muteAllRemoteAudioStreams(true)
+//        agoraKit.muteAllRemoteAudioStreams(true)
         
 //        let hostingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
 //        hostingView.translatesAutoresizingMaskIntoConstraints = false
@@ -574,6 +599,7 @@ extension PlayViewController{
             return
         }
         
+        bgMusicPlayer.pause()
         ToastUtils.showLoadingToast(msg: "进入游戏房间")
         
         /// 首次切换，清空ID
@@ -596,8 +622,11 @@ extension PlayViewController{
         }else {
             print("进入房间成功:\(code)")
             
-            
-            playStartGame()
+            if !isCloseMusic{
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: { [weak self] in
+                    self?.playStartGame()
+                })
+            }
         }
         
         agoraKit.setupRemoteVideo(nil)
@@ -666,6 +695,7 @@ extension PlayViewController{
     /// 切换视频到直播界面
     func swichVideoChannerlToLive() -> () {
         
+        bgMusicPlayer.pause()
         ToastUtils.showLoadingToast(msg: "退出游戏房间")
         
         /// 把video的id切回去
@@ -723,6 +753,9 @@ extension PlayViewController: AgoraRtcEngineDelegate {
             self.showPlayGroup()
         }
         ToastUtils.hide()
+        if !isCloseMusic {
+            bgMusicPlayer.play()
+        }
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit!, firstLocalVideoFrameWith size: CGSize, elapsed: Int) {
@@ -1657,6 +1690,37 @@ extension PlayViewController{
     
 }
 
+//支付相关
+extension PlayViewController{
+    
+    func showPayDialog() -> () {
+        if payDialog == nil {
+            payDialog = PayListDialog(frame: UIScreen.main.bounds)
+        }
+        payDialog.createView()
+        if mainVC != nil {
+            payDialog.show2(mainViewController: mainVC)
+        }else{
+            payDialog.show()
+        }
+        payDialog.paySuccessCallback = {[weak self] in
+            self?.getsUserInfo()
+        }
+    }
+    
+    func getsUserInfo() -> () {
+        if Constants.User.USER_ID == "" {
+            return
+        }
+        print("获取用户信息")
+        UserTools.getUserInfo(callback: { [weak self] in
+            if self?.gemLabel != nil {
+                self?.gemLabel.text = String(Constants.User.diamondsCount)
+            }
+        })
+    }
+    
+}
 
 
 

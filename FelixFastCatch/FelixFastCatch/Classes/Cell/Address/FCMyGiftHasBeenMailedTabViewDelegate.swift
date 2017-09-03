@@ -29,9 +29,12 @@ extension FCMyGiftHasBeenMailedTabViewDelegate:UITableViewDelegate, UITableViewD
         
         let itemData = dataSource[indexPath.row]
         
-        cell?.hasBeenMailedView.timeLabel.text = "申请时间: 2017.7.8 12:30"
+        let dfmatter = DateFormatter()
+        dfmatter.dateFormat="yyyy.MM.dd hh:ss"
         
-        cell?.hasBeenMailedView.mailedTimeLabel.text = "邮寄时间: 2017.8.9 10:00"
+        cell?.hasBeenMailedView.timeLabel.text = "申请时间: " + dfmatter.string(from: Date(timeIntervalSince1970: TimeInterval(itemData["createTime"].int64Value/1000)))
+        
+        cell?.hasBeenMailedView.mailedTimeLabel.text = "邮寄时间: " + dfmatter.string(from: Date(timeIntervalSince1970: TimeInterval(itemData["updateTime"].int64Value/1000)))
         
         cell?.hasBeenMailedView.mailedCodeLabel.text = "邮寄单号:" + itemData["oid"].stringValue
         

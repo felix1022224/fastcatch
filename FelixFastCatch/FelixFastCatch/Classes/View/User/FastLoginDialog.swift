@@ -156,10 +156,13 @@ class FastLoginDialog: BaseDialog {
                 print("response:\(String(describing: response.response?.allHeaderFields))")
                 LocalDataUtils.updateLocalUserData(resultData: resultJson, response)
                 ToastUtils.showSuccessToast(msg: "登录成功")
-                self.hide()
                 if resultJson["data"]["new"].boolValue {
                     self.showFirstLoginReward()
                 }
+                if self.mainVC != nil {
+                    self.mainVC.getsUserInfo()
+                }
+                self.hide()
             }
         }
     }
@@ -187,10 +190,13 @@ class FastLoginDialog: BaseDialog {
                 print("response:\(String(describing: response.response?.allHeaderFields))")
                 LocalDataUtils.updateLocalUserData(resultData: resultJson, response)
 //                ToastUtils.showSuccessToast(msg: "登录成功")
-                self.hide()
                 if resultJson["data"]["new"].boolValue {
                     self.showFirstLoginReward()
                 }
+                if self.mainVC != nil {
+                    self.mainVC.getsUserInfo()
+                }
+                self.hide()
             }else {
                 SVProgressHUD.dismiss()
             }

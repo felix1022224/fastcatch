@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>NSCameraUsageDescription</key>
-    <string>访问相机以获取图片</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>访问相册以获取图片</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -56,7 +52,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>3</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>mqzoneopensdk</string>
@@ -91,6 +87,8 @@
 	<string>为您提供更智能化的奖品推荐</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>use microphone to start video call</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>访问相册以获取图片</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Skranji-Bold.ttf</string>

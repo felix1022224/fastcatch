@@ -111,6 +111,7 @@ class EditAddressDialog: BaseDialog {
         phoneNumberTextField.textColor = UIColor.white
         phoneNumberTextField.clearButtonMode = .unlessEditing
         phoneNumberTextField.keyboardType = .phonePad
+        phoneNumberTextField.delegate = self
         addSubview(phoneNumberTextField)
         
         phoneNumberTextField.snp.makeConstraints { (make) in
@@ -270,6 +271,10 @@ extension EditAddressDialog{
             ToastUtils.showErrorToast(msg: "请输入手机号")
             return false
         }
+        if (phoneNumberTextField.text?.characters.count)! < 11 {
+            ToastUtils.showErrorToast(msg: "请输入正确长度的手机号")
+            return false
+        }
         if (addressTextFiled.text?.characters.count)! <= 0 {
             ToastUtils.showErrorToast(msg: "请输入地址")
             return false
@@ -290,6 +295,29 @@ extension EditAddressDialog{
         if Constants.User.addr != "" {
             addressTextFiled.text = Constants.User.addr
         }
+    }
+    
+}
+
+// MARK: - 文字输入框的代理
+extension EditAddressDialog:UITextFieldDelegate{
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if (textField == self.phoneNumberTextField) {
+            let existedLength = textField.text?.characters.count;
+            let selectedLength = range.length;
+            let replaceLength = string.characters.count;
+            
+            if (existedLength! - selectedLength + replaceLength >= 12) {
+                let endIndex = textField.text?.index((textField.text?.startIndex)!, offsetBy: 11)
+                
+                textField.text = textField.text?.substring(with: Range<String.Index>(uncheckedBounds: ((textField.text?.startIndex)!, endIndex!)))
+                return false
+            }
+        }
+        
+        return true
     }
     
 }

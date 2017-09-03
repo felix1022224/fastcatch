@@ -67,6 +67,10 @@ class FCMailedConfirmDialog: BaseDialog {
         
         if contentImagesLine <= 0 {
             contentImagesLine = 1
+        }else{
+            if sendData.count%4 != 0 {
+                contentImagesLine = contentImagesLine + 1
+            }
         }
         
         scrollRootView.frame = CGRect(x: self.bounds.width/2 - backgroundImage.bounds.width/2 + 20, y: self.bounds.height/2 - backgroundImage.bounds.height/2 + 70, width: backgroundImage.bounds.width - 40, height:  backgroundImage.bounds.height - 105)

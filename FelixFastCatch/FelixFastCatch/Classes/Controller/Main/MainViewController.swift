@@ -83,6 +83,9 @@ class MainViewController: UIViewController{
     /// 是否正在加载更多
     fileprivate var isLoadingMore = false
     
+    /// 帮助的dialog
+    fileprivate var helpDialog:HelpDialog!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -220,6 +223,9 @@ class MainViewController: UIViewController{
         
         /// 分享战绩
         showOffRecordDialog = ShowOffRecordDialog(frame: UIScreen.main.bounds)
+        
+        /// 帮助
+        helpDialog = HelpDialog(frame: UIScreen.main.bounds)
     }
     
     func test() -> () {
@@ -407,6 +413,7 @@ extension MainViewController:UIScrollViewDelegate{
         }
         let webVC = WebViewController()
         webVC.link = link
+        webVC.actionTitle = self.mainBannersData[(sender.view?.tag)!]["title"].stringValue
         present(webVC, animated: true, completion: nil)
     }
     
@@ -563,6 +570,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             self?.showShardRecordDialog()
         }
         
+        playView.mainVC = self
+        
         playView.bottomAwardCardImagePath = mainListData[sender.tag]["award"]["img"].stringValue
         playView.bootomAwardDescription = mainListData[sender.tag]["award"]["description"].stringValue
         playView.bottomAwardTitle = mainListData[sender.tag]["award"]["title"].stringValue
@@ -572,12 +581,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         navigationController?.pushViewController(playView, animated: true)
         
-        
-        
-//        print("123123123123123131231231231231")
-//        
-//        playView.setDarwCount(count: mainListData[sender.tag]["darwCount"].intValue)
-//        test()
     }
     
     func itemClick(index:Int) -> () {
@@ -597,6 +600,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         playView.playSuccess = {[weak self] in
             self?.showShardRecordDialog()
         }
+        
+        playView.mainVC = self
         
         playView.bottomAwardCardImagePath = mainListData[index]["award"]["img"].stringValue
         playView.bootomAwardDescription = mainListData[index]["award"]["description"].stringValue
@@ -846,6 +851,11 @@ extension MainViewController{
         infoIcon.sizeToFit()
         settingsGroupView.addSubview(infoIcon)
         
+        infoIcon.isUserInteractionEnabled = true
+        
+        let infoTap = UITapGestureRecognizer(target: self, action: #selector(showHelpDialog))
+        infoIcon.addGestureRecognizer(infoTap)
+        
         settingsGroupView.isHidden = true
     }
     
@@ -857,6 +867,11 @@ extension MainViewController{
         }
         userInfoDialog.createView()
         userInfoDialog.show2(mainViewController: self)
+    }
+    
+    func showHelpDialog() -> () {
+        helpDialog.createView()
+        helpDialog.show()
     }
     
 }
