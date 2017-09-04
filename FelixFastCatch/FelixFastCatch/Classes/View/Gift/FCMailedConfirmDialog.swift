@@ -183,7 +183,7 @@ class FCMailedConfirmDialog: BaseDialog {
         freemailNumberLabel.outTextColor = UIColor.white
         freemailNumberLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         freemailNumberLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
-        freemailNumberLabel.text = "本月剩余免邮次数:1次"
+        freemailNumberLabel.text = "9月30日前限时免邮"
         freemailNumberLabel.sizeToFit()
         scrollRootView.addSubview(freemailNumberLabel)
         

@@ -361,7 +361,7 @@ extension MainViewController:UIScrollViewDelegate{
         
         if contentOffsetX > self.view.frame.size.width * CGFloat(count) {
             // 当前视图显示的是第三个的时候，设置bottomView的偏移量为0
-            self.bannerView.setContentOffset(CGPoint(x:0,y:0), animated: true)
+            self.bannerView.setContentOffset(CGPoint(x:0, y:0), animated: true)
         }else{
             self.bannerView.setContentOffset(CGPoint(x:contentOffsetX,y:0), animated: true)
         }
@@ -407,14 +407,26 @@ extension MainViewController:UIScrollViewDelegate{
     }
     
     func bannerTap(sender:UITapGestureRecognizer) -> () {
-        let link = self.mainBannersData[(sender.view?.tag)!]["scheme"].stringValue
-        if link == "" {
-            return
+        if self.mainBannersData[(sender.view?.tag)!]["redirectType"].intValue == 1 {
+            let link = self.mainBannersData[(sender.view?.tag)!]["scheme"].stringValue
+            // 跳转到网页
+            if link == "" {
+                return
+            }
+            let webVC = WebViewController()
+            webVC.link = link
+            webVC.actionTitle = self.mainBannersData[(sender.view?.tag)!]["title"].stringValue
+            present(webVC, animated: true, completion: nil)
+        }else if self.mainBannersData[(sender.view?.tag)!]["redirectType"].intValue == 2 {
+            let link = self.mainBannersData[(sender.view?.tag)!]["scheme"].intValue
+            if link == -1 {
+                showPayDialog()
+                return
+            }else{
+                itemClick(index: link)
+            }
         }
-        let webVC = WebViewController()
-        webVC.link = link
-        webVC.actionTitle = self.mainBannersData[(sender.view?.tag)!]["title"].stringValue
-        present(webVC, animated: true, completion: nil)
+        
     }
     
 }
@@ -566,8 +578,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let playView = PlayViewController()
         playView.deviceId = mainListData[sender.tag]["deviceId"].stringValue
         playView.darwCount = mainListData[sender.tag]["darwCount"].intValue
-        playView.playSuccess = {[weak self] in
-            self?.showShardRecordDialog()
+        playView.playSuccess = {[weak self] (deviceId) in
+            self?.showShardRecordDialog(deviceId: deviceId)
         }
         
         playView.mainVC = self
@@ -597,8 +609,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let playView = PlayViewController()
         playView.deviceId = mainListData[index]["deviceId"].stringValue
         playView.darwCount = mainListData[index]["darwCount"].intValue
-        playView.playSuccess = {[weak self] in
-            self?.showShardRecordDialog()
+        playView.playSuccess = {[weak self] (deviceId) in
+            self?.showShardRecordDialog(deviceId: deviceId)
         }
         
         playView.mainVC = self
@@ -809,9 +821,9 @@ extension MainViewController{
     }
     
     /// 显示分享战绩的dialog
-    func showShardRecordDialog() -> () {
+    func showShardRecordDialog(deviceId:String) -> () {
         showOffRecordDialog.createView()
-        showOffRecordDialog.show()
+        showOffRecordDialog.show2(deviceId: deviceId)
     }
     
     // 点击展开隐藏设置按钮

@@ -90,14 +90,18 @@ class HasBeenMailedView: UIView {
         layout.minimumLineSpacing = 4
         
         // 設置每個 cell 的尺寸
-        layout.itemSize = CGSize(width: CGFloat(((hasBeenContentBackgroundImage?.size.width)! - 20) / 4 - 8), height: CGFloat((hasBeenProductBackground?.size.height)! + 10))
+        layout.itemSize = CGSize(width: CGFloat(((hasBeenContentBackgroundImage?.size.width)! - 20) / 4 - 8), height: CGFloat((hasBeenProductBackground?.size.height)! + 5))
         
         var line = itemData["awards"].array!.count / 4
         if line <= 0 {
             line = 1
+        }else{
+            if itemData["awards"].array!.count % 4 > 0 {
+                line = line + 1
+            }
         }
         
-        productsGroup = UICollectionView(frame: CGRect(x: 10, y: timeLabel.bounds.height + 24, width: hasBeenContentBackgroundImage!.size.width - 20, height: (hasBeenProductBackground?.size.height)! * CGFloat(line) + 10 * CGFloat(line)), collectionViewLayout: layout)
+        productsGroup = UICollectionView(frame: CGRect(x: 10, y: timeLabel.bounds.height + 34, width: hasBeenContentBackgroundImage!.size.width - 20, height: (hasBeenProductBackground?.size.height)! * CGFloat(line) + 10 * CGFloat(line)), collectionViewLayout: layout)
         productsGroup.backgroundColor = UIColor.clear
         
         hasbeenProductsDelegate = FCMyGiftHasBeenProductsDelegate(dataSource: itemData["awards"].array!)
@@ -126,7 +130,7 @@ class HasBeenMailedView: UIView {
         addSubview(statusLabel)
         
         statusLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(productsGroup).offset(productsGroup.bounds.height + 10)
+            make.top.equalTo(productsGroup).offset(productsGroup.bounds.height)
             make.left.equalTo(self).offset(10)
             make.right.equalTo(self).offset(10)
         }
@@ -144,7 +148,7 @@ class HasBeenMailedView: UIView {
 //        mailedTimeLabel.isHidden = true
         
         mailedTimeLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(statusLabel).offset(statusLabel.bounds.height + 10)
+            make.top.equalTo(statusLabel).offset(statusLabel.bounds.height + 5)
             make.left.equalTo(statusLabel)
             make.right.equalTo(statusLabel)
         }
@@ -163,13 +167,13 @@ class HasBeenMailedView: UIView {
 //        mailedCodeLabel.isHidden = true
         
         mailedCodeLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(mailedTimeLabel).offset(mailedTimeLabel.bounds.height + 10)
+            make.top.equalTo(mailedTimeLabel).offset(mailedTimeLabel.bounds.height + 5)
             make.left.equalTo(statusLabel)
             make.right.equalTo(statusLabel)
         }
         
         contentBacngroundImage.frame = CGRect(x: 0, y: timeLabel.bounds.height + 10 * 2, width: hasBeenContentBackgroundImage!.size.width, height: productsGroup.bounds.height + statusLabel.bounds.height + mailedTimeLabel.bounds.height +
-            mailedCodeLabel.bounds.height + 10 * 3 + 10)
+            mailedCodeLabel.bounds.height + 12 * 3 + 10)
         
         //        contentBacngroundImage.snp.makeConstraints { (make) in
         //            make.width.equalTo(self)

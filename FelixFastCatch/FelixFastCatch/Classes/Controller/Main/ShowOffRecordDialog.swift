@@ -49,6 +49,8 @@ class ShowOffRecordDialog: BaseDialog {
         nowShardBtn.setBackgroundImage(UIImage(named: "分享按钮"), for: .normal)
         addSubview(nowShardBtn)
         
+        nowShardBtn.addTarget(self, action: #selector(shared), for: .touchUpInside)
+        
         nowShardBtn.snp.makeConstraints { (make) in
             make.width.equalTo(118)
             make.height.equalTo(35)
@@ -58,5 +60,39 @@ class ShowOffRecordDialog: BaseDialog {
         
         addDialogToWindow()
     }
+    
+    fileprivate var deviceId:String!
+    
+    func show2(deviceId:String) -> () {
+        self.deviceId = deviceId
+        show()
+    }
 
+    func shared() -> () {
+        ToastUtils.showLoadingToast(msg: "请稍后……")
+        getDataFromUrl(url: URL(string: "http://meizhe.meidaojia.com/makeup/public/images/doll/" + deviceId + ".jpg")!) { (data, response, error) in
+            if error == nil {
+                WeChatShared.shareImage(data!, thumbImage: UIImage(named: "shared_logo"), title: "抓中啦", description: "抓到了", to: .Timeline, resuleHandle: { (isSuccess, info) in
+                    if isSuccess {
+                        ToastUtils.showSuccessToast(msg: "分享成功")
+                    }else{
+                        ToastUtils.showErrorToast(msg: " 分享失败")
+                    }
+                })
+            }
+        }
+    }
+    
+    override func hide() {
+        super.hide()
+        ToastUtils.hide()
+    }
+    
+    func getDataFromUrl(url: URL, completion: @escaping (_ data: Data?, _  response: URLResponse?, _ error: Error?) -> Void) {
+        URLSession.shared.dataTask(with: url) {
+            (data, response, error) in
+            completion(data, response, error)
+            }.resume()
+    }
+    
 }

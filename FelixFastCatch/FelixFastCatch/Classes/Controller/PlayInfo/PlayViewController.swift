@@ -128,7 +128,7 @@ class PlayViewController: UIViewController {
     /// 是否正在游戏中
     var isGameing = false
     
-    var playSuccess:(()->())? = nil
+    var playSuccess:((_ deviceId:String)->())? = nil
     
     /// 底部的view
     var bottomGroupView:UIView!
@@ -174,6 +174,9 @@ class PlayViewController: UIViewController {
     
     /// 主页
     var mainVC:MainViewController!
+    
+    /// 是否抓中了
+    var isGameWinner:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -543,6 +546,11 @@ extension PlayViewController{
         out(deviceId: deviceId)
         self.navigationController?.popViewController(animated: true)
         ToastUtils.hide()
+        if isGameWinner {
+            if self.playSuccess != nil {
+                self.playSuccess!(self.deviceId)
+            }
+        }
     }
 }
 
@@ -1303,16 +1311,14 @@ extension PlayViewController{
                     self.getWardCodeNumber = 0
                     print("抓取成功")
                     self.wardCode = ""
-//                    self.playResultDialog.isSuccess = true
-//                    self.playResultDialog.createView()
-//                    self.playResultDialog.show()
+                    self.playResultDialog.isSuccess = true
+                    self.playResultDialog.createView()
+                    self.playResultDialog.show()
                     self.playGrapSuccess()
                     self.hidePlayGroup()
                     /// 展示再来一局的界面
                     self.showRePlayInfo()
-                    if self.playSuccess != nil {
-                        self.playSuccess!()
-                    }
+                    self.isGameWinner = true
                 }else {
                     print("抓取失败")
                     self.getWardCodeNumber = self.getWardCodeNumber + 1

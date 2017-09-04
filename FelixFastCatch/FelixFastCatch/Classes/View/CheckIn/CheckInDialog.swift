@@ -74,7 +74,7 @@ class CheckInDialog: BaseDialog {
         tipsLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         tipsLabel.outTextColor = UIColor.white
         tipsLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        tipsLabel.text = "连续签到赢代币"
+        tipsLabel.text = "已连续签到" + String(Constants.User.checkDays) + "天共获取" + String(Constants.User.checkDays) + "代币"
         tipsLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         tipsLabel.sizeToFit()
         addSubview(tipsLabel)
@@ -195,6 +195,10 @@ extension CheckInDialog{
         for i in 0..<Constants.User.checkDays {
             print("i:\(i)")
             check7DayViews[i].setChecked(isChecked: true)
+        }
+        
+        if tipsLabel != nil {
+            tipsLabel.text = "已连续签到" + String(Constants.User.checkDays) + "天共获取" + String(Constants.User.checkDays + 1) + "代币"
         }
     }
     
