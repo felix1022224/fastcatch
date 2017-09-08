@@ -86,6 +86,9 @@ class MainViewController: UIViewController{
     /// 帮助的dialog
     fileprivate var helpDialog:HelpDialog!
     
+    /// 版本号显示
+    fileprivate var versionLabel:UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -327,7 +330,7 @@ extension MainViewController:UIScrollViewDelegate{
     ///
     /// - Returns: banner图的高度是整体view的高的20%
     func getBannerHeight() -> CGFloat {
-        return UIScreen.main.bounds.height * 0.25 - 1
+        return UIScreen.main.bounds.width * 0.4 - 1
     }
     
     //创建轮播图定时器
@@ -472,7 +475,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let main = UIScreen.main.bounds
         // 設置 header 及 footer 的尺寸
-        layout.footerReferenceSize = CGSize(width: CGFloat(4) * main.width, height: 80)
+        layout.footerReferenceSize = CGSize(width: CGFloat(4) * main.width, height: 90)
         
         // item的宽度
         let itemWidth = (CGFloat(UIScreen.main.bounds.width) - dataListPadding*2)/2 - 5
@@ -656,6 +659,8 @@ extension MainViewController{
         params["size"] = "10"
         params["page"] = String(page)
         
+        print("main_params:\(params)")
+        
         Alamofire.request(Constants.Network.MAIN_LIST, method: .post, parameters: params).responseJSON { (response) in
             print("result:\(String(describing: response.result.value))")
             self.isLoadingMore = false
@@ -743,31 +748,40 @@ extension MainViewController{
         
         setupSettings(testImage: settingImage)
         
-        let settingsBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 - settingImage.bounds.width, y: UIScreen.main.bounds.height - 80, width: settingImage.bounds.width, height: settingImage.bounds.height), image: settingImage.image, actionTitle: "设置")
+        let settingsBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 - settingImage.bounds.width, y: UIScreen.main.bounds.height - 90, width: settingImage.bounds.width, height: settingImage.bounds.height), image: settingImage.image, actionTitle: "设置")
         view.addSubview(settingsBtn)  
         
         settingsBtn.addBtnClickAction(target: self, action: #selector(settingsClick))
         
         /// 邀请按钮
-        let inviteBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 2 - settingsBtn.bounds.width * 2, y: UIScreen.main.bounds.height - 80, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Store-btn"), actionTitle: "邀请")
+        let inviteBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 2 - settingsBtn.bounds.width * 2, y: UIScreen.main.bounds.height - 90, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Store-btn"), actionTitle: "邀请")
         view.addSubview(inviteBtn)
         
         inviteBtn.addBtnClickAction(target: self, action: #selector(showInviteDialog))
         
         /// 签到
-        let checkInBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 3 - settingsBtn.bounds.width * 3, y: UIScreen.main.bounds.height - 80, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Achievements-btn"), actionTitle: "签到")
+        let checkInBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 3 - settingsBtn.bounds.width * 3, y: UIScreen.main.bounds.height - 90, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Achievements-btn"), actionTitle: "签到")
         view.addSubview(checkInBtn)
         checkInBtn.addBtnClickAction(target: self, action: #selector(showCheckInDialog))
         
         /// 礼物按钮
-        let giftBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 4 - settingsBtn.bounds.width * 4, y: UIScreen.main.bounds.height - 80, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Leaderboard-btn"), actionTitle: "奖品")
+        let giftBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 4 - settingsBtn.bounds.width * 4, y: UIScreen.main.bounds.height - 90, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Leaderboard-btn"), actionTitle: "奖品")
         view.addSubview(giftBtn)
         giftBtn.addBtnClickAction(target: self, action: #selector(showMyGift))
         
         /// 购买钻石按钮
-        payGemBtn = MainFloatMenu(frame: CGRect(x: 10, y: UIScreen.main.bounds.height - 80, width: settingImage.bounds.width, height: 80), image: UIImage(named: "Plus-btn"), actionTitle: "0")
+        payGemBtn = MainFloatMenu(frame: CGRect(x: 10, y: UIScreen.main.bounds.height - 90, width: settingImage.bounds.width, height: 90), image: UIImage(named: "Plus-btn"), actionTitle: "0")
         view.addSubview(payGemBtn)
 //        payGemBtn.isHidden = true
+        
+        let infoDictionary = Bundle.main.infoDictionary!
+        versionLabel = UILabel()
+        versionLabel.font = UIFont.systemFont(ofSize: 12)
+        versionLabel.textColor = UIColor.lightGray
+        versionLabel.text = "V " + (infoDictionary["CFBundleShortVersionString"] as? String)!
+        versionLabel.sizeToFit()
+        versionLabel.frame = CGRect(x: UIScreen.main.bounds.width - versionLabel.bounds.width, y: UIScreen.main.bounds.height - versionLabel.bounds.height, width: versionLabel.bounds.width, height: versionLabel.bounds.height)
+        view.addSubview(versionLabel)
         
         payGemBtn.addBtnClickAction(target: self, action: #selector(showPayDialog))
         

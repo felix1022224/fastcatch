@@ -69,12 +69,17 @@ class ShowOffRecordDialog: BaseDialog {
     }
 
     func shared() -> () {
+        if WeChatShared.isInstall() == false {
+            ToastUtils.showErrorToast(msg: "暂时无法分享")
+            return
+        }
         ToastUtils.showLoadingToast(msg: "请稍后……")
         getDataFromUrl(url: URL(string: "http://meizhe.meidaojia.com/makeup/public/images/doll/" + deviceId + ".jpg")!) { (data, response, error) in
             if error == nil {
                 WeChatShared.shareImage(data!, thumbImage: UIImage(named: "shared_logo"), title: "抓中啦", description: "抓到了", to: .Timeline, resuleHandle: { (isSuccess, info) in
                     if isSuccess {
                         ToastUtils.showSuccessToast(msg: "分享成功")
+                        self.hide()
                     }else{
                         ToastUtils.showErrorToast(msg: " 分享失败")
                     }

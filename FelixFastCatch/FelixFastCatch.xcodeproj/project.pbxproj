@@ -41,6 +41,7 @@
 		4D2EC3D71F5005380008F96E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2EC3D61F5005380008F96E /* StoreKit.framework */; };
 		4D4ACE751F51CA0D0011E7F7 /* ProductinfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4ACE741F51CA0D0011E7F7 /* ProductinfoDialog.swift */; };
 		4D4ACE771F51CE410011E7F7 /* GemLackDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4ACE761F51CE410011E7F7 /* GemLackDialog.swift */; };
+		4D4B25D81F5FA64900338CBD /* SharedViewDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B25D71F5FA64900338CBD /* SharedViewDialog.swift */; };
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
 		4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D56251C1F2605A700515C98 /* Assets.xcassets */; };
 		4D589C741F386EB500C8DBC7 /* CheckIn7DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */; };
@@ -139,6 +140,7 @@
 		4D2EC3D61F5005380008F96E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		4D4ACE741F51CA0D0011E7F7 /* ProductinfoDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductinfoDialog.swift; sourceTree = "<group>"; };
 		4D4ACE761F51CE410011E7F7 /* GemLackDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GemLackDialog.swift; sourceTree = "<group>"; };
+		4D4B25D71F5FA64900338CBD /* SharedViewDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SharedViewDialog.swift; path = FelixFastCatch/Classes/Controller/Main/SharedViewDialog.swift; sourceTree = SOURCE_ROOT; };
 		4D5625121F2605A700515C98 /* FelixFastCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FelixFastCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5625151F2605A700515C98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D56251C1F2605A700515C98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -573,6 +575,7 @@
 		4DE204111F39B42C0046B130 /* Shard */ = {
 			isa = PBXGroup;
 			children = (
+				4D4B25D71F5FA64900338CBD /* SharedViewDialog.swift */,
 			);
 			path = Shard;
 			sourceTree = "<group>";
@@ -781,6 +784,7 @@
 				4DCD39E91F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedCell.swift in Sources */,
 				4D2B80161F40263F0075D390 /* ShowOffRecordDialog.swift in Sources */,
 				4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */,
+				4D4B25D81F5FA64900338CBD /* SharedViewDialog.swift in Sources */,
 				4DAD03341F51777200D7E72F /* WebViewController.swift in Sources */,
 				4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */,
 				4D1D861D1F333299005210CA /* HideView.swift in Sources */,

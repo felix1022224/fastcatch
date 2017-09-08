@@ -98,6 +98,13 @@ class EditInviteCode: BaseDialog {
     }
     
     func useInviteCode() -> () {
+        if editInviteCodeTextFiled.text == Constants.User.USER_TAG {
+            self.errorLabel.isHidden = false
+            return
+        }
+        
+        endEditing(true)
+        
         ToastUtils.showLoadingToast(msg: "正在请求数据")
         
         var params = NetWorkUtils.createBaseParams()
@@ -140,6 +147,10 @@ class EditInviteCode: BaseDialog {
         hide()
         inviteSuccessDialog.createView()
         inviteSuccessDialog.show()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        endEditing(true)
     }
 
 }

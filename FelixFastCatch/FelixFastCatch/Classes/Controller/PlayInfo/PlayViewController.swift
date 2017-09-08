@@ -406,6 +406,14 @@ extension PlayViewController{
             make.left.equalTo(helpBtn)
         }
         
+        if UserDefaults.standard.bool(forKey: Constants.User.USER_AUDIO_SETTING) == false {
+            isCloseMusic = false
+            audioBtn.setImage(UIImage(named: "icon_audio"), for: .normal)
+        }else{
+            isCloseMusic = true
+            audioBtn.setImage(UIImage(named: "audio_close"), for: .normal)
+        }
+        
         lensBtn.setImage(UIImage(named: "icon_lens"), for: .normal)
         lensBtn.sizeToFit()
         view.addSubview(lensBtn)
@@ -446,10 +454,12 @@ extension PlayViewController{
             bgMusicPlayer.play()
             isCloseMusic = false
             audioBtn.setImage(UIImage(named: "icon_audio"), for: .normal)
+            UserDefaults.standard.set(false, forKey: Constants.User.USER_AUDIO_SETTING)
         }else{
             bgMusicPlayer.pause()
             isCloseMusic = true
             audioBtn.setImage(UIImage(named: "audio_close"), for: .normal)
+            UserDefaults.standard.set(true, forKey: Constants.User.USER_AUDIO_SETTING)
         }
     }
     
@@ -546,11 +556,9 @@ extension PlayViewController{
         out(deviceId: deviceId)
         self.navigationController?.popViewController(animated: true)
         ToastUtils.hide()
-        if isGameWinner {
-            if self.playSuccess != nil {
-                self.playSuccess!(self.deviceId)
-            }
-        }
+//        if isGameWinner {
+//            
+//        }
     }
 }
 
@@ -561,7 +569,7 @@ extension PlayViewController{
     /// 创建video 的view
     func createVideo() -> () {
         videoView.backgroundColor = UIColor.white
-        videoView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height * 0.5  + UIApplication.shared.statusBarFrame.height * 2)
+        videoView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height * 0.5 + UIApplication.shared.statusBarFrame.height)
         view.addSubview(videoView)
         
         agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: "a61c87d429a748cfbdae28178e082289", delegate: self)
@@ -906,7 +914,7 @@ extension PlayViewController{
         backgroundImage.frame.size = CGSize(width: self.view.bounds.width, height: self.view.bounds.height - topHeight)
         playGroupView.addSubview(backgroundImage)
         
-        let controllerSize = 50
+        let controllerSize = UIScreen.main.bounds.width * 0.12
         
         /// 上
         controllerUp = CustomerControllerButton(frame: CGRect.zero, controllerDown: { [weak self] (button)  in
@@ -925,12 +933,7 @@ extension PlayViewController{
 //        controllerUp.addTarget(self, action: #selector(controllerPathDown(sender:)), for: .)
 //        controllerUp.addTarget(self, action: #selector(controllerPathUp(sender:)), for: .touchUpOutside)
         
-        controllerUp.snp.makeConstraints { (make) in
-            make.width.equalTo(controllerSize)
-            make.height.equalTo(controllerSize)
-            make.left.equalTo(self.view).offset(20 + controllerSize)
-            make.top.equalTo(playGroupView).offset(30)
-        }
+        
         
         /// 左
         controllerLeft = CustomerControllerButton(frame: CGRect.zero, controllerDown: {[weak self] (button) in
@@ -950,7 +953,7 @@ extension PlayViewController{
             make.width.equalTo(controllerSize)
             make.height.equalTo(controllerSize)
             make.right.equalTo(controllerUp).offset(-(controllerSize))
-            make.top.equalTo(controllerUp).offset(controllerSize + 5)
+            make.centerY.equalTo(playGroupView)
         }
         
 //        controllerLeft.addTarget(self, action: #selector(controllerPathDown(sender:)), for: .touchUpInside)
@@ -974,7 +977,7 @@ extension PlayViewController{
             make.width.equalTo(controllerSize)
             make.height.equalTo(controllerSize)
             make.left.equalTo(controllerUp).offset(controllerSize)
-            make.centerY.equalTo(controllerLeft)
+            make.centerY.equalTo(playGroupView)
         }
         
         controllerRight.addTarget(self, action: #selector(controllerPathDown(sender:)), for: .touchUpInside)
@@ -994,11 +997,18 @@ extension PlayViewController{
         controllerDown.sizeToFit()
         playGroupView.addSubview(controllerDown)
         
+        controllerUp.snp.makeConstraints { (make) in
+            make.width.equalTo(controllerSize)
+            make.height.equalTo(controllerSize)
+            make.left.equalTo(self.view).offset(20 + controllerSize)
+            make.bottom.equalTo(controllerLeft).offset(-controllerSize)
+        }
+        
         controllerDown.snp.makeConstraints { (make) in
             make.width.equalTo(controllerSize)
             make.height.equalTo(controllerSize)
             make.centerX.equalTo(controllerUp)
-            make.top.equalTo(controllerLeft).offset(controllerSize + 5)
+            make.top.equalTo(controllerLeft).offset(controllerSize)
         }
         
         controllerDown.addTarget(self, action: #selector(controllerPathDown(sender:)), for: .touchUpInside)
@@ -1012,20 +1022,21 @@ extension PlayViewController{
         playGroupView.addSubview(grabBtn)
         
         grabBtn.snp.makeConstraints { (make) in
-            make.width.equalTo(86)
-            make.height.equalTo(86)
-            make.centerY.equalTo(controllerRight)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.21)
+            make.height.equalTo(UIScreen.main.bounds.width * 0.21)
+            make.centerY.equalTo(playGroupView)
             make.right.equalTo(self.view).offset(-20)
         }
         
         grabBtn.addTarget(self, action: #selector(controllerGrap), for: .touchUpInside)
         
+        print("size:\( UIScreen.main.bounds.width)")
         
         /// 倒计时
         playTime.outLineWidth = 1
         playTime.outTextColor = UIColor.white
         playTime.outLienTextColor = UIColor.gray
-        playTime.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(20))
+        playTime.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(18))
         playTime.text = "0:30"
         playTime.sizeToFit()
         playTime.textAlignment = .center
@@ -1033,7 +1044,7 @@ extension PlayViewController{
         
         playTime.snp.makeConstraints { (make) in
             make.centerX.equalTo(grabBtn)
-            make.top.equalTo(grabBtn).offset(86 + 5)
+            make.top.equalTo(grabBtn).offset(UIScreen.main.bounds.width * 0.21 + 2.5)
             make.width.equalTo(100)
         }
         
@@ -1046,12 +1057,12 @@ extension PlayViewController{
         playGroupView.isHidden = false
         isGrab = false
         
+        resetReplayInfo()
+        
         isGameing = true
         
         startPlayBtn.isEnabled = false
         disableControllerBtns(isEnbled: true)
-        
-        resetReplayInfo()
         
         lensBtn.isHidden = false
         
@@ -1291,9 +1302,9 @@ extension PlayViewController{
         if getWardCodeNumber >= 5 {
             getWardCodeNumber = 0
             wardCode = ""
-            playResultDialog.isSuccess = false
-            playResultDialog.createView()
-            playResultDialog.show()
+//            playResultDialog.isSuccess = false
+//            playResultDialog.createView()
+//            playResultDialog.show()
             self.playGrapFail()
             hidePlayGroup()
             /// 展示再来一局的界面
@@ -1311,14 +1322,17 @@ extension PlayViewController{
                     self.getWardCodeNumber = 0
                     print("抓取成功")
                     self.wardCode = ""
-                    self.playResultDialog.isSuccess = true
-                    self.playResultDialog.createView()
-                    self.playResultDialog.show()
+//                    self.playResultDialog.isSuccess = true
+//                    self.playResultDialog.createView()
+//                    self.playResultDialog.show()
                     self.playGrapSuccess()
                     self.hidePlayGroup()
                     /// 展示再来一局的界面
                     self.showRePlayInfo()
-                    self.isGameWinner = true
+//                    self.isGameWinner = true
+                    if self.playSuccess != nil {
+                        self.playSuccess!(self.deviceId)
+                    }
                 }else {
                     print("抓取失败")
                     self.getWardCodeNumber = self.getWardCodeNumber + 1
@@ -1411,6 +1425,8 @@ extension PlayViewController{
         rePlayGameTimeLabel.isHidden = false
         /// 开始倒计时
         reStartCreateTime()
+        
+        isGameing = false
     }
     
     // 隐藏再玩一次的界面
@@ -1449,13 +1465,14 @@ extension PlayViewController{
         bgMusicPlayer.numberOfLoops = -1
         //准备播放音乐
         bgMusicPlayer.prepareToPlay()
-        //播放音乐
-        bgMusicPlayer.play()
+        
+        if !isCloseMusic {
+            //播放音乐
+            bgMusicPlayer.play()
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(pauseSong(notification:)), name:NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(playSong(notification:)), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-        
-        isCloseMusic = false
     }
     
     func pauseSong(notification : NSNotification) {
@@ -1612,7 +1629,7 @@ extension PlayViewController{
         bottomGroupView = UIView(frame: CGRect(x: 0, y: topHeight, width: self.view.bounds.width, height: self.view.bounds.height - topHeight))
         view.addSubview(bottomGroupView)
         
-        let cardWidth = (bottomGroupView.bounds.width - 15*2 - 20)/2
+        let cardWidth = (bottomGroupView.bounds.width - 20*2 - 20)/2.1
         
         ///奖品card
         bottomAwardCard = UIView()

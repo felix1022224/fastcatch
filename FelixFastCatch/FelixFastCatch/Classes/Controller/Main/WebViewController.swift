@@ -79,13 +79,12 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     }
     
     func shared() -> () {
-        WeChatShared.shareURL(link, title: actionTitle, description: actionTitle, thumbImg: UIImage(named: "shared_logo"), to: LDWechatScene.Timeline) { (isSuccess, info) in
-            if isSuccess {
-                ToastUtils.showSuccessToast(msg: "分享成功")
-            }else{
-                ToastUtils.showErrorToast(msg: "分享失败")
-            }
-        }
+        
+        let sharedView = SharedViewDialog(frame: UIScreen.main.bounds)
+        sharedView.createView()
+        sharedView.scheme = link
+        sharedView.show()
+      
     }
     
     override func didReceiveMemoryWarning() {

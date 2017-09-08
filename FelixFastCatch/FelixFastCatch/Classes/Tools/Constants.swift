@@ -192,6 +192,9 @@ class Constants: NSObject {
         
         /// 地址ID
         static var addressId = ""
+        
+        /// 音频开关设置
+        static let USER_AUDIO_SETTING = "userAudioSetting"
     }
     
     ///是否显示了login界面

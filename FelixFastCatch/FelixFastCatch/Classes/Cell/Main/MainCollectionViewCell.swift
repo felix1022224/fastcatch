@@ -129,7 +129,7 @@ extension MainCollectionViewCell{
             make.top.equalTo(bottomGroup).offset(4)
             make.left.equalTo(bottomGroup).offset(2)
             make.right.equalTo(bottomGroup).offset(-2)
-            make.bottom.equalTo(playBtn).offset(-(playBtn.bounds.height + 2))
+//            make.bottom.equalTo(playBtn).offset(-(playBtn.bounds.height + 2))
         }
     }
     
