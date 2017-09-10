@@ -327,13 +327,13 @@ extension MyGiftDialog{
                 }
                 self.tobeMailedDelegate.dataSource += json["data"]["content"].array!
                 
-                for i in 0...self.tobeMailedDelegate.dataSource.count-1 {
-                    self.tobeMailedDelegate.selectList[i] = true
+                if self.tobeMailedDelegate.dataSource.count > 0 {
+                    for i in 0...self.tobeMailedDelegate.dataSource.count-1 {
+                        self.tobeMailedDelegate.selectList[i] = true
+                    }
                 }
                 
                 self.tobeMailedTabView.reloadData()
-                
-                
                 
                 self.showTobeMailedNoValue()
                 

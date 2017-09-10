@@ -86,7 +86,6 @@ class SharedViewDialog: BaseDialog {
         super.hide()
         rootView.removeFromSuperview()
         rootView = nil
-        self.removeFromSuperview()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

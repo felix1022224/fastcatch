@@ -294,6 +294,10 @@ class MainViewController: UIViewController{
         }
     }
     
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+    }
 }
 
 
@@ -330,7 +334,7 @@ extension MainViewController:UIScrollViewDelegate{
     ///
     /// - Returns: banner图的高度是整体view的高的20%
     func getBannerHeight() -> CGFloat {
-        return UIScreen.main.bounds.width * 0.4 - 1
+        return UIScreen.main.bounds.width * 0.45 - 1
     }
     
     //创建轮播图定时器
@@ -486,6 +490,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         dataList = UICollectionView(frame: CGRect(x: 0, y: bannerView.bounds.height, width: self.view.bounds.width, height: self.view.bounds.height - bannerView.bounds.height), collectionViewLayout: layout)
         dataList.backgroundColor = UIColor.clear
         
+        self.dataList.delegate = self
+        self.dataList.dataSource = self
+        
         view.addSubview(dataList)
         
         dataList.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: "CellId")
@@ -496,9 +503,11 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         header.lastUpdatedTimeLabel.isHidden = true // 隐藏时间
         //隐藏状态
         header.stateLabel.isHidden = true
-        dataList!.mj_header = header
+//        dataList!.mj_header = header
         
         getMainListData()
+        
+        getBannerList()
     }
     
     //顶部下拉刷新
@@ -507,7 +516,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         isRefresh = true
         getMainListData()
         //结束刷新
-        self.dataList!.mj_header.endRefreshing()
+//        self.dataList!.mj_header.endRefreshing()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -549,7 +558,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         if kind == UICollectionElementKindSectionFooter {
             footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "footer", for: indexPath)
-            loadMore()
+//            loadMore()
         }
         
         return footer
@@ -659,10 +668,10 @@ extension MainViewController{
         params["size"] = "10"
         params["page"] = String(page)
         
-        print("main_params:\(params)")
+//        print("main_params:\(params)")
         
         Alamofire.request(Constants.Network.MAIN_LIST, method: .post, parameters: params).responseJSON { (response) in
-            print("result:\(String(describing: response.result.value))")
+//            print("result:\(String(describing: response.result.value))")
             self.isLoadingMore = false
             if response.error == nil {
                 let jsonObject = JSON(response.data!)
@@ -677,8 +686,6 @@ extension MainViewController{
                 }
                 self.mainListData = self.mainListData + jsonObject["data"]["content"].arrayValue
 
-                self.dataList.delegate = self
-                self.dataList.dataSource = self
                 self.dataList.reloadData()
                 
                 // 如果数据不等于0 页码+1
@@ -700,10 +707,20 @@ extension MainViewController{
                 }
             }
             
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: { [weak self] in
+                self?.page = 0
+                self?.isRefresh = true
+                self?.getMainListData()
+            })
+            
             SVProgressHUD.dismiss()
         }
         
-        getBannerList()
+        if mainBannersData != nil && mainBannersData.count <= 0 {
+            getBannerList()
+        }
+        
+        getsUserInfo()
         
     }
     
@@ -821,7 +838,7 @@ extension MainViewController{
         }
         checkInDialog.createView()
         checkInDialog.initCheckIn7DayView()
-        checkInDialog.show()
+        checkInDialog.show2(mainViewController: self)
     }
     
     /// 显示购买的dialog
@@ -906,6 +923,7 @@ extension MainViewController{
     
     /// 来到首页的时候，读取用户信息
     func getsUserInfo() -> () {
+        print("userid:\(Constants.User.USER_ID)")
         if Constants.User.USER_ID == "" {
             return
         }

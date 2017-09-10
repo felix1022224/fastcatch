@@ -230,9 +230,11 @@ extension EditAddressDialog{
         params["name"] = userNameTextField.text
         params["phone"] = phoneNumberTextField.text
         
-        if Constants.User.addressId != "" {
+        if Constants.User.addressId != "0" {
             params["id"] = Constants.User.addressId
         }
+        
+        print("address-params:\(params)")
         
         Alamofire.request(Constants.Network.Gift.SAVE_USER_ADDRESS, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {

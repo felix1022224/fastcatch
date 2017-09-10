@@ -102,6 +102,13 @@ class CheckInDialog: BaseDialog {
         hide()
     }
 
+    fileprivate var mainVC:MainViewController!
+    
+    func show2(mainViewController:MainViewController) -> () {
+        mainVC = mainViewController
+        show()
+    }
+    
 }
 
 
@@ -244,6 +251,11 @@ extension CheckInDialog{
                 }else{
                     self?.initCheckIn7DayView()
                 }
+                
+                if self?.mainVC != nil {
+                    self?.mainVC.getsUserInfo()
+                }
+                
             }
         }
     }

@@ -70,7 +70,6 @@ class FastLoginDialog: BaseDialog {
             make.centerY.equalTo(backgroundImage).offset(CGFloat(btnSize)/1.5)
         }
         
-        
         // qq
         qqLoginBtn = UIButton(type: .custom)
         qqLoginBtn.setBackgroundImage(UIImage(named: "icon_qq"), for: .normal)
@@ -110,10 +109,10 @@ class FastLoginDialog: BaseDialog {
             wechatLoginBtn.isHidden = true
         }
         
-        /// 没有安装qq 隐藏qq登录按钮
-        if TencentShared.isQQInstall() == false {
-            qqLoginBtn.isHidden = true
-        }
+//        /// 没有安装qq 隐藏qq登录按钮
+//        if TencentShared.isQQInstall() == false {
+//            qqLoginBtn.isHidden = true
+//        }
         
         addDialogToWindow()
     }

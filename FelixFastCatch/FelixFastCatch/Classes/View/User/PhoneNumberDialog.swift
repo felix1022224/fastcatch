@@ -172,6 +172,13 @@ class PhoneNumberDialog: BaseDialog {
         addDialogToWindow()
     }
 
+    fileprivate var mainVC:MainViewController!
+    
+    func show2(mainViewController:MainViewController) -> () {
+        mainVC = mainViewController
+        show()
+    }
+    
     func showProtocolInfoDialog() -> () {
         protocolInfoDialog.createView()
         protocolInfoDialog.show()
@@ -256,6 +263,10 @@ extension PhoneNumberDialog{
                     LocalDataUtils.updateLocalUserData(resultData: resultJson, response)
                     ToastUtils.showSuccessToast(msg: "登录成功")
                     self.hide()
+                    
+                    if self.mainVC != nil {
+                        self.mainVC.getsUserInfo()
+                    }
                     
                     if resultJson["data"]["new"].boolValue {
                         self.showFirstLoginReward()

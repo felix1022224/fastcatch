@@ -18,10 +18,10 @@ class LocalDataUtils: NSObject {
     /// - Parameter resultData: 网络返回的用户数据
     class func updateLocalUserData(resultData:JSON, _ dataResponse:DataResponse<Any>?){
         
-        UserDefaults.standard.set(resultData["data"]["nick"].string!, forKey: Constants.User.USER_NICK_NAME_KEY)
-        UserDefaults.standard.set(String(resultData["data"]["uid"].int!), forKey: Constants.User.USER_ID_KEY)
-        UserDefaults.standard.set(resultData["data"]["avatar"].string, forKey: Constants.User.USER_FACE_IMAGE_KEY)
-        UserDefaults.standard.set(String(resultData["data"]["gender"].int!), forKey: Constants.User.USER_SEX_KEY)
+        UserDefaults.standard.set(resultData["data"]["nick"].stringValue, forKey: Constants.User.USER_NICK_NAME_KEY)
+        UserDefaults.standard.set(String(resultData["data"]["uid"].intValue), forKey: Constants.User.USER_ID_KEY)
+        UserDefaults.standard.set(resultData["data"]["avatar"].stringValue, forKey: Constants.User.USER_FACE_IMAGE_KEY)
+        UserDefaults.standard.set(String(resultData["data"]["gender"].intValue), forKey: Constants.User.USER_SEX_KEY)
         UserDefaults.standard.set(resultData["data"]["birthday"].stringValue, forKey: Constants.User.USER_BRITHDAY_KEY)
         UserDefaults.standard.set(resultData["data"]["tag"].stringValue, forKey: Constants.User.USER_TAG_KEY)
         
