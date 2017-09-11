@@ -80,6 +80,11 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     
     func shared() -> () {
         
+        if WeChatShared.isInstall() == false {
+            ToastUtils.showErrorToast(msg: "暂时无法分享")
+            return
+        }
+        
         let sharedView = SharedViewDialog(frame: UIScreen.main.bounds)
         sharedView.createView()
         sharedView.scheme = link
