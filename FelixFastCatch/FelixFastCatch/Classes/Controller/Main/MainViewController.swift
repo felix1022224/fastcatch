@@ -296,12 +296,6 @@ class MainViewController: UIViewController{
     
     }
     
-    override func removeFromParentViewController() {
-        timer.invalidate()
-        timer = nil
-        super.removeFromParentViewController()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         print("appear")
         //每次显示界面，调用一遍获取用户信息的接口
@@ -312,7 +306,6 @@ class MainViewController: UIViewController{
             }
         }
     }
-    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
@@ -342,10 +335,8 @@ extension MainViewController:UIScrollViewDelegate{
         view.addSubview(pageControl)
     }
     
-    
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width + 0.5)
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
         pageControl.currentPage = page
     }
     
@@ -369,7 +360,7 @@ extension MainViewController:UIScrollViewDelegate{
         timer =  Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.timerManager), userInfo: nil, repeats: true)
         
         //这句话实现多线程，如果你的ScrollView是作为TableView的headerView的话，在拖动tableView的时候让轮播图仍然能轮播就需要用到这句话
-        RunLoop.current.add(timer, forMode: RunLoopMode.commonModes)
+//        RunLoop.current.add(timer, forMode: RunLoopMode.commonModes)
         
         bannerView.touchBeganFunc = {[weak self] in
             self?.timer.invalidate()
@@ -396,6 +387,9 @@ extension MainViewController:UIScrollViewDelegate{
     }
     
     func setupImages() -> () {
+        
+        print("setupImages")
+        
         //循环增加图片到scrollview当中
         for i:Int in 0..<mainBannersData.count{
             let iv = UIImageView()
