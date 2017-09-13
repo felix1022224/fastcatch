@@ -341,6 +341,7 @@ extension MainViewController:UIScrollViewDelegate{
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print("touch:\(bannerViewIsTouch)")
         if bannerViewIsTouch {
             let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
             pageControl.currentPage = page
@@ -383,8 +384,8 @@ extension MainViewController:UIScrollViewDelegate{
         }
         
         bannerView.touchEndFunc = {[weak self] in
-            self?.creatTimer()
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
+                self?.creatTimer()
                 self?.bannerViewIsTouch = false
             })
         }
