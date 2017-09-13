@@ -15,15 +15,16 @@ class CustomerBannerView: UIScrollView {
     var touchEndFunc:(()->())? = nil
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("touchtouch")
         if touchBeganFunc != nil {
             touchBeganFunc!()
         }
     }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         if touchEndFunc != nil {
             touchEndFunc!()
         }
     }
-
+    
 }

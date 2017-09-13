@@ -95,9 +95,14 @@ class MainViewController: UIViewController{
     /// 是否正在加载主页的数据
     fileprivate var isLoadingMainData = false
     
+    /// banner的view是否触摸中
+    fileprivate var bannerViewIsTouch = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+//        view.safeAreaLayoutGuide
+        
         self.navigationController?.navigationBar.isHidden = true
         
         backgroundImage.image = UIImage(named: "main_background")
@@ -335,6 +340,13 @@ extension MainViewController:UIScrollViewDelegate{
         view.addSubview(pageControl)
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if bannerViewIsTouch {
+            let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+            pageControl.currentPage = page
+        }
+    }
+    
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
         pageControl.currentPage = page
@@ -360,15 +372,21 @@ extension MainViewController:UIScrollViewDelegate{
         timer =  Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.timerManager), userInfo: nil, repeats: true)
         
         //这句话实现多线程，如果你的ScrollView是作为TableView的headerView的话，在拖动tableView的时候让轮播图仍然能轮播就需要用到这句话
-//        RunLoop.current.add(timer, forMode: RunLoopMode.commonModes)
-        
+        RunLoop.current.add(timer, forMode: RunLoopMode.commonModes)
+        bannerView.delaysContentTouches = false
         bannerView.touchBeganFunc = {[weak self] in
-            self?.timer.invalidate()
-            self?.timer = nil
+            if self?.timer != nil {
+                self?.timer.invalidate()
+                self?.timer = nil
+            }
+            self?.bannerViewIsTouch = true
         }
         
         bannerView.touchEndFunc = {[weak self] in
             self?.creatTimer()
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
+                self?.bannerViewIsTouch = false
+            })
         }
         
     }
