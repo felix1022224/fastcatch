@@ -208,8 +208,7 @@ class PlayViewController: UIViewController {
         UIApplication.shared.isIdleTimerDisabled = false
 //        out(deviceId: deviceId)
         agoraKit.leaveChannel { (starts) in
-            // 离开
-            print("离开")
+            //离开直播间
         }
     }
     
@@ -282,7 +281,6 @@ class PlayViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        print("页面销毁")
         bgMusicPlayer.stop()
         wardCode = ""
         UIApplication.shared.isIdleTimerDisabled = false
@@ -745,16 +743,6 @@ extension PlayViewController{
 extension PlayViewController: AgoraRtcEngineDelegate {
     func rtcEngine(_ engine: AgoraRtcEngineKit!, firstRemoteVideoDecodedOfUid uid: UInt, size: CGSize, elapsed: Int) {
         // 初始化成功
-        print("成功\(uid)")
-//        if isLive {
-//            liveVideoIds.append(uid)
-//            /// 对当前镜头id进行赋值
-//            nowLiveVideoId = uid
-//        }else {
-//            /// 对当前的镜头id进行赋值
-//            nowDefaultVideoId = uid
-//            defaultVideoIds.append(uid)
-//        }
         if isLive {
             agoraKit.setupRemoteVideo(nil)
             let canvas = AgoraRtcVideoCanvas()
@@ -866,7 +854,6 @@ extension PlayViewController{
         if let queue = resultData["data"]["waitCtlCount"].int {
             queueNumber.text = String(queue) + "人等待"
         }
-        print("result:\(resultData)")
         gemLabel.text = String(Constants.User.diamondsCount)
     }
     
@@ -1030,8 +1017,6 @@ extension PlayViewController{
         
         grabBtn.addTarget(self, action: #selector(controllerGrap), for: .touchUpInside)
         
-        print("size:\( UIScreen.main.bounds.width)")
-        
         /// 倒计时
         playTime.outLineWidth = 1
         playTime.outTextColor = UIColor.white
@@ -1139,7 +1124,7 @@ extension PlayViewController{
         params["deviceid"] = deviceId
         
         Alamofire.request(Constants.Network.Machine.WAIT_QUEUE, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
-            print("result:\(String(describing: response.result.value)),error:\(String(describing: response.error))")
+            print("开始预约的回调:\(String(describing: response.result.value)),error:\(String(describing: response.error))")
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(data: response.data!)
                 if json["data"]["tryLock"].bool! == true {

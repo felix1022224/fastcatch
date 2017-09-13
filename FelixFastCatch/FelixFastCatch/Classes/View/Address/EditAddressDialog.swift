@@ -202,7 +202,6 @@ class EditAddressDialog: BaseDialog {
             offsetY = kbRect.origin.y - UIScreen.main.bounds.height + backgroundImage.bounds.height
         }
         
-        print("off:\(kbRect.origin.y) , \(offsetY), \(UIScreen.main.bounds.height)")
         UIView.animate(withDuration: 0.4) { [weak self] in
             self?.transform = CGAffineTransform(translationX: 0, y: offsetY)
         }
@@ -234,8 +233,6 @@ extension EditAddressDialog{
             params["id"] = Constants.User.addressId
         }
         
-        print("address-params:\(params)")
-        
         Alamofire.request(Constants.Network.Gift.SAVE_USER_ADDRESS, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 ToastUtils.showSuccessToast(msg: "修改成功")
@@ -257,7 +254,6 @@ extension EditAddressDialog{
                 
                 self.hide()
             }else{
-                print("reult:\(String(describing: response.result.value))")
                 ToastUtils.showErrorToast(msg: "保存失败!")
             }
         }

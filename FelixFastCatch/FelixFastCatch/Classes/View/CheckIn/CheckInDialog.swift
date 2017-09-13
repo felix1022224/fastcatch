@@ -197,10 +197,7 @@ extension CheckInDialog{
         check6DayView.setChecked(isChecked: false)
         check7DayView.setChecked(isChecked: false)
         
-        print("checked:\(Constants.User.checkDays)")
-        
         for i in 0..<Constants.User.checkDays {
-            print("i:\(i)")
             check7DayViews[i].setChecked(isChecked: true)
         }
         
@@ -239,7 +236,6 @@ extension CheckInDialog{
     
     func UserCheckIn() -> () {
         Alamofire.request(Constants.Network.User.USER_CHECKIN, method: .post, parameters: NetWorkUtils.createBaseParams(), encoding: URLEncoding.default, headers: nil).responseJSON { [weak self] (response) in
-            print("check:\(String(describing: response.result.value))")
             if NetWorkUtils.checkReponse(response: response) {
                 self?.checkInBtn.isEnabled = false
                 let json = JSON(response.result.value!)

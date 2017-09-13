@@ -20,5 +20,6 @@ pod 'SwiftyJSON'
 pod 'MJRefresh'
 pod 'AgoraRtcEngine_iOS'
 pod 'AlicloudFeedback', '~> 3.2.0'
+pod 'Socket.IO-Client-Swift', '~> 11.1.2' # Or latest version
 
 end

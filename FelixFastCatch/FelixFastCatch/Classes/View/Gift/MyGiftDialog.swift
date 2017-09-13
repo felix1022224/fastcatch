@@ -187,7 +187,6 @@ class MyGiftDialog: BaseDialog {
         mailedConfirmDialog.sendData = sendData
         
         mailedConfirmDialog.mailedSuccessCallback = { [weak self] in
-            print("重新加载数据")
             self?.getTobeMailedGiftList(isRefresh: true)
             self?.getMailedGiftList(isRefresh: true)
         }
@@ -318,7 +317,6 @@ extension MyGiftDialog{
         params["page"] = "0"
         
         Alamofire.request(Constants.Network.Gift.GET_TOBE_MAILED_GIFT_LIST, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
-            print("result:\(String(describing: response.result.value))")
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(response.result.value!)
                 if isRefresh {
@@ -370,7 +368,6 @@ extension MyGiftDialog{
         params["page"] = "0"
         
         Alamofire.request(Constants.Network.Gift.GET_MAILED_GIFT_LIST, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
-            print("result:\(String(describing: response.result.value))")
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(response.result.value!)
                 if isRefresh {

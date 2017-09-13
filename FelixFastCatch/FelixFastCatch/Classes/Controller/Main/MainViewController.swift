@@ -14,6 +14,7 @@ import Alamofire
 import SwiftyJSON
 import MJRefresh
 import StoreKit
+import SocketIO
 
 class MainViewController: UIViewController{
 
@@ -36,7 +37,7 @@ class MainViewController: UIViewController{
     fileprivate var timer:Timer!
     
     // banner数据
-    fileprivate var mainBannersData:[JSON]!
+    fileprivate var mainBannersData:[JSON] = [JSON]()
     
     // 首页列表的数据
     fileprivate lazy var mainListData:[JSON] = [JSON]()
@@ -89,6 +90,11 @@ class MainViewController: UIViewController{
     /// 版本号显示
     fileprivate var versionLabel:UILabel!
     
+    let socket = SocketIOClient(socketURL: URL(string: "http://192.168.0.186:8080")!, config: [.log(true), .compress])
+    
+    /// 是否正在加载主页的数据
+    fileprivate var isLoadingMainData = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -99,6 +105,19 @@ class MainViewController: UIViewController{
         view.addSubview(backgroundImage)
         
         setupUI()
+        
+//        socket.on(clientEvent: .connect) {data, ack in
+//            print("socket connected")
+//            self.socket.emit("chatevent", "12333")
+//        }
+//        
+//        socket.on(clientEvent: .disconnect) { (data, ack) in
+//            print("disconnect")
+//        }
+//        
+//        socket.reconnects = true
+//        
+//        socket.connect()
         
 //        let webVC = WebViewController()
 //        webVC.link = "http://www.baidu.com"
@@ -340,6 +359,8 @@ extension MainViewController:UIScrollViewDelegate{
     //创建轮播图定时器
     func creatTimer() {
         
+        print("createTime")
+        
         if timer != nil {
             timer.invalidate()
             timer = nil
@@ -375,10 +396,6 @@ extension MainViewController:UIScrollViewDelegate{
     }
     
     func setupImages() -> () {
-        if mainBannersData == nil {
-            return
-        }
-        
         //循环增加图片到scrollview当中
         for i:Int in 0..<mainBannersData.count{
             let iv = UIImageView()
@@ -446,12 +463,10 @@ extension MainViewController{
         Alamofire.request(Constants.Network.MAIN_BANNER_LIST, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { (response) in
             if response.error == nil {
                 print("bannerList:\(response.result.value!)")
-                if self.mainBannersData != nil {
-                    self.mainBannersData.removeAll()
-                }
+                self.mainBannersData.removeAll()
                 
                 let jsonObject = JSON(response.data!)
-                self.mainBannersData = jsonObject["data"].array
+                self.mainBannersData = jsonObject["data"].arrayValue
                 
                 self.setupImages()
                 
@@ -506,8 +521,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 //        dataList!.mj_header = header
         
         getMainListData()
-        
-        getBannerList()
     }
     
     //顶部下拉刷新
@@ -552,13 +565,11 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        print("kind\(indexPath.row)")
         
         var footer = UICollectionReusableView()
         
         if kind == UICollectionElementKindSectionFooter {
             footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "footer", for: indexPath)
-//            loadMore()
         }
         
         return footer
@@ -664,6 +675,11 @@ extension MainViewController{
     
     /// 获取首页的数据
     func getMainListData() -> () {
+        if isLoadingMainData {
+            return
+        }
+        isLoadingMainData = true
+        
         var params = NetWorkUtils.createBaseParams()
         params["size"] = "10"
         params["page"] = String(page)
@@ -710,13 +726,14 @@ extension MainViewController{
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: { [weak self] in
                 self?.page = 0
                 self?.isRefresh = true
+                self?.isLoadingMainData = false
                 self?.getMainListData()
             })
             
             SVProgressHUD.dismiss()
         }
         
-        if mainBannersData != nil && mainBannersData.count <= 0 {
+        if mainBannersData.count <= 0 {
             getBannerList()
         }
         
@@ -923,11 +940,9 @@ extension MainViewController{
     
     /// 来到首页的时候，读取用户信息
     func getsUserInfo() -> () {
-        print("userid:\(Constants.User.USER_ID)")
         if Constants.User.USER_ID == "" {
             return
         }
-        print("获取用户信息")
         UserTools.getUserInfo(callback: { [weak self] in
             if self?.payGemBtn != nil {
                 self?.payGemBtn.actionLabel.text = String(Constants.User.diamondsCount)

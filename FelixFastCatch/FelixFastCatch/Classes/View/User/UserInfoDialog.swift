@@ -180,7 +180,6 @@ class UserInfoDialog: BaseDialog {
         self.hide()
         
         Alamofire.request(Constants.Network.User.LOGOUT_URL, method: .post, parameters: NetWorkUtils.createBaseParams(), encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
-            print("result:\(response.result.value!)")
             if NetWorkUtils.checkReponse(response: response) {
                 /// 登出成功
 //                ToastUtils.hide()
@@ -195,9 +194,9 @@ class UserInfoDialog: BaseDialog {
         editUserInfoDialog.show2(action: { [weak self] (nick, sex, birthday) in
             self?.userNickName.text = "昵称:" + nick
             if sex == "0" {
-                self?.sexLabel.text = "性别:女"
-            }else {
                 self?.sexLabel.text = "性别:男"
+            }else {
+                self?.sexLabel.text = "性别:女"
             }
             let df = DateFormatter()
             df.dateFormat = "yyyy-MM-dd"

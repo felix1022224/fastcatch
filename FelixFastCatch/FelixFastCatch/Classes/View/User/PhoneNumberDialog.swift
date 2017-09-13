@@ -259,7 +259,6 @@ extension PhoneNumberDialog{
             if response.error == nil && response.data != nil {
                 let resultJson = JSON(data: response.data!)
                 if NetWorkUtils.checkReponse(response: response) {
-                    print("response:\(String(describing: resultJson))")
                     LocalDataUtils.updateLocalUserData(resultData: resultJson, response)
                     ToastUtils.showSuccessToast(msg: "登录成功")
                     self.hide()
@@ -275,7 +274,6 @@ extension PhoneNumberDialog{
                     self.fastLoginDialog.hide()
                     return
                 }
-                print("result:\(response.result.value!)")
                 let json = JSON(response.result.value!)
                 ToastUtils.showErrorToast(msg: "登录失败:\(json["msg"].stringValue)")
             }

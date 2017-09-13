@@ -150,9 +150,8 @@ class FastLoginDialog: BaseDialog {
         
         Alamofire.request(Constants.Network.User.WECHAT_LOGIN, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             let resultJson = JSON(data: response.data!)
-            print("result:\(resultJson)")
+            print("请求服务器微信登录回调:\(resultJson)")
             if NetWorkUtils.checkReponse(response: response) {
-                print("response:\(String(describing: response.response?.allHeaderFields))")
                 LocalDataUtils.updateLocalUserData(resultData: resultJson, response)
                 ToastUtils.showSuccessToast(msg: "登录成功")
                 if resultJson["data"]["new"].boolValue {
@@ -180,15 +179,11 @@ class FastLoginDialog: BaseDialog {
         }
         params["figureurl_qq_1"] = qqInfo["advatarStr"] as? String
         
-        print("params:\(params)")
-        
         Alamofire.request(Constants.Network.User.QQ_LOGIN, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             let resultJson = JSON(data: response.data!)
-            print("result:\(String(describing: response.result.value))")
+            print("请求服务器QQ登录回调:\(String(describing: response.result.value))")
             if NetWorkUtils.checkReponse(response: response) {
-                print("response:\(String(describing: response.response?.allHeaderFields))")
                 LocalDataUtils.updateLocalUserData(resultData: resultJson, response)
-//                ToastUtils.showSuccessToast(msg: "登录成功")
                 if resultJson["data"]["new"].boolValue {
                     self.showFirstLoginReward()
                 }

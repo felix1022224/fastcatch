@@ -112,7 +112,6 @@ class EditInviteCode: BaseDialog {
         
         Alamofire.request(Constants.Network.User.USER_INVITE, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
-                print("\(String(describing: response.result.value))")
                 let resultJson = JSON(data: response.data!)
                 if resultJson["data"]["errcode"].intValue == 0 {
                     self.errorLabel.isHidden = true

@@ -117,9 +117,6 @@ class LocalDataUtils: NSObject {
         }else {
             Constants.User.USER_TAG = userTag!
         }
-        
-        print("初始化完毕")
-        
     }
     
     

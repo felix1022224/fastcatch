@@ -148,7 +148,6 @@ extension PayListDialog:UITableViewDelegate, UITableViewDataSource{
     ///
     /// - Parameter sender: 按钮
     func payClick(sender:UIButton) -> () {
-        print("rp:\(sender.tag)")
         wechatPay(rp: sender.tag)
     }
     
@@ -257,8 +256,6 @@ extension PayListDialog{
                 ToastUtils.hide()
                 let json = JSON(data: response.data!)
                 WeChatShared.pay(to: "main", json["data"], resultHandle: { (result, identifier) in
-                    print("result:\(result)")
-                    print("indentifier:\(identifier)")
                     switch(result){
                         case .Success:
                             ToastUtils.showSuccessToast(msg: "支付成功")
@@ -294,6 +291,7 @@ extension PayListDialog{
     func getPayList() -> () {
         Alamofire.request(Constants.Network.GET_PAY_LIST, method: .post, parameters: NetWorkUtils.createBaseParams(), encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
+//                print("123131:\(response.result.value!)")
                 let json = JSON(data: response.data!)
                 /// 获取数据成功，重新加载数据
                 print("data\(json)")

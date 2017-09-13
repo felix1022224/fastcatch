@@ -13,6 +13,9 @@ PODS:
   - Kingfisher (3.12.2)
   - MJRefresh (3.1.12)
   - SnapKit (3.2.0)
+  - Socket.IO-Client-Swift (11.1.2):
+    - StarscreamSocketIO (~> 8.0.5)
+  - StarscreamSocketIO (8.0.5)
   - SVProgressHUD (2.1.2)
   - SwiftyJSON (3.1.4)
   - WechatOpenSDK (1.8.0)
@@ -24,6 +27,7 @@ DEPENDENCIES:
   - Kingfisher (~> 3.0)
   - MJRefresh
   - SnapKit (~> 3.2.0)
+  - Socket.IO-Client-Swift (~> 11.1.2)
   - SVProgressHUD
   - SwiftyJSON
   - WechatOpenSDK
@@ -38,10 +42,12 @@ SPEC CHECKSUMS:
   Kingfisher: 320626678acadfcf47008b3c6841cd882050737b
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  Socket.IO-Client-Swift: 2283d3d333cc6b24c4e7ba191a8a7907d35ac42b
+  StarscreamSocketIO: b56993332d3cd74885a7486e183ff0cd9541b3f3
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   WechatOpenSDK: 0ee07a8d492299d3e47372a33da5af26524a7576
 
-PODFILE CHECKSUM: 34a4c1072351fb27a01ee9d68f78057dd365a3ff
+PODFILE CHECKSUM: 911c28f4c869bcc4feff3cffb7e0d1c29d27d383
 
 COCOAPODS: 1.2.1

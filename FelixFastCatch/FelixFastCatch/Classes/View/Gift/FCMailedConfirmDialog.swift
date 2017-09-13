@@ -61,8 +61,6 @@ class FCMailedConfirmDialog: BaseDialog {
    
         editAddressDialog = EditAddressDialog(frame: UIScreen.main.bounds)
         
-        print("sendData:\(sendData)" + "addrss:\(Constants.User.addressId)")
-        
         contentImagesLine = sendData.count/4
         
         if contentImagesLine <= 0 {
@@ -367,8 +365,6 @@ extension FCMailedConfirmDialog{
         
         var params = NetWorkUtils.createBaseParams()
         params["id"] = ids
-        
-        print("params:\(Constants.Network.Gift.CREATE_POSTAGE + "?" + ids)")
         
         Alamofire.request(Constants.Network.Gift.CREATE_POSTAGE + "?" + ids, method: .get, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
