@@ -24,11 +24,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        // 延迟一秒钟
-//        sleep(1)
+        /// 友盟统计
+        UMAnalyticsConfig.sharedInstance().appKey = "59ba3e84c62dca5d7c00004e"
+        UMAnalyticsConfig.sharedInstance().channelId = "iOSDefault";
+        MobClick.start(withConfigure: UMAnalyticsConfig.sharedInstance())
         
         TencentShared.registeApp("101417288", appKey: "2cf4d8fd277a91f2ecd788611fa39755")
         WeChatShared.registeApp("wxb119161278966b95", appSecret: "2d54a9c60554787ea2a2d9c4f67eebb1")
+        
+        ///bugly
+        Bugly.start(withAppId: "38f8b7d158")
         
         /// 取得用户授权 显示通知（上方提示条/声音/badgeNumber）
         if #available(iOS 10.0, *) {
@@ -41,7 +46,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             application.registerUserNotificationSettings(settings)
         }
         
+        /// loading 的样式
         SVProgressHUD.setDefaultStyle(.dark)
+        
+        /// 友盟推送
+        UMessage.start(withAppkey: "59ba3e84c62dca5d7c00004e", launchOptions: launchOptions, httpsEnable: true)
+        UMessage.registerForRemoteNotifications()
+        UMessage.setLogEnabled(true)
         
         window = UIWindow()
         let vc = MainViewController()
@@ -70,6 +81,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
         
         return true
+    }
+
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("notification:\(error)")
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        UMessage.registerDeviceToken(deviceToken)
+        print("deviceToken:\(deviceToken)")
+    }
+    
+    func setupPush() -> () {
+        if #available(iOS 10.0, *) {
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options: UNAuthorizationOptions(rawValue : UNAuthorizationOptions.alert.rawValue | UNAuthorizationOptions.badge.rawValue | UNAuthorizationOptions.sound.rawValue)){ (granted: Bool, error:Error?) in
+                if granted {
+                    print("success")
+                }
+            }
+            UIApplication.shared.registerForRemoteNotifications()
+        }else if #available(iOS 8.0, *) {
+            // 请求授权
+            let type = UIUserNotificationType.alert.rawValue | UIUserNotificationType.badge.rawValue | UIUserNotificationType.sound.rawValue
+            let set = UIUserNotificationSettings(types: UIUserNotificationType(rawValue: type), categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(set)
+            // 需要通过设备UDID, 和app bundle id, 发送请求, 获取deviceToken
+            UIApplication.shared.registerForRemoteNotifications()
+        }else {
+            let type = UIRemoteNotificationType(rawValue: UIRemoteNotificationType.alert.rawValue | UIRemoteNotificationType.sound.rawValue | UIRemoteNotificationType.badge.rawValue)
+            UIApplication.shared.registerForRemoteNotifications(matching: type)
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -126,6 +168,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    //iOS10以下使用这个方法接收通知
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
+        UMessage.setAutoAlert(true)
+        UMessage.didReceiveRemoteNotification(userInfo)
+    }
+    @available(iOS 10.0, *)
+    func userNotificationCenter(center: UNUserNotificationCenter, willPresentNotification notification: UNNotification, withCompletionHandler completionHandler: (UNNotificationPresentationOptions) -> Void){
+        let userInfo = notification.request.content.userInfo
+        if (notification.request.trigger?.isKind(of: UNPushNotificationTrigger.superclass()!))! {
+            //应用处于前台时的远程推送接受
+            //关闭友盟自带的弹出框
+            UMessage.setAutoAlert(true)
+            //必须加这句代码
+            UMessage.didReceiveRemoteNotification(userInfo)
+        }else{
+            //应用处于前台时的本地推送接受
+        }
+        //当应用处于前台时提示设置，需要哪个可以设置哪一个
+        completionHandler([.sound,.alert,.badge])
+    }
+    @available(iOS 10.0, *)
+    func userNotificationCenter(center: UNUserNotificationCenter, didReceiveNotificationResponse response: UNNotificationResponse, withCompletionHandler completionHandler: () -> Void){
+        let userInfo = response.notification.request.content.userInfo
+        if (response.notification.request.trigger?.isKind(of: UNPushNotificationTrigger.superclass()!))! {
+            //应用处于前台时的远程推送接受
+            //必须加这句代码
+            UMessage.setAutoAlert(true)
+            UMessage.didReceiveRemoteNotification(userInfo)
+        }else{
+            //应用处于前台时的本地推送接受
+        }
+    }
 
 }
 

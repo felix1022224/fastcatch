@@ -12,9 +12,10 @@ class Constants: NSObject {
     
     /// 网络
     struct Network {
+        
         static let BASE_URL = "http://101.201.68.47:9125/"
         
-//        static let BASE_URL = "http://192.168.1.103:9125/"
+//        static let BASE_URL = "http://192.168.0.254:9125/"
         
         /// 微信Pay支付接口
         static let WECHAT_PAY_URL =  BASE_URL +  "trade/wechatorder"
@@ -36,6 +37,12 @@ class Constants: NSObject {
         
         /// 获取支付列表
         static let GET_PAY_LIST = BASE_URL + "rp/list"
+        
+        /// 获取系统版本号
+        static let GET_SYS_INFO_VERSION = BASE_URL + "/app/config/version"
+        
+        /// 苹果内购服务器验证
+        static let APPLE_PAY_CHECK = BASE_URL + "trade/applePayOrder"
         
         /// 游戏房间相关
         struct Machine {
@@ -200,4 +207,6 @@ class Constants: NSObject {
     ///是否显示了login界面
     public static var isFastLoginShow = false
     
+    /// app当前版本号
+    public static var app_release_version = ""
 }

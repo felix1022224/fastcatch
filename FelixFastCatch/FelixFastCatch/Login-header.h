@@ -29,4 +29,13 @@
 #import <YWFeedbackFMWK/YWFeedbackKit.h>
 #import <YWFeedbackFMWK/YWFeedbackViewController.h>
 
+#import "UMMobClick/MobClick.h"
+
+//友盟推送
+#import "UMessage.h"
+#import <UserNotifications/UserNotifications.h>
+
+//bugly
+#import <Bugly/Bugly.h>
+
 #endif /* Login_header_h */

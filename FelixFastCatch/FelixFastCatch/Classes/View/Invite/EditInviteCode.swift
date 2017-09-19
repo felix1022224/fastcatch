@@ -110,16 +110,13 @@ class EditInviteCode: BaseDialog {
         var params = NetWorkUtils.createBaseParams()
         params["tag"] = editInviteCodeTextFiled.text
         
-        Alamofire.request(Constants.Network.User.USER_INVITE, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.User.USER_INVITE, method: .post, parameters: params).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 let resultJson = JSON(data: response.data!)
                 if resultJson["data"]["errcode"].intValue == 0 {
                     self.errorLabel.isHidden = true
                     self.showInviteSuccessDialog()
                     ToastUtils.hide()
-                    if self.mainvc != nil {
-                        self.mainvc.getsUserInfo()
-                    }
                     self.hide()
                 }else{
                     ToastUtils.showErrorToast(msg: resultJson["data"]["errmsg"].stringValue)

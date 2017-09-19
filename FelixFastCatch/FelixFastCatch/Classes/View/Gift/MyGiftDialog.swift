@@ -316,7 +316,7 @@ extension MyGiftDialog{
         params["size"] = "150"
         params["page"] = "0"
         
-        Alamofire.request(Constants.Network.Gift.GET_TOBE_MAILED_GIFT_LIST, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.Gift.GET_TOBE_MAILED_GIFT_LIST, method: .post, parameters: params).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(response.result.value!)
                 if isRefresh {
@@ -367,7 +367,7 @@ extension MyGiftDialog{
         params["size"] = "150"
         params["page"] = "0"
         
-        Alamofire.request(Constants.Network.Gift.GET_MAILED_GIFT_LIST, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.Gift.GET_MAILED_GIFT_LIST, method: .post, parameters: params).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(response.result.value!)
                 if isRefresh {

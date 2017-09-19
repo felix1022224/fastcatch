@@ -837,7 +837,7 @@ extension PlayViewController{
         var params = NetWorkUtils.createBaseParams()
         params["deviceid"] = deviceId
         
-        Alamofire.request(Constants.Network.Machine.ENTER_WATCH, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.Machine.ENTER_WATCH, method: .post, parameters: params).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(data: response.data!)
                 self.setupInfo(resultData:json)
@@ -1091,7 +1091,7 @@ extension PlayViewController{
         var params = NetWorkUtils.createBaseParams()
         params["deviceid"] = deviceId
         
-        Alamofire.request(Constants.Network.Machine.START_PLAY, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.Machine.START_PLAY, method: .post, parameters: params).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 print("开始游戏回调:\(String(describing: response.result.value))")
                 let json = JSON(response.result.value!)
@@ -1123,7 +1123,7 @@ extension PlayViewController{
         var params = NetWorkUtils.createBaseParams()
         params["deviceid"] = deviceId
         
-        Alamofire.request(Constants.Network.Machine.WAIT_QUEUE, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.Machine.WAIT_QUEUE, method: .post, parameters: params).responseJSON { (response) in
             print("开始预约的回调:\(String(describing: response.result.value)),error:\(String(describing: response.error))")
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(data: response.data!)
@@ -1242,7 +1242,7 @@ extension PlayViewController{
         params["direction"] = path
         params["status"] = status
         
-        Alamofire.request(Constants.Network.Machine.DIECTION_CONTROLLER, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.Machine.DIECTION_CONTROLLER, method: .post, parameters: params).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 print("result:\(String(describing: response.result.value))")
             }else {
@@ -1257,7 +1257,7 @@ extension PlayViewController{
         var params = NetWorkUtils.createBaseParams()
         params["deviceid"] = deviceId
         
-        Alamofire.request(Constants.Network.Machine.CONTROLLER_CATCH, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.Machine.CONTROLLER_CATCH, method: .post, parameters: params).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 print("下爪成功")
                 self.hidePlayGroup()
@@ -1300,7 +1300,7 @@ extension PlayViewController{
         var params = NetWorkUtils.createBaseParams()
         params["gtradeno"] = wardCode
         
-        Alamofire.request(Constants.Network.Machine.GET_WARD, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.Machine.GET_WARD, method: .post, parameters: params).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(response.result.value!)
                 if json["data"]["drawable"].bool! == true {

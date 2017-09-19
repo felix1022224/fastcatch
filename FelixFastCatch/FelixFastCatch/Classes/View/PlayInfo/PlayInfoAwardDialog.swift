@@ -67,8 +67,9 @@ class PlayInfoAwardDialog: BaseDialog {
         awardTitle.outTextColor = UIColor.white
         awardTitle.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         awardTitle.outLienTextColor = Constants.UI.OUT_LINE_COLOR
+        awardTitle.numberOfLines = 0
         awardTitle.sizeToFit()
-        awardTitle.frame = CGRect(x: 0, y: awardImage.bounds.height + 15, width: rootView.bounds.width, height: awardTitle.bounds.height)
+        awardTitle.frame = CGRect(x: 0, y: awardImage.bounds.height + 10, width: rootView.bounds.width, height: awardTitle.bounds.height)
         rootView.addSubview(awardTitle)
         
         awardDescription = MainCustomerLabel()
@@ -77,8 +78,9 @@ class PlayInfoAwardDialog: BaseDialog {
         awardDescription.outTextColor = UIColor.white
         awardDescription.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         awardDescription.outLienTextColor = Constants.UI.OUT_LINE_COLOR
+        awardDescription.numberOfLines = 0
         awardDescription.sizeToFit()
-        awardDescription.frame = CGRect(x: 0, y: awardImage.bounds.height + 15 + awardTitle.bounds.height + 15, width: rootView.bounds.width, height: awardTitle.bounds.height)
+        awardDescription.frame = CGRect(x: 0, y: awardImage.bounds.height + 10 + awardTitle.bounds.height + 5, width: rootView.bounds.width, height: awardTitle.bounds.height)
         rootView.addSubview(awardDescription)
         
         rootView.contentSize = CGSize(width: rootView.bounds.width, height: awardImage.bounds.height + 15 + awardTitle.bounds.height + 15 + awardDescription.bounds.height + 25)

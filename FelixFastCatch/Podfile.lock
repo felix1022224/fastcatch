@@ -10,6 +10,7 @@ PODS:
   - AlicloudUtils (1.2.2):
     - AlicloudUT
     - AlicloudUTDID
+  - Bugly (2.4.8)
   - Kingfisher (3.13.0)
   - MJRefresh (3.1.12)
   - SnapKit (3.2.0)
@@ -18,18 +19,21 @@ PODS:
   - StarscreamSocketIO (8.0.5)
   - SVProgressHUD (2.2)
   - SwiftyJSON (3.1.4)
+  - UMengAnalytics-NO-IDFA (4.2.5)
   - WechatOpenSDK (1.8.0)
 
 DEPENDENCIES:
   - AgoraRtcEngine_iOS
   - Alamofire (~> 4.4)
   - AlicloudFeedback (~> 3.2.0)
+  - Bugly
   - Kingfisher (~> 3.0)
   - MJRefresh
   - SnapKit (~> 3.2.0)
   - Socket.IO-Client-Swift (~> 11.1.2)
   - SVProgressHUD
   - SwiftyJSON
+  - UMengAnalytics-NO-IDFA
   - WechatOpenSDK
 
 SPEC CHECKSUMS:
@@ -39,6 +43,7 @@ SPEC CHECKSUMS:
   AlicloudUT: 9f20dcfd2753de09261b6c279245da1650a34932
   AlicloudUTDID: f5a7bc1420c5f83e3bd40296e5ab2e5a804a12f8
   AlicloudUtils: 2437ae7fd2b39343539e8f48aa1f7bf6f5a6cff1
+  Bugly: da3c02408c14838d498429320545a8e439392978
   Kingfisher: 7eebf6000ac64401839f10da37f21eefa7d88970
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
@@ -46,8 +51,9 @@ SPEC CHECKSUMS:
   StarscreamSocketIO: b56993332d3cd74885a7486e183ff0cd9541b3f3
   SVProgressHUD: 3f37f3409ddb15f35c99315ae7dc33c474aa3256
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  UMengAnalytics-NO-IDFA: 16666e32edce5be44ae5b14aaaa7f3582e09d6ab
   WechatOpenSDK: 0ee07a8d492299d3e47372a33da5af26524a7576
 
-PODFILE CHECKSUM: 911c28f4c869bcc4feff3cffb7e0d1c29d27d383
+PODFILE CHECKSUM: cd3e2fb1c0de99f289421f61832b9b213712f52f
 
 COCOAPODS: 1.2.1

@@ -41,6 +41,7 @@ class LocalDataUtils: NSObject {
                     HTTPCookieStorage.shared.setCookie(cookie)
                 }
             }
+            print("cookies:\(UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY))")
         }
         
         
@@ -54,8 +55,6 @@ class LocalDataUtils: NSObject {
         Constants.User.addressId = String(resultData["data"]["pav"]["id"].intValue)
         
         initUserInfo()
-        
-//        UserTools.getUserInfo()
     }
     
     class func initUserInfo() -> () {
@@ -69,6 +68,8 @@ class LocalDataUtils: NSObject {
                 }
             }
         }
+        
+        print("cookieArray:\(UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY))")
         
         // 用户昵称
         let userNickName = UserDefaults.standard.string(forKey: Constants.User.USER_NICK_NAME_KEY)

@@ -132,7 +132,7 @@ extension InviteListDialog{
         params["size"] = "100"
         params["page"] = "0"
         
-        Alamofire.request(Constants.Network.User.GET_INVITE_LIST, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.User.GET_INVITE_LIST, method: .post, parameters: params).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(data: response.data!)
                 self.dataSource = json["data"]["content"].arrayValue

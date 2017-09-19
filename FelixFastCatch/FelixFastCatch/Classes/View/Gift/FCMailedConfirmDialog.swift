@@ -366,7 +366,7 @@ extension FCMailedConfirmDialog{
         var params = NetWorkUtils.createBaseParams()
         params["id"] = ids
         
-        Alamofire.request(Constants.Network.Gift.CREATE_POSTAGE + "?" + ids, method: .get, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.Gift.CREATE_POSTAGE + "?" + ids, method: .get).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 ToastUtils.hide()
                 if self.mailedSuccessCallback != nil {

@@ -259,13 +259,10 @@ extension PhoneNumberDialog{
             if response.error == nil && response.data != nil {
                 let resultJson = JSON(data: response.data!)
                 if NetWorkUtils.checkReponse(response: response) {
+                    print("qqqqqq:\(response.response?.allHeaderFields as! [String: String] )")
                     LocalDataUtils.updateLocalUserData(resultData: resultJson, response)
                     ToastUtils.showSuccessToast(msg: "登录成功")
                     self.hide()
-                    
-                    if self.mainVC != nil {
-                        self.mainVC.getsUserInfo()
-                    }
                     
                     if resultJson["data"]["new"].boolValue {
                         self.showFirstLoginReward()

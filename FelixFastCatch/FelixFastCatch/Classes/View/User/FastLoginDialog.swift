@@ -148,7 +148,7 @@ class FastLoginDialog: BaseDialog {
         var params = NetWorkUtils.createBaseParams()
         params["code"] = wechatCode
         
-        Alamofire.request(Constants.Network.User.WECHAT_LOGIN, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.User.WECHAT_LOGIN, method: .post, parameters: params).responseJSON { (response) in
             let resultJson = JSON(data: response.data!)
             print("请求服务器微信登录回调:\(resultJson)")
             if NetWorkUtils.checkReponse(response: response) {
@@ -156,9 +156,6 @@ class FastLoginDialog: BaseDialog {
                 ToastUtils.showSuccessToast(msg: "登录成功")
                 if resultJson["data"]["new"].boolValue {
                     self.showFirstLoginReward()
-                }
-                if self.mainVC != nil {
-                    self.mainVC.getsUserInfo()
                 }
                 self.hide()
             }
@@ -179,16 +176,14 @@ class FastLoginDialog: BaseDialog {
         }
         params["figureurl_qq_1"] = qqInfo["advatarStr"] as? String
         
-        Alamofire.request(Constants.Network.User.QQ_LOGIN, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.User.QQ_LOGIN, method: .post, parameters: params).responseJSON { (response) in
             let resultJson = JSON(data: response.data!)
+            print("qqqqqq:\(response.response?.allHeaderFields as! [String: String] )")
             print("请求服务器QQ登录回调:\(String(describing: response.result.value))")
             if NetWorkUtils.checkReponse(response: response) {
                 LocalDataUtils.updateLocalUserData(resultData: resultJson, response)
                 if resultJson["data"]["new"].boolValue {
                     self.showFirstLoginReward()
-                }
-                if self.mainVC != nil {
-                    self.mainVC.getsUserInfo()
                 }
                 self.hide()
             }else {
@@ -218,9 +213,6 @@ class FastLoginDialog: BaseDialog {
     override func hide() {
         super.hide()
         Constants.isFastLoginShow = false
-        if mainVC != nil {
-            mainVC.getsUserInfo()
-        }
     }
     
 }

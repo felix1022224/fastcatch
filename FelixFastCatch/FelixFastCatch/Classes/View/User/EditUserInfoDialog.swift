@@ -278,7 +278,7 @@ class EditUserInfoDialog: BaseDialog {
         }
         params["birthday"] = brithdaySelectGroup.text
         
-        Alamofire.request(Constants.Network.User.UPDATE_USER_INFO, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.User.UPDATE_USER_INFO, method: .post, parameters: params).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 if self.callback != nil {
                     self.callback!(params["nick"]!, params["gender"]!, params["birthday"]!)

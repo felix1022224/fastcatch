@@ -33,6 +33,11 @@ THE SOFTWARE.
 
 Alibaba-INC copyright
 
+## Bugly
+
+Copyright 2017 tencent.com. All rights reserved.
+
+
 ## Kingfisher
 
 The MIT License (MIT)
@@ -554,6 +559,11 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+
+## UMengAnalytics-NO-IDFA
+
+Copyright 2011 - 2015 UMeng.com. All rights reserved.
 
 
 ## WechatOpenSDK

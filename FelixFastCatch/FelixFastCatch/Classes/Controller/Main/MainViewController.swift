@@ -341,7 +341,6 @@ extension MainViewController:UIScrollViewDelegate{
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("touch:\(bannerViewIsTouch)")
         if bannerViewIsTouch {
             let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
             pageControl.currentPage = page
@@ -561,15 +560,22 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell?.playBtn.tag = indexPath.row
         cell?.addPlayBtnClick(target: self, action: #selector(showPlay))
         
-        cell?.productImage.kf.setImage(with: URL(string: itemData["img"].stringValue), placeholder: UIImage(named: "main_no_value"), options: nil, progressBlock: nil, completionHandler: nil)
+//        cell?.productImage.kf.setImage(with: URL(string: itemData["img"].stringValue), placeholder: UIImage(named: "main_no_value"), options: nil, progressBlock: nil, completionHandler: nil)
+        cell?.productImage.kf.setImage(with: URL(string: itemData["img"].stringValue))
         
         cell?.titleLabel.text = itemData["award"]["title"].string!
         cell?.gemNumberLabel.text = String(itemData["perDiamondsCount"].int!)
         
-        if itemData["status"].intValue == 0 || itemData["status"].intValue == 1 {
+        if itemData["status"].intValue == 0 {
             cell?.hideErrorView()
+            cell?.hideGameingView()
+            cell?.playBtn.setImage(UIImage(named: "Easy"), for: .normal)
+        } else if itemData["status"].intValue == 1 {
+            cell?.hideErrorView()
+            cell?.showGameingView()
             cell?.playBtn.setImage(UIImage(named: "Easy"), for: .normal)
         }else{
+            cell?.hideGameingView()
             cell?.showErrorView()
             cell?.playBtn.setImage(UIImage(named: "维护"), for: .normal)
         }
@@ -694,7 +700,7 @@ extension MainViewController{
         isLoadingMainData = true
         
         var params = NetWorkUtils.createBaseParams()
-        params["size"] = "10"
+        params["size"] = "100"
         params["page"] = String(page)
         
 //        print("main_params:\(params)")
@@ -714,7 +720,6 @@ extension MainViewController{
                     self.isRefresh = false
                 }
                 self.mainListData = self.mainListData + jsonObject["data"]["content"].arrayValue
-
                 self.dataList.reloadData()
                 
                 // 如果数据不等于0 页码+1
@@ -734,6 +739,8 @@ extension MainViewController{
                     // 没有数据
                     self.setupNoValueView()
                 }
+                
+//                self.isLoadingMainData = false
             }
             
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: { [weak self] in
@@ -750,7 +757,9 @@ extension MainViewController{
             getBannerList()
         }
         
-        getsUserInfo()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) { [weak self] in
+            self?.getsUserInfo()
+        }
         
     }
     
@@ -804,15 +813,17 @@ extension MainViewController{
         let inviteBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 2 - settingsBtn.bounds.width * 2, y: UIScreen.main.bounds.height - 90, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Store-btn"), actionTitle: "邀请")
         view.addSubview(inviteBtn)
         
+        inviteBtn.isHidden = true
+        
         inviteBtn.addBtnClickAction(target: self, action: #selector(showInviteDialog))
         
         /// 签到
-        let checkInBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 3 - settingsBtn.bounds.width * 3, y: UIScreen.main.bounds.height - 90, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Achievements-btn"), actionTitle: "签到")
+        let checkInBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 2 - settingsBtn.bounds.width * 2, y: UIScreen.main.bounds.height - 90, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Achievements-btn"), actionTitle: "签到")
         view.addSubview(checkInBtn)
         checkInBtn.addBtnClickAction(target: self, action: #selector(showCheckInDialog))
         
         /// 礼物按钮
-        let giftBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 4 - settingsBtn.bounds.width * 4, y: UIScreen.main.bounds.height - 90, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Leaderboard-btn"), actionTitle: "奖品")
+        let giftBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 3 - settingsBtn.bounds.width * 3, y: UIScreen.main.bounds.height - 90, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Leaderboard-btn"), actionTitle: "奖品")
         view.addSubview(giftBtn)
         giftBtn.addBtnClickAction(target: self, action: #selector(showMyGift))
         
@@ -903,7 +914,7 @@ extension MainViewController{
         let testInfoIconImage = UIImageView(image: UIImage(named: "Info-icon"))
         
         
-        let settingsY = UIScreen.main.bounds.height - (80 - testImage.bounds.height) - 150 - 10
+        let settingsY = UIScreen.main.bounds.height - (80 - testImage.bounds.height) - 150 - 14
         let settingsWidth = testImage.bounds.width - 10
         
         settingsGroupView = UIView(frame: CGRect(x: self.view.bounds.width - testImage.bounds.width - 5, y: settingsY, width: settingsWidth, height: 150))

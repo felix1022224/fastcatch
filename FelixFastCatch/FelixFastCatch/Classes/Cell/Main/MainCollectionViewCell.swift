@@ -32,7 +32,13 @@ class MainCollectionViewCell: UICollectionViewCell{
     /// 异常的view
     var errorStatusView:UIView!
     
+    /// 游戏中的view
+    var gameingStatusView:UIView!
+    
     var errorImage:UIImageView!
+    
+    /// 游戏中的view
+    var gammingImage:UIImageView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -57,6 +63,7 @@ class MainCollectionViewCell: UICollectionViewCell{
         setupImage()
         createBottomGroup()
         createErrorView()
+        createGameingView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -73,7 +80,7 @@ extension MainCollectionViewCell{
     fileprivate func setupImage() -> () {
         productImage = UIImageView()
         productImage.frame = CGRect(x: 0, y: 0, width: rootView.bounds.width, height: rootView.bounds.height * 0.75)
-        productImage.backgroundColor = UIColor.lightGray
+//        productImage.backgroundColor = UIColor.lightGray
         productImage.frame = productImage.frame.insetBy(dx: CGFloat(4), dy: CGFloat(4))
         productImage.layer.cornerRadius = 5
         productImage.layer.masksToBounds = true
@@ -231,6 +238,54 @@ extension MainCollectionViewCell{
         errorStatusView.isHidden = true
         errorImage.isHidden = true
     }
+    
+    /// 创建游戏中的view
+    func createGameingView() -> () {
+        gameingStatusView = UIView()
+        gameingStatusView.frame.size = CGSize(width: self.rootView.bounds.width, height: 20)
+        gameingStatusView.backgroundColor = UIColor(red: 121/255.0, green: 207/255.0, blue: 50/255.0, alpha: 0.8)
+        
+        let gameingStatusLabel = MainCustomerLabel()
+        gameingStatusLabel.text = "正在游戏中"
+        gameingStatusLabel.outLineWidth = 1
+        gameingStatusLabel.outTextColor = UIColor.white
+        gameingStatusLabel.outLienTextColor = UIColor.yellow
+        gameingStatusLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
+        gameingStatusLabel.sizeToFit()
+        gameingStatusView.addSubview(gameingStatusLabel)
+        
+        let gameingRoundView = UIView()
+        gameingRoundView.frame.size = CGSize(width: gameingStatusView.bounds.width, height: gameingStatusView.bounds.height + 15)
+        gameingRoundView.frame = gameingRoundView.frame.insetBy(dx: CGFloat(4), dy: CGFloat(4))
+        gameingRoundView.layer.masksToBounds = true
+        gameingRoundView.layer.cornerRadius = 5
+        addSubview(gameingRoundView)
+        
+        gameingRoundView.addSubview(gameingStatusView)
+        
+        gameingStatusLabel.snp.makeConstraints { (make) in
+            make.center.equalTo(gameingStatusView)
+        }
+        
+        gammingImage = UIImageView(image: UIImage(named: "Star-icon"))
+        addSubview(gammingImage)
+        
+//        hideGameingView()
+    }
+    
+    /// 显示游戏中的view
+    func showGameingView() -> () {
+        gammingImage.isHidden = false
+        gameingStatusView.isHidden = false
+        hideErrorView()
+    }
+    
+    /// 隐藏游戏中的view
+    func hideGameingView() -> () {
+        gammingImage.isHidden = true
+        gameingStatusView.isHidden = true
+    }
+    
 }
 
 

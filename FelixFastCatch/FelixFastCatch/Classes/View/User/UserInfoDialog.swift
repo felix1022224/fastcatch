@@ -179,7 +179,7 @@ class UserInfoDialog: BaseDialog {
         LocalDataUtils.clearLoaclData()
         self.hide()
         
-        Alamofire.request(Constants.Network.User.LOGOUT_URL, method: .post, parameters: NetWorkUtils.createBaseParams(), encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.User.LOGOUT_URL, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 /// 登出成功
 //                ToastUtils.hide()

@@ -233,7 +233,7 @@ extension EditAddressDialog{
             params["id"] = Constants.User.addressId
         }
         
-        Alamofire.request(Constants.Network.Gift.SAVE_USER_ADDRESS, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.Gift.SAVE_USER_ADDRESS, method: .post, parameters: params).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 ToastUtils.showSuccessToast(msg: "修改成功")
                 

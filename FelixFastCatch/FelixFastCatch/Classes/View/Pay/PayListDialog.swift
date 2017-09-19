@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import StoreKit
 
 class PayListDialog: BaseDialog {
 
@@ -35,6 +36,9 @@ class PayListDialog: BaseDialog {
         
         backgroundImage.frame.size = CGSize(width: 290, height: 410)
         backgroundImage.center = self.center
+        
+//        SKPaymentQueue.default().restoreCompletedTransactions()
+        SKPaymentQueue.default().add(self)
         
         createCloseBtn()
         
@@ -111,6 +115,78 @@ class PayListDialog: BaseDialog {
         show()
     }
     
+    override func hide() {
+        super.hide()
+        SKPaymentQueue.default().remove(self)
+    }
+    
+}
+
+// MARK: - 内购支付
+extension PayListDialog: SKPaymentTransactionObserver {// 交易队列监听
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        for transaction in transactions {// 当交易队列里面添加的每一笔交易状态发生变化的时候调用
+            switch transaction.transactionState {
+            case .deferred:
+                print("延迟处理")
+            case .failed:
+                print("支付失败")
+                queue.finishTransaction(transaction)
+            case .purchased:
+                print("支付成功")
+                applePaySuccess(transactions: transaction)
+                queue.finishTransaction(transaction)
+            case .purchasing:
+                print("正在支付")
+            case .restored:
+                print("恢复购买")
+                queue.finishTransaction(transaction)
+            }
+        }
+    }
+}
+
+// MARK: - 内购的代理
+extension PayListDialog: SKProductsRequestDelegate {
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {// 当请求完毕之后, 从苹果服务器获取到数据之后调用
+        print(response.products)
+        print(response.invalidProductIdentifiers)
+        var prod: SKProduct?
+        for pro in response.products {
+            print("------------------")
+            print(pro.localizedDescription)
+            print(pro.localizedTitle)
+            print(pro.price)
+            print(pro.productIdentifier)
+            print("------------------")
+            prod = pro
+        }
+        // 发送购买请求
+        if let produ = prod {
+            let payment = SKPayment(product: produ)
+            SKPaymentQueue.default().add(payment)
+        }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+            ToastUtils.hide()
+        }
+    }
+    
+    /// 支付成功,去服务器校验
+    func applePaySuccess(transactions: SKPaymentTransaction) -> () {
+        let receiptUrl = Bundle.main.appStoreReceiptURL
+        let receiveData = NSData(contentsOf: receiptUrl!)
+        // 最好转成Base64，万一返回结果有特殊字符
+        let receiptString = receiveData?.base64EncodedString(options: NSData.Base64EncodingOptions.endLineWithLineFeed)
+        
+        var params = NetWorkUtils.createBaseParams()
+        params["productIdentifier"] = transactions.payment.productIdentifier
+        params["receipt"] = receiptString
+        params["transactionIdentifier"] = transactions.transactionIdentifier
+        
+        Alamofire.request(Constants.Network.APPLE_PAY_CHECK, method: .post, parameters: params).responseJSON { (response) in
+            print("reponse:\(response.result.value!)")
+        }
+    }
 }
 
 // MARK: - 列表的代理
@@ -148,7 +224,19 @@ extension PayListDialog:UITableViewDelegate, UITableViewDataSource{
     ///
     /// - Parameter sender: 按钮
     func payClick(sender:UIButton) -> () {
-        wechatPay(rp: sender.tag)
+        if wechatBtn.isSelected && WeChatShared.isInstall() {
+            wechatPay(rp: sender.tag)
+            return
+        }
+        /// 内购
+        if SKPaymentQueue.canMakePayments() {//判断当前的支付环境, 是否可以支付
+            ToastUtils.showLoadingToast(msg: "请稍后……")
+            let product = ["com.meidaojia.secondcatch." + String(sender.tag)]
+            let set = NSSet(array: product as [AnyObject])
+            let request = SKProductsRequest(productIdentifiers: set as! Set<String>)
+            request.delegate = self
+            request.start()
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -185,13 +273,14 @@ extension PayListDialog{
         wechatBtn.setBackgroundImage(UIImage(named: "微信选中"), for: .selected)
         addSubview(wechatBtn)
         
-        wechatBtn.isSelected = true
+        wechatBtn.isSelected = false
         wechatBtn.frame.size = CGSize(width: 36, height: 36)
         
         wechatBtn.tag = 101
         
         wechatBtn.snp.makeConstraints { (make) in
-            make.right.equalTo(aliPayBtn).offset(-(aliPayBtn.bounds.width + 18))
+            make.right.equalTo(backgroundImage).offset(-16)
+//            make.right.equalTo(aliPayBtn).offset(-(aliPayBtn.bounds.width + 18))
             make.centerY.equalTo(aliPayBtn)
         }
         
@@ -208,9 +297,14 @@ extension PayListDialog{
         
         exchangeCode.addTarget(self, action: #selector(showExchangeDialog), for: .touchUpInside)
         
+        exchangeCode.isHidden = true
+        
         aliPayBtn.isHidden = true
         wechatBtn.isHidden = true
         
+        wechatBtn.isSelected = false
+        
+        getAppReleaseVersion()
     }
     
     func showExchangeDialog() -> () {
@@ -230,7 +324,9 @@ extension PayListDialog{
         }else if sender.tag == 101 {
             /// 微信
             if !wechatBtn.isSelected {
-                switchPayBtn()
+                wechatBtn.isSelected = true
+            }else{
+                wechatBtn.isSelected = false
             }
         }
     }
@@ -247,11 +343,16 @@ extension PayListDialog{
     
     /// 微信支付
     func wechatPay(rp:Int) -> () {
+        if WeChatShared.isInstall() == false {
+            ToastUtils.showErrorToast(msg: "暂时无法支付")
+            return
+        }
+        
         ToastUtils.showLoadingToast(msg: "正在下单")
         var params = NetWorkUtils.createBaseParams()
         params["rp"] = String(rp)
         
-        Alamofire.request(Constants.Network.WECHAT_PAY_URL, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.WECHAT_PAY_URL, method: .post, parameters: params).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 ToastUtils.hide()
                 let json = JSON(data: response.data!)
@@ -259,9 +360,6 @@ extension PayListDialog{
                     switch(result){
                         case .Success:
                             ToastUtils.showSuccessToast(msg: "支付成功")
-                            if self.mainVC != nil {
-                                self.mainVC.getsUserInfo()
-                            }
                             if self.paySuccessCallback != nil {
                                 self.paySuccessCallback!()
                             }
@@ -289,9 +387,9 @@ extension PayListDialog{
 
     /// 获取支付的列表
     func getPayList() -> () {
-        Alamofire.request(Constants.Network.GET_PAY_LIST, method: .post, parameters: NetWorkUtils.createBaseParams(), encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(Constants.Network.GET_PAY_LIST, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { (response) in
+            print("reponse:\(response.result.value!)")
             if NetWorkUtils.checkReponse(response: response) {
-//                print("123131:\(response.result.value!)")
                 let json = JSON(data: response.data!)
                 /// 获取数据成功，重新加载数据
                 print("data\(json)")
@@ -299,6 +397,40 @@ extension PayListDialog{
                 self.payList.reloadData()
             }else{
                 ToastUtils.showErrorToast(msg: "获取套餐列表失败")
+            }
+        }
+    }
+}
+
+// MARK: - 获取当前APP STORE上的版本号
+extension PayListDialog{
+    
+    /// 获取版本号，来判断显不显示微信支付
+    func getAppReleaseVersion() -> () {
+        Alamofire.request(Constants.Network.GET_SYS_INFO_VERSION, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { (response) in
+            print("versionValue:\(response.result.value!)")
+            if NetWorkUtils.checkReponse(response: response) {
+                let json = JSON(data: response.data!)
+                let infoDictionary = Bundle.main.infoDictionary!
+                if let buildVersion = (infoDictionary["CFBundleVersion"] as? NSString)?.doubleValue {
+                    print("buildVersion:\(buildVersion)")
+                    if json["data"].doubleValue >= buildVersion {
+                        print("正式")
+                        self.wechatBtn.isSelected = true
+                        self.exchangeCode.isHidden = false
+                    }else{
+                        print("提审")
+                        self.wechatBtn.isSelected = false
+                        self.exchangeCode.isHidden = true
+                    }
+                }else {
+                    self.wechatBtn.isSelected = false
+                    self.exchangeCode.isHidden = true
+                }
+            }else{
+                /// 发生异常
+                self.wechatBtn.isSelected = false
+                self.exchangeCode.isHidden = true
             }
         }
     }

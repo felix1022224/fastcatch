@@ -235,7 +235,7 @@ extension CheckInDialog{
 extension CheckInDialog{
     
     func UserCheckIn() -> () {
-        Alamofire.request(Constants.Network.User.USER_CHECKIN, method: .post, parameters: NetWorkUtils.createBaseParams(), encoding: URLEncoding.default, headers: nil).responseJSON { [weak self] (response) in
+        Alamofire.request(Constants.Network.User.USER_CHECKIN, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { [weak self] (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 self?.checkInBtn.isEnabled = false
                 let json = JSON(response.result.value!)
@@ -248,9 +248,9 @@ extension CheckInDialog{
                     self?.initCheckIn7DayView()
                 }
                 
-                if self?.mainVC != nil {
-                    self?.mainVC.getsUserInfo()
-                }
+//                if self?.mainVC != nil {
+//                    self?.mainVC.getsUserInfo()
+//                }
                 
             }
         }
