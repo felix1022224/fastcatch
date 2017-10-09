@@ -38,7 +38,6 @@
 		4D2B80141F40097E0075D390 /* OutGameDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B80131F40097E0075D390 /* OutGameDialog.swift */; };
 		4D2B80161F40263F0075D390 /* ShowOffRecordDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B80151F40263F0075D390 /* ShowOffRecordDialog.swift */; };
 		4D2B801B1F4C07050075D390 /* SubmitSuccessDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B801A1F4C07050075D390 /* SubmitSuccessDialog.swift */; };
-		4D2EC3D71F5005380008F96E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2EC3D61F5005380008F96E /* StoreKit.framework */; };
 		4D38B2591F6A963E0019730A /* libUMessage_Sdk_1.5.0a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D38B2571F6A963E0019730A /* libUMessage_Sdk_1.5.0a.a */; };
 		4D4ACE751F51CA0D0011E7F7 /* ProductinfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4ACE741F51CA0D0011E7F7 /* ProductinfoDialog.swift */; };
 		4D4ACE771F51CE410011E7F7 /* GemLackDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4ACE761F51CE410011E7F7 /* GemLackDialog.swift */; };
@@ -62,6 +61,8 @@
 		4D82A4521F36C7AD007ADE5C /* UserTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D82A4511F36C7AD007ADE5C /* UserTools.swift */; };
 		4D82A4551F36D33B007ADE5C /* Skranji-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D82A4531F36D18F007ADE5C /* Skranji-Bold.ttf */; };
 		4D82A4591F3721BF007ADE5C /* Fangzhengyuan-cuti.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D82A4581F3721A2007ADE5C /* Fangzhengyuan-cuti.ttf */; };
+		4D879B671F7CABF6009F2ECC /* MainBeginnerGuidGiftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D879B661F7CABF6009F2ECC /* MainBeginnerGuidGiftView.swift */; };
+		4D879B691F7CAEE8009F2ECC /* MainBeginnerGuidPlaySwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D879B681F7CAEE8009F2ECC /* MainBeginnerGuidPlaySwitchView.swift */; };
 		4D96D3981F59824600E614CD /* Customized.YWFeedbackBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4D96D3971F59824600E614CD /* Customized.YWFeedbackBundle.bundle */; };
 		4D96D39D1F5BD7CE00E614CD /* InviteFirendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D96D39C1F5BD7CE00E614CD /* InviteFirendsCell.swift */; };
 		4D96D3BD1F5BDE2000E614CD /* HelpDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D96D3BC1F5BDE2000E614CD /* HelpDialog.swift */; };
@@ -98,6 +99,8 @@
 		4DCD39EA1F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedTabViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39E41F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedTabViewDelegate.swift */; };
 		4DCD39EB1F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39E51F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift */; };
 		4DCD39EC1F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39E61F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift */; };
+		4DD3A5001F7A07D8000B5F25 /* GameSceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD3A4FF1F7A07D8000B5F25 /* GameSceneController.swift */; };
+		4DD3A5041F7C9CFA000B5F25 /* MainBeginnerGuidPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD3A5031F7C9CFA000B5F25 /* MainBeginnerGuidPayView.swift */; };
 		4DDD2B7C1F283F3D00102A0F /* ToastUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B7B1F283F3D00102A0F /* ToastUtils.swift */; };
 		4DDD2B7F1F2848FC00102A0F /* MainCustomerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B7E1F2848FC00102A0F /* MainCustomerLabel.swift */; };
 		4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B811F2849DC00102A0F /* NetWorkUtils.swift */; };
@@ -167,6 +170,8 @@
 		4D82A4511F36C7AD007ADE5C /* UserTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTools.swift; sourceTree = "<group>"; };
 		4D82A4531F36D18F007ADE5C /* Skranji-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Skranji-Bold.ttf"; sourceTree = "<group>"; };
 		4D82A4581F3721A2007ADE5C /* Fangzhengyuan-cuti.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fangzhengyuan-cuti.ttf"; sourceTree = "<group>"; };
+		4D879B661F7CABF6009F2ECC /* MainBeginnerGuidGiftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBeginnerGuidGiftView.swift; sourceTree = "<group>"; };
+		4D879B681F7CAEE8009F2ECC /* MainBeginnerGuidPlaySwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBeginnerGuidPlaySwitchView.swift; sourceTree = "<group>"; };
 		4D96D3971F59824600E614CD /* Customized.YWFeedbackBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Customized.YWFeedbackBundle.bundle; sourceTree = "<group>"; };
 		4D96D39C1F5BD7CE00E614CD /* InviteFirendsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFirendsCell.swift; sourceTree = "<group>"; };
 		4D96D3BC1F5BDE2000E614CD /* HelpDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpDialog.swift; sourceTree = "<group>"; };
@@ -203,6 +208,8 @@
 		4DCD39E41F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedTabViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMyGiftHasBeenMailedTabViewDelegate.swift; sourceTree = "<group>"; };
 		4DCD39E51F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMyGiftHasBeenProductsDelegate.swift; sourceTree = "<group>"; };
 		4DCD39E61F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMyGiftToBeMailedTabViewDelegate.swift; sourceTree = "<group>"; };
+		4DD3A4FF1F7A07D8000B5F25 /* GameSceneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneController.swift; sourceTree = "<group>"; };
+		4DD3A5031F7C9CFA000B5F25 /* MainBeginnerGuidPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBeginnerGuidPayView.swift; sourceTree = "<group>"; };
 		4DD6C1571F6A81D900007EE6 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		4DDD2B7B1F283F3D00102A0F /* ToastUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastUtils.swift; sourceTree = "<group>"; };
 		4DDD2B7E1F2848FC00102A0F /* MainCustomerLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCustomerLabel.swift; sourceTree = "<group>"; };
@@ -220,7 +227,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DBDE8B61F6AB1F60058E4FE /* UserNotifications.framework in Frameworks */,
-				4D2EC3D71F5005380008F96E /* StoreKit.framework in Frameworks */,
 				4D2B800E1F3BFBF40075D390 /* libresolv.tbd in Frameworks */,
 				4D7FF4BC1F596FEC00396C00 /* AlipaySDK.framework in Frameworks */,
 				4DCD39D61F2F0DDE002B7F35 /* Foundation.framework in Frameworks */,
@@ -464,6 +470,7 @@
 			isa = PBXGroup;
 			children = (
 				4D64B8921F287FB9002A9BFD /* PlayViewController.swift */,
+				4DD3A4FF1F7A07D8000B5F25 /* GameSceneController.swift */,
 			);
 			path = PlayInfo;
 			sourceTree = "<group>";
@@ -474,6 +481,9 @@
 				4D2B80151F40263F0075D390 /* ShowOffRecordDialog.swift */,
 				4D2B80131F40097E0075D390 /* OutGameDialog.swift */,
 				4D96D3BC1F5BDE2000E614CD /* HelpDialog.swift */,
+				4DD3A5031F7C9CFA000B5F25 /* MainBeginnerGuidPayView.swift */,
+				4D879B661F7CABF6009F2ECC /* MainBeginnerGuidGiftView.swift */,
+				4D879B681F7CAEE8009F2ECC /* MainBeginnerGuidPlaySwitchView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -645,6 +655,7 @@
 					4D5625111F2605A700515C98 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = U7BV5BW6M7;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -749,6 +760,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DD3A5041F7C9CFA000B5F25 /* MainBeginnerGuidPayView.swift in Sources */,
 				4DCC49CC1F52E0110017D4A4 /* PlayInfoAwardDialog.swift in Sources */,
 				4D96D3BF1F5BE14200E614CD /* ProtocolInfoDialog.swift in Sources */,
 				4DCD39EB1F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift in Sources */,
@@ -770,6 +782,7 @@
 				4DCD39DB1F2F31C6002B7F35 /* PayItemTableViewCell.swift in Sources */,
 				4DAD03321F51629B00D7E72F /* CustomerBannerView.swift in Sources */,
 				4D1D861B1F32F78F005210CA /* SelectDateView.swift in Sources */,
+				4D879B671F7CABF6009F2ECC /* MainBeginnerGuidGiftView.swift in Sources */,
 				4D1D86151F31BA9C005210CA /* EditAddressDialog.swift in Sources */,
 				4D64B8981F29B549002A9BFD /* MainBanner.swift in Sources */,
 				4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */,
@@ -781,6 +794,7 @@
 				4D4ACE751F51CA0D0011E7F7 /* ProductinfoDialog.swift in Sources */,
 				4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */,
 				4D1D86131F306307005210CA /* TobeGiftModel.swift in Sources */,
+				4D879B691F7CAEE8009F2ECC /* MainBeginnerGuidPlaySwitchView.swift in Sources */,
 				4DCD39E11F2F4A2B002B7F35 /* MyGiftDialog.swift in Sources */,
 				4D82A4521F36C7AD007ADE5C /* UserTools.swift in Sources */,
 				4D1D86171F31D1FE005210CA /* EditUserInfoDialog.swift in Sources */,
@@ -804,6 +818,7 @@
 				4DCD39E91F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedCell.swift in Sources */,
 				4D2B80161F40263F0075D390 /* ShowOffRecordDialog.swift in Sources */,
 				4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */,
+				4DD3A5001F7A07D8000B5F25 /* GameSceneController.swift in Sources */,
 				4D4B25D81F5FA64900338CBD /* SharedViewDialog.swift in Sources */,
 				4DAD03341F51777200D7E72F /* WebViewController.swift in Sources */,
 				4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */,
@@ -958,7 +973,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/lufan/Developer/ios-git/FelixFastCatch/FelixFastCatch/Login-header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -998,7 +1014,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/lufan/Developer/ios-git/FelixFastCatch/FelixFastCatch/Login-header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

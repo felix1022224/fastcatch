@@ -191,7 +191,7 @@ class EditAddressDialog: BaseDialog {
         createView()
     }
     
-    func kbFrameChanged(_ notification : Notification){
+    @objc func kbFrameChanged(_ notification : Notification){
         let info = notification.userInfo
         let kbRect = (info?[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         var offsetY:CGFloat
@@ -217,7 +217,7 @@ class EditAddressDialog: BaseDialog {
 extension EditAddressDialog{
     
     /// 保存地址
-    func saveAddress() -> () {
+    @objc func saveAddress() -> () {
         if !checkAddressEdit() {
             return
         }
@@ -309,7 +309,6 @@ extension EditAddressDialog:UITextFieldDelegate{
             
             if (existedLength! - selectedLength + replaceLength >= 12) {
                 let endIndex = textField.text?.index((textField.text?.startIndex)!, offsetBy: 11)
-                
                 textField.text = textField.text?.substring(with: Range<String.Index>(uncheckedBounds: ((textField.text?.startIndex)!, endIndex!)))
                 return false
             }

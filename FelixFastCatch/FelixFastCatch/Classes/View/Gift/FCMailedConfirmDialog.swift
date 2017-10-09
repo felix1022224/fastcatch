@@ -128,7 +128,7 @@ class FCMailedConfirmDialog: BaseDialog {
         paraph.alignment = .left
         //样式属性集合
         let attributes = [
-                          NSParagraphStyleAttributeName: paraph]
+                          NSAttributedStringKey.paragraphStyle: paraph]
         address.attributedText = NSAttributedString(string: address.text!, attributes: attributes)
         address.sizeToFit()
         scrollRootView.addSubview(address)
@@ -225,7 +225,7 @@ class FCMailedConfirmDialog: BaseDialog {
         address.text = "地址 : " + Constants.User.addr
     }
     
-    func editAddress() -> () {
+    @objc func editAddress() -> () {
         editAddressDialog.userName = userInfoData
         editAddressDialog.phoneNumber = phoneNumberData
         editAddressDialog.address = addressData
@@ -347,7 +347,7 @@ extension FCMailedConfirmDialog:UICollectionViewDelegate, UICollectionViewDataSo
 extension FCMailedConfirmDialog{
     
     /// 通知后台，开始邮寄
-    func maild() -> () {
+    @objc func maild() -> () {
         if !checkAddress() {
             return
         }

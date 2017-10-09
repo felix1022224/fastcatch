@@ -24,6 +24,7 @@ class LocalDataUtils: NSObject {
         UserDefaults.standard.set(String(resultData["data"]["gender"].intValue), forKey: Constants.User.USER_SEX_KEY)
         UserDefaults.standard.set(resultData["data"]["birthday"].stringValue, forKey: Constants.User.USER_BRITHDAY_KEY)
         UserDefaults.standard.set(resultData["data"]["tag"].stringValue, forKey: Constants.User.USER_TAG_KEY)
+        UserDefaults.standard.set(String(resultData["data"]["id"].intValue), forKey: Constants.User.ID_KEY)
         
         if dataResponse != nil {
             let headerFields = dataResponse?.response?.allHeaderFields as! [String: String]
@@ -41,7 +42,7 @@ class LocalDataUtils: NSObject {
                     HTTPCookieStorage.shared.setCookie(cookie)
                 }
             }
-            print("cookies:\(UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY))")
+            print("cookies:\(String(describing: UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY)))")
         }
         
         
@@ -69,7 +70,7 @@ class LocalDataUtils: NSObject {
             }
         }
         
-        print("cookieArray:\(UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY))")
+//        print("cookieArray:\(String(describing: UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY)))")
         
         // 用户昵称
         let userNickName = UserDefaults.standard.string(forKey: Constants.User.USER_NICK_NAME_KEY)
@@ -85,6 +86,14 @@ class LocalDataUtils: NSObject {
             Constants.User.USER_ID = ""
         }else {
             Constants.User.USER_ID = userId!
+        }
+        
+        // 用户ID
+        let id = UserDefaults.standard.string(forKey: Constants.User.ID_KEY)
+        if id == nil {
+            Constants.User.ID = ""
+        }else {
+            Constants.User.ID = id!
         }
         
         // 用户头像

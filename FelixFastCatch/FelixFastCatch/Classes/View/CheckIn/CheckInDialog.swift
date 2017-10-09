@@ -32,6 +32,9 @@ class CheckInDialog: BaseDialog {
     /// 连续签到赢钻石奖励
     fileprivate var tipsLabel:MainCustomerLabel!
     
+    /// 签到7天以上的天数
+    private var check8DayNumber:MainCustomerLabel!
+    
     override func createView() {
         
         createBackgroundImage(imageName: "checkin_background")
@@ -189,20 +192,27 @@ extension CheckInDialog{
     
     /// 初始化前七天签到样式
     func initCheckIn7DayView() -> () {
-        check1DayView.setChecked(isChecked: false)
-        check2DayView.setChecked(isChecked: false)
-        check3DayView.setChecked(isChecked: false)
-        check4DayView.setChecked(isChecked: false)
-        check5DayView.setChecked(isChecked: false)
-        check6DayView.setChecked(isChecked: false)
-        check7DayView.setChecked(isChecked: false)
         
-        for i in 0..<Constants.User.checkDays {
-            check7DayViews[i].setChecked(isChecked: true)
+        if Constants.User.checkDays < 7 {
+            check1DayView.setChecked(isChecked: false)
+            check2DayView.setChecked(isChecked: false)
+            check3DayView.setChecked(isChecked: false)
+            check4DayView.setChecked(isChecked: false)
+            check5DayView.setChecked(isChecked: false)
+            check6DayView.setChecked(isChecked: false)
+            check7DayView.setChecked(isChecked: false)
+            
+            for i in 0..<Constants.User.checkDays {
+                check7DayViews[i].setChecked(isChecked: true)
+            }
         }
         
         if tipsLabel != nil {
-            tipsLabel.text = "已连续签到" + String(Constants.User.checkDays) + "天共获取" + String(Constants.User.checkDays + 1) + "代币"
+            if Constants.User.checkDays > 7 {
+                tipsLabel.text = "已连续签到" + String(Constants.User.checkDays) + "天共获取8代币"
+            }else {
+                tipsLabel.text = "已连续签到" + String(Constants.User.checkDays) + "天共获取" + String(Constants.User.checkDays + 1) + "代币"
+            }
         }
     }
     
@@ -227,6 +237,29 @@ extension CheckInDialog{
         addSubview(greater8DayImageView)
         
         greater8DayImageView.center = backgroundImage.center
+        
+        check8DayNumber = MainCustomerLabel()
+        check8DayNumber.text = String(Constants.User.checkDays)
+        check8DayNumber.font = UIFont(name: "Skranji-Bold", size: CGFloat(16))
+        check8DayNumber.outLineWidth = 1
+        check8DayNumber.outTextColor = UIColor.white
+        check8DayNumber.outLienTextColor = UIColor.black
+        check8DayNumber.sizeToFit()
+        addSubview(check8DayNumber)
+        
+        check8DayNumber.snp.makeConstraints { (make) in
+            make.top.equalTo(greater8DayImageView).offset(5)
+            make.centerX.equalTo(greater8DayImageView).offset(3)
+        }
+        
+        check8DayNumber.frame = CGRect(x: greater8DayImageView.bounds.width/2 - check8DayNumber.bounds.width/2 + 4, y: 5, width: check8DayNumber.bounds.width, height: check8DayNumber.bounds.height)
+        
+    }
+    
+    /// 更新8天以后的界面
+    func update8DayCheckInInfo() -> () {
+        let checkInYes = UIImage(named: "8已签")
+        greater8DayImageView.image = checkInYes
     }
     
 }
@@ -234,7 +267,7 @@ extension CheckInDialog{
 // MARK: - 向服务端请求签到
 extension CheckInDialog{
     
-    func UserCheckIn() -> () {
+    @objc func UserCheckIn() -> () {
         Alamofire.request(Constants.Network.User.USER_CHECKIN, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { [weak self] (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 self?.checkInBtn.isEnabled = false
@@ -243,7 +276,7 @@ extension CheckInDialog{
                 Constants.User.todayChecked = true
                 
                 if Constants.User.checkDays > 8 {
-                    
+                    self?.update8DayCheckInInfo()
                 }else{
                     self?.initCheckIn7DayView()
                 }

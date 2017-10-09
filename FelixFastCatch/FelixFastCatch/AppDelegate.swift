@@ -143,6 +143,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             return WeChatShared.handle(url)
         }
         
+        //跳转支付宝钱包进行支付，处理支付结果
+        AlipaySDK.defaultService().processOrder(withPaymentResult: url) { (resultDict) in
+            print("result:\(String(describing: resultDict))")
+            if let Alipayjson = resultDict as NSDictionary?{
+                let resultStatus = Alipayjson.value(forKey: "resultStatus") as! String
+                if resultStatus == "9000"{
+                    print("OK")
+                    ToastUtils.showSuccessToast(msg: "支付成功")
+                }else if resultStatus == "8000" {
+                    print("正在处理中")
+                }else if resultStatus == "4000" {
+                    print("订单支付失败");
+                    ToastUtils.showErrorToast(msg: "支付失败")
+                }else if resultStatus == "6001" {
+                    print("用户中途取消")
+                    ToastUtils.showErrorToast(msg: "支付取消")
+                }else if resultStatus == "6002" {
+                    print("网络连接出错")
+                    ToastUtils.showErrorToast(msg: "网络出错")
+                }
+            }
+        }
+        
         return true
     }
     

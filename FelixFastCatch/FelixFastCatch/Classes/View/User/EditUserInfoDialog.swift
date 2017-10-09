@@ -154,7 +154,7 @@ class EditUserInfoDialog: BaseDialog {
             make.right.equalTo(nickNameEdit)
         }
         
-        if Constants.User.USER_SEX == "1" {
+        if Constants.User.USER_SEX == "1" || Constants.User.USER_SEX == "-1"{
             isSelectMan = true
             changeSex()
         }else{
@@ -220,7 +220,7 @@ class EditUserInfoDialog: BaseDialog {
         
     }
     
-    func selectDate() -> () {
+    @objc func selectDate() -> () {
         endEditing(true)
         selectDateTime.createView()
         selectDateTime.show2 { [weak self] in
@@ -241,7 +241,7 @@ class EditUserInfoDialog: BaseDialog {
 //        return nil
 //    }
     
-    func changeSex() -> () {
+    @objc func changeSex() -> () {
         if isSelectMan {
             isSelectMan = false
             manBtn.isSelected = false
@@ -263,7 +263,7 @@ class EditUserInfoDialog: BaseDialog {
     }
     
     /// 保存用户信息
-    func saveUserInfo() -> () {
+    @objc func saveUserInfo() -> () {
         if !checkUserInfo() {
             return
         }

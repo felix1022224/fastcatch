@@ -97,7 +97,7 @@ class ExchangeCodeDialog: BaseDialog {
         addDialogToWindow()
     }
     
-    func useInviteCode() -> () {
+    @objc func useInviteCode() -> () {
         ToastUtils.showLoadingToast(msg: "正在请求数据")
         
         self.endEditing(true)

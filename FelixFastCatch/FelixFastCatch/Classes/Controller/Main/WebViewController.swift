@@ -74,11 +74,11 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         }
     }
 
-    func back() -> () {
+    @objc func back() -> () {
         dismiss(animated: true, completion: nil)
     }
     
-    func shared() -> () {
+    @objc func shared() -> () {
         
         if WeChatShared.isInstall() == false {
             ToastUtils.showErrorToast(msg: "暂时无法分享")

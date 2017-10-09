@@ -135,7 +135,7 @@ class MyGiftDialog: BaseDialog {
     }
     
     // 展示邮件信息确认页面
-    func showMailedConfirmDialog() -> () {
+    @objc func showMailedConfirmDialog() -> () {
         if tobeMailedDelegate.selectList.count <= 0 {
             ToastUtils.showErrorToast(msg: "请选择要邮寄的产品")
             return

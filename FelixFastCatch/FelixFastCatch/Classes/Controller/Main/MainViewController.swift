@@ -75,9 +75,6 @@ class MainViewController: UIViewController{
     /// 邀请界面
     fileprivate var inviteDialog:InviteDialog!
     
-    /// 分享战绩
-    fileprivate var showOffRecordDialog:ShowOffRecordDialog!
-    
     /// 钻石btn
     fileprivate var payGemBtn:MainFloatMenu!
     
@@ -90,13 +87,20 @@ class MainViewController: UIViewController{
     /// 版本号显示
     fileprivate var versionLabel:UILabel!
     
-    let socket = SocketIOClient(socketURL: URL(string: "http://192.168.0.186:8080")!, config: [.log(true), .compress])
-    
     /// 是否正在加载主页的数据
     fileprivate var isLoadingMainData = false
     
     /// banner的view是否触摸中
     fileprivate var bannerViewIsTouch = false
+    
+//    /// socket io
+//    let socket = SocketIOClient(socketURL: URL(string: "http://47.92.72.158:9130")!, config: [.log(true), .compress])
+    
+    /// 是否登录到了socket
+//    let isLogin = false
+    
+    /// 购买引导
+    fileprivate var payGuidView:MainBeginnerGuidPayView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -149,7 +153,6 @@ class MainViewController: UIViewController{
 //            //请求内购商品
 //            reuqestProductData(type: "com.meidaojia.secondcatch.b01")
 //        }
-        
     }
     
 //    func checkPay() -> Bool {
@@ -227,8 +230,8 @@ class MainViewController: UIViewController{
         fastLoginDialog = FastLoginDialog(frame: UIScreen.main.bounds)
         
         if Constants.User.USER_ID == "" {
-            fastLoginDialog.createView()
-            fastLoginDialog.show()
+//            fastLoginDialog.createView()
+//            fastLoginDialog.show()
         }else {
             getsUserInfo()
         }
@@ -248,11 +251,16 @@ class MainViewController: UIViewController{
         /// 邀请
         inviteDialog = InviteDialog(frame: UIScreen.main.bounds)
         
-        /// 分享战绩
-        showOffRecordDialog = ShowOffRecordDialog(frame: UIScreen.main.bounds)
-        
         /// 帮助
         helpDialog = HelpDialog(frame: UIScreen.main.bounds)
+        
+        if UserDefaults.standard.bool(forKey: Constants.IS_FIRST_OPEN_MAIN) == false {
+            payGuidView = MainBeginnerGuidPayView(frame: UIScreen.main.bounds)
+            payGuidView.createView()
+            payGuidView.show()
+            UserDefaults.standard.set(true, forKey: Constants.IS_FIRST_OPEN_MAIN)
+        }
+        
     }
     
     func test() -> () {
@@ -392,7 +400,7 @@ extension MainViewController:UIScrollViewDelegate{
     }
     
     //创建定时器管理者
-    func timerManager() {
+    @objc func timerManager() {
         let contentOffsetX = self.bannerView.contentOffset.x + self.view.frame.size.width
         let count = CGFloat(mainBannersData.count) - 1
         
@@ -442,7 +450,7 @@ extension MainViewController:UIScrollViewDelegate{
         creatTimer()
     }
     
-    func bannerTap(sender:UITapGestureRecognizer) -> () {
+    @objc func bannerTap(sender:UITapGestureRecognizer) -> () {
         if self.mainBannersData[(sender.view?.tag)!]["redirectType"].intValue == 1 {
             let link = self.mainBannersData[(sender.view?.tag)!]["scheme"].stringValue
             // 跳转到网页
@@ -536,7 +544,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     //顶部下拉刷新
-    func headerRefresh(){
+    @objc func headerRefresh(){
         page = 0
         isRefresh = true
         getMainListData()
@@ -606,12 +614,12 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     /// 显示游戏界面
-    func showPlay(sender: UIButton) -> () {
-        if Constants.User.USER_ID == "" {
-            fastLoginDialog.createView()
-            fastLoginDialog.show()
-            return
-        }
+    @objc func showPlay(sender: UIButton) -> () {
+//        if Constants.User.USER_ID == "" {
+//            fastLoginDialog.createView()
+//            fastLoginDialog.show()
+//            return
+//        }
         
         if !checkDeviceStatus(status: mainListData[sender.tag]["status"].intValue) {
             return
@@ -620,8 +628,13 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let playView = PlayViewController()
         playView.deviceId = mainListData[sender.tag]["deviceId"].stringValue
         playView.darwCount = mainListData[sender.tag]["darwCount"].intValue
-        playView.playSuccess = {[weak self] (deviceId) in
-            self?.showShardRecordDialog(deviceId: deviceId)
+//        playView.playSuccess = {[weak self] (deviceId) in
+//            self?.showShardRecordDialog(deviceId: deviceId)
+//        }
+        
+        playView.needLogin = { [weak self] in
+            self?.fastLoginDialog.createView()
+            self?.fastLoginDialog.show()
         }
         
         playView.mainVC = self
@@ -638,11 +651,11 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func itemClick(index:Int) -> () {
-        if Constants.User.USER_ID == "" {
-            fastLoginDialog.createView()
-            fastLoginDialog.show()
-            return
-        }
+//        if Constants.User.USER_ID == "" {
+//            fastLoginDialog.createView()
+//            fastLoginDialog.show()
+//            return
+//        }
         
         if !checkDeviceStatus(status: mainListData[index]["status"].intValue) {
             return
@@ -651,8 +664,12 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let playView = PlayViewController()
         playView.deviceId = mainListData[index]["deviceId"].stringValue
         playView.darwCount = mainListData[index]["darwCount"].intValue
-        playView.playSuccess = {[weak self] (deviceId) in
-            self?.showShardRecordDialog(deviceId: deviceId)
+//        playView.playSuccess = {[weak self] (deviceId) in
+//            self?.showShardRecordDialog(deviceId: deviceId)
+//        }
+        playView.needLogin = { [weak self] in
+            self?.fastLoginDialog.createView()
+            self?.fastLoginDialog.show()
         }
         
         playView.mainVC = self
@@ -759,6 +776,7 @@ extension MainViewController{
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) { [weak self] in
             self?.getsUserInfo()
+//            self?.getAppReleaseVersion()
         }
         
     }
@@ -787,7 +805,7 @@ extension MainViewController{
     }
     
     // 重新获取数据
-    func reLoadNetworkData() -> () {
+    @objc func reLoadNetworkData() -> () {
         ToastUtils.showLoadingToast(msg: "加载数据……")
         getMainListData()
     }
@@ -830,7 +848,6 @@ extension MainViewController{
         /// 购买钻石按钮
         payGemBtn = MainFloatMenu(frame: CGRect(x: 10, y: UIScreen.main.bounds.height - 90, width: settingImage.bounds.width, height: 90), image: UIImage(named: "Plus-btn"), actionTitle: "0")
         view.addSubview(payGemBtn)
-//        payGemBtn.isHidden = true
         
         let infoDictionary = Bundle.main.infoDictionary!
         versionLabel = UILabel()
@@ -846,7 +863,7 @@ extension MainViewController{
     }
     
     /// 显示邀请界面
-    func showInviteDialog() -> () {
+    @objc func showInviteDialog() -> () {
         if Constants.User.USER_ID == "" {
             showFastLogin()
             return
@@ -856,7 +873,7 @@ extension MainViewController{
     }
     
     /// 显示我的礼物
-    func showMyGift() -> () {
+    @objc func showMyGift() -> () {
         if Constants.User.USER_ID == "" {
             showFastLogin()
             return
@@ -872,7 +889,7 @@ extension MainViewController{
     
     
     /// 显示签到的dialog
-    func showCheckInDialog() -> () {
+    @objc func showCheckInDialog() -> () {
         if Constants.User.USER_ID == "" {
             showFastLogin()
             return
@@ -883,19 +900,20 @@ extension MainViewController{
     }
     
     /// 显示购买的dialog
-    func showPayDialog() -> () {
+    @objc func showPayDialog() -> () {
+        if Constants.isShowPay == false {
+            return
+        }
         if Constants.User.USER_ID == "" {
             showFastLogin()
             return
         }
+//        if WeChatShared.isInstall() == false {
+//            ToastUtils.showErrorToast(msg: "充值支付出错，您还没有安装微信")
+//            return
+//        }
         payGemDialog.createView()
         payGemDialog.show2(mainViewController: self)
-    }
-    
-    /// 显示分享战绩的dialog
-    func showShardRecordDialog(deviceId:String) -> () {
-        showOffRecordDialog.createView()
-        showOffRecordDialog.show2(deviceId: deviceId)
     }
     
     // 点击展开隐藏设置按钮
@@ -944,7 +962,7 @@ extension MainViewController{
     }
     
     /// 显示用户信息
-    func showUserInfoDialog() -> () {
+    @objc func showUserInfoDialog() -> () {
         if Constants.User.USER_ID == "" {
             showFastLogin()
             return
@@ -953,7 +971,7 @@ extension MainViewController{
         userInfoDialog.show2(mainViewController: self)
     }
     
-    func showHelpDialog() -> () {
+    @objc func showHelpDialog() -> () {
         helpDialog.createView()
         helpDialog.show()
     }
@@ -981,7 +999,42 @@ extension MainViewController{
     
 }
 
-
+extension MainViewController{
+    
+    /// 获取版本号，来判断显不显示支付
+    func getAppReleaseVersion() -> () {
+        if Constants.User.USER_ID == "" {
+            return
+        }
+        Alamofire.request(Constants.Network.GET_SYS_INFO_VERSION, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { (response) in
+//            print("versionValue:\(response.result.value!)")
+            if NetWorkUtils.checkReponse(response: response) {
+                let json = JSON(data: response.data!)
+                let infoDictionary = Bundle.main.infoDictionary!
+                if let buildVersion = (infoDictionary["CFBundleVersion"] as? NSString)?.doubleValue {
+//                    print("buildVersion:\(buildVersion)")
+                    if json["data"].doubleValue >= buildVersion {
+                        print("正式")
+                        self.payGemBtn.isHidden = false
+//                        Constants.isShowPay = true
+                    }else{
+                        print("提审")
+                        
+//                        self.payGemBtn.isHidden = true
+//                        Constants.isShowPay = false
+                    }
+                }else {
+//                    self.payGemBtn.isHidden = true
+//                    Constants.isShowPay = false
+                }
+            }else{
+                /// 发生异常
+//                self.payGemBtn.isHidden = true
+//                Constants.isShowPay = false
+            }
+        }
+    }
+}
 
 
 

@@ -65,7 +65,7 @@ class BaseDialog: UIView {
     }
     
     // 隐藏
-    func hide() -> () {
+    @objc func hide() -> () {
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.shadow.alpha = 0.0
             self?.transform = CGAffineTransform(scaleX: 0.0,y: 0.0)

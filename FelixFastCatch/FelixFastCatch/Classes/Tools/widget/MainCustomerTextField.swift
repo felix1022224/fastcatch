@@ -26,11 +26,11 @@ class MainCustomerTextField: UITextField {
         
         c!.setTextDrawingMode(CGTextDrawingMode.stroke)
         
-        self.attributedPlaceholder = NSAttributedString(string: placeholder!, attributes: [NSForegroundColorAttributeName: outLienTextColor])
+        self.attributedPlaceholder = NSAttributedString(string: placeholder!, attributes: [NSAttributedStringKey.foregroundColor: outLienTextColor])
         
         super.drawPlaceholder(in: rect)
         
-        self.attributedPlaceholder = NSAttributedString(string: placeholder!, attributes: [NSForegroundColorAttributeName: outTextColor])
+        self.attributedPlaceholder = NSAttributedString(string: placeholder!, attributes: [NSAttributedStringKey.foregroundColor: outTextColor])
         
         c!.setTextDrawingMode(CGTextDrawingMode.fill)
         

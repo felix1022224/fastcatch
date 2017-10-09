@@ -68,7 +68,7 @@ class ShowOffRecordDialog: BaseDialog {
         show()
     }
 
-    func shared() -> () {
+    @objc func shared() -> () {
         if WeChatShared.isInstall() == false {
             ToastUtils.showErrorToast(msg: "暂时无法分享")
             return

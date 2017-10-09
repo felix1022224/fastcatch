@@ -54,7 +54,7 @@ class SharedViewDialog: BaseDialog {
         addDialogToWindow()
     }
     
-    func sharedClick(sender:UIButton) -> () {
+    @objc func sharedClick(sender:UIButton) -> () {
         if sender == sharedWechatSession {
             WeChatShared.shareURL(scheme, title: "免费抓娃娃啦，快来领游戏币！", description: "明星和网红们疯狂在抓的互联网实景娃娃机来啦！免费送钻快来抓！", thumbImg: UIImage(named: "shared_logo"), to: LDWechatScene.Session) { (isSuccess, info) in
                     if isSuccess {

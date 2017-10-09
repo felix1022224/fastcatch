@@ -18,7 +18,7 @@ class ToastUtils: NSObject {
         SVProgressHUD.dismiss()
 //        SVProgressHUD.setDefaultMaskType(.clear)
         SVProgressHUD.showError(withStatus: msg)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
             SVProgressHUD.dismiss()
         }
     }
@@ -31,7 +31,7 @@ class ToastUtils: NSObject {
         SVProgressHUD.dismiss()
 //        SVProgressHUD.setDefaultMaskType(.clear)
         SVProgressHUD.showSuccess(withStatus: msg)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
             SVProgressHUD.dismiss()
         }
     }
@@ -44,7 +44,7 @@ class ToastUtils: NSObject {
         SVProgressHUD.dismiss()
 //        SVProgressHUD.setDefaultMaskType(.clear)
         SVProgressHUD.showInfo(withStatus: msg)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
             SVProgressHUD.dismiss()
         }
     }

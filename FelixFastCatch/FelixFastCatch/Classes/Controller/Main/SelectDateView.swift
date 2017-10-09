@@ -71,7 +71,7 @@ class SelectDateView: BaseDialog {
         addDialogToWindow()
     }
     
-    func okTime() -> () {
+    @objc func okTime() -> () {
 //        let con = ConstellationUtils.calculateWithDate(date: datePicker.date)
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "yyyy-MM-dd"

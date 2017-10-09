@@ -118,7 +118,7 @@ class FastLoginDialog: BaseDialog {
     }
     
     // 按钮点击事件
-    func loginBtnClick(sender:UIButton) -> () {
+    @objc func loginBtnClick(sender:UIButton) -> () {
         if sender == phoneNumberLoginBtn {
             phoneNumberLogin.createView(fastLogin:self)
             phoneNumberLogin.show()

@@ -132,7 +132,9 @@ class UserInfoDialog: BaseDialog {
         sexLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         if Constants.User.USER_SEX == "0" {
             sexLabel.text = "性别: 男"
-        }else {
+        }else if Constants.User.USER_SEX == "-1"{
+            sexLabel.text = "性别: 未知"
+        }else{
             sexLabel.text = "性别: 女"
         }
         sexLabel.outLineWidth = 3
@@ -169,7 +171,7 @@ class UserInfoDialog: BaseDialog {
     }
 
     /// 退出登录
-    func logOut() -> () {
+    @objc func logOut() -> () {
 //        ToastUtils.showLoadingToast(msg: "正在登出")
         
         if mainVC != nil {
@@ -189,7 +191,7 @@ class UserInfoDialog: BaseDialog {
         }
     }
     
-    func editUserInfo() -> () {
+    @objc func editUserInfo() -> () {
         editUserInfoDialog.createView()
         editUserInfoDialog.show2(action: { [weak self] (nick, sex, birthday) in
             self?.userNickName.text = "昵称:" + nick
@@ -219,7 +221,7 @@ class UserInfoDialog: BaseDialog {
     /// 初始化生日
     func initBrithday() -> () {
         if Constants.User.USER_BRITHDAY == "" {
-            constellationLabel.text = "星座:"
+            constellationLabel.text = "星座:未知"
             return
         }
         let format = DateFormatter()

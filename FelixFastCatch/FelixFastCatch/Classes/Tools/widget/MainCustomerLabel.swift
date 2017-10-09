@@ -55,7 +55,7 @@ class MainCustomerLabel: UILabel {
         self.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(clickLabel)))
     }
     
-    func clickLabel() {
+    @objc func clickLabel() {
         
         // 让其成为响应者
         becomeFirstResponder()
@@ -73,7 +73,7 @@ class MainCustomerLabel: UILabel {
         
     }
     
-    func copyText() {
+    @objc func copyText() {
         let index = self.text?.index((self.text?.endIndex)!, offsetBy: -7)
         UIPasteboard.general.string = self.text?.substring(from: index!)
     }

@@ -157,8 +157,8 @@ class PhoneNumberDialog: BaseDialog {
         let str1 = NSMutableAttributedString(string: "登录即同意《秒抓APP用户协议》")
         let range1 = NSRange(location: 0, length: str1.length)
         let number = NSNumber(value:NSUnderlineStyle.styleSingle.rawValue)//此处需要转换为NSNumber 不然不对,rawValue转换为integer
-        str1.addAttribute(NSUnderlineStyleAttributeName, value: number, range: range1)
-        str1.addAttribute(NSForegroundColorAttributeName, value: UIColor.gray, range: range1)
+        str1.addAttribute(NSAttributedStringKey.underlineStyle, value: number, range: range1)
+        str1.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.gray, range: range1)
         pactInfoLabel.setAttributedTitle(str1, for: UIControlState.normal)
         addSubview(pactInfoLabel)
         
@@ -179,7 +179,7 @@ class PhoneNumberDialog: BaseDialog {
         show()
     }
     
-    func showProtocolInfoDialog() -> () {
+    @objc func showProtocolInfoDialog() -> () {
         protocolInfoDialog.createView()
         protocolInfoDialog.show()
     }
@@ -239,7 +239,7 @@ class PhoneNumberDialog: BaseDialog {
 extension PhoneNumberDialog{
     
     // 手机号登录
-    func loginByPhoneNumber() -> () {
+    @objc func loginByPhoneNumber() -> () {
         if (phoneNumberEdit.text?.characters.count)! <= 0 {
             ToastUtils.showErrorToast(msg: "请输入手机号")
             return
@@ -260,6 +260,9 @@ extension PhoneNumberDialog{
                 let resultJson = JSON(data: response.data!)
                 if NetWorkUtils.checkReponse(response: response) {
                     print("qqqqqq:\(response.response?.allHeaderFields as! [String: String] )")
+                    
+                    print("userId:\(resultJson)")
+                    
                     LocalDataUtils.updateLocalUserData(resultData: resultJson, response)
                     ToastUtils.showSuccessToast(msg: "登录成功")
                     self.hide()
@@ -289,7 +292,7 @@ extension PhoneNumberDialog{
 extension PhoneNumberDialog{
     
     // 发送验证码
-    func sendVerifyCode() -> () {
+    @objc func sendVerifyCode() -> () {
         if (phoneNumberEdit.text?.characters.count)! <= 0 {
             ToastUtils.showErrorToast(msg: "请输入手机号")
             return

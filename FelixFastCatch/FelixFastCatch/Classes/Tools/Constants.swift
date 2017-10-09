@@ -17,6 +17,8 @@ class Constants: NSObject {
         
 //        static let BASE_URL = "http://192.168.0.186:9125/"
         
+//        static let BASE_URL = "http://47.92.72.158:9125/"
+        
         /// 微信Pay支付接口
         static let WECHAT_PAY_URL =  BASE_URL +  "trade/wechatorder"
         
@@ -165,12 +167,15 @@ class Constants: NSObject {
         /// 用户ID
         static var USER_ID = ""
         
+        static var ID = ""
+        
         /// 用户头像
         static var USER_FACE_IMAGE = ""
         
         /// 用户邀请码
         static var USER_TAG = ""
         
+        static let ID_KEY = "user_id"
         static let USER_SESSION_KEY = "userSessionId"
         static let USER_NICK_NAME_KEY = "userNickName"
         static let USER_SEX_KEY = "userSex"
@@ -209,4 +214,13 @@ class Constants: NSObject {
     
     /// app当前版本号
     public static var app_release_version = ""
+    
+    /// 是否显示支付页面
+    public static var isShowPay = true
+    
+    /// 是否第一次打开啊首页
+    public static var IS_FIRST_OPEN_MAIN = "isFirstOpenMain"
+    
+    /// 是否第一次打开游戏界面
+    public static var IS_FIRST_OPEN_PLAY = "isFirstOpenPlay"
 }

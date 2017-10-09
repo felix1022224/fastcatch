@@ -24,7 +24,7 @@ class PlayViewController: UIViewController {
     fileprivate lazy var gemBackground:UIImageView = UIImageView()
     
     /// 钻石数量
-    fileprivate lazy var gemLabel:MainCustomerLabel = MainCustomerLabel()
+    lazy var gemLabel:MainCustomerLabel = MainCustomerLabel()
     
     /// 视屏view
     fileprivate lazy var videoView:UIView = UIView()
@@ -33,10 +33,10 @@ class PlayViewController: UIViewController {
     fileprivate lazy var startPlayBtn:UIButton = UIButton()
 
     /// 观看人数
-    fileprivate var playNumber:MainCustomerLabel!
+    var playNumber:MainCustomerLabel!
     
     /// 排队人数
-    fileprivate var queueNumber:MainCustomerLabel!
+    var queueNumber:MainCustomerLabel!
     
     /// 操作group
     fileprivate var startBtnBackgroundView = UIView()
@@ -102,7 +102,7 @@ class PlayViewController: UIViewController {
     var nowLiveVideoId:UInt!
     
     /// 摄像头按钮
-    fileprivate lazy var lensBtn:UIButton = UIButton(type: UIButtonType.custom)
+    lazy var lensBtn:UIButton = UIButton(type: UIButtonType.custom)
     
     /// 游戏结果
     fileprivate var playResultDialog:PlayResultDialog!
@@ -128,7 +128,10 @@ class PlayViewController: UIViewController {
     /// 是否正在游戏中
     var isGameing = false
     
-    var playSuccess:((_ deviceId:String)->())? = nil
+//    var playSuccess:((_ deviceId:String)->())? = nil
+    
+    /// 需要登录
+    var needLogin:(()->())? = nil
     
     /// 底部的view
     var bottomGroupView:UIView!
@@ -163,6 +166,9 @@ class PlayViewController: UIViewController {
     /// 被抓去次数的label
     var darwCountLabel:UILabel!
     
+    /// 抓取次数的背景view
+    let darwCountBgView = UIView()
+    
     /// 音频按钮
     var audioBtn:UIButton!
     
@@ -177,6 +183,15 @@ class PlayViewController: UIViewController {
     
     /// 是否抓中了
     var isGameWinner:Bool = false
+    
+    /// 分享战绩
+    private var showOffRecordDialog:ShowOffRecordDialog!
+    
+    /// 游戏房间的控制器
+    private var gameSceneController:GameSceneController!
+    
+    /// 切换镜头
+    private var playSwitchGuid:MainBeginnerGuidPlaySwitchView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -193,7 +208,7 @@ class PlayViewController: UIViewController {
         
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false;   //禁用侧滑手势
         
-        enter()
+//        enter()
         
         setupUI()
         
@@ -201,7 +216,17 @@ class PlayViewController: UIViewController {
         playBackgroundMusic()
         
         ToastUtils.showLoadingToast(msg: "正在加入房间")
-
+        
+        /// 初始化
+        gameSceneController = GameSceneController(playViewController: self, deviceId: deviceId)
+        gameSceneController.connectSocket()
+        
+        if UserDefaults.standard.bool(forKey: Constants.IS_FIRST_OPEN_PLAY) == false {
+            playSwitchGuid = MainBeginnerGuidPlaySwitchView(frame: UIScreen.main.bounds)
+            playSwitchGuid.createView2(playViewController: self)
+            playSwitchGuid.show2()
+            UserDefaults.standard.set(true, forKey: Constants.IS_FIRST_OPEN_PLAY)
+        }
     }
 
     deinit {
@@ -359,7 +384,7 @@ extension PlayViewController{
             make.right.equalTo(self.view).offset(-10)
         }
         
-        gemLabel.text = ""
+        gemLabel.text = String(Constants.User.diamondsCount)
         gemLabel.outLineWidth = 1
         gemLabel.outTextColor = UIColor.white
         gemLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -374,6 +399,19 @@ extension PlayViewController{
         gemBackground.isUserInteractionEnabled = true
         let payTap = UITapGestureRecognizer(target: self, action: #selector(showPayDialog))
         gemBackground.addGestureRecognizer(payTap)
+        
+        if Constants.isShowPay == false {
+            gemBackground.isHidden = true
+            gemLabel.isHidden = true
+        }else{
+            if Constants.User.USER_ID == "" {
+                gemBackground.isHidden = true
+                gemLabel.isHidden = true
+            }else{
+                gemBackground.isHidden = false
+                gemLabel.isHidden = false
+            }
+        }
     }
     
     /// 创建游戏相关按钮
@@ -426,12 +464,11 @@ extension PlayViewController{
         lensBtn.isHidden = true
         
         darwCountLabel = UILabel()
-        darwCountLabel.text = "已被抓取了" + String(darwCount) + "次"
+        darwCountLabel.text = "游戏0次   抓中0次"
         darwCountLabel.textColor = UIColor.white
         darwCountLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         darwCountLabel.sizeToFit()
         
-        let darwCountBgView = UIView()
         darwCountBgView.frame.size = CGSize(width: darwCountLabel.bounds.width * 2, height: darwCountLabel.bounds.height * 1.5)
         darwCountBgView.backgroundColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.7)
         darwCountBgView.layer.cornerRadius = (darwCountLabel.bounds.height * 1.5)/2
@@ -446,8 +483,16 @@ extension PlayViewController{
         
     }
 
+    func updateAwardUI() -> () {
+        darwCountLabel.sizeToFit()
+        darwCountBgView.frame.size = CGSize(width: darwCountLabel.bounds.width * 1.5, height: darwCountLabel.bounds.height * 1.5)
+        darwCountBgView.frame = CGRect(x: self.view.bounds.width - darwCountBgView.bounds.width - 10, y: videoView.bounds.height - darwCountBgView.bounds.height - 5, width: darwCountBgView.bounds.width, height: darwCountBgView.bounds.height)
+        
+        darwCountLabel.center = darwCountBgView.center
+    }
+    
     /// 切换音频按钮
-    func switchAudio() -> () {
+    @objc func switchAudio() -> () {
         if isCloseMusic {
             bgMusicPlayer.play()
             isCloseMusic = false
@@ -461,7 +506,7 @@ extension PlayViewController{
         }
     }
     
-    func showFeecbackView() -> () {
+    @objc func showFeecbackView() -> () {
         if isShowFeedbackView {
             return
         }
@@ -539,7 +584,7 @@ extension PlayViewController{
     }
     
     /// 关闭当前页面
-    func backBtnClick() -> () {
+    @objc func backBtnClick() -> () {
         if isGameing {
             /// 游戏中点击返回键
             outGameDialog.createView()
@@ -551,9 +596,15 @@ extension PlayViewController{
         UIApplication.shared.isIdleTimerDisabled = false
         /// 取消再来一次的倒计时
         isReplayCounting = false
+        
+        /// 断开socket连接
+        gameSceneController.disconnect()
+        gameSceneController = nil
+        
         out(deviceId: deviceId)
         self.navigationController?.popViewController(animated: true)
         ToastUtils.hide()
+        
 //        if isGameWinner {
 //            
 //        }
@@ -656,7 +707,7 @@ extension PlayViewController{
     }
     
     // 切换镜头
-    func changeLens(sender:UIButton) -> () {
+    @objc func changeLens(sender:UIButton) -> () {
         if !isLive {
             lensBtn.isEnabled = false
             //不是直播模式，就是在游戏中
@@ -742,6 +793,7 @@ extension PlayViewController{
 
 extension PlayViewController: AgoraRtcEngineDelegate {
     func rtcEngine(_ engine: AgoraRtcEngineKit!, firstRemoteVideoDecodedOfUid uid: UInt, size: CGSize, elapsed: Int) {
+        print("到这里了")
         // 初始化成功
         if isLive {
             agoraKit.setupRemoteVideo(nil)
@@ -832,42 +884,49 @@ extension PlayViewController{
 // MARK: - 进入和退出房间
 extension PlayViewController{
     
-    /// 进入房间
-    fileprivate func enter(){
-        var params = NetWorkUtils.createBaseParams()
-        params["deviceid"] = deviceId
-        
-        Alamofire.request(Constants.Network.Machine.ENTER_WATCH, method: .post, parameters: params).responseJSON { (response) in
-            if NetWorkUtils.checkReponse(response: response) {
-                let json = JSON(data: response.data!)
-                self.setupInfo(resultData:json)
-            }
-        }
-    }
-    
-    /// 装载数据
-    fileprivate func setupInfo(resultData:JSON) -> () {
-        if let watchNumber = resultData["data"]["waitWatchCount"].int {
-            playNumber.text = String(watchNumber) + "人观看"
-        }
-        
-        if let queue = resultData["data"]["waitCtlCount"].int {
-            queueNumber.text = String(queue) + "人等待"
-        }
-        gemLabel.text = String(Constants.User.diamondsCount)
-    }
+//    /// 进入房间
+//    fileprivate func enter(){
+//        if Constants.User.USER_ID == "" {
+//            return
+//        }
+//
+//        var params = NetWorkUtils.createBaseParams()
+//        params["deviceid"] = deviceId
+//
+//        Alamofire.request(Constants.Network.Machine.ENTER_WATCH, method: .post, parameters: params).responseJSON { (response) in
+//            if NetWorkUtils.checkReponse(response: response) {
+//                let json = JSON(data: response.data!)
+//                self.setupInfo(resultData:json)
+//            }
+//        }
+//    }
+//
+//    /// 装载数据
+//    fileprivate func setupInfo(resultData:JSON) -> () {
+//        if let watchNumber = resultData["data"]["waitWatchCount"].int {
+//            playNumber.text = String(watchNumber) + "人观看"
+//        }
+//
+//        if let queue = resultData["data"]["waitCtlCount"].int {
+//            queueNumber.text = String(queue) + "人等待"
+//        }
+//        gemLabel.text = String(Constants.User.diamondsCount)
+//    }
     
     /// 退出房间
     fileprivate func out(deviceId:String){
+        if Constants.User.USER_ID == "" {
+            return
+        }
         endQueue(deviceId: deviceId)
         
-        var params = NetWorkUtils.createBaseParams()
-        params["deviceid"] = deviceId
-        Alamofire.request(Constants.Network.Machine.OUT_WATCH, method: .post, parameters: params).responseJSON { (response) in
-            if response.error == nil && response.data != nil {
-                print("result_退出房间:\(response.result.value ?? "")")
-            }
-        }
+//        var params = NetWorkUtils.createBaseParams()
+//        params["deviceid"] = deviceId
+//        Alamofire.request(Constants.Network.Machine.OUT_WATCH, method: .post, parameters: params).responseJSON { (response) in
+//            if response.error == nil && response.data != nil {
+//                print("result_退出房间:\(response.result.value ?? "")")
+//            }
+//        }
     }
     
     /// 取消预约
@@ -1117,7 +1176,12 @@ extension PlayViewController{
     }
     
     /// 开始预约
-    func waitQueue(){
+    @objc func waitQueue(){
+        if Constants.User.USER_ID == "" {
+            needLogin?()
+            backBtnClick()
+            return
+        }
 //        ToastUtils.showLoadingToast(msg: "请稍后……")
         
         var params = NetWorkUtils.createBaseParams()
@@ -1157,7 +1221,7 @@ extension PlayViewController{
     }
     
     ///  按下操作方向
-    func controllerPathDown(sender:CustomerControllerButton ) -> () {
+    @objc func controllerPathDown(sender:CustomerControllerButton ) -> () {
         if isGrab {
             // 如果是下爪的过程中，不能操作
             return
@@ -1193,7 +1257,7 @@ extension PlayViewController{
         }
     }
     
-    func controllerPathUp(sender:CustomerControllerButton ) -> () {
+    @objc func controllerPathUp(sender:CustomerControllerButton ) -> () {
         isControoler = false
         if isGrab {
             // 如果是下爪的过程中，不能操作
@@ -1237,36 +1301,40 @@ extension PlayViewController{
     /// 通过网络操作机器臂的方向
     func controllerNetworkPath(path:String, status:String) -> () {
         print("status:\(status)")
-        var params = NetWorkUtils.createBaseParams()
-        params["deviceid"] = deviceId
-        params["direction"] = path
-        params["status"] = status
         
-        Alamofire.request(Constants.Network.Machine.DIECTION_CONTROLLER, method: .post, parameters: params).responseJSON { (response) in
-            if NetWorkUtils.checkReponse(response: response) {
-                print("result:\(String(describing: response.result.value))")
-            }else {
-                print("error:\(String(describing: response.error)),response:\(String(describing: response.response))")
-            }
-        }
+        gameSceneController.controllerPath(path: path, status: status)
+        
+//        var params = NetWorkUtils.createBaseParams()
+//        params["deviceid"] = deviceId
+//        params["direction"] = path
+//        params["status"] = status
+//
+//        Alamofire.request(Constants.Network.Machine.DIECTION_CONTROLLER, method: .post, parameters: params).responseJSON { (response) in
+//            if NetWorkUtils.checkReponse(response: response) {
+//                print("result:\(String(describing: response.result.value))")
+//            }else {
+//                print("error:\(String(describing: response.error)),response:\(String(describing: response.response))")
+//            }
+//        }
     }
     
     /// 下爪
-    func controllerGrap() -> () {
+    @objc func controllerGrap() -> () {
         isGrab = true
-        var params = NetWorkUtils.createBaseParams()
-        params["deviceid"] = deviceId
-        
-        Alamofire.request(Constants.Network.Machine.CONTROLLER_CATCH, method: .post, parameters: params).responseJSON { (response) in
-            if NetWorkUtils.checkReponse(response: response) {
-                print("下爪成功")
-                self.hidePlayGroup()
-                self.getWard()
-            }else{
-                print("response:\(response)")
-                self.hidePlayGroup()
-            }
-        }
+        gameSceneController.controllerGrap()
+//        var params = NetWorkUtils.createBaseParams()
+//        params["deviceid"] = deviceId
+//
+//        Alamofire.request(Constants.Network.Machine.CONTROLLER_CATCH, method: .post, parameters: params).responseJSON { (response) in
+//            if NetWorkUtils.checkReponse(response: response) {
+//                print("下爪成功")
+//                self.hidePlayGroup()
+//                self.getWard()
+//            }else{
+//                print("response:\(response)")
+//                self.hidePlayGroup()
+//            }
+//        }
     }
     
     func disableControllerBtns(isEnbled:Bool) -> () {
@@ -1315,9 +1383,10 @@ extension PlayViewController{
                     /// 展示再来一局的界面
                     self.showRePlayInfo()
 //                    self.isGameWinner = true
-                    if self.playSuccess != nil {
-                        self.playSuccess!(self.deviceId)
-                    }
+//                    if self.playSuccess != nil {
+//                        self.playSuccess!(self.deviceId)
+//                    }
+                    self.showShardRecordDialog(deviceId: self.deviceId)
                 }else {
                     print("抓取失败")
                     self.getWardCodeNumber = self.getWardCodeNumber + 1
@@ -1378,7 +1447,7 @@ extension PlayViewController{
     }
     
     /// 再来一局
-    func replayGame() -> () {
+    @objc func replayGame() -> () {
         startPlay()
     }
     
@@ -1460,11 +1529,11 @@ extension PlayViewController{
         NotificationCenter.default.addObserver(self, selector: #selector(playSong(notification:)), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
     
-    func pauseSong(notification : NSNotification) {
+    @objc func pauseSong(notification : NSNotification) {
         bgMusicPlayer.pause()
     }
     
-    func playSong(notification : NSNotification) {
+    @objc func playSong(notification : NSNotification) {
         if !isCloseMusic {
             bgMusicPlayer.play()
         }
@@ -1680,7 +1749,7 @@ extension PlayViewController{
         
     }
     
-    func showBannerInfo() -> () {
+    @objc func showBannerInfo() -> () {
         if bottomBannerDialog == nil {
             bottomBannerDialog = PlayInfoBannerDialog(frame: UIScreen.main.bounds)
         }
@@ -1688,7 +1757,7 @@ extension PlayViewController{
         bottomBannerDialog.showUrl(link:bottomBannerCardScheme)
     }
     
-    func showAwardInfo() -> () {
+    @objc func showAwardInfo() -> () {
         if bottomAwardDialog == nil {
             bottomAwardDialog = PlayInfoAwardDialog(frame: UIScreen.main.bounds)
         }
@@ -1701,10 +1770,16 @@ extension PlayViewController{
 //支付相关
 extension PlayViewController{
     
-    func showPayDialog() -> () {
+    @objc func showPayDialog() -> () {
         if payDialog == nil {
             payDialog = PayListDialog(frame: UIScreen.main.bounds)
         }
+        
+//        if WeChatShared.isInstall() == false {
+//            ToastUtils.showErrorToast(msg: "充值支付出错，您还没有安装微信")
+//            return
+//        }
+        
         payDialog.createView()
         if mainVC != nil {
             payDialog.show2(mainViewController: mainVC)
@@ -1728,6 +1803,18 @@ extension PlayViewController{
         })
     }
     
+}
+
+extension PlayViewController{
+    /// 显示分享战绩的dialog
+    func showShardRecordDialog(deviceId:String) -> () {
+        if showOffRecordDialog == nil {
+            /// 分享战绩
+            showOffRecordDialog = ShowOffRecordDialog(frame: UIScreen.main.bounds)
+        }
+        showOffRecordDialog.createView()
+        showOffRecordDialog.show2(deviceId: deviceId)
+    }
 }
 
 

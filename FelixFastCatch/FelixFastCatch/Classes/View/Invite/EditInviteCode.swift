@@ -97,7 +97,7 @@ class EditInviteCode: BaseDialog {
         addDialogToWindow()
     }
     
-    func useInviteCode() -> () {
+    @objc func useInviteCode() -> () {
         if editInviteCodeTextFiled.text == Constants.User.USER_TAG {
             self.errorLabel.isHidden = false
             return

@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
-import StoreKit
+//import StoreKit
 
 class PayListDialog: BaseDialog {
 
@@ -38,7 +38,6 @@ class PayListDialog: BaseDialog {
         backgroundImage.center = self.center
         
 //        SKPaymentQueue.default().restoreCompletedTransactions()
-//        SKPaymentQueue.default().add(self)
         
         createCloseBtn()
         
@@ -116,8 +115,10 @@ class PayListDialog: BaseDialog {
     }
     
     override func hide() {
+//        if wechatBtn.isSelected == false {
+//            SKPaymentQueue.default().remove(self)
+//        }
         super.hide()
-//        SKPaymentQueue.default().remove(self)
     }
     
 }
@@ -129,24 +130,28 @@ class PayListDialog: BaseDialog {
 //            switch transaction.transactionState {
 //            case .deferred:
 //                print("延迟处理")
+//                ToastUtils.hide()
 //            case .failed:
 //                print("支付失败")
+//                ToastUtils.hide()
 //                queue.finishTransaction(transaction)
 //            case .purchased:
 //                print("支付成功")
+//                ToastUtils.hide()
 //                applePaySuccess(transactions: transaction)
 //                queue.finishTransaction(transaction)
 //            case .purchasing:
 //                print("正在支付")
 //            case .restored:
 //                print("恢复购买")
+//                ToastUtils.hide()
 //                queue.finishTransaction(transaction)
 //            }
 //        }
 //    }
 //}
-
-// MARK: - 内购的代理
+//
+//// MARK: - 内购的代理
 //extension PayListDialog: SKProductsRequestDelegate {
 //    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {// 当请求完毕之后, 从苹果服务器获取到数据之后调用
 //        print(response.products)
@@ -167,22 +172,22 @@ class PayListDialog: BaseDialog {
 //            SKPaymentQueue.default().add(payment)
 //        }
 //        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-//            ToastUtils.hide()
+//
 //        }
 //    }
-//    
+//
 //    /// 支付成功,去服务器校验
 //    func applePaySuccess(transactions: SKPaymentTransaction) -> () {
 //        let receiptUrl = Bundle.main.appStoreReceiptURL
 //        let receiveData = NSData(contentsOf: receiptUrl!)
 //        // 最好转成Base64，万一返回结果有特殊字符
 //        let receiptString = receiveData?.base64EncodedString(options: NSData.Base64EncodingOptions.endLineWithLineFeed)
-//        
+//
 //        var params = NetWorkUtils.createBaseParams()
 //        params["productIdentifier"] = transactions.payment.productIdentifier
 //        params["receipt"] = receiptString
 //        params["transactionIdentifier"] = transactions.transactionIdentifier
-//        
+//
 //        Alamofire.request(Constants.Network.APPLE_PAY_CHECK, method: .post, parameters: params).responseJSON { (response) in
 //            print("reponse:\(response.result.value!)")
 //        }
@@ -223,19 +228,24 @@ extension PayListDialog:UITableViewDelegate, UITableViewDataSource{
     /// 点击购买按钮
     ///
     /// - Parameter sender: 按钮
-    func payClick(sender:UIButton) -> () {
-        if WeChatShared.isInstall() == false {
-            ToastUtils.showErrorToast(msg: "不支持购买")
-            return
-        }
-        if wechatBtn.isSelected && WeChatShared.isInstall() {
+    @objc func payClick(sender:UIButton) -> () {
+        if wechatBtn.isSelected {
+            /// 微信支付
+            if WeChatShared.isInstall() == false {
+                ToastUtils.showErrorToast(msg: "充值支付出错，您还没有安装微信")
+                return
+            }
             wechatPay(rp: sender.tag)
             return
+        }else{
+            /// 支付宝支付
+            aliPay(rp: sender.tag)
         }
         /// 内购
 //        if SKPaymentQueue.canMakePayments() {//判断当前的支付环境, 是否可以支付
+//            SKPaymentQueue.default().add(self)
 //            ToastUtils.showLoadingToast(msg: "请稍后……")
-//            let product = ["com.meidaojia.secondcatch." + String(sender.tag)]
+//            let product = ["com.meidaojia.secondcatch.00" + String(sender.tag)]
 //            let set = NSSet(array: product as [AnyObject])
 //            let request = SKProductsRequest(productIdentifiers: set as! Set<String>)
 //            request.delegate = self
@@ -284,7 +294,7 @@ extension PayListDialog{
         
         wechatBtn.snp.makeConstraints { (make) in
             make.right.equalTo(backgroundImage).offset(-16)
-//            make.right.equalTo(aliPayBtn).offset(-(aliPayBtn.bounds.width + 18))
+            make.right.equalTo(aliPayBtn).offset(-(aliPayBtn.bounds.width + 18))
             make.centerY.equalTo(aliPayBtn)
         }
         
@@ -303,13 +313,22 @@ extension PayListDialog{
         
         exchangeCode.isHidden = true
         
-        aliPayBtn.isHidden = true
-        wechatBtn.isHidden = true
+        if WeChatShared.isInstall() == false {
+            /// 没有安装微信
+            wechatBtn.isHidden = true
+            wechatBtn.isSelected = false
+        }
+        
+        wechatBtn.isSelected = false
+        aliPayBtn.isSelected = true
+        aliPayBtn.isHidden = false
+        
+//        wechatBtn.isSelected = false
         
         getAppReleaseVersion()
     }
     
-    func showExchangeDialog() -> () {
+    @objc func showExchangeDialog() -> () {
         if exchangeCodeDialog == nil {
             exchangeCodeDialog = ExchangeCodeDialog(frame: UIScreen.main.bounds)
         }
@@ -317,7 +336,7 @@ extension PayListDialog{
         exchangeCodeDialog.show2(mainViewController: mainVC)
     }
     
-    func payBtnClick(sender:UIButton) -> () {
+    @objc func payBtnClick(sender:UIButton) -> () {
         if sender.tag == 100 {
             /// 支付宝
             if !aliPayBtn.isSelected {
@@ -326,10 +345,11 @@ extension PayListDialog{
         }else if sender.tag == 101 {
             /// 微信
             if !wechatBtn.isSelected {
-                wechatBtn.isSelected = true
-            }else{
-                wechatBtn.isSelected = false
+                switchPayBtn()
             }
+//            else{
+//                wechatBtn.isSelected = false
+//            }
         }
     }
     
@@ -382,6 +402,51 @@ extension PayListDialog{
             }
         }
     }
+}
+
+// MARK: - 支付宝支付
+extension PayListDialog{
+    
+    func aliPay(rp:Int) -> () {
+        ToastUtils.showLoadingToast(msg: "正在下单……")
+        var params = NetWorkUtils.createBaseParams()
+        params["rp"] = String(rp)
+        
+        Alamofire.request(Constants.Network.ALIPAY_URL, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            ToastUtils.hide()
+            print("result:\(String(describing: response.result.value))")
+            let json = JSON(data: response.data!)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: { [weak self] in
+                self?.aliPayOrder(orderBody: json["data"]["orderBody"].string!)
+            })
+        }
+    }
+    
+    func aliPayOrder(orderBody:String) -> () {
+        AlipaySDK.defaultService().payOrder(orderBody, fromScheme: "alipay2017071707787463", callback: { (result) in
+            /// 使用web支付会走到这里
+            print("result:\(String(describing: result))")
+            if let Alipayjson = result as NSDictionary?{
+                let resultStatus = Alipayjson.value(forKey: "resultStatus") as! String
+                if resultStatus == "9000"{
+                    print("OK")
+                    ToastUtils.showSuccessToast(msg: "支付成功")
+                }else if resultStatus == "8000" {
+                    print("正在处理中")
+                }else if resultStatus == "4000" {
+                    print("订单支付失败");
+                    ToastUtils.showErrorToast(msg: "支付失败")
+                }else if resultStatus == "6001" {
+                    print("用户中途取消")
+                    ToastUtils.showErrorToast(msg: "支付取消")
+                }else if resultStatus == "6002" {
+                    print("网络连接出错")
+                    ToastUtils.showErrorToast(msg: "网络出错")
+                }
+            }
+        })
+    }
+    
 }
 
 // MARK: - 获取支付的列表

@@ -149,7 +149,7 @@ class InviteDialog: BaseDialog {
         nowInvite.addTarget(self, action: #selector(showNowShared), for: .touchUpInside)
     }
     
-    func showEditInviteCode() -> () {
+    @objc func showEditInviteCode() -> () {
         if editInviteCodeDialog == nil {
             editInviteCodeDialog = EditInviteCode(frame: UIScreen.main.bounds)
         }
@@ -157,7 +157,7 @@ class InviteDialog: BaseDialog {
         editInviteCodeDialog.show2(mainViewController: self.mainController)
     }
     
-    func showMyInviteDialog() -> () {
+    @objc func showMyInviteDialog() -> () {
         if inviteListDialog == nil {
             inviteListDialog = InviteListDialog(frame: UIScreen.main.bounds)
         }
@@ -166,7 +166,7 @@ class InviteDialog: BaseDialog {
     }
     
     /// 立即分享
-    func showNowShared() -> () {
+    @objc func showNowShared() -> () {
         if WeChatShared.isInstall() == false {
             ToastUtils.showErrorToast(msg: "无法分享")
             return
