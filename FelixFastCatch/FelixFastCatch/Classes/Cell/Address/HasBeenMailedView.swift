@@ -38,7 +38,7 @@ class HasBeenMailedView: UIView {
     private var itemData:JSON!
     
     func getHeight() -> CGFloat {
-        return CGFloat(10 + timeLabel.bounds.height + productsGroup.bounds.height + 10 + statusLabel.bounds.height + 10 +
+        return CGFloat(10*2 + timeLabel.bounds.height + productsGroup.bounds.height + 10 + statusLabel.bounds.height + 10 +
         mailedTimeLabel.bounds.height + 10 + mailedCodeLabel.bounds.height + 20)
     }
     
@@ -52,9 +52,14 @@ class HasBeenMailedView: UIView {
         
         backgroundColor = UIColor.clear
         
+        hasBeenContentBackgroundImage = UIImage(named: "已邮寄item背景")
+        contentBacngroundImage = UIImageView()
+        contentBacngroundImage.image = hasBeenContentBackgroundImage
+        addSubview(contentBacngroundImage)
+        
         // 时间标签
         timeLabel = MainCustomerLabel()
-        timeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        timeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
         timeLabel.outLineWidth = 2
         timeLabel.outTextColor = UIColor.white
         timeLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -63,13 +68,9 @@ class HasBeenMailedView: UIView {
         addSubview(timeLabel)
         
         timeLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(self).offset(10)
+            make.top.equalTo(self).offset(20)
+            make.left.equalTo(self).offset(20)
         }
-        
-        hasBeenContentBackgroundImage = UIImage(named: "has_been_content_background")
-        contentBacngroundImage = UIImageView()
-        contentBacngroundImage.image = hasBeenContentBackgroundImage
-        addSubview(contentBacngroundImage)
         
         createProductGroup()
         
@@ -90,18 +91,18 @@ class HasBeenMailedView: UIView {
         layout.minimumLineSpacing = 4
         
         // 設置每個 cell 的尺寸
-        layout.itemSize = CGSize(width: CGFloat(((hasBeenContentBackgroundImage?.size.width)! - 20) / 4 - 8), height: CGFloat((hasBeenProductBackground?.size.height)! + 5))
+        layout.itemSize = CGSize(width: CGFloat(((hasBeenContentBackgroundImage?.size.width)! - 20) / 5 - 8), height: CGFloat((hasBeenProductBackground?.size.height)! + 5))
         
-        var line = itemData["awards"].array!.count / 4
+        var line = itemData["awards"].array!.count / 5
         if line <= 0 {
             line = 1
         }else{
-            if itemData["awards"].array!.count % 4 > 0 {
+            if itemData["awards"].array!.count % 5 > 0 {
                 line = line + 1
             }
         }
         
-        productsGroup = UICollectionView(frame: CGRect(x: 10, y: timeLabel.bounds.height + 34, width: hasBeenContentBackgroundImage!.size.width - 20, height: (hasBeenProductBackground?.size.height)! * CGFloat(line) + 10 * CGFloat(line)), collectionViewLayout: layout)
+        productsGroup = UICollectionView(frame: CGRect(x: 10, y: timeLabel.bounds.height + 25, width: hasBeenContentBackgroundImage!.size.width - 20, height: (hasBeenProductBackground?.size.height)! * CGFloat(line) + 10 * CGFloat(line)), collectionViewLayout: layout)
         productsGroup.backgroundColor = UIColor.clear
         
         hasbeenProductsDelegate = FCMyGiftHasBeenProductsDelegate(dataSource: itemData["awards"].array!)
@@ -131,8 +132,8 @@ class HasBeenMailedView: UIView {
         
         statusLabel.snp.makeConstraints { (make) in
             make.top.equalTo(productsGroup).offset(productsGroup.bounds.height)
-            make.left.equalTo(self).offset(10)
-            make.right.equalTo(self).offset(10)
+            make.left.equalTo(self).offset(20)
+            make.right.equalTo(self).offset(20)
         }
         
         // 邮寄时间
@@ -172,7 +173,7 @@ class HasBeenMailedView: UIView {
             make.right.equalTo(statusLabel)
         }
         
-        contentBacngroundImage.frame = CGRect(x: 0, y: timeLabel.bounds.height + 10 * 2, width: hasBeenContentBackgroundImage!.size.width, height: productsGroup.bounds.height + statusLabel.bounds.height + mailedTimeLabel.bounds.height +
+        contentBacngroundImage.frame = CGRect(x: 0, y: 0, width: hasBeenContentBackgroundImage!.size.width, height: 10 * 2 + timeLabel.bounds.height + productsGroup.bounds.height + statusLabel.bounds.height + mailedTimeLabel.bounds.height +
             mailedCodeLabel.bounds.height + 12 * 3 + 10)
         
         //        contentBacngroundImage.snp.makeConstraints { (make) in

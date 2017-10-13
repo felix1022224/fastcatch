@@ -51,11 +51,19 @@ class FCMailedConfirmDialog: BaseDialog {
     /// 邮寄成功的回调，回调上一个接口刷新list
     var mailedSuccessCallback:(()->())? = nil
     
+    var freePostageNumber = 0
+    var postageCashNumber = 0
+    
+    /// 邮费不足的dialog
+    fileprivate var cashShortDialog:MailedCashShortDialog!
+    
     override func createView() {
         createBackgroundImage(imageName: "信息确认背景")
         
         backgroundImage.frame.size = CGSize(width: 290, height: 388)
         backgroundImage.center = self.center
+        
+        cashShortDialog = MailedCashShortDialog(frame: UIScreen.main.bounds)
         
         createCloseBtn()
    
@@ -169,7 +177,11 @@ class FCMailedConfirmDialog: BaseDialog {
         postageLabel.outTextColor = UIColor.white
         postageLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         postageLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
-        postageLabel.text = "免邮"
+        if freePostageNumber <= 0 {
+            postageLabel.text = String(postageCashNumber) + "代币"
+        }else{
+            postageLabel.text = "免费"
+        }
         postageLabel.textAlignment = .right
         postageLabel.sizeToFit()
         scrollRootView.addSubview(postageLabel)
@@ -186,6 +198,8 @@ class FCMailedConfirmDialog: BaseDialog {
         scrollRootView.addSubview(freemailNumberLabel)
         
         freemailNumberLabel.frame = CGRect(x: 0, y: postageHelperY + postageHelper.bounds.height + 10, width: scrollRootView.bounds.width, height: postageLabel.bounds.height)
+        
+        freemailNumberLabel.isHidden = true
         
         let rootHeightSize = postageHelperY + postageHelper.bounds.height + 10 + freemailNumberLabel.bounds.height
         
@@ -273,24 +287,24 @@ extension FCMailedConfirmDialog:UICollectionViewDelegate, UICollectionViewDataSo
         contentBacngroundImage.image = hasBeenContentBackgroundImage
         scrollRootView.addSubview(contentBacngroundImage)
         
-        let hasBeenProductBackground = UIImage(named: "已邮寄产品框")
+        let hasBeenProductBackground = UIImage(named: "产品框")
         
         let layout = UICollectionViewFlowLayout()
         
         // 設置 section 的間距 四個數值分別代表 上、左、下、右 的間距
-        layout.sectionInset = UIEdgeInsetsMake(4, 0, 4, 0);
+        layout.sectionInset = UIEdgeInsetsMake(3, 0, 3, 0);
         
         // 設置每一行的間距
-        layout.minimumLineSpacing = 4
+        layout.minimumLineSpacing = 3
         
         // 設置每個 cell 的尺寸
-        layout.itemSize = CGSize(width: CGFloat((scrollRootView.bounds.width - 20)/4-12), height: CGFloat((hasBeenProductBackground?.size.height)!))
+        layout.itemSize = CGSize(width: CGFloat((scrollRootView.bounds.width - 20)/4-14), height: CGFloat((hasBeenProductBackground?.size.height)!))
         
         let headerHeight = userInfo.bounds.height + 10
         layout.headerReferenceSize = CGSize(width: scrollRootView.bounds.width, height: headerHeight)
         
         let groupY = userInfo.bounds.height + phoneNumber.bounds.height + address.bounds.height + 10 + 2
-        productsGroup = UICollectionView(frame: CGRect(x: 10, y: groupY, width: scrollRootView.bounds.width - 20, height: (hasBeenProductBackground?.size.height)! * CGFloat(contentImagesLine) + CGFloat(4 * contentImagesLine) + 4 + headerHeight), collectionViewLayout: layout)
+        productsGroup = UICollectionView(frame: CGRect(x: 10, y: groupY, width: scrollRootView.bounds.width - 20, height: (hasBeenProductBackground?.size.height)! * CGFloat(contentImagesLine) + CGFloat(3 * contentImagesLine) + 3 + headerHeight), collectionViewLayout: layout)
         productsGroup.backgroundColor = UIColor.clear
         
         productsGroup.delegate = self
@@ -367,13 +381,31 @@ extension FCMailedConfirmDialog{
         params["id"] = ids
         
         Alamofire.request(Constants.Network.Gift.CREATE_POSTAGE + "?" + ids, method: .get).responseJSON { (response) in
-            if NetWorkUtils.checkReponse(response: response) {
-                ToastUtils.hide()
-                if self.mailedSuccessCallback != nil {
-                    self.mailedSuccessCallback?()
+            ToastUtils.hide()
+            if response.error == nil && response.data != nil {
+                print("result:\(response.result.value!)")
+                let jsonData = JSON(data: response.data!)
+                if jsonData["code"].int! == 0 {
+                    if self.mailedSuccessCallback != nil {
+                        self.mailedSuccessCallback?()
+                    }
+                    self.hide()
+                    self.showSuccessDialog()
+                }else if jsonData["code"].int! == -302 {
+                    print("用户身份异常，重新登录")
+                    if !Constants.isFastLoginShow {
+                        let loginDialog = FastLoginDialog(frame: UIScreen.main.bounds)
+                        loginDialog.createView()
+                        loginDialog.show()
+                    }
+                    LocalDataUtils.clearLoaclData()
+                }else if jsonData["code"].int! == -1 {
+                    /// 邮费不足
+                    self.cashShortDialog.createView()
+                    self.cashShortDialog.show()
                 }
-                self.hide()
-                self.showSuccessDialog()
+            }else{
+                print("error:\(String(describing: response.error))")
             }
         }
     }

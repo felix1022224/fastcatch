@@ -140,11 +140,6 @@ class MyGiftDialog: BaseDialog {
             ToastUtils.showErrorToast(msg: "请选择要邮寄的产品")
             return
         }
-//        if addressData == "" {
-//            editAddressDialog.createView(dialog:self)
-//            editAddressDialog.show()
-//            return
-//        }
         /// 组装数据
         var sendData = [JSON]()
         for key in Array(tobeMailedDelegate.selectList.keys) {
@@ -152,12 +147,6 @@ class MyGiftDialog: BaseDialog {
                 sendData.append(tobeMailedDelegate.dataSource[key])
             }
         }
-        
-//        let json = JSON(addressData)
-        
-//        mailedConfirmDialog.userInfoData = json["name"].stringValue
-//        mailedConfirmDialog.phoneNumberData = json["phone"].stringValue
-//        mailedConfirmDialog.addressData = json["addr"].stringValue
         
         mailedConfirmDialog.mailedSuccessCallback = {[weak self] in
             self?.tobeMailedDelegate.dataSource.removeAll()

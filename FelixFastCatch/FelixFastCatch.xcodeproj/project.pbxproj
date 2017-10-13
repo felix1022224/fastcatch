@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D0161DC1F9075C2004A90DF /* CustomerServiceInfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0161DB1F9075C2004A90DF /* CustomerServiceInfoDialog.swift */; };
 		4D17ECF81F3B0355004DD01F /* 镜头切换_音效.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4D17ECF11F3B017B004DD01F /* 镜头切换_音效.wav */; };
 		4D17ECF91F3B0355004DD01F /* 游戏开始_音效.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4D17ECEF1F3B017B004DD01F /* 游戏开始_音效.wav */; };
 		4D17ECFA1F3B0355004DD01F /* background_music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4D17ECEE1F3B017B004DD01F /* background_music.mp3 */; };
@@ -32,6 +33,10 @@
 		4D1D861F1F334461005210CA /* ConstellationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1D861E1F334461005210CA /* ConstellationUtils.swift */; };
 		4D1DA0F41F2F4C4300B1138D /* FCHasBennMailedProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1DA0F31F2F4C4300B1138D /* FCHasBennMailedProductCell.swift */; };
 		4D1DA0F61F2F4C7000B1138D /* FCMailedConfirmDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1DA0F51F2F4C7000B1138D /* FCMailedConfirmDialog.swift */; };
+		4D1F59D91F8CC80100806C00 /* GameHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F59D81F8CC80100806C00 /* GameHistoryViewController.swift */; };
+		4D1F59DC1F8CC8EA00806C00 /* TokenHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F59DB1F8CC8EA00806C00 /* TokenHistoryViewController.swift */; };
+		4D1F59DF1F8CCD8D00806C00 /* GameHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F59DE1F8CCD8D00806C00 /* GameHistoryCell.swift */; };
+		4D1F59E11F8CD9D600806C00 /* TokenHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F59E01F8CD9D600806C00 /* TokenHistoryCell.swift */; };
 		4D2B800E1F3BFBF40075D390 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2B800D1F3BFBF40075D390 /* libresolv.tbd */; };
 		4D2B80101F40027D0075D390 /* InviteListDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B800F1F40027D0075D390 /* InviteListDialog.swift */; };
 		4D2B80121F4008060075D390 /* MailedSuccessDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B80111F4008060075D390 /* MailedSuccessDialog.swift */; };
@@ -56,6 +61,10 @@
 		4D64B8A01F29D9DA002A9BFD /* BaseDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B89F1F29D9DA002A9BFD /* BaseDialog.swift */; };
 		4D64B8A21F2ADC50002A9BFD /* MainCustomerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8A11F2ADC50002A9BFD /* MainCustomerTextField.swift */; };
 		4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8A31F2B079E002A9BFD /* LocalDataUtils.swift */; };
+		4D7048A71F908A8600D337F4 /* MailedCashShortDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7048A61F908A8600D337F4 /* MailedCashShortDialog.swift */; };
+		4D7048A91F909EBC00D337F4 /* UserTitlesGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7048A81F909EBC00D337F4 /* UserTitlesGroup.swift */; };
+		4D7048AC1F90AB8500D337F4 /* TitlesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7048AB1F90AB8500D337F4 /* TitlesCell.swift */; };
+		4D7144831F8B584700B37D8A /* MailingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7144821F8B584700B37D8A /* MailingListViewController.swift */; };
 		4D7FF4BC1F596FEC00396C00 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7FF4BA1F596FEC00396C00 /* AlipaySDK.framework */; };
 		4D7FF4BD1F596FEC00396C00 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4D7FF4BB1F596FEC00396C00 /* AlipaySDK.bundle */; };
 		4D82A4521F36C7AD007ADE5C /* UserTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D82A4511F36C7AD007ADE5C /* UserTools.swift */; };
@@ -71,6 +80,12 @@
 		4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB8A1F271C80002674DE /* MainViewController.swift */; };
 		4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */; };
 		4D9EBB961F276822002674DE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9EBB951F276822002674DE /* Constants.swift */; };
+		4DA23CDE1F8F4C5100B2337E /* MainADVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA23CDD1F8F4C5100B2337E /* MainADVCell.swift */; };
+		4DA23CE01F8F536B00B2337E /* CustomeFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA23CDF1F8F536B00B2337E /* CustomeFlowLayout.swift */; };
+		4DA23CE21F8F6CF200B2337E /* MainFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA23CE11F8F6CF200B2337E /* MainFooterCell.swift */; };
+		4DA23CE41F8F878D00B2337E /* UserCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA23CE31F8F878D00B2337E /* UserCenterViewController.swift */; };
+		4DA23CE71F8F87CD00B2337E /* UserCenterWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA23CE61F8F87CD00B2337E /* UserCenterWidget.swift */; };
+		4DA23CEB1F8F920E00B2337E /* PlayUserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA23CEA1F8F920E00B2337E /* PlayUserInfoView.swift */; };
 		4DAD03321F51629B00D7E72F /* CustomerBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAD03311F51629B00D7E72F /* CustomerBannerView.swift */; };
 		4DAD03341F51777200D7E72F /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAD03331F51777200D7E72F /* WebViewController.swift */; };
 		4DBDE8B61F6AB1F60058E4FE /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DD6C1571F6A81D900007EE6 /* UserNotifications.framework */; };
@@ -106,10 +121,14 @@
 		4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B811F2849DC00102A0F /* NetWorkUtils.swift */; };
 		4DDD2B861F286BC000102A0F /* DeviceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B851F286BC000102A0F /* DeviceTools.swift */; };
 		4DE204131F39B8100046B130 /* HasBeenMailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE204121F39B8100046B130 /* HasBeenMailedView.swift */; };
+		4DF0587F1F90C1B900E17B75 /* UserTitlesInfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0587E1F90C1B900E17B75 /* UserTitlesInfoDialog.swift */; };
+		4DF058811F90C7EC00E17B75 /* TitlesInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF058801F90C7EC00E17B75 /* TitlesInfoCell.swift */; };
+		4DF058831F90D20500E17B75 /* GameUserInfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF058821F90D20500E17B75 /* GameUserInfoDialog.swift */; };
 		958698C56D14F18FE0B94475 /* Pods_FelixFastCatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7E009E5610C1572048261D2 /* Pods_FelixFastCatch.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D0161DB1F9075C2004A90DF /* CustomerServiceInfoDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerServiceInfoDialog.swift; sourceTree = "<group>"; };
 		4D17ECEE1F3B017B004DD01F /* background_music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background_music.mp3; sourceTree = "<group>"; };
 		4D17ECEF1F3B017B004DD01F /* 游戏开始_音效.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "游戏开始_音效.wav"; sourceTree = "<group>"; };
 		4D17ECF01F3B017B004DD01F /* 抓取失败_音效.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "抓取失败_音效.wav"; sourceTree = "<group>"; };
@@ -136,6 +155,10 @@
 		4D1D861E1F334461005210CA /* ConstellationUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstellationUtils.swift; sourceTree = "<group>"; };
 		4D1DA0F31F2F4C4300B1138D /* FCHasBennMailedProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCHasBennMailedProductCell.swift; sourceTree = "<group>"; };
 		4D1DA0F51F2F4C7000B1138D /* FCMailedConfirmDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMailedConfirmDialog.swift; sourceTree = "<group>"; };
+		4D1F59D81F8CC80100806C00 /* GameHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHistoryViewController.swift; sourceTree = "<group>"; };
+		4D1F59DB1F8CC8EA00806C00 /* TokenHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenHistoryViewController.swift; sourceTree = "<group>"; };
+		4D1F59DE1F8CCD8D00806C00 /* GameHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHistoryCell.swift; sourceTree = "<group>"; };
+		4D1F59E01F8CD9D600806C00 /* TokenHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenHistoryCell.swift; sourceTree = "<group>"; };
 		4D2B800D1F3BFBF40075D390 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		4D2B800F1F40027D0075D390 /* InviteListDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteListDialog.swift; sourceTree = "<group>"; };
 		4D2B80111F4008060075D390 /* MailedSuccessDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailedSuccessDialog.swift; sourceTree = "<group>"; };
@@ -165,6 +188,10 @@
 		4D64B89F1F29D9DA002A9BFD /* BaseDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDialog.swift; sourceTree = "<group>"; };
 		4D64B8A11F2ADC50002A9BFD /* MainCustomerTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCustomerTextField.swift; sourceTree = "<group>"; };
 		4D64B8A31F2B079E002A9BFD /* LocalDataUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDataUtils.swift; sourceTree = "<group>"; };
+		4D7048A61F908A8600D337F4 /* MailedCashShortDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailedCashShortDialog.swift; sourceTree = "<group>"; };
+		4D7048A81F909EBC00D337F4 /* UserTitlesGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTitlesGroup.swift; sourceTree = "<group>"; };
+		4D7048AB1F90AB8500D337F4 /* TitlesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlesCell.swift; sourceTree = "<group>"; };
+		4D7144821F8B584700B37D8A /* MailingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailingListViewController.swift; sourceTree = "<group>"; };
 		4D7FF4BA1F596FEC00396C00 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		4D7FF4BB1F596FEC00396C00 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		4D82A4511F36C7AD007ADE5C /* UserTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTools.swift; sourceTree = "<group>"; };
@@ -180,6 +207,12 @@
 		4D9EBB8A1F271C80002674DE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
 		4D9EBB951F276822002674DE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4DA23CDD1F8F4C5100B2337E /* MainADVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainADVCell.swift; sourceTree = "<group>"; };
+		4DA23CDF1F8F536B00B2337E /* CustomeFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomeFlowLayout.swift; sourceTree = "<group>"; };
+		4DA23CE11F8F6CF200B2337E /* MainFooterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFooterCell.swift; sourceTree = "<group>"; };
+		4DA23CE31F8F878D00B2337E /* UserCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterViewController.swift; sourceTree = "<group>"; };
+		4DA23CE61F8F87CD00B2337E /* UserCenterWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterWidget.swift; sourceTree = "<group>"; };
+		4DA23CEA1F8F920E00B2337E /* PlayUserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayUserInfoView.swift; sourceTree = "<group>"; };
 		4DAD03311F51629B00D7E72F /* CustomerBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerBannerView.swift; sourceTree = "<group>"; };
 		4DAD03331F51777200D7E72F /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		4DAD03351F518AD700D7E72F /* FelixFastCatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FelixFastCatch.entitlements; sourceTree = "<group>"; };
@@ -216,6 +249,9 @@
 		4DDD2B811F2849DC00102A0F /* NetWorkUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetWorkUtils.swift; sourceTree = "<group>"; };
 		4DDD2B851F286BC000102A0F /* DeviceTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceTools.swift; sourceTree = "<group>"; };
 		4DE204121F39B8100046B130 /* HasBeenMailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasBeenMailedView.swift; sourceTree = "<group>"; };
+		4DF0587E1F90C1B900E17B75 /* UserTitlesInfoDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTitlesInfoDialog.swift; sourceTree = "<group>"; };
+		4DF058801F90C7EC00E17B75 /* TitlesInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlesInfoCell.swift; sourceTree = "<group>"; };
+		4DF058821F90D20500E17B75 /* GameUserInfoDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameUserInfoDialog.swift; sourceTree = "<group>"; };
 		9DA239CE4A7A8989C9E6EAED /* Pods-FelixFastCatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FelixFastCatch.release.xcconfig"; path = "Pods/Target Support Files/Pods-FelixFastCatch/Pods-FelixFastCatch.release.xcconfig"; sourceTree = "<group>"; };
 		D7E009E5610C1572048261D2 /* Pods_FelixFastCatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FelixFastCatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFC6B4F6BC202EA7BB7FDC1F /* Pods-FelixFastCatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FelixFastCatch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FelixFastCatch/Pods-FelixFastCatch.debug.xcconfig"; sourceTree = "<group>"; };
@@ -292,6 +328,25 @@
 				4D1D86121F306307005210CA /* TobeGiftModel.swift */,
 			);
 			path = TobeGift;
+			sourceTree = "<group>";
+		};
+		4D1F59DA1F8CC8D900806C00 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				4D1F59D81F8CC80100806C00 /* GameHistoryViewController.swift */,
+				4D1F59DB1F8CC8EA00806C00 /* TokenHistoryViewController.swift */,
+				4D0161DB1F9075C2004A90DF /* CustomerServiceInfoDialog.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		4D1F59DD1F8CCD6700806C00 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				4D1F59DE1F8CCD8D00806C00 /* GameHistoryCell.swift */,
+				4D1F59E01F8CD9D600806C00 /* TokenHistoryCell.swift */,
+			);
+			path = History;
 			sourceTree = "<group>";
 		};
 		4D2B80171F4C05C50075D390 /* Exchange */ = {
@@ -384,6 +439,24 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		4D7048AA1F90AB5D00D337F4 /* Titles */ = {
+			isa = PBXGroup;
+			children = (
+				4D7048AB1F90AB8500D337F4 /* TitlesCell.swift */,
+				4DF058801F90C7EC00E17B75 /* TitlesInfoCell.swift */,
+			);
+			path = Titles;
+			sourceTree = "<group>";
+		};
+		4D7144811F8B582400B37D8A /* Mailing */ = {
+			isa = PBXGroup;
+			children = (
+				4D7144821F8B584700B37D8A /* MailingListViewController.swift */,
+				4D7048A61F908A8600D337F4 /* MailedCashShortDialog.swift */,
+			);
+			path = Mailing;
+			sourceTree = "<group>";
+		};
 		4D96D39B1F5BD7B600E614CD /* Invite */ = {
 			isa = PBXGroup;
 			children = (
@@ -407,6 +480,9 @@
 		4D9EBB841F271C3A002674DE /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4DA23CE51F8F87B600B2337E /* UserCenter */,
+				4D1F59DA1F8CC8D900806C00 /* History */,
+				4D7144811F8B582400B37D8A /* Mailing */,
 				4D9EBB881F271C5C002674DE /* Main */,
 				4D9EBB891F271C5C002674DE /* PlayInfo */,
 			);
@@ -462,6 +538,7 @@
 				4D9EBB8A1F271C80002674DE /* MainViewController.swift */,
 				4D1D861A1F32F78F005210CA /* SelectDateView.swift */,
 				4DAD03331F51777200D7E72F /* WebViewController.swift */,
+				4DA23CDF1F8F536B00B2337E /* CustomeFlowLayout.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -471,6 +548,8 @@
 			children = (
 				4D64B8921F287FB9002A9BFD /* PlayViewController.swift */,
 				4DD3A4FF1F7A07D8000B5F25 /* GameSceneController.swift */,
+				4DA23CEA1F8F920E00B2337E /* PlayUserInfoView.swift */,
+				4DF058821F90D20500E17B75 /* GameUserInfoDialog.swift */,
 			);
 			path = PlayInfo;
 			sourceTree = "<group>";
@@ -524,6 +603,8 @@
 		4D9EBB901F274563002674DE /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				4D7048AA1F90AB5D00D337F4 /* Titles */,
+				4D1F59DD1F8CCD6700806C00 /* History */,
 				4D96D39B1F5BD7B600E614CD /* Invite */,
 				4DCD39D91F2F31AB002B7F35 /* Pay */,
 				4D9EBB911F274563002674DE /* Address */,
@@ -550,8 +631,21 @@
 			isa = PBXGroup;
 			children = (
 				4D9EBB931F274583002674DE /* MainCollectionViewCell.swift */,
+				4DA23CDD1F8F4C5100B2337E /* MainADVCell.swift */,
+				4DA23CE11F8F6CF200B2337E /* MainFooterCell.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		4DA23CE51F8F87B600B2337E /* UserCenter */ = {
+			isa = PBXGroup;
+			children = (
+				4DA23CE31F8F878D00B2337E /* UserCenterViewController.swift */,
+				4DA23CE61F8F87CD00B2337E /* UserCenterWidget.swift */,
+				4D7048A81F909EBC00D337F4 /* UserTitlesGroup.swift */,
+				4DF0587E1F90C1B900E17B75 /* UserTitlesInfoDialog.swift */,
+			);
+			path = UserCenter;
 			sourceTree = "<group>";
 		};
 		4DCD39D91F2F31AB002B7F35 /* Pay */ = {
@@ -760,6 +854,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D7048AC1F90AB8500D337F4 /* TitlesCell.swift in Sources */,
+				4DA23CE01F8F536B00B2337E /* CustomeFlowLayout.swift in Sources */,
 				4DD3A5041F7C9CFA000B5F25 /* MainBeginnerGuidPayView.swift in Sources */,
 				4DCC49CC1F52E0110017D4A4 /* PlayInfoAwardDialog.swift in Sources */,
 				4D96D3BF1F5BE14200E614CD /* ProtocolInfoDialog.swift in Sources */,
@@ -768,16 +864,22 @@
 				4D1D86191F31DA17005210CA /* PlayResultDialog.swift in Sources */,
 				4DDD2B861F286BC000102A0F /* DeviceTools.swift in Sources */,
 				4D64B8951F2885AA002A9BFD /* MainFloatMenu.swift in Sources */,
+				4DF058811F90C7EC00E17B75 /* TitlesInfoCell.swift in Sources */,
 				4D64B8A21F2ADC50002A9BFD /* MainCustomerTextField.swift in Sources */,
 				4DDD2B7F1F2848FC00102A0F /* MainCustomerLabel.swift in Sources */,
+				4DA23CDE1F8F4C5100B2337E /* MainADVCell.swift in Sources */,
 				4DE204131F39B8100046B130 /* HasBeenMailedView.swift in Sources */,
+				4D0161DC1F9075C2004A90DF /* CustomerServiceInfoDialog.swift in Sources */,
+				4DA23CEB1F8F920E00B2337E /* PlayUserInfoView.swift in Sources */,
 				4D2B80101F40027D0075D390 /* InviteListDialog.swift in Sources */,
+				4D7048A91F909EBC00D337F4 /* UserTitlesGroup.swift in Sources */,
 				4D64B89E1F29D9C7002A9BFD /* PhoneNumberDialog.swift in Sources */,
 				4D9EBB811F26F163002674DE /* WeChatShared.swift in Sources */,
 				4D1DA0F41F2F4C4300B1138D /* FCHasBennMailedProductCell.swift in Sources */,
 				4DCD39EA1F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedTabViewDelegate.swift in Sources */,
 				4D64B8A01F29D9DA002A9BFD /* BaseDialog.swift in Sources */,
 				4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */,
+				4D1F59DC1F8CC8EA00806C00 /* TokenHistoryViewController.swift in Sources */,
 				4D18ACD41F261378005363A4 /* TencentShared.swift in Sources */,
 				4DCD39DB1F2F31C6002B7F35 /* PayItemTableViewCell.swift in Sources */,
 				4DAD03321F51629B00D7E72F /* CustomerBannerView.swift in Sources */,
@@ -786,6 +888,9 @@
 				4D1D86151F31BA9C005210CA /* EditAddressDialog.swift in Sources */,
 				4D64B8981F29B549002A9BFD /* MainBanner.swift in Sources */,
 				4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */,
+				4DA23CE71F8F87CD00B2337E /* UserCenterWidget.swift in Sources */,
+				4D1F59DF1F8CCD8D00806C00 /* GameHistoryCell.swift in Sources */,
+				4D1F59E11F8CD9D600806C00 /* TokenHistoryCell.swift in Sources */,
 				4DCD39D81F2F12E9002B7F35 /* PayListDialog.swift in Sources */,
 				4D96D3BD1F5BDE2000E614CD /* HelpDialog.swift in Sources */,
 				4D5BF1C01F3853F60091180B /* InviteDialog.swift in Sources */,
@@ -803,15 +908,19 @@
 				4D2B801B1F4C07050075D390 /* SubmitSuccessDialog.swift in Sources */,
 				4DCC49CA1F52A65F0017D4A4 /* PlayInfoBannerDialog.swift in Sources */,
 				4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */,
+				4DA23CE21F8F6CF200B2337E /* MainFooterCell.swift in Sources */,
 				4D2B80141F40097E0075D390 /* OutGameDialog.swift in Sources */,
 				4DCC49CE1F52E8B10017D4A4 /* EditInviteCode.swift in Sources */,
 				4D4ACE771F51CE410011E7F7 /* GemLackDialog.swift in Sources */,
+				4DA23CE41F8F878D00B2337E /* UserCenterViewController.swift in Sources */,
 				4DCC49D01F52F7D30017D4A4 /* InviteSuccessDialog.swift in Sources */,
 				4D589C761F39AC3D00C8DBC7 /* FirstLoginRewardDialog.swift in Sources */,
 				4DCD39DD1F2F3CD5002B7F35 /* UserInfoDialog.swift in Sources */,
 				4D64B89C1F29D984002A9BFD /* FastLoginDialog.swift in Sources */,
 				4DCD39EC1F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift in Sources */,
+				4DF058831F90D20500E17B75 /* GameUserInfoDialog.swift in Sources */,
 				4DCD39B71F2DA5FC002B7F35 /* CustomerControllerButton.swift in Sources */,
+				4D7144831F8B584700B37D8A /* MailingListViewController.swift in Sources */,
 				4DCC49D21F5307220017D4A4 /* ExchangeCodeDialog.swift in Sources */,
 				4D1D861F1F334461005210CA /* ConstellationUtils.swift in Sources */,
 				4D5BF1BD1F3851570091180B /* CheckInDialog.swift in Sources */,
@@ -820,9 +929,12 @@
 				4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */,
 				4DD3A5001F7A07D8000B5F25 /* GameSceneController.swift in Sources */,
 				4D4B25D81F5FA64900338CBD /* SharedViewDialog.swift in Sources */,
+				4D1F59D91F8CC80100806C00 /* GameHistoryViewController.swift in Sources */,
+				4DF0587F1F90C1B900E17B75 /* UserTitlesInfoDialog.swift in Sources */,
 				4DAD03341F51777200D7E72F /* WebViewController.swift in Sources */,
 				4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */,
 				4D1D861D1F333299005210CA /* HideView.swift in Sources */,
+				4D7048A71F908A8600D337F4 /* MailedCashShortDialog.swift in Sources */,
 				4D589C741F386EB500C8DBC7 /* CheckIn7DayView.swift in Sources */,
 				4D9EBB961F276822002674DE /* Constants.swift in Sources */,
 			);

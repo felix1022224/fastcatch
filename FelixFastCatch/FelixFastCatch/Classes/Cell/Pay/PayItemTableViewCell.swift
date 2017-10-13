@@ -11,7 +11,7 @@ import UIKit
 class PayItemTableViewCell: UITableViewCell {
 
     // 顶部背景
-    private var topContentBackground:UIImageView!
+    var topContentBackground:UIImageView!
     
     // 钻石描述
     lazy var gemInfo:MainCustomerLabel = MainCustomerLabel()

@@ -13,11 +13,13 @@ class Constants: NSObject {
     /// 网络
     struct Network {
         
-        static let BASE_URL = "http://101.201.68.47:9125/"
+        /// 正式地址
+//        static let BASE_URL = "http://101.201.68.47:9125/"
         
-//        static let BASE_URL = "http://192.168.0.186:9125/"
+        /// 测试地址
+//        static let BASE_URL = "http://192.168.1.162:9125/"
         
-//        static let BASE_URL = "http://47.92.72.158:9125/"
+        static let BASE_URL = "http://47.92.72.158:9125/"
         
         /// 微信Pay支付接口
         static let WECHAT_PAY_URL =  BASE_URL +  "trade/wechatorder"
@@ -72,6 +74,7 @@ class Constants: NSObject {
             
             /// 取消预约
             static let END_PALY = BASE_URL + "machine/quitqueue"
+            
         }
         
         /// 礼物相关
@@ -123,6 +126,18 @@ class Constants: NSObject {
             
             /// 获取邀请好友列表
             static let GET_INVITE_LIST = BASE_URL + "user/invreglist"
+            
+            /// 游戏记录
+            static let GET_GAME_HISTORY = BASE_URL + "award/list"
+            
+            /// 代币记录
+            static let GET_TOKEN_HISTORY = BASE_URL + "cr/list"
+            
+            /// 获取免邮次数
+            static let GET_FREE_POST_NUMBER = BASE_URL + "app/config/freepostnum"
+            
+            /// 获取成就列表
+            static let GET_USER_TITLES_LIST = BASE_URL + "user/achievement"
         }
     }
     

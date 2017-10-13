@@ -21,7 +21,7 @@ class PlayViewController: UIViewController {
     fileprivate lazy var backgroundView:UIView = UIView()
     
     /// 钻石背景
-    fileprivate lazy var gemBackground:UIImageView = UIImageView()
+    lazy var gemBackground:UIImageView = UIImageView()
     
     /// 钻石数量
     lazy var gemLabel:MainCustomerLabel = MainCustomerLabel()
@@ -157,8 +157,8 @@ class PlayViewController: UIViewController {
     var bottomAwardDialog:PlayInfoAwardDialog!
     
     /// 正在排队中的view
-    fileprivate var playQueueNumberStatus:UIView!
-    fileprivate var playQueueStausNumber:MainCustomerLabel!
+    var playQueueNumberStatus:UIView!
+    var playQueueStausNumber:MainCustomerLabel!
     
     /// 被抓取的次数
     var darwCount = 0
@@ -193,9 +193,28 @@ class PlayViewController: UIViewController {
     /// 切换镜头
     private var playSwitchGuid:MainBeginnerGuidPlaySwitchView!
     
+    /// 正在游戏的用户集合
+    lazy var gameUserGroup:UIView = UIView()
+    
+    /// 正在游戏的用户头像
+    lazy var gameUserImage = UIImageView()
+    
+    /// 正在游戏的用户昵称
+    lazy var gameUserNickName = MainCustomerLabel()
+    
+    /// 正在游戏的用户昵称背景
+    lazy var gameUserNickNameBackground = UIView()
+    
+    /// 游戏中的弹窗
+    var gameUserInfoDialog:GameUserInfoDialog!
+    
+    var gameUserInfo:JSON!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        gameUserInfoDialog = GameUserInfoDialog(frame: UIScreen.main.bounds)
+        
         UIApplication.shared.isIdleTimerDisabled = true
         
         outGameDialog = OutGameDialog(frame: UIScreen.main.bounds)
@@ -208,9 +227,18 @@ class PlayViewController: UIViewController {
         
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false;   //禁用侧滑手势
         
-//        enter()
-        
         setupUI()
+        
+        createPlayUserInfo()
+        
+        let infoTap = UITapGestureRecognizer(target: self, action: #selector(showGameUserInfo))
+        infoTap.numberOfTapsRequired = 1
+        gameUserImage.isUserInteractionEnabled = true
+        gameUserGroup.isUserInteractionEnabled = true
+        gameUserImage.isMultipleTouchEnabled = true
+        view.isUserInteractionEnabled = true
+        
+        gameUserImage.addGestureRecognizer(infoTap)
         
         /// 播放背景音乐
         playBackgroundMusic()
@@ -227,8 +255,18 @@ class PlayViewController: UIViewController {
             playSwitchGuid.show2()
             UserDefaults.standard.set(true, forKey: Constants.IS_FIRST_OPEN_PLAY)
         }
+        
     }
 
+    @objc func showGameUserInfo() -> () {
+        if gameUserInfo == nil {
+            return
+        }
+        gameUserInfoDialog.dataSources = gameUserInfo
+        gameUserInfoDialog.createView()
+        gameUserInfoDialog.show()
+    }
+    
     deinit {
         UIApplication.shared.isIdleTimerDisabled = false
 //        out(deviceId: deviceId)
@@ -597,6 +635,9 @@ extension PlayViewController{
         /// 取消再来一次的倒计时
         isReplayCounting = false
         
+        /// 退出游戏队列
+        gameSceneController.quitQueue()
+        
         /// 断开socket连接
         gameSceneController.disconnect()
         gameSceneController = nil
@@ -805,8 +846,7 @@ extension PlayViewController: AgoraRtcEngineDelegate {
             agoraKit.setRemoteVideoStream(UInt(uid), type: .videoStream_High)
             agoraKit.setupRemoteVideo(canvas)
         }else{
-            ///成功
-            self.showPlayGroup()
+            
         }
         ToastUtils.hide()
         if !isCloseMusic {
@@ -918,7 +958,10 @@ extension PlayViewController{
         if Constants.User.USER_ID == "" {
             return
         }
-        endQueue(deviceId: deviceId)
+        if gameSceneController != nil {
+            gameSceneController.quitQueue()
+        }
+//        endQueue(deviceId: deviceId)
         
 //        var params = NetWorkUtils.createBaseParams()
 //        params["deviceid"] = deviceId
@@ -930,15 +973,15 @@ extension PlayViewController{
     }
     
     /// 取消预约
-    fileprivate func endQueue(deviceId:String){
-        var params = NetWorkUtils.createBaseParams()
-        params["deviceid"] = deviceId
-        Alamofire.request(Constants.Network.Machine.END_PALY, method: .post, parameters: params).responseJSON { (response) in
-            if response.error == nil && response.data != nil {
-                print("result_取消预约:\(response.result.value ?? "")")
-            }
-        }
-    }
+//    fileprivate func endQueue(deviceId:String){
+//        var params = NetWorkUtils.createBaseParams()
+//        params["deviceid"] = deviceId
+//        Alamofire.request(Constants.Network.Machine.END_PALY, method: .post, parameters: params).responseJSON { (response) in
+//            if response.error == nil && response.data != nil {
+//                print("result_取消预约:\(response.result.value ?? "")")
+//            }
+//        }
+//    }
     
 }
 
@@ -976,11 +1019,6 @@ extension PlayViewController{
         controllerUp.sizeToFit()
         playGroupView.addSubview(controllerUp)
         
-//        controllerUp.addTarget(self, action: #selector(controllerPathDown(sender:)), for: .)
-//        controllerUp.addTarget(self, action: #selector(controllerPathUp(sender:)), for: .touchUpOutside)
-        
-        
-        
         /// 左
         controllerLeft = CustomerControllerButton(frame: CGRect.zero, controllerDown: {[weak self] (button) in
             self?.controllerPathDown(sender: button)
@@ -1001,10 +1039,7 @@ extension PlayViewController{
             make.right.equalTo(controllerUp).offset(-(controllerSize))
             make.centerY.equalTo(playGroupView)
         }
-        
-//        controllerLeft.addTarget(self, action: #selector(controllerPathDown(sender:)), for: .touchUpInside)
-//        controllerLeft.addTarget(self, action: #selector(controllerPathUp(sender:)), for: .touchUpOutside)
-        
+    
         /// 右
         controllerRight = CustomerControllerButton(frame: CGRect.zero, controllerDown: {[weak self] (button) in
             self?.controllerPathDown(sender: button)
@@ -1128,8 +1163,6 @@ extension PlayViewController{
         /// 开始进行再来一局的倒计时
         
         lensBtn.isHidden = true
-        
-//        isGameing = false
     }
     
     @objc func updateTime() {
@@ -1159,6 +1192,9 @@ extension PlayViewController{
                     /// 切换到另一个房间
                     self.switchVideoChannelToDefault()
                     
+                    ///成功
+                    self.showPlayGroup()
+                    
                     self.gemLabel.text = String(json["data"]["diamondsCount"].int!)
                     Constants.User.diamondsCount = json["data"]["diamondsCount"].intValue
                     self.wardCode = json["data"]["gTradeNo"].string!
@@ -1168,7 +1204,6 @@ extension PlayViewController{
                 }
                 
             }else {
-//                ToastUtils.showErrorToast(msg: response.error.debugDescription)
                 print("error:\(String(describing: response.error))")
             }
             self.isStartClick = false
@@ -1182,42 +1217,47 @@ extension PlayViewController{
             backBtnClick()
             return
         }
+        
+        gameSceneController.enterGameQueue()
 //        ToastUtils.showLoadingToast(msg: "请稍后……")
         
-        var params = NetWorkUtils.createBaseParams()
-        params["deviceid"] = deviceId
-        
-        Alamofire.request(Constants.Network.Machine.WAIT_QUEUE, method: .post, parameters: params).responseJSON { (response) in
-            print("开始预约的回调:\(String(describing: response.result.value)),error:\(String(describing: response.error))")
-            if NetWorkUtils.checkReponse(response: response) {
-                let json = JSON(data: response.data!)
-                if json["data"]["tryLock"].bool! == true {
-                    print("进来了")
-                    // 可以开始游戏了
-                    self.startPlay()
-                    self.playQueueNumberStatus.isHidden = true
-                }else{
-                    print("已经有\(String(describing: json["data"]["waitCtlCount"].int!))人在游戏中，请等候")
-                    
-                    self.playQueueStausNumber.text = "预约第\(json["data"]["waitCtlIndex"].intValue)位"
-                    self.queueNumber.text = String(json["data"]["waitCtlCount"].intValue) + "人等待"
-                    
-                    self.playQueueNumberStatus.isHidden = false
-                    
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: {[weak self] in
-                        self?.waitQueue()
-                    })
-                }
-            }else{
-                let json = JSON(data: response.data!)
-                if json["code"].intValue == -520 {
-                    self.endQueue(deviceId: self.deviceId)
-                    ToastUtils.showErrorToast(msg: "设备维护中")
-                }
-                /// 当数据data为空的时候，报告异常
-            }
+//        var params = NetWorkUtils.createBaseParams()
+//        params["deviceid"] = deviceId
+//
+//        Alamofire.request(Constants.Network.Machine.WAIT_QUEUE, method: .post, parameters: params).responseJSON { (response) in
+//            print("开始预约的回调:\(String(describing: response.result.value)),error:\(String(describing: response.error))")
+//            if NetWorkUtils.checkReponse(response: response) {
+//                let json = JSON(data: response.data!)
+//                if json["data"]["tryLock"].bool! == true {
+//                    print("进来了")
+//                    // 可以开始游戏了
+//                    self.startPlay()
+//                    self.playQueueNumberStatus.isHidden = true
+//                }else{
+//                    print("已经有\(String(describing: json["data"]["waitCtlCount"].int!))人在游戏中，请等候")
+//
+//                    self.playQueueStausNumber.text = "预约第\(json["data"]["waitCtlIndex"].intValue)位"
+//                    self.queueNumber.text = String(json["data"]["waitCtlCount"].intValue) + "人等待"
+//
+//                    self.playQueueNumberStatus.isHidden = false
+//
+//                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: {[weak self] in
+//                        self?.waitQueue()
+//                    })
+//                }
+//            }else{
+//                let json = JSON(data: response.data!)
+//                if json["code"].intValue == -520 {
+////                    self.endQueue(deviceId: self.deviceId)
+//                    if self.gameSceneController != nil {
+//                        self.gameSceneController.quitQueue()
+//                    }
+//                    ToastUtils.showErrorToast(msg: "设备维护中")
+//                }
+//                /// 当数据data为空的时候，报告异常
+//            }
 //            ToastUtils.hide()
-        }
+//        }
     }
     
     ///  按下操作方向
@@ -1494,7 +1534,9 @@ extension PlayViewController{
         /// 把直播的镜头切回去
         swichVideoChannerlToLive()
         
-        endQueue(deviceId: deviceId)
+        if gameSceneController != nil {
+            gameSceneController.quitQueue()
+        }
     }
 }
 

@@ -109,11 +109,6 @@ class FastLoginDialog: BaseDialog {
             wechatLoginBtn.isHidden = true
         }
         
-//        /// 没有安装qq 隐藏qq登录按钮
-//        if TencentShared.isQQInstall() == false {
-//            qqLoginBtn.isHidden = true
-//        }
-        
         addDialogToWindow()
     }
     
@@ -178,7 +173,6 @@ class FastLoginDialog: BaseDialog {
         
         Alamofire.request(Constants.Network.User.QQ_LOGIN, method: .post, parameters: params).responseJSON { (response) in
             let resultJson = JSON(data: response.data!)
-            print("qqqqqq:\(response.response?.allHeaderFields as! [String: String] )")
             print("请求服务器QQ登录回调:\(String(describing: response.result.value))")
             if NetWorkUtils.checkReponse(response: response) {
                 LocalDataUtils.updateLocalUserData(resultData: resultJson, response)

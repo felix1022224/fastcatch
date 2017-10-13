@@ -209,10 +209,15 @@ extension PayListDialog:UITableViewDelegate, UITableViewDataSource{
         cell?.payBtn.tag = dataItem["id"].intValue
         
         cell?.gemInfo.text = dataItem["name"].stringValue
-//        cell?.payBtn.setImage(UIImage(named: dataItem["pay_btn_image_named"]!), for: .normal)
-//        cell?.payBtn.titleLabel?.text = "\(dataItem["value"].stringValue)"
-//        cell?.payBtn.setTitle("  \(dataItem["value"].stringValue)", for: .normal)
         cell?.payBtn.addTarget(self, action: #selector(payClick(sender:)), for: .touchUpInside)
+        
+        if dataItem["status"].intValue == 0 {
+            cell?.payBtn.setBackgroundImage(UIImage(named: "pay_number"), for: .normal)
+            cell?.topContentBackground.image = UIImage(named: "pay_item_background")
+        }else{
+            cell?.payBtn.setBackgroundImage(UIImage(named: "优惠按钮"), for: .normal)
+            cell?.topContentBackground.image = UIImage(named: "优惠背景")
+        }
         
         cell?.payNumberLabel.text = dataItem["value"].stringValue
         
@@ -323,8 +328,6 @@ extension PayListDialog{
         aliPayBtn.isSelected = true
         aliPayBtn.isHidden = false
         
-//        wechatBtn.isSelected = false
-        
         getAppReleaseVersion()
     }
     
@@ -347,9 +350,6 @@ extension PayListDialog{
             if !wechatBtn.isSelected {
                 switchPayBtn()
             }
-//            else{
-//                wechatBtn.isSelected = false
-//            }
         }
     }
     
@@ -375,11 +375,12 @@ extension PayListDialog{
         params["rp"] = String(rp)
         
         Alamofire.request(Constants.Network.WECHAT_PAY_URL, method: .post, parameters: params).responseJSON { (response) in
-            if NetWorkUtils.checkReponse(response: response) {
-                ToastUtils.hide()
-                let json = JSON(data: response.data!)
-                WeChatShared.pay(to: "main", json["data"], resultHandle: { (result, identifier) in
-                    switch(result){
+            ToastUtils.hide()
+            if response.error == nil && response.data != nil {
+                let jsonData = JSON(data: response.data!)
+                if jsonData["code"].int! == 0 {
+                    WeChatShared.pay(to: "main", jsonData["data"], resultHandle: { (result, identifier) in
+                        switch(result){
                         case .Success:
                             ToastUtils.showSuccessToast(msg: "支付成功")
                             if self.paySuccessCallback != nil {
@@ -392,13 +393,21 @@ extension PayListDialog{
                         case .Cancel:
                             ToastUtils.showInfoToast(msg: "取消支付")
                             break;
-//                        default:
-//                            ToastUtils.showInfoToast(msg: "发生异常")
-//                            break
+                        }
+                    })
+                }else if jsonData["code"].int! == -302 {
+                    print("用户身份异常，重新登录")
+                    if !Constants.isFastLoginShow {
+                        let loginDialog = FastLoginDialog(frame: UIScreen.main.bounds)
+                        loginDialog.createView()
+                        loginDialog.show()
                     }
-                })
+                    LocalDataUtils.clearLoaclData()
+                }else if jsonData["code"].int! == -101 {
+                    ToastUtils.showErrorToast(msg: "您不具备首充资格，请刷新")
+                }
             }else{
-                ToastUtils.showErrorToast(msg: "错误，请稍后重试")
+                print("error:\(String(describing: response.error))")
             }
         }
     }
@@ -414,11 +423,26 @@ extension PayListDialog{
         
         Alamofire.request(Constants.Network.ALIPAY_URL, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             ToastUtils.hide()
-            print("result:\(String(describing: response.result.value))")
-            let json = JSON(data: response.data!)
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: { [weak self] in
-                self?.aliPayOrder(orderBody: json["data"]["orderBody"].string!)
-            })
+            if response.error == nil && response.data != nil {
+                let jsonData = JSON(data: response.data!)
+                if jsonData["code"].int! == 0 {
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: { [weak self] in
+                        self?.aliPayOrder(orderBody: jsonData["data"]["orderBody"].string!)
+                    })
+                }else if jsonData["code"].int! == -302 {
+                    print("用户身份异常，重新登录")
+                    if !Constants.isFastLoginShow {
+                        let loginDialog = FastLoginDialog(frame: UIScreen.main.bounds)
+                        loginDialog.createView()
+                        loginDialog.show()
+                    }
+                    LocalDataUtils.clearLoaclData()
+                }else if jsonData["code"].int! == -101 {
+                    ToastUtils.showErrorToast(msg: "您不具备首充资格，请刷新")
+                }
+            }else{
+                print("error:\(String(describing: response.error))")
+            }
         }
     }
     
@@ -454,7 +478,10 @@ extension PayListDialog{
 
     /// 获取支付的列表
     func getPayList() -> () {
-        Alamofire.request(Constants.Network.GET_PAY_LIST, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { (response) in
+        var params = NetWorkUtils.createBaseParams()
+        params["status"] = "1"
+        
+        Alamofire.request(Constants.Network.GET_PAY_LIST, method: .post, parameters: params).responseJSON { (response) in
             print("reponse:\(response.result.value!)")
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(data: response.data!)

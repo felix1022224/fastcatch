@@ -19,7 +19,9 @@ class GameSceneController: NSObject {
     private var deviceId:String = ""
     
     /// socket io
-    let socket = SocketIOClient(socketURL: URL(string: "http://101.201.68.47:9130")!, config: [.log(false), .compress])
+//    let socket = SocketIOClient(socketURL: URL(string: "http://101.201.68.47:9130")!, config: [.log(false), .compress])
+//    let socket = SocketIOClient(socketURL: URL(string: "http://192.168.1.162:9130")!, config: [.log(false), .compress])
+    let socket = SocketIOClient(socketURL: URL(string: "http://47.92.72.158:9130")!, config: [.log(false), .compress])
     
     init(playViewController:PlayViewController, deviceId:String) {
         self.playViewController = playViewController
@@ -67,6 +69,7 @@ extension GameSceneController{
     /// 关闭连接
     func disconnect() -> () {
         print("离开房间")
+        
         /// 离开房间
         var params = [String :Any]()
         params["deviceid"] = self.deviceId
@@ -74,7 +77,9 @@ extension GameSceneController{
         
         socket.emit("room", params)
         
-        socket.disconnect()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) { [weak self] in
+            self?.socket.disconnect()
+        }
     }
         
 }
@@ -85,6 +90,10 @@ extension GameSceneController{
     func enterRoomSuccess() -> () {
         print("加入房间成功")
         ToastUtils.hide()
+        
+        socket.on("gameUserInfo") { [weak self] (data, ack) in
+            self?.updateGameUser(data: data)
+        }
         
         if Constants.User.ID != "" {
             socket.on("loginSuccess", callback: { [weak self] (data, ack) in
@@ -147,6 +156,7 @@ extension GameSceneController{
     
 }
 
+// MARK: - 游戏的相关
 extension GameSceneController{
     
     /// 移动手臂
@@ -176,9 +186,68 @@ extension GameSceneController{
     
 }
 
+// MARK: - 排队相关
+extension GameSceneController{
+    
+    /// 加入游戏排队队列
+    func enterGameQueue() -> () {
+        
+        /// 等待排队
+        socket.on("waitqueue") { [weak self] (data, ack) in
+            self?.waitQueue(data: data)
+        }
+        
+        var params = [String: Any]()
+        params["deviceid"] = deviceId
+        
+        /// 加入队列
+        socket.emit("waitqueue", params)
+    }
+    
+    /// 等待排队
+    func waitQueue(data:[Any]) -> () {
+        let json = JSON(data[0])
+        if json["tryLock"].bool! == true {
+            print("进来了")
+            // 可以开始游戏了
+            self.playViewController?.startPlay()
+            self.playViewController?.playQueueNumberStatus.isHidden = true
+        }else{
+            print("已经有\(String(describing: json["waitCtlCount"].intValue))人在游戏中，请等候")
+            
+            self.playViewController?.playQueueStausNumber.text = "预约第\(json["waitCtlIndex"].intValue)位"
+            self.playViewController?.queueNumber.text = String(json["waitCtlCount"].intValue) + "人等待"
+            
+            self.playViewController?.playQueueNumberStatus.isHidden = false
+        }
+    }
+    
+    /// 退出队列
+    func quitQueue() -> () {
+        /// 退出队列
+        var params = [String: Any]()
+        params["deviceid"] = self.deviceId
+        socket.emit("quitqueue", params)
+    }
+    
+}
 
-
-
+// MARK: - 游戏中的用户信息
+extension GameSceneController{
+    
+    func updateGameUser(data:[Any]) -> () {
+        let resultJson = JSON(data[0])
+        print("result\(data[0])")
+        if resultJson["id"].intValue != 0 {
+            self.playViewController?.gameUserInfo = resultJson
+            self.playViewController?.updateGameUserInfoWidget(userFaceImage: resultJson["avatar"].stringValue, userNickName: resultJson["nick"].stringValue)
+        }else{
+            self.playViewController?.gameUserInfo = nil
+            self.playViewController?.removeGameUserInfo()
+        }
+    }
+    
+}
 
 
 

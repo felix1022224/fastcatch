@@ -18,7 +18,7 @@ class FCHasBennMailedProductCell: UICollectionViewCell {
         super.init(frame: frame)
         
         backgroundImage = UIImageView()
-        backgroundImage.image = UIImage(named: "已邮寄产品框")
+        backgroundImage.image = UIImage(named: "产品框")
 //        backgroundImage.center = self.center
         backgroundImage.sizeToFit()
         addSubview(backgroundImage)
@@ -35,8 +35,8 @@ class FCHasBennMailedProductCell: UICollectionViewCell {
         addSubview(productImage)
         
         productImage.snp.makeConstraints { (make) in
-            make.width.equalTo(backgroundImage.bounds.width * 0.8)
-            make.height.equalTo(backgroundImage.bounds.height * 0.8)
+            make.width.equalTo(backgroundImage.bounds.width * 0.85)
+            make.height.equalTo(backgroundImage.bounds.height * 0.85)
             make.center.equalTo(backgroundImage)
         }
         

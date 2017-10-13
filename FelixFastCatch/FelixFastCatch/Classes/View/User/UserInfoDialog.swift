@@ -172,8 +172,6 @@ class UserInfoDialog: BaseDialog {
 
     /// 退出登录
     @objc func logOut() -> () {
-//        ToastUtils.showLoadingToast(msg: "正在登出")
-        
         if mainVC != nil {
             mainVC.clearGemNumber()
         }
@@ -182,12 +180,7 @@ class UserInfoDialog: BaseDialog {
         self.hide()
         
         Alamofire.request(Constants.Network.User.LOGOUT_URL, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { (response) in
-            if NetWorkUtils.checkReponse(response: response) {
-                /// 登出成功
-//                ToastUtils.hide()
-            }else{
-//                ToastUtils.showErrorToast(msg: "登出失败")
-            }
+            
         }
     }
     

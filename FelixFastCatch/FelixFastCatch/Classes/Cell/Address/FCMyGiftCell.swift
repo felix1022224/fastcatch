@@ -51,19 +51,20 @@ extension FCMyGiftCell{
     // 装载布局
     func setupUIWidget() -> () {
         contentGroup = UIImageView()
-        contentGroup.image = UIImage(named: "内容块")
+        contentGroup.image = UIImage(named: "邮寄item背景")
         contentGroup.sizeToFit()
         addSubview(contentGroup)
         
         // 产品背景图
         productBackgroundImage = UIImageView()
-        productBackgroundImage.image = UIImage(named: "产品框")
+        productBackgroundImage.image = UIImage(named: "邮寄产品框")
         productBackgroundImage.sizeToFit()
         addSubview(productBackgroundImage)
         
         productBackgroundImage.snp.makeConstraints { (make) in
-            make.top.equalTo(contentGroup).offset(contentGroup.bounds.height / 2 - productBackgroundImage.bounds.height / 2)
-            make.left.equalTo(contentGroup).offset(contentGroup.bounds.height / 2 - productBackgroundImage.bounds.height / 2)
+            make.centerY.equalTo(contentGroup).offset(-2.5)
+//            make.top.equalTo(contentGroup).offset(contentGroup.bounds.height / 2 - productBackgroundImage.bounds.height / 2)
+            make.left.equalTo(contentGroup).offset(productBackgroundImage.bounds.width / 2.5)
         }
         
         // 产品图
@@ -81,22 +82,22 @@ extension FCMyGiftCell{
         
         // 选择按钮
         selectBtn = UIButton()
-        selectBtn.setBackgroundImage(UIImage(named: "待发货未选中"), for: .normal)
-        selectBtn.setBackgroundImage(UIImage(named: "待发货未选中"), for: .highlighted)
-        selectBtn.setBackgroundImage(UIImage(named: "待发货选中"), for: .selected)
+        selectBtn.setBackgroundImage(UIImage(named: "邮寄未选中"), for: .normal)
+        selectBtn.setBackgroundImage(UIImage(named: "邮寄未选中"), for: .highlighted)
+        selectBtn.setBackgroundImage(UIImage(named: "邮寄选中"), for: .selected)
         selectBtn.sizeToFit()
         addSubview(selectBtn)
 //        selectBtn.addTarget(self, action: #selector(selectBtnClick), for: .touchUpInside)
         selectBtn.snp.makeConstraints { (make) in
             make.centerY.equalTo(contentGroup)
-            make.right.equalTo(contentGroup).offset(-(contentGroup.bounds.height / 2 - productBackgroundImage.bounds.height / 2))
+            make.right.equalTo(contentGroup).offset(-(productBackgroundImage.bounds.width / 2.5))
         }
         
         // 产品名标题
         productTitleLabel = MainCustomerLabel()
         productTitleLabel.numberOfLines = 1
-        productTitleLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
-        productTitleLabel.outLineWidth = 1
+        productTitleLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(15))
+        productTitleLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         productTitleLabel.outTextColor = UIColor.white
         productTitleLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         addSubview(productTitleLabel)

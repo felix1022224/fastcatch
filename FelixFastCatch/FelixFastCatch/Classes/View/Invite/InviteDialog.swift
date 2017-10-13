@@ -58,7 +58,7 @@ class InviteDialog: BaseDialog {
         rule1.outTextColor = UIColor.white
         rule1.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         rule1.textAlignment = .center
-        rule1.text = "邀请新用户双方各奖励30代币"
+        rule1.text = "邀请新用户双方各奖励25代币"
         rule1.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         rule1.sizeToFit()
         addSubview(rule1)
@@ -75,7 +75,7 @@ class InviteDialog: BaseDialog {
         rule2.outTextColor = UIColor.white
         rule2.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         rule2.textAlignment = .center
-        rule2.text = "邀满10个好友额外奖励200代币"
+        rule2.text = "邀满10个好友额外奖励100代币"
         rule2.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         rule2.sizeToFit()
         addSubview(rule2)

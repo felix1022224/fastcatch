@@ -63,9 +63,6 @@ class MainViewController: UIViewController{
     /// 用户信息
     fileprivate var userInfoDialog:UserInfoDialog!
     
-    /// 我的礼物
-    fileprivate var myGift:MyGiftDialog!
-    
     // 设置按钮的集合view
     fileprivate var settingsGroupView:UIView!
     
@@ -93,19 +90,24 @@ class MainViewController: UIViewController{
     /// banner的view是否触摸中
     fileprivate var bannerViewIsTouch = false
     
-//    /// socket io
-//    let socket = SocketIOClient(socketURL: URL(string: "http://47.92.72.158:9130")!, config: [.log(true), .compress])
-    
-    /// 是否登录到了socket
-//    let isLogin = false
-    
     /// 购买引导
     fileprivate var payGuidView:MainBeginnerGuidPayView!
     
+    /// 广告列表
+    fileprivate var advList:[JSON] = [JSON]()
+    
+    /// 记录坐标: 1，section的位置 2，类型 3，广告的位置 4，机器的位置
+    fileprivate var positionList:[String: [String: String]] = [String: [String: String]]()
+    
+    /// section的记录list，来区分类型和长度
+    fileprivate var sectionList:[String: [String: String]] = [String: [String: String]]()
+    
+    fileprivate var spiltMachineList:[String: [JSON]] = [String: [JSON]]()
+    
+//    fileprivate var splitMachineList:[String: ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        view.safeAreaLayoutGuide
         
         self.navigationController?.navigationBar.isHidden = true
         
@@ -114,116 +116,7 @@ class MainViewController: UIViewController{
         view.addSubview(backgroundImage)
         
         setupUI()
-        
-//        socket.on(clientEvent: .connect) {data, ack in
-//            print("socket connected")
-//            self.socket.emit("chatevent", "12333")
-//        }
-//        
-//        socket.on(clientEvent: .disconnect) { (data, ack) in
-//            print("disconnect")
-//        }
-//        
-//        socket.reconnects = true
-//        
-//        socket.connect()
-        
-//        let webVC = WebViewController()
-//        webVC.link = "http://www.baidu.com"
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) { 
-//            self.present(webVC, animated: true, completion: nil)
-//        }
-        
-        
-        // 开启内购检测
-//        SKPaymentQueue.default().add(self)
-        
-        /**
-         *
-         */
-//        let familyNames = UIFont.familyNames;
-//        for item in familyNames{
-//            let fontNames = UIFont.fontNames(forFamilyName: item)
-//            for item2 in fontNames{
-//                print( "\tFont: \(item2) \n");
-//            }
-//        }
-        
-//        if checkPay() {
-//            //请求内购商品
-//            reuqestProductData(type: "com.meidaojia.secondcatch.b01")
-//        }
     }
-    
-//    func checkPay() -> Bool {
-//        if(SKPaymentQueue.canMakePayments()){
-//            return true
-//        }
-//        else{
-//            print("请允许付费")
-//            return false
-//        }
-//    }
-//    
-//    private func reuqestProductData(type: String) {
-//        let product = [type]
-//        let set = NSSet(array: product as [AnyObject])
-//        let request = SKProductsRequest(productIdentifiers: set as! Set<String>)
-//        request.delegate = self
-//        request.start()
-//    }
-//    
-//    // 监听购买结果
-//    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-//        
-//        for tran in transactions {
-//            // print(tran.error?.description)
-//            
-//            switch tran.transactionState {
-//            case .purchased:
-//                print("购买成功")
-//                print("tran:\(tran)")
-//                SKPaymentQueue.default().finishTransaction(tran)
-//                
-//            case .purchasing:
-//                print("用户正在购买")
-//                
-//            case .restored:
-//                print("已经购买过商品")
-//                
-//            case .failed:
-//                SKPaymentQueue.default().finishTransaction(tran)
-//                print("失败:\(tran.error.debugDescription)")
-//                
-//            default:
-//                break
-//            }
-//        }
-//    }
-//    
-//    // 收到产品返回的信息
-//    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-//        if response.products.count == 0 {
-//            print("没有商品")
-//        }
-//        var prod: SKProduct?
-//        for pro in response.products {
-//            print("------------------")
-//            print(pro.localizedDescription)
-//            print(pro.localizedTitle)
-//            print(pro.price)
-//            print(pro.productIdentifier)
-//            print("------------------")
-//            if pro.productIdentifier == "com.meidaojia.secondcatch.b01" {
-//                prod = pro
-//            }
-//        }
-//        // 发送购买请求
-//        if let produ = prod {
-//            let payment = SKPayment(product: produ)
-//            SKPaymentQueue.default().add(payment)
-//        }
-//    }
 
     /// 在加载显示完首页的viewcontroller之后，需要调用该方法来成功获取系统的window
     func loadDialogToWindow() -> () {
@@ -243,7 +136,7 @@ class MainViewController: UIViewController{
         userInfoDialog = UserInfoDialog(frame: UIScreen.main.bounds)
         
         /// 我的礼物
-        myGift = MyGiftDialog(frame: UIScreen.main.bounds)
+//        myGift = MyGiftDialog(frame: UIScreen.main.bounds)
         
         /// 签到
         checkInDialog = CheckInDialog(frame: UIScreen.main.bounds)
@@ -263,42 +156,6 @@ class MainViewController: UIViewController{
         
     }
     
-    func test() -> () {
-//        SVProgressHUD.setDefaultStyle(.dark)
-//        SVProgressHUD.show(withStatus: "正在下单……")
-        
-//        var params = NetWorkUtils.createBaseParams()
-//        params["rp"] = "1"
-//   
-//        Alamofire.request(Constants.Network.ALIPAY_URL, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
-//            print("result:\(response.result.value)")
-//            let json = JSON(response.result.value)
-//            AlipaySDK.defaultService().payOrder(json["data"]["orderBody"].string, fromScheme: "alipay2017071707787463", callback: { (result) in
-//                print("result:\(result)")
-//            })
-//        }
-//        Alamofire.request(Constants.Network.WECHAT_PAY_URL + "?rp=1").responseJSON { (response) in
-//            
-//            if response.error != nil{
-//                print("error: \(String(describing: response.error))")
-//                ToastUtils.showErrorToast(msg: "网络错误，请稍后重试")
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { 
-//                    SVProgressHUD.dismiss()
-//                })
-//                return
-//            }
-//            
-//            if let data = response.data {
-//                let json = JSON(data: data)
-//                WeChatShared.pay(to: "main", json["data"], resultHandle: { (result, identifier) in
-//                    print("result:\(result)")
-//                    print("indentifier:\(identifier)")
-//                })
-//            }
-//            SVProgressHUD.dismiss()
-//        }
-    }
-    
     /// 初始化
     func setupUI() -> () {
         createBannerView()
@@ -310,7 +167,6 @@ class MainViewController: UIViewController{
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print("appear")
         //每次显示界面，调用一遍获取用户信息的接口
         if Constants.User.USER_ID != "" {
             getsUserInfo()
@@ -319,13 +175,7 @@ class MainViewController: UIViewController{
             }
         }
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-    }
 }
-
-
 
 // MARK: - Banner Images
 extension MainViewController:UIScrollViewDelegate{
@@ -470,7 +320,6 @@ extension MainViewController:UIScrollViewDelegate{
                 itemClick(index: link)
             }
         }
-        
     }
     
 }
@@ -499,7 +348,7 @@ extension MainViewController{
 }
 
 // MARK: - 装载首页的列表数据
-extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource{
+extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
 
     // 创建首页的数据列表
     func createDataList() -> () {
@@ -508,19 +357,19 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         // 設置 section 的間距 四個數值分別代表 上、左、下、右 的間距
         layout.sectionInset = UIEdgeInsetsMake(dataListPadding, dataListPadding, dataListPadding, dataListPadding);
-        
+
         // 設置每一行的間距
         layout.minimumLineSpacing = dataListPadding + 1
         
-        let main = UIScreen.main.bounds
+//        let main = UIScreen.main.bounds
         // 設置 header 及 footer 的尺寸
-        layout.footerReferenceSize = CGSize(width: CGFloat(4) * main.width, height: 90)
+//        layout.footerReferenceSize = CGSize(width: CGFloat(4) * main.width, height: 90)
         
         // item的宽度
-        let itemWidth = (CGFloat(UIScreen.main.bounds.width) - dataListPadding*2)/2 - 5
+//        let itemWidth = (CGFloat(UIScreen.main.bounds.width) - dataListPadding*2)/2 - 5
         
         // 設置每個 cell 的尺寸
-        layout.itemSize = CGSize(width: itemWidth, height: itemWidth * 1.3)
+//        layout.itemSize = CGSize(width: itemWidth, height: itemWidth * 1.3)
         
         dataList = UICollectionView(frame: CGRect(x: 0, y: bannerView.bounds.height, width: self.view.bounds.width, height: self.view.bounds.height - bannerView.bounds.height), collectionViewLayout: layout)
         dataList.backgroundColor = UIColor.clear
@@ -531,14 +380,16 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         view.addSubview(dataList)
         
         dataList.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: "CellId")
-        dataList.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "footer")
+        dataList.register(MainADVCell.self, forCellWithReuseIdentifier: "AdvCell")
+        dataList.register(MainFooterCell.self, forCellWithReuseIdentifier: "FooterCell")
+//        dataList.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "CellId")
+//        dataList.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "footer")
         
         //下拉刷新相关设置
         header.setRefreshingTarget(self, refreshingAction: #selector(headerRefresh))
         header.lastUpdatedTimeLabel.isHidden = true // 隐藏时间
         //隐藏状态
         header.stateLabel.isHidden = true
-//        dataList!.mj_header = header
         
         getMainListData()
     }
@@ -548,47 +399,195 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         page = 0
         isRefresh = true
         getMainListData()
-        //结束刷新
-//        self.dataList!.mj_header.endRefreshing()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var size:CGSize
+        
+        if indexPath.section%2 == 0 {
+            let itemWidth = (CGFloat(UIScreen.main.bounds.width) - 8*2)/2 - 5
+            // 設置每個 cell 的尺寸
+            size = CGSize(width: itemWidth, height: itemWidth * 1.3)
+        }else{
+            let itemWidth = (CGFloat(UIScreen.main.bounds.width) - 8*2)
+            size = CGSize(width: itemWidth, height: itemWidth/3)
+        }
+        
+        
+        if advList.count > 0 && indexPath.section >= advList.count*2+1 {
+            let itemWidth = (CGFloat(UIScreen.main.bounds.width) - 8*2)
+            size = CGSize(width: itemWidth, height: 90)
+            return size
+        }
+
+        if advList.count <= 0 && indexPath.section == 1 {
+            let itemWidth = (CGFloat(UIScreen.main.bounds.width) - 8*2)
+            size = CGSize(width: itemWidth, height: 90)
+            return size
+        }
+        return size
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mainListData.count
+        /// 广告数组没有的情况直接返回机器列表的长度
+        if advList.count <= 0 {
+            if mainListData.count <= 0 {
+                return 0
+            }
+            if section == 1 {
+                return 1
+            }
+            return mainListData.count
+        }
+        
+        if advList.count * 2 + 1 < section {
+            return 1
+        }
+        
+        if section%2 == 0 || section == 0 {
+            /// 不是adv, 是机器
+            if section/2 > advList.count-1 {
+                //最后一行
+                return mainListData.count - advList[advList.count-1]["sequence"].intValue
+            }
+            if section == 0 {
+                return advList[section/2]["sequence"].intValue
+            }else{
+                return advList[section/2]["sequence"].intValue - advList[section/2 - 1]["sequence"].intValue
+            }
+        }else{
+            /// 是adv
+            return 1
+        }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        if advList.count <= 0 {
+            return 2
+        }
+        /// 根据广告来拆分分组，例如 3个广告，那边是7个分组
+        return advList.count * 2 + 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellId", for: indexPath) as? MainCollectionViewCell
         
-        let itemData = mainListData[indexPath.row]
-        
-        cell?.playBtn.tag = indexPath.row
-        cell?.addPlayBtnClick(target: self, action: #selector(showPlay))
-        
-//        cell?.productImage.kf.setImage(with: URL(string: itemData["img"].stringValue), placeholder: UIImage(named: "main_no_value"), options: nil, progressBlock: nil, completionHandler: nil)
-        cell?.productImage.kf.setImage(with: URL(string: itemData["img"].stringValue))
-        
-        cell?.titleLabel.text = itemData["award"]["title"].string!
-        cell?.gemNumberLabel.text = String(itemData["perDiamondsCount"].int!)
-        
-        if itemData["status"].intValue == 0 {
-            cell?.hideErrorView()
-            cell?.hideGameingView()
-            cell?.playBtn.setImage(UIImage(named: "Easy"), for: .normal)
-        } else if itemData["status"].intValue == 1 {
-            cell?.hideErrorView()
-            cell?.showGameingView()
-            cell?.playBtn.setImage(UIImage(named: "Easy"), for: .normal)
+        if advList.count > 0 {
+            if advList[advList.count-1]["sequence"].intValue >= mainListData.count {
+                if indexPath.section > advList.count * 2 {
+                    let footerCell = collectionView.dequeueReusableCell(withReuseIdentifier: "FooterCell", for: indexPath) as? MainFooterCell
+                    return footerCell!
+                }
+            }else{
+                if advList.count * 2 + 1 <= indexPath.section {
+                    let footerCell = collectionView.dequeueReusableCell(withReuseIdentifier: "FooterCell", for: indexPath) as? MainFooterCell
+                    return footerCell!
+                }
+            }
         }else{
-            cell?.hideGameingView()
-            cell?.showErrorView()
-            cell?.playBtn.setImage(UIImage(named: "维护"), for: .normal)
+            if advList.count <= 0 && indexPath.section == 1 {
+                let footerCell = collectionView.dequeueReusableCell(withReuseIdentifier: "FooterCell", for: indexPath) as? MainFooterCell
+                return footerCell!
+            }
         }
         
+        if indexPath.section%2 == 0  {
+            var itemData:JSON;
+            if indexPath.section == 0 {
+                itemData = mainListData[indexPath.row]
+                cell?.titleLabel.text = itemData["award"]["title"].string! + String(indexPath.row + 1)
+            }else{
+//                print("index:\(advList[(indexPath.section - 1)/2]["sequence"].intValue)")
+                itemData = mainListData[indexPath.row + advList[indexPath.section/2-1]["sequence"].intValue]
+                cell?.titleLabel.text = itemData["award"]["title"].string! + String(indexPath.row + advList[(indexPath.section-1)/2]["sequence"].intValue + 1)
+            }
+            
+            cell?.playBtn.tag = indexPath.row
+            cell?.addPlayBtnClick(target: self, action: #selector(showPlay))
+            
+            cell?.productImage.kf.setImage(with: URL(string: itemData["img"].stringValue))
+            
+            cell?.gemNumberLabel.text = String(itemData["perDiamondsCount"].int!)
+            
+            if itemData["status"].intValue == 0 {
+                cell?.hideErrorView()
+                cell?.hideGameingView()
+                cell?.playBtn.setImage(UIImage(named: "Easy"), for: .normal)
+            } else if itemData["status"].intValue == 1 {
+                cell?.hideErrorView()
+                cell?.showGameingView()
+                cell?.playBtn.setImage(UIImage(named: "Easy"), for: .normal)
+            }else{
+                cell?.hideGameingView()
+                cell?.showErrorView()
+                cell?.playBtn.setImage(UIImage(named: "维护"), for: .normal)
+            }
+
+            return cell!
+        }else{
+            if indexPath.section <= advList.count * 2 {
+                let advCell = collectionView.dequeueReusableCell(withReuseIdentifier: "AdvCell", for: indexPath) as? MainADVCell
+                
+                advCell?.advImage.kf.setImage(with: URL(string: advList[(indexPath.section-1)/2]["advertiseBigImg"].stringValue))
+                
+//                advCell?.advImage.tag = (indexPath.section-1)/2
+//
+//                advCell?.advImage.isUserInteractionEnabled = true
+//                let advTouch = UITapGestureRecognizer(target: self, action: #selector(advItemClick(itemImage:)))
+//                advCell?.advImage.addGestureRecognizer(advTouch)
+                
+                return advCell!
+            }
+        }
+
         return cell!
+    }
+    
+//    /// 点击广告
+//    @objc func advItemClick(itemImage:UIImageView) -> () {
+//        print("advList:\(advList[itemImage.tag])")
+//        if advList[itemImage.tag]["redirectType"].intValue == 1 {
+//            let link = advList[itemImage.tag]["scheme"].stringValue
+//            // 跳转到网页
+//            if link == "" {
+//                return
+//            }
+//            let webVC = WebViewController()
+//            webVC.link = link
+//            webVC.actionTitle = advList[itemImage.tag]["name"].stringValue
+//            present(webVC, animated: true, completion: nil)
+//        }else if advList[itemImage.tag]["redirectType"].intValue == 2 {
+//            let link = advList[itemImage.tag]["scheme"].intValue
+//            if link == -1 {
+//                showPayDialog()
+//                return
+//            }else{
+//                itemClick(index: link)
+//            }
+//        }
+//    }
+    
+    /// 点击广告
+    func advItemClick(item:JSON) -> () {
+        if item["redirectType"].intValue == 1 {
+            let link = item["scheme"].stringValue
+            // 跳转到网页
+            if link == "" {
+                return
+            }
+            let webVC = WebViewController()
+            webVC.link = link
+            webVC.actionTitle = item["name"].stringValue
+            present(webVC, animated: true, completion: nil)
+        }else if item["redirectType"].intValue == 2 {
+            let link = item["scheme"].intValue
+            if link == -1 {
+                showPayDialog()
+                return
+            }else{
+                itemClick(index: link)
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -597,30 +596,40 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         if kind == UICollectionElementKindSectionFooter {
             footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "footer", for: indexPath)
+            footer.backgroundColor = UIColor.red
+            if indexPath.section == advList.count * 2 + 1 {
+                footer.isHidden = false
+            }else{
+                footer.isHidden = true
+            }
         }
         
         return footer
     }
     
     func loadMore() -> () {
-        if isLoadingMore == false {
-            isLoadingMore = true
-            getMainListData()
-        }
+//        if isLoadingMore == false {
+//            isLoadingMore = true
+//            getMainListData()
+//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        itemClick(index: indexPath.row)
+        if indexPath.section % 2 == 0 {
+            if indexPath.section == 0 {
+                itemClick(index: indexPath.row)
+            }else{
+                itemClick(index: indexPath.row + advList[indexPath.section/2 - 1]["sequence"].intValue)
+            }
+        }else{
+            if advList.count > 0 && indexPath.section < advList.count * 2 + 1 {
+                advItemClick(item: advList[(indexPath.section - 1)/2])
+            }
+        }
     }
     
     /// 显示游戏界面
     @objc func showPlay(sender: UIButton) -> () {
-//        if Constants.User.USER_ID == "" {
-//            fastLoginDialog.createView()
-//            fastLoginDialog.show()
-//            return
-//        }
-        
         if !checkDeviceStatus(status: mainListData[sender.tag]["status"].intValue) {
             return
         }
@@ -628,9 +637,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let playView = PlayViewController()
         playView.deviceId = mainListData[sender.tag]["deviceId"].stringValue
         playView.darwCount = mainListData[sender.tag]["darwCount"].intValue
-//        playView.playSuccess = {[weak self] (deviceId) in
-//            self?.showShardRecordDialog(deviceId: deviceId)
-//        }
         
         playView.needLogin = { [weak self] in
             self?.fastLoginDialog.createView()
@@ -651,12 +657,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func itemClick(index:Int) -> () {
-//        if Constants.User.USER_ID == "" {
-//            fastLoginDialog.createView()
-//            fastLoginDialog.show()
-//            return
-//        }
-        
         if !checkDeviceStatus(status: mainListData[index]["status"].intValue) {
             return
         }
@@ -664,9 +664,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let playView = PlayViewController()
         playView.deviceId = mainListData[index]["deviceId"].stringValue
         playView.darwCount = mainListData[index]["darwCount"].intValue
-//        playView.playSuccess = {[weak self] (deviceId) in
-//            self?.showShardRecordDialog(deviceId: deviceId)
-//        }
         playView.needLogin = { [weak self] in
             self?.fastLoginDialog.createView()
             self?.fastLoginDialog.show()
@@ -680,7 +677,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         playView.bootomBannerCardImagePath = mainListData[index]["activity"]["bannerSmallImg"].stringValue
         playView.bottomBannerCardScheme = mainListData[index]["activity"]["scheme"].stringValue
-
         
         navigationController?.pushViewController(playView, animated: true)
     }
@@ -698,7 +694,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             ToastUtils.showErrorToast(msg: "设备已下线")
             return false
         }
-        
         return true
     }
     
@@ -707,8 +702,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
 // MARK: - 从网络获取首页的网络数据
 extension MainViewController{
-    
-    
     /// 获取首页的数据
     func getMainListData() -> () {
         if isLoadingMainData {
@@ -720,10 +713,8 @@ extension MainViewController{
         params["size"] = "100"
         params["page"] = String(page)
         
-//        print("main_params:\(params)")
-        
         Alamofire.request(Constants.Network.MAIN_LIST, method: .post, parameters: params).responseJSON { (response) in
-//            print("result:\(String(describing: response.result.value))")
+//            print("main_list:\(String(describing: response.result.value))")
             self.isLoadingMore = false
             if response.error == nil {
                 let jsonObject = JSON(response.data!)
@@ -734,8 +725,15 @@ extension MainViewController{
                 
                 if self.isRefresh {
                     self.mainListData.removeAll()
+                    self.advList.removeAll()
                     self.isRefresh = false
                 }
+                
+                if let resultAdvList = jsonObject["data"]["advertiseVO"].array {
+                    self.advList = self.advList + resultAdvList
+                    self.changeAdvList()
+                }
+                
                 self.mainListData = self.mainListData + jsonObject["data"]["content"].arrayValue
                 self.dataList.reloadData()
                 
@@ -756,8 +754,6 @@ extension MainViewController{
                     // 没有数据
                     self.setupNoValueView()
                 }
-                
-//                self.isLoadingMainData = false
             }
             
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: { [weak self] in
@@ -776,8 +772,13 @@ extension MainViewController{
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) { [weak self] in
             self?.getsUserInfo()
-//            self?.getAppReleaseVersion()
         }
+        
+    }
+    
+    /// 根据广告列表计算出位置
+    func changeAdvList() -> () {
+        /// 取出advlist的数据
         
     }
     
@@ -831,17 +832,15 @@ extension MainViewController{
         let inviteBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 2 - settingsBtn.bounds.width * 2, y: UIScreen.main.bounds.height - 90, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Store-btn"), actionTitle: "邀请")
         view.addSubview(inviteBtn)
         
-        inviteBtn.isHidden = true
-        
         inviteBtn.addBtnClickAction(target: self, action: #selector(showInviteDialog))
         
         /// 签到
-        let checkInBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 2 - settingsBtn.bounds.width * 2, y: UIScreen.main.bounds.height - 90, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Achievements-btn"), actionTitle: "签到")
+        let checkInBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 3 - settingsBtn.bounds.width * 3, y: UIScreen.main.bounds.height - 90, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Achievements-btn"), actionTitle: "签到")
         view.addSubview(checkInBtn)
         checkInBtn.addBtnClickAction(target: self, action: #selector(showCheckInDialog))
         
         /// 礼物按钮
-        let giftBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 3 - settingsBtn.bounds.width * 3, y: UIScreen.main.bounds.height - 90, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Leaderboard-btn"), actionTitle: "奖品")
+        let giftBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 4 - settingsBtn.bounds.width * 4, y: UIScreen.main.bounds.height - 90, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Leaderboard-btn"), actionTitle: "奖品")
         view.addSubview(giftBtn)
         giftBtn.addBtnClickAction(target: self, action: #selector(showMyGift))
         
@@ -878,8 +877,10 @@ extension MainViewController{
             showFastLogin()
             return
         }
-        myGift.createView()
-        myGift.show()
+//        myGift.createView()
+//        myGift.show()
+        let mailingListVC = MailingListViewController()
+        self.navigationController?.pushViewController(mailingListVC, animated: true)
     }
     
     func showFastLogin() -> () {
@@ -932,15 +933,16 @@ extension MainViewController{
         let testInfoIconImage = UIImageView(image: UIImage(named: "Info-icon"))
         
         
-        let settingsY = UIScreen.main.bounds.height - (80 - testImage.bounds.height) - 150 - 14
+        let settingsY = UIScreen.main.bounds.height - (80 - testImage.bounds.height) - 250 - 14
         let settingsWidth = testImage.bounds.width - 10
         
-        settingsGroupView = UIView(frame: CGRect(x: self.view.bounds.width - testImage.bounds.width - 5, y: settingsY, width: settingsWidth, height: 150))
-        settingsGroupView.layer.cornerRadius = 25
+        settingsGroupView = UIView(frame: CGRect(x: self.view.bounds.width - testImage.bounds.width - 5, y: settingsY, width: settingsWidth, height: 250))
+        settingsGroupView.layer.cornerRadius = 20
         settingsGroupView.layer.masksToBounds = true
         settingsGroupView.backgroundColor = UIColor(red: 99/255.0, green: 168/255.0, blue: 205/255.0, alpha: 1)
         view.addSubview(settingsGroupView)
         
+        /// 用户中心
         let userIcon = UIButton(type: .custom)
         userIcon.frame = CGRect(x: settingsWidth/2-testUserIconImage.bounds.width/2, y: 10, width: 0, height: 0)
         userIcon.setBackgroundImage(UIImage(named: "daeva_profile"), for: .normal)
@@ -948,14 +950,47 @@ extension MainViewController{
         settingsGroupView.addSubview(userIcon)
         userIcon.addTarget(self, action: #selector(showUserInfoDialog), for: .touchUpInside)
         
-        let infoIcon = UIImageView(frame: CGRect(x: settingsWidth/2-testInfoIconImage.bounds.width/2, y: 30 + testUserIconImage.bounds.height, width: 0, height: 0))
+        /// 游戏记录
+        let gameHistroy = UIButton(type: .custom)
+        gameHistroy.setBackgroundImage(UIImage(named: "游戏记录"), for: .normal)
+        gameHistroy.sizeToFit()
+        settingsGroupView.addSubview(gameHistroy)
+        
+        gameHistroy.addTarget(self, action: #selector(showGameHistoryView), for: .touchUpInside)
+        
+        gameHistroy.snp.makeConstraints { (make) in
+            make.top.equalTo(userIcon).offset(userIcon.bounds.height + 20)
+            make.centerX.equalTo(settingsGroupView)
+        }
+        
+        /// 代币记录
+        let tokenHistroy = UIButton(type: .custom)
+        tokenHistroy.setBackgroundImage(UIImage(named: "代币记录"), for: .normal)
+        tokenHistroy.sizeToFit()
+        settingsGroupView.addSubview(tokenHistroy)
+        
+        tokenHistroy.addTarget(self, action: #selector(showTokenHistoryView), for: .touchUpInside)
+        
+        tokenHistroy.snp.makeConstraints { (make) in
+            make.top.equalTo(gameHistroy).offset(gameHistroy.bounds.height + 20)
+            make.centerX.equalTo(settingsGroupView)
+        }
+        
+        /// 帮助
+        let infoIcon = UIImageView()
         infoIcon.image = UIImage(named: "Info-icon")
         infoIcon.sizeToFit()
         settingsGroupView.addSubview(infoIcon)
         
+        infoIcon.snp.makeConstraints { (make) in
+            make.centerX.equalTo(settingsGroupView)
+            make.top.equalTo(tokenHistroy).offset(tokenHistroy.bounds.height + 20)
+        }
+        
         infoIcon.isUserInteractionEnabled = true
         
         let infoTap = UITapGestureRecognizer(target: self, action: #selector(showHelpDialog))
+        infoTap.numberOfTapsRequired = 1
         infoIcon.addGestureRecognizer(infoTap)
         
         settingsGroupView.isHidden = true
@@ -967,13 +1002,33 @@ extension MainViewController{
             showFastLogin()
             return
         }
-        userInfoDialog.createView()
-        userInfoDialog.show2(mainViewController: self)
+        let userCenterVC = UserCenterViewController()
+        self.navigationController?.pushViewController(userCenterVC, animated: true)
+//        userInfoDialog.createView()
+//        userInfoDialog.show2(mainViewController: self)
     }
     
     @objc func showHelpDialog() -> () {
         helpDialog.createView()
         helpDialog.show()
+    }
+    
+    @objc func showGameHistoryView(){
+        if Constants.User.USER_ID == "" {
+            showFastLogin()
+            return
+        }
+        let gameHistoryVC = GameHistoryViewController()
+        self.navigationController?.pushViewController(gameHistoryVC, animated: true)
+    }
+    
+    @objc func showTokenHistoryView(){
+        if Constants.User.USER_ID == "" {
+            showFastLogin()
+            return
+        }
+        let tokenHistoryVC = TokenHistoryViewController()
+        self.navigationController?.pushViewController(tokenHistoryVC, animated: true)
     }
     
 }
