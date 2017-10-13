@@ -502,7 +502,7 @@ extension PlayViewController{
         lensBtn.isHidden = true
         
         darwCountLabel = UILabel()
-        darwCountLabel.text = "游戏0次   抓中0次"
+        darwCountLabel.text = "游戏0次"
         darwCountLabel.textColor = UIColor.white
         darwCountLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
         darwCountLabel.sizeToFit()

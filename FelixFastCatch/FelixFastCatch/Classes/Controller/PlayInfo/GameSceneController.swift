@@ -150,7 +150,7 @@ extension GameSceneController{
         print("award:\(data)")
         
         let resultData = JSON(data[0])
-        self.playViewController?.darwCountLabel.text = "游戏" + String(resultData["awardDrawCount"].intValue) + "次   抓中" + String(resultData["awardWinningCount"].intValue) + "次"
+        self.playViewController?.darwCountLabel.text = "游戏" + String(resultData["awardDrawCount"].intValue) + "次"
         self.playViewController?.updateAwardUI()
     }
     
