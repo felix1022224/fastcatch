@@ -22,10 +22,15 @@ class GameHistoryViewController: UIViewController {
     // 游戏记录的数据
     fileprivate var gameHistoryDataSource = [JSON]()
     
+    // 联系客服的弹窗
+    fileprivate var customerServiceDialog:CustomerServiceInfoDialog!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         createBtnsAndBackground()
+        
+        customerServiceDialog = CustomerServiceInfoDialog(frame: UIScreen.main.bounds)
         
     }
 
@@ -56,10 +61,26 @@ class GameHistoryViewController: UIViewController {
         
         backBtn.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         
+        /// 客服
+        let customerServiceBtn = UIButton(type: UIButtonType.custom)
+        customerServiceBtn.setImage(UIImage(named: "代币记录客服"), for: .normal)
+        customerServiceBtn.sizeToFit()
+        view.addSubview(customerServiceBtn)
         
+        customerServiceBtn.addTarget(self, action: #selector(showCSDialog), for: .touchUpInside)
+        
+        customerServiceBtn.snp.makeConstraints { (make) in
+            make.centerY.equalTo(gameHisoryTitleImage)
+            make.right.equalTo(view).offset(-14)
+        }
         
         createGameHistoryList(titilImage: gameHisoryTitleImage)
         
+    }
+    
+    @objc func showCSDialog(){
+        customerServiceDialog.createView()
+        customerServiceDialog.show()
     }
     
     /// 关掉当前页面

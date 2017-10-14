@@ -32,7 +32,7 @@ extension PlayViewController {
         
         view.addSubview(gameUserGroup)
         
-        gameUserNickName.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
+        gameUserNickName.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         gameUserNickName.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         gameUserNickName.outTextColor = UIColor.white
         gameUserNickName.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -68,6 +68,20 @@ extension PlayViewController {
 //            make.top.equalTo(gameUserGroup).offset(2)
 //        }
         
+        
+        gameUserBtn.frame.size = CGSize(width: 40 + gameUserNickName.bounds.width + 10, height: 40)
+        gameUserBtn.backgroundColor = UIColor.clear
+        view.addSubview(gameUserBtn)
+        
+        gameUserBtn.snp.makeConstraints { (make) in
+            make.left.equalTo(gameUserGroup)
+            make.right.equalTo(gameUserGroup)
+            make.centerY.equalTo(gameUserGroup)
+        }
+        
+        gameUserBtn.addTarget(self, action: #selector(showGameUserInfo), for: .touchUpInside)
+        
+        gameUserBtn.isHidden = true
         gameUserImage.isHidden = true
         gameUserGroup.isHidden = true
     }
@@ -75,7 +89,9 @@ extension PlayViewController {
     public func updateGameUserInfoWidget(userFaceImage:String, userNickName:String) -> () {
         gameUserImage.kf.setImage(with: URL(string: userFaceImage))
         gameUserNickName.text = userNickName
-        gameUserNickNameBackground.frame = CGRect(x: 5, y: 4, width: 40 + gameUserNickName.bounds.width + 10, height: 36)
+        gameUserNickName.sizeToFit()
+        
+        gameUserNickNameBackground.frame = CGRect(x: 5, y: 2, width: 40 + gameUserNickName.bounds.width + 10, height: 36)
         gameUserGroup.snp.makeConstraints { (make) in
             make.right.equalTo(view).offset(-10)
             make.top.equalTo(gemBackground).offset(gemBackground.bounds.height + 14)
@@ -85,11 +101,15 @@ extension PlayViewController {
         gameUserImage.frame = CGRect(x: UIScreen.main.bounds.width - (40 + gameUserNickName.bounds.width + 10) - 14 + 2,
                                      y: gemBackground.bounds.height + 14 + 4 + UIApplication.shared.statusBarFrame.height, width: 36, height: 36)
         
+        gameUserBtn.frame.size = CGSize(width: 40 + gameUserNickName.bounds.width + 10, height: 40)
+        
+        gameUserBtn.isHidden = false
         gameUserImage.isHidden = false
         gameUserGroup.isHidden = false
     }
     
     public func removeGameUserInfo(){
+        gameUserBtn.isHidden = true
         gameUserImage.isHidden = true
         gameUserGroup.isHidden = true
     }

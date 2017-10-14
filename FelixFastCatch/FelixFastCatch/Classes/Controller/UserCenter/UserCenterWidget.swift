@@ -33,7 +33,7 @@ extension UserCenterViewController {
         view.addSubview(topGroupView)
         
         /// 底部的集合
-        bottomGroupView.frame = CGRect(x: 5, y: UIScreen.main.bounds.height * 0.3 + 25, width: UIScreen.main.bounds.width - 5*2, height: UIScreen.main.bounds.height - 25 - UIScreen.main.bounds.height * 0.3 - 5)
+        bottomGroupView.frame = CGRect(x: 0, y: UIScreen.main.bounds.height * 0.3 + 25, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 25 - UIScreen.main.bounds.height * 0.3 - 5)
         view.addSubview(bottomGroupView)
         
         setupTopWidget()

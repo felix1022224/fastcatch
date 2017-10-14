@@ -386,6 +386,7 @@ extension PayListDialog{
                             if self.paySuccessCallback != nil {
                                 self.paySuccessCallback!()
                             }
+                            self.getPayList()
                             break;
                         case .Failed:
                             ToastUtils.showErrorToast(msg: "支付失败")
@@ -454,6 +455,7 @@ extension PayListDialog{
                 let resultStatus = Alipayjson.value(forKey: "resultStatus") as! String
                 if resultStatus == "9000"{
                     print("OK")
+                    self.getPayList()
                     ToastUtils.showSuccessToast(msg: "支付成功")
                 }else if resultStatus == "8000" {
                     print("正在处理中")
@@ -487,6 +489,7 @@ extension PayListDialog{
                 let json = JSON(data: response.data!)
                 /// 获取数据成功，重新加载数据
                 print("data\(json)")
+                self.payListDataSource.removeAll()
                 self.payListDataSource = json["data"].arrayValue
                 self.payList.reloadData()
             }else{

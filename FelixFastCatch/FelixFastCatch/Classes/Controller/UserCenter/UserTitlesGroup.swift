@@ -18,7 +18,7 @@ extension UserCenterViewController{
     
     /// 创建称号的集合
     func createTitlesGroup() -> () {
-        titlesGroupView.frame = CGRect(x: 5, y: 0, width: UIScreen.main.bounds.width - 5*2, height: UIScreen.main.bounds.height - 30 - UIScreen.main.bounds.height * 0.3 - 5)
+        titlesGroupView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 30 - UIScreen.main.bounds.height * 0.3 - 5)
         titlesGroupView.image = UIImage(named: "我的成就底")
         bottomGroupView.addSubview(titlesGroupView)
         
@@ -35,7 +35,7 @@ extension UserCenterViewController{
         
         titlesGroupTitleLabel.snp.makeConstraints { (make) in
             make.top.equalTo(titlesGroupView).offset(25)
-            make.centerX.equalTo(view)
+            make.centerX.equalTo(view).offset(1)
         }
         
         createTitlesGroupList(titlesLabel: titlesGroupTitleLabel)
@@ -74,7 +74,7 @@ extension UserCenterViewController{
         self.titlesList.delegate = self
         self.titlesList.dataSource = self
         
-        titlesList.frame = CGRect(x: (UIScreen.main.bounds.width - titlesList.bounds.width)/2, y: titlesLabel.bounds.height + 10 + 20, width: titlesList.bounds.width, height: titlesList.bounds.height - 20)
+        titlesList.frame = CGRect(x: (UIScreen.main.bounds.width - titlesList.bounds.width)/2 + 1, y: titlesLabel.bounds.height + 10 + 20, width: titlesList.bounds.width, height: titlesList.bounds.height - 20)
         
         bottomGroupView.addSubview(titlesList)
         

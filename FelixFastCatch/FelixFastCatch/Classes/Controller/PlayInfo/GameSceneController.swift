@@ -215,6 +215,8 @@ extension GameSceneController{
         }else{
             print("已经有\(String(describing: json["waitCtlCount"].intValue))人在游戏中，请等候")
             
+            self.playViewController?.startPlayBtn.isEnabled = false
+            
             self.playViewController?.playQueueStausNumber.text = "预约第\(json["waitCtlIndex"].intValue)位"
             self.playViewController?.queueNumber.text = String(json["waitCtlCount"].intValue) + "人等待"
             

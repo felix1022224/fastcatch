@@ -30,7 +30,7 @@ class PlayViewController: UIViewController {
     fileprivate lazy var videoView:UIView = UIView()
     
     /// 游戏开始的按钮
-    fileprivate lazy var startPlayBtn:UIButton = UIButton()
+    lazy var startPlayBtn:UIButton = UIButton()
 
     /// 观看人数
     var playNumber:MainCustomerLabel!
@@ -209,6 +209,8 @@ class PlayViewController: UIViewController {
     var gameUserInfoDialog:GameUserInfoDialog!
     
     var gameUserInfo:JSON!
+    
+    let gameUserBtn = UIButton(type: UIButtonType.custom)
     
     override func viewDidLoad() {
         super.viewDidLoad()
