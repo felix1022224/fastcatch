@@ -164,7 +164,7 @@ extension MailingListViewController{
             }
             
             mailedBtn.isHidden = false
-            postageInfoLabel.isHidden = false
+//            postageInfoLabel.isHidden = false
             
         }else{
             tobeMailedBtn.isSelected = false
@@ -183,7 +183,7 @@ extension MailingListViewController{
             }
             
             mailedBtn.isHidden = true
-            postageInfoLabel.isHidden = true
+//            postageInfoLabel.isHidden = true
         }
     }
     
@@ -242,6 +242,8 @@ extension MailingListViewController{
         postageInfoLabel.text = "本月剩余免邮次数"
         postageInfoLabel.sizeToFit()
         view.addSubview(postageInfoLabel)
+        
+        postageInfoLabel.isHidden = true
         
         postageInfoLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
@@ -316,7 +318,7 @@ extension MailingListViewController{
             make.top.equalTo(tabsBackground).offset(tabsBackground.bounds.height + 5)
             make.centerX.equalTo(view)
             make.bottom.equalTo(mailedBtn).offset(-(5 + mailedBtn.bounds.height))
-            make.width.equalTo((UIImage(named: "邮寄item背景")?.size.width)!)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.98)
         }
         
         getTobeMailedGiftList(isRefresh: true)
@@ -402,7 +404,7 @@ extension MailingListViewController{
             make.top.equalTo(tabsBackground).offset(tabsBackground.bounds.height + 10)
             make.centerX.equalTo(view)
             make.bottom.equalTo(view)
-            make.width.equalTo((hasBeenContentBackgroundImage!.size.width))
+            make.width.equalTo(UIScreen.main.bounds.width * 0.98)
         }
         
         hasbeenMailedTabView.isHidden = true

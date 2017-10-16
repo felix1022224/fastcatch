@@ -103,7 +103,7 @@ extension UserCenterViewController:UICollectionViewDelegate, UICollectionViewDat
             let item = titlesDataSource[indexPath.row]
             
             cell?.title.text = item["name"].stringValue
-            cell?.info.text = item["description"].stringValue
+            cell?.info.attributedText = cell?.getAttributeStringWithString(item["description"].stringValue, lineSpace: 4)
             cell?.image.kf.setImage(with: URL(string: item["achievementImg"].stringValue))
             
         }

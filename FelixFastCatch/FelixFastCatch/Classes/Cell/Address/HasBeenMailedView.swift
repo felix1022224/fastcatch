@@ -91,7 +91,7 @@ class HasBeenMailedView: UIView {
         layout.minimumLineSpacing = 4
         
         // 設置每個 cell 的尺寸
-        layout.itemSize = CGSize(width: CGFloat(((hasBeenContentBackgroundImage?.size.width)! - 20) / 5 - 8), height: CGFloat((hasBeenProductBackground?.size.height)! + 5))
+        layout.itemSize = CGSize(width: CGFloat((UIScreen.main.bounds.width * 0.98 - 20) / 5 - 8), height: CGFloat((hasBeenProductBackground?.size.height)! + 5))
         
         var line = itemData["awards"].array!.count / 5
         if line <= 0 {
@@ -102,7 +102,7 @@ class HasBeenMailedView: UIView {
             }
         }
         
-        productsGroup = UICollectionView(frame: CGRect(x: 10, y: timeLabel.bounds.height + 25, width: hasBeenContentBackgroundImage!.size.width - 20, height: (hasBeenProductBackground?.size.height)! * CGFloat(line) + 10 * CGFloat(line)), collectionViewLayout: layout)
+        productsGroup = UICollectionView(frame: CGRect(x: 10, y: timeLabel.bounds.height + 25, width: UIScreen.main.bounds.width * 0.98 - 20, height: (hasBeenProductBackground?.size.height)! * CGFloat(line) + 10 * CGFloat(line)), collectionViewLayout: layout)
         productsGroup.backgroundColor = UIColor.clear
         
         hasbeenProductsDelegate = FCMyGiftHasBeenProductsDelegate(dataSource: itemData["awards"].array!)
@@ -173,7 +173,7 @@ class HasBeenMailedView: UIView {
             make.right.equalTo(statusLabel)
         }
         
-        contentBacngroundImage.frame = CGRect(x: 0, y: 0, width: hasBeenContentBackgroundImage!.size.width, height: 10 * 2 + timeLabel.bounds.height + productsGroup.bounds.height + statusLabel.bounds.height + mailedTimeLabel.bounds.height +
+        contentBacngroundImage.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width * 0.98, height: 10 * 2 + timeLabel.bounds.height + productsGroup.bounds.height + statusLabel.bounds.height + mailedTimeLabel.bounds.height +
             mailedCodeLabel.bounds.height + 12 * 3 + 10)
         
         //        contentBacngroundImage.snp.makeConstraints { (make) in

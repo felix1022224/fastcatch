@@ -138,7 +138,7 @@ extension InviteListDialog{
                 self.dataSource = json["data"]["content"].arrayValue
                 self.firendsList.reloadData()
                 self.inviteMember.text = "已邀请" + String(self.dataSource.count) + "人"
-                self.inviteGemNumber.text = "共获得" + String(self.dataSource.count * 30) + "代币"
+                self.inviteGemNumber.text = "共获得" + String(self.dataSource.count * 25) + "代币"
                 
                 if self.dataSource.count > 0 {
                     self.noValueView.isHidden = true

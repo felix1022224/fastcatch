@@ -19,9 +19,9 @@ class GameSceneController: NSObject {
     private var deviceId:String = ""
     
     /// socket io
-//    let socket = SocketIOClient(socketURL: URL(string: "http://101.201.68.47:9130")!, config: [.log(false), .compress])
+    let socket = SocketIOClient(socketURL: URL(string: "http://101.201.68.47:9130")!, config: [.log(false), .compress])
 //    let socket = SocketIOClient(socketURL: URL(string: "http://192.168.1.162:9130")!, config: [.log(false), .compress])
-    let socket = SocketIOClient(socketURL: URL(string: "http://47.92.72.158:9130")!, config: [.log(false), .compress])
+//    let socket = SocketIOClient(socketURL: URL(string: "http://47.92.72.158:9130")!, config: [.log(false), .compress])
     
     init(playViewController:PlayViewController, deviceId:String) {
         self.playViewController = playViewController
@@ -90,6 +90,11 @@ extension GameSceneController{
     func enterRoomSuccess() -> () {
         print("加入房间成功")
         ToastUtils.hide()
+        
+        socket.on("maintain") { [weak self] (data, ack) in
+            ToastUtils.showErrorToast(msg: "维护中，请稍后")
+            self?.playViewController?.backBtnClick()
+        }
         
         socket.on("gameUserInfo") { [weak self] (data, ack) in
             self?.updateGameUser(data: data)
@@ -207,6 +212,11 @@ extension GameSceneController{
     /// 等待排队
     func waitQueue(data:[Any]) -> () {
         let json = JSON(data[0])
+        print("resultqqqqqqqq:\(json["tryLock"].bool!)")
+        if json["canGame"].boolValue == false {
+            ToastUtils.showErrorToast(msg: "代币不足")
+            return
+        }
         if json["tryLock"].bool! == true {
             print("进来了")
             // 可以开始游戏了

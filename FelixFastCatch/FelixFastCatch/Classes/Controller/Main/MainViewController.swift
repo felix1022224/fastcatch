@@ -40,7 +40,7 @@ class MainViewController: UIViewController{
     fileprivate var mainBannersData:[JSON] = [JSON]()
     
     // 首页列表的数据
-    fileprivate lazy var mainListData:[JSON] = [JSON]()
+    lazy var mainListData:[JSON] = [JSON]()
     
     // 当前的页数
     fileprivate var page:Int = 0
@@ -116,6 +116,8 @@ class MainViewController: UIViewController{
         view.addSubview(backgroundImage)
         
         setupUI()
+        
+        
     }
 
     /// 在加载显示完首页的viewcontroller之后，需要调用该方法来成功获取系统的window
@@ -153,7 +155,6 @@ class MainViewController: UIViewController{
             payGuidView.show()
             UserDefaults.standard.set(true, forKey: Constants.IS_FIRST_OPEN_MAIN)
         }
-        
     }
     
     /// 初始化
@@ -308,9 +309,11 @@ extension MainViewController:UIScrollViewDelegate{
                 return
             }
             let webVC = WebViewController()
+            webVC.mainVC = self
             webVC.link = link
             webVC.actionTitle = self.mainBannersData[(sender.view?.tag)!]["title"].stringValue
-            present(webVC, animated: true, completion: nil)
+//            present(webVC, animated: true, completion: nil)
+            self.navigationController?.pushViewController(webVC, animated: true)
         }else if self.mainBannersData[(sender.view?.tag)!]["redirectType"].intValue == 2 {
             let link = self.mainBannersData[(sender.view?.tag)!]["scheme"].intValue
             if link == -1 {
@@ -356,7 +359,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         let layout = UICollectionViewFlowLayout()
         
         // 設置 section 的間距 四個數值分別代表 上、左、下、右 的間距
-        layout.sectionInset = UIEdgeInsetsMake(dataListPadding, dataListPadding, dataListPadding, dataListPadding);
+        layout.sectionInset = UIEdgeInsetsMake(dataListPadding/2, dataListPadding, dataListPadding/2, dataListPadding);
 
         // 設置每一行的間距
         layout.minimumLineSpacing = dataListPadding + 1
@@ -495,11 +498,11 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             var itemData:JSON;
             if indexPath.section == 0 {
                 itemData = mainListData[indexPath.row]
-                cell?.titleLabel.text = itemData["award"]["title"].string! + String(indexPath.row + 1)
+                cell?.titleLabel.text = itemData["award"]["title"].string!
             }else{
 //                print("index:\(advList[(indexPath.section - 1)/2]["sequence"].intValue)")
                 itemData = mainListData[indexPath.row + advList[indexPath.section/2-1]["sequence"].intValue]
-                cell?.titleLabel.text = itemData["award"]["title"].string! + String(indexPath.row + advList[(indexPath.section-1)/2]["sequence"].intValue + 1)
+                cell?.titleLabel.text = itemData["award"]["title"].string!
             }
             
             cell?.playBtn.tag = indexPath.row
@@ -576,9 +579,11 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
                 return
             }
             let webVC = WebViewController()
+            webVC.mainVC = self
             webVC.link = link
             webVC.actionTitle = item["name"].stringValue
-            present(webVC, animated: true, completion: nil)
+//            present(webVC, animated: true, completion: nil)
+            self.navigationController?.pushViewController(webVC, animated: true)
         }else if item["redirectType"].intValue == 2 {
             let link = item["scheme"].intValue
             if link == -1 {
@@ -679,6 +684,30 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         playView.bottomBannerCardScheme = mainListData[index]["activity"]["scheme"].stringValue
         
         navigationController?.pushViewController(playView, animated: true)
+    }
+    
+    func getPlayVC(index:Int) -> PlayViewController? {
+        if checkDeviceStatus(status: mainListData[index]["status"].intValue) {
+            let playView = PlayViewController()
+            playView.deviceId = mainListData[index]["deviceId"].stringValue
+            playView.darwCount = mainListData[index]["darwCount"].intValue
+            playView.needLogin = { [weak self] in
+                self?.fastLoginDialog.createView()
+                self?.fastLoginDialog.show()
+            }
+            
+            playView.mainVC = self
+            
+            playView.bottomAwardCardImagePath = mainListData[index]["award"]["img"].stringValue
+            playView.bootomAwardDescription = mainListData[index]["award"]["description"].stringValue
+            playView.bottomAwardTitle = mainListData[index]["award"]["title"].stringValue
+            
+            playView.bootomBannerCardImagePath = mainListData[index]["activity"]["bannerSmallImg"].stringValue
+            playView.bottomBannerCardScheme = mainListData[index]["activity"]["scheme"].stringValue
+            
+            return playView
+        }
+        return nil
     }
 
     func checkDeviceStatus(status:Int) -> Bool {
@@ -1038,6 +1067,7 @@ extension MainViewController{
     /// 来到首页的时候，读取用户信息
     func getsUserInfo() -> () {
         if Constants.User.USER_ID == "" {
+            payGemBtn.actionLabel.text = "0"
             return
         }
         UserTools.getUserInfo(callback: { [weak self] in

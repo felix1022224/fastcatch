@@ -19,29 +19,32 @@ class UserTitlesInfoDialog: BaseDialog {
     override func createView() {
         createBackgroundImage(imageName: "成就详情背景")
         
-        backgroundImage.frame.size = CGSize(width: 330, height: 412)
+        backgroundImage.frame.size = CGSize(width: 310, height: 400)
+        backgroundImage.center = self.center
         
         createCloseBtn()
         
         let itemImage = UIImageView(image: UIImage(named: "成就详情底"))
         itemImage.sizeToFit()
         
-        titlesInfoTabView.frame.size = CGSize(width: itemImage.bounds.width, height: backgroundImage.bounds.height - 80 - 20)
+        titlesInfoTabView.frame.size = CGSize(width: itemImage.bounds.width, height: backgroundImage.bounds.height - 80 - 10)
         titlesInfoTabView.backgroundColor = UIColor.clear
         titlesInfoTabView.separatorColor = UIColor.clear
-        titlesInfoTabView.showsVerticalScrollIndicator = false
+//        titlesInfoTabView.showsVerticalScrollIndicator = false
         titlesInfoTabView.delegate = self
         titlesInfoTabView.dataSource = self
         titlesInfoTabView.register(TitlesInfoCell.self, forCellReuseIdentifier: "cellId")
         addSubview(titlesInfoTabView)
         
-        titlesInfoTabView.frame = CGRect(x: (UIScreen.main.bounds.width - titlesInfoTabView.bounds.width)/2 - 5, y: (UIScreen.main.bounds.height - titlesInfoTabView.bounds.height)/2 + 10, width: titlesInfoTabView.bounds.width, height: titlesInfoTabView.bounds.height)
-        
+        titlesInfoTabView.frame = CGRect(x: (UIScreen.main.bounds.width/2 - titlesInfoTabView.bounds.width/2), y: (UIScreen.main.bounds.height - titlesInfoTabView.bounds.height)/2 + 10, width: titlesInfoTabView.bounds.width, height: titlesInfoTabView.bounds.height)
         
         addDialogToWindow()
     }
     
     func show2(list:[JSON]) -> () {
+        if list.count <= 0 {
+            return
+        }
         show()
         dataSources.removeAll()
         dataSources = list

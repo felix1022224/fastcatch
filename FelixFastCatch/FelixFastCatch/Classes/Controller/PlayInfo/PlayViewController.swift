@@ -264,6 +264,7 @@ class PlayViewController: UIViewController {
         if gameUserInfo == nil {
             return
         }
+        gameUserInfoDialog.dataSources = nil
         gameUserInfoDialog.dataSources = gameUserInfo
         gameUserInfoDialog.createView()
         gameUserInfoDialog.show()

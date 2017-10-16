@@ -21,8 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     var locationManager:CLLocationManager!
     
-    var vc = MainViewController()
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -91,7 +89,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         UMessage.registerDeviceToken(deviceToken)
-        print("deviceToken:\(deviceToken)")
+        let device = NSData(data: deviceToken)
+        let deviceId = device.description.replacingOccurrences(of:"<", with:"").replacingOccurrences(of:">", with:"").replacingOccurrences(of:" ", with:"")
+        print("deviceToken:\(deviceId)")
     }
     
     func setupPush() -> () {

@@ -81,8 +81,9 @@ class OutGameDialog: BaseDialog {
     func show2(action:@escaping ()->()) -> () {
         show()
         yesOut = action
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) { [weak self] in
             self?.hide()
         }
     }
+    
 }

@@ -73,6 +73,7 @@ extension UserCenterViewController {
         userNickNameLabel.snp.makeConstraints { (make) in
             make.top.equalTo(userFaceImageBackground).offset(5)
             make.left.equalTo(userFaceImageBackground).offset(userFaceImageBackground.bounds.width + 15)
+            make.right.equalTo(view).offset(-100)
         }
         
         /// 用户性别
@@ -213,6 +214,8 @@ extension UserCenterViewController {
         ucTitleImage.snp.makeConstraints { (make) in
             make.top.equalTo(view).offset(UIApplication.shared.statusBarFrame.height + 5)
             make.centerX.equalTo(view)
+            make.width.equalTo(200)
+            make.height.equalTo(50)
         }
         
         backBtn.setImage(UIImage(named: "邮寄返回"), for: .normal)

@@ -7,9 +7,48 @@
 //
 
 import UIKit
+import JavaScriptCore
+
+@objc protocol webJsDelegate:JSExport {
+    func payList()
+    func enterRoom(index:Int)
+}
+
+@objc class webJsModel: NSObject, webJsDelegate {
+    
+    var mainVC:MainViewController!
+
+    var webVC:WebViewController!
+    
+    func payList() {
+        let payListDialog = PayListDialog(frame: UIScreen.main.bounds)
+        payListDialog.createView()
+        payListDialog.show()
+    }
+    
+    func enterRoom(index: Int) {
+        print("213123123123:\(index)")
+        if mainVC == nil {
+            return
+        }
+        if mainVC.mainListData.count <= 0 {
+            return
+        }
+        mainVC.itemClick(index: index)
+        //        let playView =  mainVC.getPlayVC(index: index)
+//        if playView == nil {
+//            return
+//        }
+//        webVC.present(playView!, animated: true, completion: nil)
+//        webVC.navigationController?.pushViewController(playView!, animated: true)
+    }
+    
+}
 
 class WebViewController: UIViewController, UIWebViewDelegate {
 
+    var mainVC:MainViewController!
+    
     /// 要跳转的url地址
     var link:String!
     
@@ -20,9 +59,11 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     
     lazy var actionTitleLabel = UILabel()
     
+    var jsContext:JSContext!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.view.backgroundColor = UIColor.white
         
         let backImageView = UIImageView(image: UIImage(named: "web_back"))
@@ -61,6 +102,25 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         webview.delegate = self
         view.addSubview(webview)
         
+        self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
+        let model = webJsModel()
+        model.webVC = self
+        if mainVC != nil {
+            model.mainVC = mainVC
+        }
+        
+        self.jsContext.setObject(model, forKeyedSubscript: "miaozhuaApp" as NSCopying & NSObjectProtocol)
+        self.jsContext.exceptionHandler = { (context, exception) in
+            print("exception \(exception)")
+        }
+        
+//        let curUrl = webview.request?.URL?.absoluteString    //WebView当前访问页面的链接 可动态注册
+//        self.jsContext.evaluateScript(try? String(contentsOfURL: NSURL(string: curUrl!)!, encoding: NSUTF8StringEncoding))
+//
+//        self.jsContext.exceptionHandler = { (context, exception) in
+//            print("exception：", exception)
+//        }
+        
         webview.loadRequest(URLRequest(url: URL(string: link)!))
         
         /// title
@@ -76,6 +136,7 @@ class WebViewController: UIViewController, UIWebViewDelegate {
 
     @objc func back() -> () {
         dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func shared() -> () {

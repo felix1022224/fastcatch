@@ -14,7 +14,7 @@ class CustomerServiceInfoDialog: BaseDialog {
         
         createBackgroundImage(imageName: "联系客服背景")
         
-        backgroundImage.frame.size = CGSize(width: 334, height: 201)
+        backgroundImage.frame.size = CGSize(width: 290, height: 210)
         backgroundImage.center = self.center
         
         // 关闭按钮

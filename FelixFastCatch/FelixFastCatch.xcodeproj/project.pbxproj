@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4D0161DC1F9075C2004A90DF /* CustomerServiceInfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0161DB1F9075C2004A90DF /* CustomerServiceInfoDialog.swift */; };
+		4D05F2FB1F938F5800A8027D /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D05F2FA1F938F5800A8027D /* WelcomeViewController.swift */; };
 		4D17ECF81F3B0355004DD01F /* 镜头切换_音效.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4D17ECF11F3B017B004DD01F /* 镜头切换_音效.wav */; };
 		4D17ECF91F3B0355004DD01F /* 游戏开始_音效.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4D17ECEF1F3B017B004DD01F /* 游戏开始_音效.wav */; };
 		4D17ECFA1F3B0355004DD01F /* background_music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4D17ECEE1F3B017B004DD01F /* background_music.mp3 */; };
@@ -129,6 +130,7 @@
 
 /* Begin PBXFileReference section */
 		4D0161DB1F9075C2004A90DF /* CustomerServiceInfoDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerServiceInfoDialog.swift; sourceTree = "<group>"; };
+		4D05F2FA1F938F5800A8027D /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		4D17ECEE1F3B017B004DD01F /* background_music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background_music.mp3; sourceTree = "<group>"; };
 		4D17ECEF1F3B017B004DD01F /* 游戏开始_音效.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "游戏开始_音效.wav"; sourceTree = "<group>"; };
 		4D17ECF01F3B017B004DD01F /* 抓取失败_音效.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "抓取失败_音效.wav"; sourceTree = "<group>"; };
@@ -539,6 +541,7 @@
 				4D1D861A1F32F78F005210CA /* SelectDateView.swift */,
 				4DAD03331F51777200D7E72F /* WebViewController.swift */,
 				4DA23CDF1F8F536B00B2337E /* CustomeFlowLayout.swift */,
+				4D05F2FA1F938F5800A8027D /* WelcomeViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -923,6 +926,7 @@
 				4D7144831F8B584700B37D8A /* MailingListViewController.swift in Sources */,
 				4DCC49D21F5307220017D4A4 /* ExchangeCodeDialog.swift in Sources */,
 				4D1D861F1F334461005210CA /* ConstellationUtils.swift in Sources */,
+				4D05F2FB1F938F5800A8027D /* WelcomeViewController.swift in Sources */,
 				4D5BF1BD1F3851570091180B /* CheckInDialog.swift in Sources */,
 				4DCD39E91F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedCell.swift in Sources */,
 				4D2B80161F40263F0075D390 /* ShowOffRecordDialog.swift in Sources */,

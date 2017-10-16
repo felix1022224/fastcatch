@@ -31,7 +31,7 @@ class GameUserInfoDialog: BaseDialog {
     override func createView() {
         createBackgroundImage(imageName: "TA的资料背景")
         
-        backgroundImage.frame.size = CGSize(width: 334, height: 225)
+        backgroundImage.frame.size = CGSize(width: 298, height: 220)
         backgroundImage.center = self.center
         
         createCloseBtn()
@@ -40,7 +40,7 @@ class GameUserInfoDialog: BaseDialog {
         let userFaceBorderImage = UIImage(named: "user_face_border")
         userFaceImageBackground = UIImageView()
         userFaceImageBackground.image = userFaceBorderImage
-        userFaceImageBackground.frame = CGRect(x: self.bounds.width/2 - backgroundImage.bounds.width/2 + 54, y: self.bounds.height/2 - backgroundImage.bounds.height/2 + 80, width: 61, height: 61)
+        userFaceImageBackground.frame = CGRect(x: self.bounds.width/2 - backgroundImage.bounds.width/2 + 54, y: self.bounds.height/2 - backgroundImage.bounds.height/2 + 70, width: 61, height: 61)
         addSubview(userFaceImageBackground)
         
         //头像
@@ -62,22 +62,24 @@ class GameUserInfoDialog: BaseDialog {
         userFaceImageView.kf.setImage(with: URL(string: dataSources["avatar"].stringValue), placeholder: UIImage(named: "default_user_face"), options: nil, progressBlock: nil, completionHandler: nil)
         
         // 用户昵称
-        userNickName.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
+        userNickName.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         userNickName.text = "昵称: \(dataSources["nick"].stringValue)"
         userNickName.outLineWidth = 3
         userNickName.outTextColor = UIColor.white
         userNickName.outLienTextColor = Constants.UI.OUT_LINE_COLOR
+        userNickName.numberOfLines = 1
         userNickName.sizeToFit()
         userNickName.frame = userNickName.frame.insetBy(dx: CGFloat(1), dy: CGFloat(0))
         addSubview(userNickName)
         
         userNickName.snp.makeConstraints { (make) in
             make.top.equalTo(backgroundImage).offset(65)
-            make.left.equalTo(userFaceImageBackground).offset(userFaceImageBackground.bounds.width + 40)
+            make.left.equalTo(userFaceImageBackground).offset(userFaceImageBackground.bounds.width + 20)
+            make.right.equalTo(backgroundImage).offset(-10)
         }
         
         // 用户星座
-        constellationLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
+        constellationLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         constellationLabel.text = "星座: " + dataSources["constellation"].stringValue
         constellationLabel.outLineWidth = 3
         constellationLabel.outTextColor = UIColor.white
@@ -91,7 +93,7 @@ class GameUserInfoDialog: BaseDialog {
         }
         
         // 用户性别
-        sexLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
+        sexLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         if dataSources["gender"].stringValue == "0" {
             sexLabel.text = "性别: 男"
         }else if Constants.User.USER_SEX == "-1"{
@@ -110,38 +112,76 @@ class GameUserInfoDialog: BaseDialog {
             make.left.equalTo(userNickName)
         }
         
+        let lineImage = UIImageView(image: UIImage(named: "GameUserInfoLine"))
+        lineImage.sizeToFit()
+        addSubview(lineImage)
+        
+        lineImage.snp.makeConstraints { (make) in
+            make.bottom.equalTo(backgroundImage).offset(-70)
+            make.centerX.equalTo(backgroundImage)
+        }
+        
         createTitlesGroup()
         
         addDialogToWindow()
     }
     
-    fileprivate var bottomTitlesGroup = UIView()
+    fileprivate var bottomTitlesGroup = UIScrollView()
     
     /// 创建成就集合
     func createTitlesGroup() -> () {
-        bottomTitlesGroup.backgroundColor = UIColor.white
+//        bottomTitlesGroup.frame.size = CGSize(width: backgroundImage.bounds.width*0.85, height: 40)
+        bottomTitlesGroup.backgroundColor = UIColor.clear
         addSubview(bottomTitlesGroup)
         
+//        bottomTitlesGroup.frame = CGRect(x: (UIScreen.main.bounds.width - width)/2, y: 0, width: width, height: height)
+        
         let titles = dataSources["achievements"].arrayValue
+        
+        if titles.count <= 0 {
+            return
+        }
+        
         var width:CGFloat = 0
-        var height:CGFloat = 0
         for i in 0...titles.count-1 {
             let itemView = getTitleItem(itemData: titles[i])
-            itemView.frame = CGRect(x: CGFloat(i)*(itemView.bounds.width + 10),
-                                    y: 0, width: itemView.bounds.width + 10, height: itemView.bounds.height)
+            itemView.frame = CGRect(x: width,
+                                    y: 0, width: itemView.bounds.width + 15, height: itemView.bounds.height)
             bottomTitlesGroup.addSubview(itemView)
             width = width + itemView.bounds.width
-            height = itemView.bounds.height
+//            height = itemView.bounds.height
         }
+        
+//        for i in 0...titles.count-1 {
+//            let itemView = getTitleItem(itemData: titles[i])
+//            itemView.frame = CGRect(x: width,
+//                                    y: 0, width: itemView.bounds.width + 15, height: itemView.bounds.height)
+//            bottomTitlesGroup.addSubview(itemView)
+//            width = width + itemView.bounds.width
+//            //            height = itemView.bounds.height
+//        }
+//
+//        for i in 0...titles.count-1 {
+//            let itemView = getTitleItem(itemData: titles[i])
+//            itemView.frame = CGRect(x: width,
+//                                    y: 0, width: itemView.bounds.width + 15, height: itemView.bounds.height)
+//            bottomTitlesGroup.addSubview(itemView)
+//            width = width + itemView.bounds.width
+//            //            height = itemView.bounds.height
+//        }
+        
+        bottomTitlesGroup.contentSize = CGSize(width: width, height: 40)
         
 //        bottomTitlesGroup.frame.size = CGSize(width: width, height: height)
         
-        bottomTitlesGroup.frame = CGRect(x: (UIScreen.main.bounds.width - width)/2, y: 0, width: width, height: height)
-        
         bottomTitlesGroup.snp.makeConstraints { (make) in
-            make.bottom.equalTo(backgroundImage).offset(-(bottomTitlesGroup.bounds.height + 10))
-            make.left.equalTo(backgroundImage).offset(backgroundImage.bounds.width/2 - width/2)
+                        make.bottom.equalTo(backgroundImage).offset(-20)
+            make.centerX.equalTo(backgroundImage)
+            make.width.equalTo(backgroundImage.bounds.width*0.82)
+            make.height.equalTo(40)
         }
+        
+        
 
         
     }
@@ -150,32 +190,35 @@ class GameUserInfoDialog: BaseDialog {
         let itemView = UIView()
         
         let titleImage = UIImageView()
-        titleImage.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        titleImage.frame = CGRect(x: 0, y: 0, width: 38, height: 38)
         itemView.addSubview(titleImage)
         
         titleImage.kf.setImage(with: URL(string: itemData["achievementImg"].stringValue))
         
-        let title = MainCustomerLabel()
-        title.outLineWidth = Constants.UI.OUT_LINE_WIDTH
-        title.outTextColor = UIColor.white
-        title.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        title.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
-        title.text = itemData["name"].stringValue
-        title.sizeToFit()
-        title.frame = CGRect(x: 0, y: titleImage.bounds.height + 5, width: title.bounds.width, height: title.bounds.height)
-        itemView.addSubview(title)
+//        let title = MainCustomerLabel()
+//        title.outLineWidth = Constants.UI.OUT_LINE_WIDTH
+//        title.outTextColor = UIColor.white
+//        title.outLienTextColor = Constants.UI.OUT_LINE_COLOR
+//        title.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
+//        title.text = itemData["name"].stringValue
+//        title.sizeToFit()
+//        title.frame = CGRect(x: 0, y: titleImage.bounds.height + 5, width: title.bounds.width, height: title.bounds.height)
+//        itemView.addSubview(title)
         
-        if titleImage.bounds.width > title.bounds.width {
-            itemView.frame.size = CGSize(width: titleImage.bounds.width, height: titleImage.bounds.height + 5 + title.bounds.height)
-        }else{
-            itemView.frame.size = CGSize(width: title.bounds.width, height: titleImage.bounds.height + 5 + title.bounds.height)
-        }
+        itemView.frame.size = CGSize(width: titleImage.bounds.width, height: titleImage.bounds.height + 5)
         
-        titleImage.frame = CGRect(x: (itemView.bounds.width - titleImage.bounds.width)/2, y: 0, width: 30, height: 30)
+        titleImage.frame = CGRect(x: (itemView.bounds.width - titleImage.bounds.width)/2, y: 0, width: 38, height: 38)
         
         return itemView
     }
     
+    override func hide() {
+        for view in bottomTitlesGroup.subviews {
+            view.removeFromSuperview()
+        }
+        bottomTitlesGroup.removeFromSuperview()
+        super.hide()
+    }
     
     
 }

@@ -30,7 +30,8 @@ class GameHistoryCell: UITableViewCell {
         
         /// 背景
         let backgroundImage = UIImageView(image: UIImage(named: "游戏记录背景框"))
-        backgroundImage.sizeToFit()
+//        backgroundImage.sizeToFit()
+        backgroundImage.frame.size = CGSize(width: (UIScreen.main.bounds.width * 0.98), height: (UIScreen.main.bounds.width * 0.95)*0.3)
         addSubview(backgroundImage)
         
         /// 产品背景图
@@ -41,7 +42,7 @@ class GameHistoryCell: UITableViewCell {
         
         /// 产品图
         productImage.frame.size = CGSize(width: productBackgroundImage.bounds.width * 0.90, height: productBackgroundImage.bounds.height * 0.90)
-        productImage.backgroundColor = UIColor.red
+        productImage.backgroundColor = UIColor.clear
         productImage.center = productBackgroundImage.center
         productImage.layer.cornerRadius = 3
         productImage.layer.masksToBounds = true

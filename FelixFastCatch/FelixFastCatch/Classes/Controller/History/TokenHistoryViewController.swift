@@ -42,13 +42,21 @@ class TokenHistoryViewController: UIViewController {
         view.addSubview(gameHistoryBackground)
         
         /// 标题
+//        let tokenHisoryTitleImage = UIView()
+//        tokenHisoryTitleImage.backgroundColor = UIColor(patternImage:  UIImage(named: "代币记录顶部")!)
+//        tokenHisoryTitleImage.frame.size = CGSize(width: 220, height: 50)
+//        view.addSubview(tokenHisoryTitleImage)
+        
         let tokenHisoryTitleImage = UIImageView(image: UIImage(named: "代币记录顶部"))
+//        tokenHisoryTitleImage.frame.size = CGSize(width: 200, height: 40)
         tokenHisoryTitleImage.sizeToFit()
         view.addSubview(tokenHisoryTitleImage)
         
         tokenHisoryTitleImage.snp.makeConstraints { (make) in
             make.top.equalTo(view).offset(UIApplication.shared.statusBarFrame.height + 5)
             make.centerX.equalTo(view)
+            make.width.equalTo(200)
+            make.height.equalTo(50)
         }
         
         backBtn.setImage(UIImage(named: "邮寄返回"), for: .normal)
@@ -96,12 +104,12 @@ class TokenHistoryViewController: UIViewController {
 extension TokenHistoryViewController: UITableViewDelegate, UITableViewDataSource{
     
     /// 创建游戏记录列表
-    func createGameHistoryList(titleImage:UIImageView) -> () {
+    func createGameHistoryList(titleImage:UIView) -> () {
         let itemImage = UIImage(named: "游戏记录背景框")
         
         tokenHistoryList.backgroundColor = UIColor.clear
         tokenHistoryList.separatorColor = UIColor.clear
-        tokenHistoryList.showsVerticalScrollIndicator = false
+//        tokenHistoryList.showsVerticalScrollIndicator = false
         tokenHistoryList.delegate = self
         tokenHistoryList.dataSource = self
         tokenHistoryList.register(TokenHistoryCell.self, forCellReuseIdentifier: "cellId")
@@ -111,7 +119,7 @@ extension TokenHistoryViewController: UITableViewDelegate, UITableViewDataSource
             make.top.equalTo(titleImage).offset(10 + titleImage.bounds.height)
             make.centerX.equalTo(view)
             make.bottom.equalTo(view)
-            make.width.equalTo((itemImage?.size.width)!)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.98)
         }
         
         getTokenHistoryList()
@@ -126,7 +134,7 @@ extension TokenHistoryViewController: UITableViewDelegate, UITableViewDataSource
         
         let item = self.tokenHistoryDataSource[indexPath.row]
         
-        cell?.tokenChangeLabel.text = item["mp"].stringValue + " " + item["diamonds"].stringValue
+        cell?.tokenChangeLabel.text = item["mp"].stringValue + " " + item["diamonds"].stringValue + "币"
         cell?.tokenChangeTime.text = item["createTime"].stringValue
         cell?.tokenChangeTitle.text = item["typeName"].stringValue
         
@@ -173,7 +181,7 @@ extension TokenHistoryViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let itemImage = UIImage(named: "代币记录背景框")
-        return (itemImage?.size.height)! + 10
+        return (UIScreen.main.bounds.width * 0.98) * 0.3
     }
 }
 

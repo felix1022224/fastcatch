@@ -66,7 +66,7 @@ class PayListDialog: BaseDialog {
         
         payList.snp.makeConstraints { (make) in
             make.width.equalTo(topContentHeight!.size.width)
-            make.height.equalTo(topContentHeight!.size.height * 4)
+            make.height.equalTo(topContentHeight!.size.height * 4.3)
             make.centerX.equalTo(backgroundImage)
             make.top.equalTo(backgroundImage).offset(75)
         }
@@ -282,7 +282,7 @@ extension PayListDialog{
         
         aliPayBtn.snp.makeConstraints { (make) in
             make.right.equalTo(backgroundImage).offset(-16)
-            make.bottom.equalTo(backgroundImage).offset(-30)
+            make.bottom.equalTo(backgroundImage).offset(-20)
         }
         
         aliPayBtn.addTarget(self, action: #selector(payBtnClick(sender:)), for: .touchUpInside)

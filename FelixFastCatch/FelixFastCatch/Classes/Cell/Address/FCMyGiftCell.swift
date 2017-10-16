@@ -53,6 +53,7 @@ extension FCMyGiftCell{
         contentGroup = UIImageView()
         contentGroup.image = UIImage(named: "邮寄item背景")
         contentGroup.sizeToFit()
+        contentGroup.frame.size = CGSize(width: UIScreen.main.bounds.width * 0.98, height: (UIScreen.main.bounds.width * 0.98)*0.3)
         addSubview(contentGroup)
         
         // 产品背景图

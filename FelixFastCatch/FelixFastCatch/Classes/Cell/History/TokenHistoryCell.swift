@@ -30,7 +30,8 @@ class TokenHistoryCell: UITableViewCell {
         
         /// 背景
         let backgroundImage = UIImageView(image: UIImage(named: "代币记录背景框"))
-        backgroundImage.sizeToFit()
+//        backgroundImage.sizeToFit()
+        backgroundImage.frame.size = CGSize(width: (UIScreen.main.bounds.width * 0.98), height: (UIScreen.main.bounds.width * 0.98)*0.3)
         addSubview(backgroundImage)
         
         /// item前面的图标
@@ -58,7 +59,7 @@ class TokenHistoryCell: UITableViewCell {
         }
         
         /// 代币记录的title
-        tokenChangeTitle.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(18))
+        tokenChangeTitle.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         tokenChangeTitle.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         tokenChangeTitle.outTextColor = UIColor.white
         tokenChangeTitle.outLienTextColor = Constants.UI.OUT_LINE_COLOR

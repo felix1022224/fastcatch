@@ -47,6 +47,8 @@ class GameHistoryViewController: UIViewController {
         gameHisoryTitleImage.snp.makeConstraints { (make) in
             make.top.equalTo(view).offset(UIApplication.shared.statusBarFrame.height + 5)
             make.centerX.equalTo(view)
+            make.width.equalTo(200)
+            make.height.equalTo(50)
         }
         
         backBtn.setImage(UIImage(named: "邮寄返回"), for: .normal)
@@ -95,11 +97,11 @@ extension GameHistoryViewController: UITableViewDelegate, UITableViewDataSource{
     
     /// 创建游戏记录列表
     func createGameHistoryList(titilImage:UIImageView) -> () {
-        let itemImage = UIImage(named: "游戏记录背景框")
+//        let itemImage = UIImage(named: "游戏记录背景框")
         
         gameHistoryList.backgroundColor = UIColor.clear
         gameHistoryList.separatorColor = UIColor.clear
-        gameHistoryList.showsVerticalScrollIndicator = false
+//        gameHistoryList.showsVerticalScrollIndicator = false
         gameHistoryList.delegate = self
         gameHistoryList.dataSource = self
         gameHistoryList.register(GameHistoryCell.self, forCellReuseIdentifier: "cellId")
@@ -109,7 +111,7 @@ extension GameHistoryViewController: UITableViewDelegate, UITableViewDataSource{
             make.top.equalTo(titilImage).offset(10 + titilImage.bounds.height)
             make.centerX.equalTo(view)
             make.bottom.equalTo(view)
-            make.width.equalTo((itemImage?.size.width)!)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.98)
         }
         
         getGameHistoryList()
@@ -135,8 +137,8 @@ extension GameHistoryViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let itemImage = UIImage(named: "游戏记录背景框")
-        return (itemImage?.size.height)! + 10
+//        let itemImage = UIImage(named: "游戏记录背景框")
+        return (UIScreen.main.bounds.width * 0.98)*0.3
     }
 }
 

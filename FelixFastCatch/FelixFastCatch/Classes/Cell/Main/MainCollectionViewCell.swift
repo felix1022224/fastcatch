@@ -103,10 +103,10 @@ extension MainCollectionViewCell{
         }else{
             testLabel.font = UIFont.systemFont(ofSize: CGFloat(11))
         }
-        testLabel.text = "测试"
+        testLabel.text = ""
         testLabel.sizeToFit()
         
-        let bottomHeight = rootView.bounds.height * 0.2 + 4*2 + testLabel.bounds.height
+        let bottomHeight = rootView.bounds.height * 0.28 + 4*2 + testLabel.bounds.height
         
         bottomGroup = UIView()
         bottomGroup.backgroundColor = rootView.backgroundColor
@@ -127,13 +127,13 @@ extension MainCollectionViewCell{
         }else{
             titleLabel.font = UIFont.systemFont(ofSize: CGFloat(11))
         }
-        titleLabel.text = "测试一下，这个新的商品怎么样"
+        titleLabel.text = ""
         titleLabel.sizeToFit()
         titleLabel.numberOfLines = 2
         bottomGroup.addSubview(titleLabel)
         
         titleLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(bottomGroup).offset(4)
+            make.top.equalTo(bottomGroup).offset(5)
             make.left.equalTo(bottomGroup).offset(2)
             make.right.equalTo(bottomGroup).offset(-2)
 //            make.bottom.equalTo(playBtn).offset(-(playBtn.bounds.height + 2))
@@ -150,7 +150,7 @@ extension MainCollectionViewCell{
         gemNumberLabel.textColor = Constants.UI.GEM_TEXT_COLOR
         gemNumberLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
         gemNumberLabel.sizeToFit()
-        gemNumberLabel.text = "30"
+        gemNumberLabel.text = ""
         bottomGroup.addSubview(gemNumberLabel)
         
         createPlayBtn()
