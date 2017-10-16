@@ -14,10 +14,10 @@ class Constants: NSObject {
     struct Network {
         
         /// 正式地址
-        static let BASE_URL = "http://101.201.68.47:9125/"
+//        static let BASE_URL = "http://101.201.68.47:9125/"
         
         /// 测试地址
-//        static let BASE_URL = "http://192.168.1.162:9125/"
+        static let BASE_URL = "http://192.168.1.162:9125/"
         
 //        static let BASE_URL = "http://47.92.72.158:9125/"
         
@@ -74,6 +74,10 @@ class Constants: NSObject {
             
             /// 取消预约
             static let END_PALY = BASE_URL + "machine/quitqueue"
+            
+            /// 获取开屏页
+            static let GET_OPEN_ADV = BASE_URL + "advertise/list?showPage=0"
+            
             
         }
         

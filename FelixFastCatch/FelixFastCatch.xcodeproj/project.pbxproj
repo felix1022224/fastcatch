@@ -38,6 +38,7 @@
 		4D1F59DC1F8CC8EA00806C00 /* TokenHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F59DB1F8CC8EA00806C00 /* TokenHistoryViewController.swift */; };
 		4D1F59DF1F8CCD8D00806C00 /* GameHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F59DE1F8CCD8D00806C00 /* GameHistoryCell.swift */; };
 		4D1F59E11F8CD9D600806C00 /* TokenHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F59E01F8CD9D600806C00 /* TokenHistoryCell.swift */; };
+		4D28005B1F948196004E9D8B /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D28005A1F948196004E9D8B /* SplashView.swift */; };
 		4D2B800E1F3BFBF40075D390 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2B800D1F3BFBF40075D390 /* libresolv.tbd */; };
 		4D2B80101F40027D0075D390 /* InviteListDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B800F1F40027D0075D390 /* InviteListDialog.swift */; };
 		4D2B80121F4008060075D390 /* MailedSuccessDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B80111F4008060075D390 /* MailedSuccessDialog.swift */; };
@@ -161,6 +162,7 @@
 		4D1F59DB1F8CC8EA00806C00 /* TokenHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenHistoryViewController.swift; sourceTree = "<group>"; };
 		4D1F59DE1F8CCD8D00806C00 /* GameHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHistoryCell.swift; sourceTree = "<group>"; };
 		4D1F59E01F8CD9D600806C00 /* TokenHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenHistoryCell.swift; sourceTree = "<group>"; };
+		4D28005A1F948196004E9D8B /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		4D2B800D1F3BFBF40075D390 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		4D2B800F1F40027D0075D390 /* InviteListDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteListDialog.swift; sourceTree = "<group>"; };
 		4D2B80111F4008060075D390 /* MailedSuccessDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailedSuccessDialog.swift; sourceTree = "<group>"; };
@@ -537,6 +539,7 @@
 		4D9EBB881F271C5C002674DE /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				4D28005A1F948196004E9D8B /* SplashView.swift */,
 				4D9EBB8A1F271C80002674DE /* MainViewController.swift */,
 				4D1D861A1F32F78F005210CA /* SelectDateView.swift */,
 				4DAD03331F51777200D7E72F /* WebViewController.swift */,
@@ -859,6 +862,7 @@
 			files = (
 				4D7048AC1F90AB8500D337F4 /* TitlesCell.swift in Sources */,
 				4DA23CE01F8F536B00B2337E /* CustomeFlowLayout.swift in Sources */,
+				4D28005B1F948196004E9D8B /* SplashView.swift in Sources */,
 				4DD3A5041F7C9CFA000B5F25 /* MainBeginnerGuidPayView.swift in Sources */,
 				4DCC49CC1F52E0110017D4A4 /* PlayInfoAwardDialog.swift in Sources */,
 				4D96D3BF1F5BE14200E614CD /* ProtocolInfoDialog.swift in Sources */,

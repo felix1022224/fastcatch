@@ -106,6 +106,8 @@ class MainViewController: UIViewController{
     
 //    fileprivate var splitMachineList:[String: ]
     
+    fileprivate var isShowADV = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -117,9 +119,31 @@ class MainViewController: UIViewController{
         
         setupUI()
         
+        SplashView.updateSplashData(imgUrl: "http://img0.zgtuku.com/images/front/v/d3/59/235563250418.jpg", actUrl: "http://www.baidu.com")
+//        SplashView.simpleShowSplashView()
         
+        getOpenAdv()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        if isShowADV {
+            return
+        }
+        SplashView.showSplashView(duration: 5, defaultImage: UIImage(named: "Launchplaceholder"), tapSplashImageBlock: { (resultStr) in
+            if let url = URL(string: resultStr!) {
+                //根据iOS系统版本，分别处理
+                if #available(iOS 10, *) {
+                    UIApplication.shared.open(url, options: [:],completionHandler: {(success) in })
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        }) { (isDiss) in
+            print("diss\(isDiss)")
+            self.isShowADV = true
+        }
+    }
+    
     /// 在加载显示完首页的viewcontroller之后，需要调用该方法来成功获取系统的window
     func loadDialogToWindow() -> () {
         fastLoginDialog = FastLoginDialog(frame: UIScreen.main.bounds)
@@ -312,7 +336,6 @@ extension MainViewController:UIScrollViewDelegate{
             webVC.mainVC = self
             webVC.link = link
             webVC.actionTitle = self.mainBannersData[(sender.view?.tag)!]["title"].stringValue
-//            present(webVC, animated: true, completion: nil)
             self.navigationController?.pushViewController(webVC, animated: true)
         }else if self.mainBannersData[(sender.view?.tag)!]["redirectType"].intValue == 2 {
             let link = self.mainBannersData[(sender.view?.tag)!]["scheme"].intValue
@@ -1121,6 +1144,21 @@ extension MainViewController{
     }
 }
 
+// MARK: - 获取开屏页广告
+extension MainViewController {
+    
+    func getOpenAdv() -> () {
+        Alamofire.request(Constants.Network.Machine.GET_OPEN_ADV).responseJSON { (dataResponse) in
+            if NetWorkUtils.checkReponse(response: dataResponse) {
+                let json = JSON(data: dataResponse.data!)
+                if json["data"].arrayValue.count > 0 {
+                    SplashView.updateSplashData(imgUrl: json["data"].arrayValue[0]["advertiseBigImg"].stringValue, actUrl: json["data"].arrayValue[0]["scheme"].stringValue)
+                }
+            }
+        }
+    }
+    
+}
 
 
 
