@@ -70,7 +70,7 @@ class BaseDialog: UIView {
             self?.shadow.alpha = 0.0
             self?.transform = CGAffineTransform(scaleX: 0.0,y: 0.0)
         }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.31) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) { [weak self] in
             self?.shadow.removeFromSuperview()
             self?.removeFromSuperview()
             for subview in (self?.subviews)! {

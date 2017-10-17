@@ -119,7 +119,7 @@ class MainViewController: UIViewController{
         
         setupUI()
         
-        SplashView.updateSplashData(imgUrl: "http://img0.zgtuku.com/images/front/v/d3/59/235563250418.jpg", actUrl: "http://www.baidu.com")
+//        SplashView.updateSplashData(imgUrl: "http://img0.zgtuku.com/images/front/v/d3/59/235563250418.jpg", actUrl: "http://www.baidu.com")
 //        SplashView.simpleShowSplashView()
         
         getOpenAdv()
@@ -127,6 +127,7 @@ class MainViewController: UIViewController{
 
     override func viewWillAppear(_ animated: Bool) {
         if isShowADV {
+            isShowADV = true
             return
         }
         SplashView.showSplashView(duration: 5, defaultImage: UIImage(named: "Launchplaceholder"), tapSplashImageBlock: { (resultStr) in
@@ -141,19 +142,19 @@ class MainViewController: UIViewController{
         }) { (isDiss) in
             print("diss\(isDiss)")
             self.isShowADV = true
+            
+            if Constants.User.USER_ID == "" {
+                //            fastLoginDialog.createView()
+                //            fastLoginDialog.show()
+            }else {
+                self.getsUserInfo()
+            }
         }
     }
     
     /// 在加载显示完首页的viewcontroller之后，需要调用该方法来成功获取系统的window
     func loadDialogToWindow() -> () {
         fastLoginDialog = FastLoginDialog(frame: UIScreen.main.bounds)
-        
-        if Constants.User.USER_ID == "" {
-//            fastLoginDialog.createView()
-//            fastLoginDialog.show()
-        }else {
-            getsUserInfo()
-        }
         
         /// 购买钻石的dialog
         payGemDialog = PayListDialog(frame: UIScreen.main.bounds)
@@ -759,6 +760,7 @@ extension MainViewController{
         if isLoadingMainData {
             return
         }
+        
         isLoadingMainData = true
         
         var params = NetWorkUtils.createBaseParams()
@@ -1093,6 +1095,11 @@ extension MainViewController{
             payGemBtn.actionLabel.text = "0"
             return
         }
+        
+        if isShowADV == false {
+            return
+        }
+        
         UserTools.getUserInfo(callback: { [weak self] in
             if self?.payGemBtn != nil {
                 self?.payGemBtn.actionLabel.text = String(Constants.User.diamondsCount)
@@ -1153,6 +1160,9 @@ extension MainViewController {
                 let json = JSON(data: dataResponse.data!)
                 if json["data"].arrayValue.count > 0 {
                     SplashView.updateSplashData(imgUrl: json["data"].arrayValue[0]["advertiseBigImg"].stringValue, actUrl: json["data"].arrayValue[0]["scheme"].stringValue)
+                }else{
+                    UserDefaults.standard.removeObject(forKey: SplashView.IMG_URL)
+                    UserDefaults.standard.removeObject(forKey: SplashView.ACT_URL)
                 }
             }
         }

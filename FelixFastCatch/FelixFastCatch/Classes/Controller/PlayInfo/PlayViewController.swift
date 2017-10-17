@@ -655,7 +655,6 @@ extension PlayViewController{
     }
 }
 
-
 // MARK: - 创建直播视屏的view
 extension PlayViewController{
     
@@ -868,7 +867,6 @@ extension PlayViewController: AgoraRtcEngineDelegate {
     
     
 }
-
 
 // MARK: - 观看人数和排队人数
 extension PlayViewController{

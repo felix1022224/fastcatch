@@ -19,9 +19,9 @@ class GameSceneController: NSObject {
     private var deviceId:String = ""
     
     /// socket io
-    let socket = SocketIOClient(socketURL: URL(string: "http://101.201.68.47:9130")!, config: [.log(false), .compress])
+//    let socket = SocketIOClient(socketURL: URL(string: "http://101.201.68.47:9130")!, config: [.log(false), .compress])
 //    let socket = SocketIOClient(socketURL: URL(string: "http://192.168.1.162:9130")!, config: [.log(false), .compress])
-//    let socket = SocketIOClient(socketURL: URL(string: "http://47.92.72.158:9130")!, config: [.log(false), .compress])
+    let socket = SocketIOClient(socketURL: URL(string: "http://47.92.72.158:9130")!, config: [.log(false), .compress])
     
     init(playViewController:PlayViewController, deviceId:String) {
         self.playViewController = playViewController
@@ -55,10 +55,12 @@ extension GameSceneController{
             self?.updateAwardNumber(data: data)
         }
         
+        /// 加入房间
         var params = [String :Any]()
         params["deviceid"] = self.deviceId
         params["state"] = "1"
         
+        /// 加入房间的回调监听
         socket.on("enterSuccess") { [weak self] (data, ack) in
             self?.enterRoomSuccess()
         }
@@ -78,6 +80,7 @@ extension GameSceneController{
         socket.emit("room", params)
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) { [weak self] in
+            print("断开连接")
             self?.socket.disconnect()
         }
     }
@@ -137,8 +140,7 @@ extension GameSceneController{
     
     /// 更新人数
     func updateGameNumber(data:[Any], ack:SocketAckEmitter) -> () {
-        print("data:\(data)")
-        print("ack:\(ack)")
+        print("updateGameNumber:\(data)")
         
         let resultData = JSON(data[0])
         if let watchNumber = resultData["waitWatchCount"].int {
@@ -152,7 +154,7 @@ extension GameSceneController{
     
     /// 更新抓取次数
     func updateAwardNumber(data:[Any]) -> () {
-        print("award:\(data)")
+        print("updateAwardNumber:\(data)")
         
         let resultData = JSON(data[0])
         self.playViewController?.darwCountLabel.text = "游戏" + String(resultData["awardDrawCount"].intValue) + "次"
@@ -180,7 +182,6 @@ extension GameSceneController{
         params["deviceid"] = deviceId
         
         socket.emit("catchpress", params)
-        
         self.playViewController?.hidePlayGroup()
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {[weak self] in
@@ -212,18 +213,18 @@ extension GameSceneController{
     /// 等待排队
     func waitQueue(data:[Any]) -> () {
         let json = JSON(data[0])
-        print("resultqqqqqqqq:\(json["tryLock"].bool!)")
+        print("waitQueue:\(json["tryLock"].bool!)")
         if json["canGame"].boolValue == false {
             ToastUtils.showErrorToast(msg: "代币不足")
             return
         }
         if json["tryLock"].bool! == true {
-            print("进来了")
+            print("可以开始游戏了")
             // 可以开始游戏了
             self.playViewController?.startPlay()
             self.playViewController?.playQueueNumberStatus.isHidden = true
         }else{
-            print("已经有\(String(describing: json["waitCtlCount"].intValue))人在游戏中，请等候")
+            print("已经有\(String(describing: json["waitCtlCount"].intValue))人在游戏中，请等候,\(json)")
             
             self.playViewController?.startPlayBtn.isEnabled = false
             
@@ -249,7 +250,7 @@ extension GameSceneController{
     
     func updateGameUser(data:[Any]) -> () {
         let resultJson = JSON(data[0])
-        print("result\(data[0])")
+        print("updateGameUser\(data[0])")
         if resultJson["id"].intValue != 0 {
             self.playViewController?.gameUserInfo = resultJson
             self.playViewController?.updateGameUserInfoWidget(userFaceImage: resultJson["avatar"].stringValue, userNickName: resultJson["nick"].stringValue)
