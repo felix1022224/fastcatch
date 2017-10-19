@@ -92,7 +92,8 @@ extension PlayViewController {
     }
     
     public func updateGameUserInfoWidget(userFaceImage:String, userNickName:String) -> () {
-        gameUserImage.kf.setImage(with: URL(string: userFaceImage))
+        gameUserImage.kf.setImage(with: URL(string: userFaceImage), placeholder: UIImage(named: "default_user_face"), options: nil, progressBlock: nil, completionHandler: nil)
+        
         gameUserNickName.text = userNickName
         gameUserNickName.sizeToFit()
         

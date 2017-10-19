@@ -18,14 +18,18 @@ class GameSceneController: NSObject {
     /// 房间号
     private var deviceId:String = ""
     
-    /// socket io
-//    let socket = SocketIOClient(socketURL: URL(string: "http://101.201.68.47:9130")!, config: [.log(false), .compress])
-//    let socket = SocketIOClient(socketURL: URL(string: "http://192.168.1.162:9130")!, config: [.log(false), .compress])
-    let socket = SocketIOClient(socketURL: URL(string: "http://47.92.72.158:9130")!, config: [.log(false), .compress])
+    /// socket 连接
+    var socket:SocketIOClient!
     
     init(playViewController:PlayViewController, deviceId:String) {
         self.playViewController = playViewController
         self.deviceId = deviceId
+        // 中间测试
+//        socket = SocketIOClient(socketURL: URL(string: "http://47.92.72.158:9130?room=" + deviceId)!, config: [.log(false), .compress])
+        // 本地测试
+//        socket = SocketIOClient(socketURL: URL(string: "http://192.168.1.162:9130?room=" + deviceId)!, config: [.log(false), .compress])
+        // 线上正式
+        socket = SocketIOClient(socketURL: URL(string: "http://101.201.68.47:9130?room=" + deviceId)!, config: [.log(false), .compress])
     }
     
 }
@@ -72,17 +76,18 @@ extension GameSceneController{
     func disconnect() -> () {
         print("离开房间")
         
-        /// 离开房间
-        var params = [String :Any]()
-        params["deviceid"] = self.deviceId
-        params["state"] = "0"
-        
-        socket.emit("room", params)
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) { [weak self] in
-            print("断开连接")
-            self?.socket.disconnect()
-        }
+//        /// 离开房间
+//        var params = [String :Any]()
+//        params["deviceid"] = self.deviceId
+//        params["state"] = "0"
+//
+//        socket.emit("room", params)
+//
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) { [weak self] in
+//            print("断开连接")
+//
+//        }
+        self.socket.disconnect()
     }
         
 }

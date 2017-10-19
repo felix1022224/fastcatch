@@ -592,6 +592,7 @@ extension PlayViewController{
         createQueueNumber()
     }
     
+    /// 排队的ui
     func createQueueNumber() -> () {
         playQueueNumberStatus = UIView()
         view.addSubview(playQueueNumberStatus)
@@ -834,6 +835,7 @@ extension PlayViewController{
     
 }
 
+// MARK: - 直播监听
 extension PlayViewController: AgoraRtcEngineDelegate {
     func rtcEngine(_ engine: AgoraRtcEngineKit!, firstRemoteVideoDecodedOfUid uid: UInt, size: CGSize, elapsed: Int) {
         print("到这里了")
@@ -1155,9 +1157,10 @@ extension PlayViewController{
         isCounting = true
     }
     
+    /// 操作界面置灰
     func hidePlayGroup() -> () {
 //        startPlayBtn.isEnabled = true
-        playGroupView.isHidden = true
+//        playGroupView.isHidden = true
         countdownTimer?.invalidate()
         countdownTimer = nil
         disableControllerBtns(isEnbled: false)
@@ -1527,6 +1530,8 @@ extension PlayViewController{
     // 隐藏再玩一次的界面
     func hideReplayView() -> () {
         resetReplayInfo()
+        
+        playGroupView.isHidden = true
         
         startPlayBtn.isEnabled = true
         

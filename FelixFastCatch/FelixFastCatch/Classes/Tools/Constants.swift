@@ -14,12 +14,12 @@ class Constants: NSObject {
     struct Network {
         
         /// 正式地址
-//        static let BASE_URL = "http://101.201.68.47:9125/"
+        static let BASE_URL = "http://101.201.68.47:9125/"
         
         /// 测试地址
 //        static let BASE_URL = "http://192.168.1.162:9125/"
         
-        static let BASE_URL = "http://47.92.72.158:9125/"
+//        static let BASE_URL = "http://47.92.72.158:9125/"
         
         /// 微信Pay支付接口
         static let WECHAT_PAY_URL =  BASE_URL +  "trade/wechatorder"

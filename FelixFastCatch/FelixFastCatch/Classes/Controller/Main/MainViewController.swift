@@ -130,6 +130,13 @@ class MainViewController: UIViewController{
             isShowADV = true
             return
         }
+        if SplashView.isExistsSplashData() == false {
+            isShowADV = true
+            if Constants.User.USER_ID != "" {
+                getsUserInfo()
+            }
+            return
+        }
         SplashView.showSplashView(duration: 5, defaultImage: UIImage(named: "Launchplaceholder"), tapSplashImageBlock: { (resultStr) in
             if let url = URL(string: resultStr!) {
                 //根据iOS系统版本，分别处理

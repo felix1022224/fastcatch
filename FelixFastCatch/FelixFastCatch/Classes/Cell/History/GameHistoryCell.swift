@@ -37,7 +37,7 @@ class GameHistoryCell: UITableViewCell {
         /// 产品背景图
         let productBackgroundImage = UIImageView(image: UIImage(named: "游戏记录框"))
         productBackgroundImage.sizeToFit()
-        productBackgroundImage.frame = CGRect(x: productBackgroundImage.bounds.width/2, y: backgroundImage.bounds.height/2 - productBackgroundImage.bounds.height * 0.8/2, width: productBackgroundImage.bounds.width * 0.8, height: productBackgroundImage.bounds.height * 0.8)
+        productBackgroundImage.frame = CGRect(x: productBackgroundImage.bounds.width/2.5, y: backgroundImage.bounds.height/2 - productBackgroundImage.bounds.height * 0.8/2, width: productBackgroundImage.bounds.width * 0.8, height: productBackgroundImage.bounds.height * 0.8)
         addSubview(productBackgroundImage)
         
         /// 产品图
@@ -50,13 +50,15 @@ class GameHistoryCell: UITableViewCell {
         
         /// 游戏状态
         productStatusImage.image = UIImage(named: "游戏失败")
-//        productStatusImage.sizeToFit()
-        productStatusImage.frame.size = CGSize(width: (productStatusImage.image?.size.width)! * 0.4, height: (productStatusImage.image?.size.height)! * 0.4)
+        productStatusImage.sizeToFit()
+//        productStatusImage.frame.size = CGSize(width: (productStatusImage.image?.size.width)! * 0.4, height: (productStatusImage.image?.size.height)! * 0.4)
         addSubview(productStatusImage)
         
         productStatusImage.snp.makeConstraints { (make) in
             make.centerY.equalTo(backgroundImage).offset(-2.5)
             make.right.equalTo(backgroundImage).offset(-productBackgroundImage.bounds.width/2)
+            make.width.equalTo(productStatusImage.bounds.width * 0.8)
+            make.height.equalTo(productStatusImage.bounds.height * 0.8)
         }
         
         /// 产品的标题

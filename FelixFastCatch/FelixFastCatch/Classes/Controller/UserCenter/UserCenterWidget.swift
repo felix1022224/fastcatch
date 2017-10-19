@@ -58,7 +58,7 @@ extension UserCenterViewController {
         userFaceImage.frame = CGRect(x: 24 + userFaceImageBackground.bounds.width/2 - userFaceImage.bounds.width/2, y: titleImage.bounds.height + 25 + UIApplication.shared.statusBarFrame.height + 5 + (userFaceImageBackground.bounds.width/2 - userFaceImage.bounds.width/2), width: userFaceImage.bounds.width, height: userFaceImage.bounds.height)
         topGroupView.addSubview(userFaceImage)
         
-        userFaceImage.kf.setImage(with: URL(string: Constants.User.USER_FACE_IMAGE))
+        userFaceImage.kf.setImage(with: URL(string: Constants.User.USER_FACE_IMAGE), placeholder: UIImage(named: "default_user_face"), options: nil, progressBlock: nil, completionHandler: nil)
         
         /// 用户昵称
         userNickNameLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))

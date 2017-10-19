@@ -61,15 +61,18 @@ class SplashView: UIView {
             splashView.splashViewDissmissBlock = splashViewDismissBlock
             splashView.durationTime = duration
             UIApplication.shared.delegate?.window!!.addSubview(splashView)
-        } else if let _defaultImage = defaultImage {
-            return
+            
+            MobClick.event("show_adv_number")
+        }
+//        else if let _defaultImage = defaultImage {
+//            return
 //            let splashView = SplashView()
 //            splashView.tapSplashImageBlock = tapSplashImageBlock
 //            splashView.splashViewDissmissBlock = splashViewDismissBlock
 //            splashView.durationTime = duration
 //            splashView.imageView?.image = _defaultImage
 //            UIApplication.shared.delegate?.window!!.addSubview(splashView)
-        }
+//        }
     }
     
     class func simpleShowSplashView() {
@@ -111,11 +114,13 @@ class SplashView: UIView {
             self.skipAction()
             _tapSplashImageBlock(self.actionUrl)
         }
+        MobClick.event("open_adv_number")
     }
     
     
     @objc func skipAction() {
         dismissSplashView(initiativeDismiss: true)
+        MobClick.event("skip_adv_number")
     }
     
     func setupTimer() {

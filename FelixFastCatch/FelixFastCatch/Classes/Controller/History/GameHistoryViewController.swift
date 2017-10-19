@@ -148,7 +148,7 @@ extension GameHistoryViewController{
     /// 获取游戏记录
     func getGameHistoryList() -> () {
         var params = NetWorkUtils.createBaseParams()
-        params["size"] = "1000"
+        params["size"] = "10000"
         params["page"] = "0"
         
         ToastUtils.showLoadingToast(msg: "请稍后……")

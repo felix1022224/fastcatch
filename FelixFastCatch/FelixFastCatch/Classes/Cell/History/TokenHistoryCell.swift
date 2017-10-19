@@ -42,10 +42,12 @@ class TokenHistoryCell: UITableViewCell {
         actionImage.snp.makeConstraints { (make) in
             make.left.equalTo(backgroundImage).offset(20)
             make.centerY.equalTo(backgroundImage)
+            make.width.equalTo(actionImage.bounds.width * 0.95)
+            make.height.equalTo(actionImage.bounds.height * 0.95)
         }
         
         /// 代币变化的label
-        tokenChangeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(18))
+        tokenChangeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
         tokenChangeLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         tokenChangeLabel.outTextColor = UIColor.white
         tokenChangeLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -59,7 +61,7 @@ class TokenHistoryCell: UITableViewCell {
         }
         
         /// 代币记录的title
-        tokenChangeTitle.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        tokenChangeTitle.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(13))
         tokenChangeTitle.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         tokenChangeTitle.outTextColor = UIColor.white
         tokenChangeTitle.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -73,7 +75,7 @@ class TokenHistoryCell: UITableViewCell {
         }
         
         /// 代币记录的时间
-        tokenChangeTime.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        tokenChangeTime.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
         tokenChangeTime.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         tokenChangeTime.outTextColor = UIColor.white
         tokenChangeTime.outLienTextColor = Constants.UI.OUT_LINE_COLOR
