@@ -19,37 +19,85 @@ class SharedViewDialog: BaseDialog {
     
     override func createView() {
         
-        rootView = UIView(frame: CGRect(x: 0, y: self.bounds.height, width: self.bounds.width, height: 100))
+        rootView = UIView(frame: CGRect(x: 0, y: self.bounds.height, width: self.bounds.width, height: 181 + 55))
         rootView.backgroundColor = UIColor.white
         addSubview(rootView)
     
+        let title = UILabel()
+        title.text = " 分享 "
+        title.font = UIFont.systemFont(ofSize: 20)
+        title.sizeToFit()
+        rootView.addSubview(title)
+        
+        title.snp.makeConstraints { (make) in
+            make.top.equalTo(rootView).offset(20)
+            make.centerX.equalTo(rootView)
+        }
+        
+        ///微信好友
         sharedWechatSession = UIButton(type: .custom)
-        sharedWechatSession.setImage(UIImage(named: "shared_wechat_session"), for: .normal)
+        sharedWechatSession.setBackgroundImage(UIImage(named: "shared_wechat_session"), for: .normal)
         sharedWechatSession.sizeToFit()
         rootView.addSubview(sharedWechatSession)
         
         sharedWechatSession.snp.makeConstraints { (make) in
             make.width.equalTo(UIScreen.main.bounds.width/8)
             make.height.equalTo(UIScreen.main.bounds.width/8)
-            make.left.equalTo(rootView).offset(15)
-            make.centerY.equalTo(rootView)
+            make.left.equalTo(rootView).offset(35)
+            make.top.equalTo(title).offset(title.bounds.height + 30)
         }
         
         sharedWechatSession.addTarget(self, action: #selector(sharedClick(sender:)), for: .touchUpInside)
         
+        let sessionLabel = UILabel()
+        sessionLabel.font = UIFont.systemFont(ofSize: 14)
+        sessionLabel.text = "好友"
+        sessionLabel.sizeToFit()
+        rootView.addSubview(sessionLabel)
+        
+        sessionLabel.snp.makeConstraints { (make) in
+            make.centerX.equalTo(sharedWechatSession)
+            make.top.equalTo(sharedWechatSession).offset(UIScreen.main.bounds.width/7.5 + 8)
+        }
+        
+        ///微信朋友圈
         sharedWechatTimeLine = UIButton(type: .custom)
-        sharedWechatTimeLine.setImage(UIImage(named: "shared_wechat_timeline"), for: .normal)
+        sharedWechatTimeLine.setBackgroundImage(UIImage(named: "shared_wechat_timeline"), for: .normal)
         sharedWechatTimeLine.sizeToFit()
         rootView.addSubview(sharedWechatTimeLine)
         
         sharedWechatTimeLine.snp.makeConstraints { (make) in
             make.width.equalTo(UIScreen.main.bounds.width/8)
             make.height.equalTo(UIScreen.main.bounds.width/8)
-            make.left.equalTo(sharedWechatSession).offset(UIScreen.main.bounds.width/8 + 15)
-            make.centerY.equalTo(rootView)
+            make.left.equalTo(sharedWechatSession).offset(UIScreen.main.bounds.width/8 + 35)
+            make.top.equalTo(title).offset(title.bounds.height + 30)
         }
         
         sharedWechatTimeLine.addTarget(self, action: #selector(sharedClick(sender:)), for: .touchUpInside)
+        
+        let timeLienLabel = UILabel()
+        timeLienLabel.font = UIFont.systemFont(ofSize: 14)
+        timeLienLabel.text = "朋友圈"
+        timeLienLabel.sizeToFit()
+        rootView.addSubview(timeLienLabel)
+        
+        let line = UIView()
+        line.backgroundColor = UIColor.lightGray
+        line.frame = CGRect(x: 0, y: 180, width: UIScreen.main.bounds.width, height: 0.5)
+        rootView.addSubview(line)
+        
+        timeLienLabel.snp.makeConstraints { (make) in
+            make.centerX.equalTo(sharedWechatTimeLine)
+            make.top.equalTo(sharedWechatTimeLine).offset(UIScreen.main.bounds.width/7.5 + 8)
+        }
+        
+        let cancelButton = UIButton(type: UIButtonType.system)
+        cancelButton.setTitle("取消", for: .normal)
+        cancelButton.setTitleColor(UIColor.gray, for: .normal)
+        cancelButton.frame = CGRect(x: 0, y: 181, width: UIScreen.main.bounds.width, height: 55)
+        rootView.addSubview(cancelButton)
+        
+        cancelButton.addTarget(self, action: #selector(hide), for: .touchUpInside)
         
         addDialogToWindow()
     }
@@ -75,17 +123,28 @@ class SharedViewDialog: BaseDialog {
     }
     
     override func show() {
-        UIView.animate(withDuration: 0.6) { [weak self] in
+        UIView.animate(withDuration: 0.3) { [weak self] in
             self?.shadow.alpha = 0.5
             self?.isHidden = false
-            self?.rootView.frame.origin.y = UIScreen.main.bounds.height - 100
+            self?.rootView.frame.origin.y = UIScreen.main.bounds.height - (181 + 55)
         }
     }
     
     override func hide() {
-        super.hide()
-        rootView.removeFromSuperview()
-        rootView = nil
+//        super.hide()
+        UIView.animate(withDuration: 0.3, animations: {[weak self] in
+            self?.shadow.alpha = 0.0
+            self?.rootView.frame.origin.y = UIScreen.main.bounds.height + (181 + 55)
+        }) { [weak self] (isHide) in
+            self?.isHidden = true
+            self?.shadow.removeFromSuperview()
+            self?.removeFromSuperview()
+            for subview in (self?.subviews)! {
+                subview.removeFromSuperview()
+            }
+            self?.rootView.removeFromSuperview()
+            self?.rootView = nil
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

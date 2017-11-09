@@ -240,11 +240,11 @@ extension PhoneNumberDialog{
     
     // 手机号登录
     @objc func loginByPhoneNumber() -> () {
-        if (phoneNumberEdit.text?.characters.count)! <= 0 {
+        if (phoneNumberEdit.text?.count)! <= 0 {
             ToastUtils.showErrorToast(msg: "请输入手机号")
             return
         }
-        if (verifyCodeEdit.text?.characters.count)! <= 0 {
+        if (verifyCodeEdit.text?.count)! <= 0 {
             ToastUtils.showErrorToast(msg: "请输入验证码")
             return
         }
@@ -293,12 +293,12 @@ extension PhoneNumberDialog{
     
     // 发送验证码
     @objc func sendVerifyCode() -> () {
-        if (phoneNumberEdit.text?.characters.count)! <= 0 {
+        if (phoneNumberEdit.text?.count)! <= 0 {
             ToastUtils.showErrorToast(msg: "请输入手机号")
             return
         }
         
-        if (phoneNumberEdit.text?.characters.count)! < 11 {
+        if (phoneNumberEdit.text?.count)! < 11 {
             ToastUtils.showErrorToast(msg: "请输入正确长度的手机号")
             return
         }
@@ -324,22 +324,23 @@ extension PhoneNumberDialog:UITextFieldDelegate{
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         if (textField == self.phoneNumberEdit) {
-            let existedLength = textField.text?.characters.count;
+            let existedLength = textField.text?.count;
             let selectedLength = range.length;
-            let replaceLength = string.characters.count;
+            let replaceLength = string.count;
             
             if (existedLength! - selectedLength + replaceLength >= 12) {
                 let endIndex = textField.text?.index((textField.text?.startIndex)!, offsetBy: 11)
                 
                 textField.text = textField.text?.substring(with: Range<String.Index>(uncheckedBounds: ((textField.text?.startIndex)!, endIndex!)))
+//                textField.text = String(describing: textField.text?[Range<String.Index>(uncheckedBounds: ((textField.text?.startIndex)!, endIndex!))])
                 return false
             }
         }
         
         if textField == self.verifyCodeEdit {
-            let existedLength = textField.text?.characters.count;
+            let existedLength = textField.text?.count;
             let selectedLength = range.length;
-            let replaceLength = string.characters.count;
+            let replaceLength = string.count;
             
             if (existedLength! - selectedLength + replaceLength >= 7) {
                 let endIndex = textField.text?.index((textField.text?.startIndex)!, offsetBy: 6)

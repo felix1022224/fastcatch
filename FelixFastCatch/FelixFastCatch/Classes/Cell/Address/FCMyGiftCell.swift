@@ -97,7 +97,7 @@ extension FCMyGiftCell{
         // 产品名标题
         productTitleLabel = MainCustomerLabel()
         productTitleLabel.numberOfLines = 1
-        productTitleLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(15))
+        productTitleLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(13))
         productTitleLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         productTitleLabel.outTextColor = UIColor.white
         productTitleLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR

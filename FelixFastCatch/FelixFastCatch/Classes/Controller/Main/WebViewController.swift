@@ -27,7 +27,6 @@ import JavaScriptCore
     }
     
     func enterRoom(index: Int) {
-        print("213123123123:\(index)")
         if mainVC == nil {
             return
         }
@@ -35,12 +34,6 @@ import JavaScriptCore
             return
         }
         mainVC.itemClick(index: index)
-        //        let playView =  mainVC.getPlayVC(index: index)
-//        if playView == nil {
-//            return
-//        }
-//        webVC.present(playView!, animated: true, completion: nil)
-//        webVC.navigationController?.pushViewController(playView!, animated: true)
     }
     
 }
@@ -111,7 +104,7 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         
         self.jsContext.setObject(model, forKeyedSubscript: "miaozhuaApp" as NSCopying & NSObjectProtocol)
         self.jsContext.exceptionHandler = { (context, exception) in
-            print("exception \(exception)")
+            print("exception \(String(describing: exception))")
         }
         
 //        let curUrl = webview.request?.URL?.absoluteString    //WebView当前访问页面的链接 可动态注册

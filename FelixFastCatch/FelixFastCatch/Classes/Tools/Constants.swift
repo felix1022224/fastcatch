@@ -13,13 +13,27 @@ class Constants: NSObject {
     /// 网络
     struct Network {
         
-        /// 正式地址
-        static let BASE_URL = "http://101.201.68.47:9125/"
+        enum MZService {
+            case Release,Debug,Test
+        }
         
-        /// 测试地址
-//        static let BASE_URL = "http://192.168.1.162:9125/"
+        /// 当前环境
+        static let nService = MZService.Test
         
-//        static let BASE_URL = "http://47.92.72.158:9125/"
+        static var BASE_URL:String {
+            get{
+                if Network.nService == MZService.Test {
+                    ///本地测试环境
+                    return "http://192.168.1.162:9125/"
+                }else if Network.nService == MZService.Debug{
+                    ///测试环境
+                    return  "http://47.92.72.158:9125/"
+                }else{
+                    ///正式环境
+                    return "http://101.201.68.47:9125/"
+                }
+            }
+        }
         
         /// 微信Pay支付接口
         static let WECHAT_PAY_URL =  BASE_URL +  "trade/wechatorder"

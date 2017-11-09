@@ -665,7 +665,7 @@ open class WebSocket : NSObject, StreamDelegate {
 
             if let acceptKey = headers[headerWSAcceptName as NSString] as? NSString {
                 if acceptKey.length > 0 {
-                    if headerSecKey.characters.count > 0 {
+                    if headerSecKey.count > 0 {
                         let sha = "\(headerSecKey)258EAFA5-E914-47DA-95CA-C5AB0DC85B11".sha1Base64()
                         if sha != acceptKey as String {
                             return -1

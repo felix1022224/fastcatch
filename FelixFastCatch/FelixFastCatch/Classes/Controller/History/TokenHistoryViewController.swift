@@ -105,7 +105,7 @@ extension TokenHistoryViewController: UITableViewDelegate, UITableViewDataSource
     
     /// 创建游戏记录列表
     func createGameHistoryList(titleImage:UIView) -> () {
-        let itemImage = UIImage(named: "游戏记录背景框")
+//        let itemImage = UIImage(named: "游戏记录背景框")
         
         tokenHistoryList.backgroundColor = UIColor.clear
         tokenHistoryList.separatorColor = UIColor.clear
@@ -180,7 +180,7 @@ extension TokenHistoryViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let itemImage = UIImage(named: "代币记录背景框")
+//        let itemImage = UIImage(named: "代币记录背景框")
         return (UIScreen.main.bounds.width * 0.98) * 0.3
     }
 }

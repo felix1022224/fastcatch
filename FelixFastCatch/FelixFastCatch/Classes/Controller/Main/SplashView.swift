@@ -111,8 +111,10 @@ class SplashView: UIView {
     
     @objc func tapImageAction() {
         if let _tapSplashImageBlock = self.tapSplashImageBlock {
-            self.skipAction()
-            _tapSplashImageBlock(self.actionUrl)
+            if self.actionUrl != "" {
+                self.skipAction()
+                _tapSplashImageBlock(self.actionUrl)
+            }
         }
         MobClick.event("open_adv_number")
     }

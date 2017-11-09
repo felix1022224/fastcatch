@@ -167,6 +167,24 @@ typedef NS_ENUM(NSInteger, AgoraRtcVideoProfile) {
     AgoraRtc_VideoProfile_DEFAULT = AgoraRtc_VideoProfile_360P,
 };
 
+typedef NS_ENUM(NSInteger, AgoraRtcAudioProfile) {
+                                                      // sample rate, bit rate, mono/stereo, speech/music codec
+    AgoraRtc_AudioProfile_Default = 0,                // use default settings
+    AgoraRtc_AudioProfile_SpeechStandard = 1,         // 32Khz, 18kbps, mono, speech
+    AgoraRtc_AudioProfile_MusicStandard = 2,          // 48Khz, 50kbps, mono, music
+    AgoraRtc_AudioProfile_MusicStandardStereo = 3,    // 48Khz, 50kbps, stereo, music
+    AgoraRtc_AudioProfile_MusicHighQuality = 4,       // 48Khz, 128kbps, mono, music
+    AgoraRtc_AudioProfile_MusicHighQualityStereo = 5, // 48Khz, 128kbps, stereo, music
+};
+
+typedef NS_ENUM(NSInteger, AgoraRtcAudioScenario) {
+    AgoraRtc_AudioScenario_Default = 0,
+    AgoraRtc_AudioScenario_ChatRoom = 1,
+    AgoraRtc_AudioScenario_Education = 2,
+    AgoraRtc_AudioScenario_GameStreaming = 3,
+    AgoraRtc_AudioScenario_ShowRoom = 4,
+};
+
 typedef NS_ENUM(NSUInteger, AgoraRtcQuality) {
     AgoraRtc_Quality_Unknown = 0,
     AgoraRtc_Quality_Excellent = 1,
@@ -1226,6 +1244,17 @@ __attribute__((visibility("default"))) @interface AgoraRtcEngineKit : NSObject
 - (int)setVideoProfile:(AgoraRtcVideoProfile)profile
     swapWidthAndHeight:(BOOL)swapWidthAndHeight;
 
+/**
+ *  set audio profile and scenario
+ *  including sample rate, bit rate, mono/stereo, speech/music codec
+ *
+ *  @param profile enumeration definition about the audio's samplerate, bitrate, mono/stereo, speech/music codec
+ *  @param scenario enumeration definition about the audio scenario
+ *
+ *  @return 0 when executed successfully. return negative value if failed.
+ */
+- (int)setAudioProfile:(AgoraRtcAudioProfile)profile
+              scenario:(AgoraRtcAudioScenario)scenario;
 
 /**
  *  Enable / disable sending local video streams to the network.
@@ -1372,7 +1401,6 @@ __attribute__((visibility("default"))) @interface AgoraRtcEngineKit : NSObject
 - (int)setHighQualityAudioParametersWithFullband:(BOOL)fullband
                                stereo:(BOOL)stereo
                           fullBitrate:(BOOL)fullBitrate;
-- (int)enableInEarMonitoring:(BOOL)enabled;
 
 - (int)enableWebSdkInteroperability:(BOOL)enabled;
 
@@ -1383,6 +1411,18 @@ __attribute__((visibility("default"))) @interface AgoraRtcEngineKit : NSObject
 - (int)setVideoCompositingLayout:(AgoraRtcVideoCompositingLayout*)layout;
 
 - (int)clearVideoCompositingLayout;
+
+#if TARGET_OS_IPHONE
+- (int)enableInEarMonitoring:(BOOL)enabled;
+/**
+ * Set the audio ears back's volume and effect
+ * @param [in] volume
+ *        set volume of audio ears back, in the range of [0..100], default value is 100
+ *
+ * @return return 0 if success or an error code
+ */
+- (int)setInEarMonitoringVolume:(NSInteger)volume;
+#endif
 
 #if (!(TARGET_OS_IPHONE) && (TARGET_OS_MAC))
 /**
@@ -1444,6 +1484,14 @@ __attribute__((visibility("default"))) @interface AgoraRtcEngineKit : NSObject
 - (int) pauseAllEffects;
 - (int) resumeEffect:(int) soundId;
 - (int) resumeAllEffects;
+/**
+ * Change the pitch of local speaker's voice
+ * @param [in] pitch
+ *        frequency, in the range of [0.5..2.0], default value is 1.0
+ *
+ * @return return 0 if success or an error code
+ */
+- (int) setLocalVoicePitch:(double) pitch;
 
 /**
  * External video source support

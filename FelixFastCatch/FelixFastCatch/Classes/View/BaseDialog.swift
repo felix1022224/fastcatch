@@ -66,18 +66,26 @@ class BaseDialog: UIView {
     
     // 隐藏
     @objc func hide() -> () {
-        UIView.animate(withDuration: 0.3) { [weak self] in
+        UIView.animate(withDuration: 0.3, animations: {[weak self] in
             self?.shadow.alpha = 0.0
-            self?.transform = CGAffineTransform(scaleX: 0.0,y: 0.0)
-        }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) { [weak self] in
+            self?.transform = CGAffineTransform(scaleX: 0.6,y: 0.6)
+            self?.alpha = 0.0
+        }) { [weak self] (isHide) in
+            self?.alpha = 1
+            self?.isHidden = true
             self?.shadow.removeFromSuperview()
             self?.removeFromSuperview()
             for subview in (self?.subviews)! {
                 subview.removeFromSuperview()
             }
         }
-        
+//        UIView.animate(withDuration: 0.3) { [weak self] in
+//            self?.shadow.alpha = 0.0
+//            self?.transform = CGAffineTransform(scaleX: 0.0,y: 0.0)
+//        }
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) { [weak self] in
+//
+//        }
     }
     
     func addOnClickListener(toView:UIView, target: AnyObject, action: Selector) {

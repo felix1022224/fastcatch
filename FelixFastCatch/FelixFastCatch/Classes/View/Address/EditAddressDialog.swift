@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import Foundation
 
 class EditAddressDialog: BaseDialog {
 
@@ -261,19 +262,19 @@ extension EditAddressDialog{
     
     /// 检查地址填写
     func checkAddressEdit() -> Bool {
-        if (userNameTextField.text?.characters.count)! <= 0 {
+        if (userNameTextField.text?.count)! <= 0 {
             ToastUtils.showErrorToast(msg: "请输入收件人")
             return false
         }
-        if (phoneNumberTextField.text?.characters.count)! <= 0 {
+        if (phoneNumberTextField.text?.count)! <= 0 {
             ToastUtils.showErrorToast(msg: "请输入手机号")
             return false
         }
-        if (phoneNumberTextField.text?.characters.count)! < 11 {
+        if (phoneNumberTextField.text?.count)! < 11 {
             ToastUtils.showErrorToast(msg: "请输入正确长度的手机号")
             return false
         }
-        if (addressTextFiled.text?.characters.count)! <= 0 {
+        if (addressTextFiled.text?.count)! <= 0 {
             ToastUtils.showErrorToast(msg: "请输入地址")
             return false
         }
@@ -303,13 +304,14 @@ extension EditAddressDialog:UITextFieldDelegate{
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         if (textField == self.phoneNumberTextField) {
-            let existedLength = textField.text?.characters.count;
+            let existedLength = textField.text?.count;
             let selectedLength = range.length;
-            let replaceLength = string.characters.count;
+            let replaceLength = string.count;
             
             if (existedLength! - selectedLength + replaceLength >= 12) {
                 let endIndex = textField.text?.index((textField.text?.startIndex)!, offsetBy: 11)
                 textField.text = textField.text?.substring(with: Range<String.Index>(uncheckedBounds: ((textField.text?.startIndex)!, endIndex!)))
+//                textField.text = String(describing: textField.text?[Range<String.Index>(uncheckedBounds: ((textField.text?.startIndex)!, endIndex!))])
                 return false
             }
         }

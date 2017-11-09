@@ -13,7 +13,7 @@ class PlayUserInfoView: NSObject {
 
 }
 
-extension PlayViewController {
+extension GameSceneViewController {
     
     /// 创建正在游戏中的用户的UI
     func createPlayUserInfo() -> () {
@@ -105,7 +105,7 @@ extension PlayViewController {
         
         gameUserNickNameBackground.frame = CGRect(x: 5, y: 2, width: width, height: 36)
         
-        gameUserGroup.frame = CGRect(x: UIScreen.main.bounds.width - width - 14, y: UIApplication.shared.statusBarFrame.height + gemBackground.bounds.height + 10, width: width, height: 50)
+        gameUserGroup.frame = CGRect(x: UIScreen.main.bounds.width - width - 14, y: UIApplication.shared.statusBarFrame.height + gemBackground.bounds.height + 20, width: width, height: 50)
         
 //        gameUserGroup.snp.makeConstraints { (make) in
 //            make.right.equalTo(view).offset(-10)

@@ -231,7 +231,7 @@ class PlayViewController: UIViewController {
         
         setupUI()
         
-        createPlayUserInfo()
+//        createPlayUserInfo()
         
         let infoTap = UITapGestureRecognizer(target: self, action: #selector(showGameUserInfo))
         infoTap.numberOfTapsRequired = 1
@@ -248,15 +248,15 @@ class PlayViewController: UIViewController {
         ToastUtils.showLoadingToast(msg: "正在加入房间")
         
         /// 初始化
-        gameSceneController = GameSceneController(playViewController: self, deviceId: deviceId)
-        gameSceneController.connectSocket()
-        
-        if UserDefaults.standard.bool(forKey: Constants.IS_FIRST_OPEN_PLAY) == false {
-            playSwitchGuid = MainBeginnerGuidPlaySwitchView(frame: UIScreen.main.bounds)
-            playSwitchGuid.createView2(playViewController: self)
-            playSwitchGuid.show2()
-            UserDefaults.standard.set(true, forKey: Constants.IS_FIRST_OPEN_PLAY)
-        }
+//        gameSceneController = GameSceneController(playViewController: self, deviceId: deviceId)
+//        gameSceneController.connectSocket()
+
+//        if UserDefaults.standard.bool(forKey: Constants.IS_FIRST_OPEN_PLAY) == false {
+//            playSwitchGuid = MainBeginnerGuidPlaySwitchView(frame: UIScreen.main.bounds)
+//            playSwitchGuid.createView2(playViewController: self)
+//            playSwitchGuid.show2()
+//            UserDefaults.standard.set(true, forKey: Constants.IS_FIRST_OPEN_PLAY)
+//        }
         
     }
 
@@ -296,7 +296,6 @@ class PlayViewController: UIViewController {
                     //到时间了，还没抓呢
                     controllerGrap()
                 }
-//                hidePlayGroup()
             }
         }
     }
@@ -572,7 +571,6 @@ extension PlayViewController{
     /// 创建开始游戏的按钮
     func createStartBtn() -> () {
         let startBtnImage = UIImage(named: "icon_start")
-//        startBtnBackgroundView.backgroundColor = UIColor(red: 91/255.0, green: 177/255.0, blue: 228/255.0, alpha: 1.0)
         startBtnBackgroundView.frame = CGRect(x: 0, y: videoView.bounds.height, width: self.view.bounds.width, height: startBtnImage!.size.height * 1.5 + 25)
         view.addSubview(startBtnBackgroundView)
         
@@ -676,13 +674,15 @@ extension PlayViewController{
         agoraKit.enableLocalVideo(false)
         agoraKit.enableVideo()
         
-        agoraKit.setVideoProfile(._VideoProfile_480P_3, swapWidthAndHeight: false)
+        agoraKit.setVideoProfile(._VideoProfile_480P_4, swapWidthAndHeight: false)
         agoraKit.setClientRole(AgoraRtcClientRole.clientRole_Audience, withKey: nil)
         
 //        agoraKit.muteAllRemoteAudioStreams(true)
         
 //        let hostingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
 //        hostingView.translatesAutoresizingMaskIntoConstraints = false
+        
+        print("device:\(deviceId + "live")")
         
         let code = agoraKit.joinChannel(byKey: nil, channelName: deviceId + "live", info: nil, uid: 878, joinSuccess: nil)
         
@@ -841,6 +841,7 @@ extension PlayViewController: AgoraRtcEngineDelegate {
         print("到这里了")
         // 初始化成功
         if isLive {
+            print("live-uid:\(uid)")
             agoraKit.setupRemoteVideo(nil)
             let canvas = AgoraRtcVideoCanvas()
             canvas.view = videoView
@@ -1159,8 +1160,6 @@ extension PlayViewController{
     
     /// 操作界面置灰
     func hidePlayGroup() -> () {
-//        startPlayBtn.isEnabled = true
-//        playGroupView.isHidden = true
         countdownTimer?.invalidate()
         countdownTimer = nil
         disableControllerBtns(isEnbled: false)
@@ -1223,45 +1222,6 @@ extension PlayViewController{
         }
         
         gameSceneController.enterGameQueue()
-//        ToastUtils.showLoadingToast(msg: "请稍后……")
-        
-//        var params = NetWorkUtils.createBaseParams()
-//        params["deviceid"] = deviceId
-//
-//        Alamofire.request(Constants.Network.Machine.WAIT_QUEUE, method: .post, parameters: params).responseJSON { (response) in
-//            print("开始预约的回调:\(String(describing: response.result.value)),error:\(String(describing: response.error))")
-//            if NetWorkUtils.checkReponse(response: response) {
-//                let json = JSON(data: response.data!)
-//                if json["data"]["tryLock"].bool! == true {
-//                    print("进来了")
-//                    // 可以开始游戏了
-//                    self.startPlay()
-//                    self.playQueueNumberStatus.isHidden = true
-//                }else{
-//                    print("已经有\(String(describing: json["data"]["waitCtlCount"].int!))人在游戏中，请等候")
-//
-//                    self.playQueueStausNumber.text = "预约第\(json["data"]["waitCtlIndex"].intValue)位"
-//                    self.queueNumber.text = String(json["data"]["waitCtlCount"].intValue) + "人等待"
-//
-//                    self.playQueueNumberStatus.isHidden = false
-//
-//                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: {[weak self] in
-//                        self?.waitQueue()
-//                    })
-//                }
-//            }else{
-//                let json = JSON(data: response.data!)
-//                if json["code"].intValue == -520 {
-////                    self.endQueue(deviceId: self.deviceId)
-//                    if self.gameSceneController != nil {
-//                        self.gameSceneController.quitQueue()
-//                    }
-//                    ToastUtils.showErrorToast(msg: "设备维护中")
-//                }
-//                /// 当数据data为空的时候，报告异常
-//            }
-//            ToastUtils.hide()
-//        }
     }
     
     ///  按下操作方向
@@ -1347,38 +1307,12 @@ extension PlayViewController{
         print("status:\(status)")
         
         gameSceneController.controllerPath(path: path, status: status)
-        
-//        var params = NetWorkUtils.createBaseParams()
-//        params["deviceid"] = deviceId
-//        params["direction"] = path
-//        params["status"] = status
-//
-//        Alamofire.request(Constants.Network.Machine.DIECTION_CONTROLLER, method: .post, parameters: params).responseJSON { (response) in
-//            if NetWorkUtils.checkReponse(response: response) {
-//                print("result:\(String(describing: response.result.value))")
-//            }else {
-//                print("error:\(String(describing: response.error)),response:\(String(describing: response.response))")
-//            }
-//        }
     }
     
     /// 下爪
     @objc func controllerGrap() -> () {
         isGrab = true
         gameSceneController.controllerGrap()
-//        var params = NetWorkUtils.createBaseParams()
-//        params["deviceid"] = deviceId
-//
-//        Alamofire.request(Constants.Network.Machine.CONTROLLER_CATCH, method: .post, parameters: params).responseJSON { (response) in
-//            if NetWorkUtils.checkReponse(response: response) {
-//                print("下爪成功")
-//                self.hidePlayGroup()
-//                self.getWard()
-//            }else{
-//                print("response:\(response)")
-//                self.hidePlayGroup()
-//            }
-//        }
     }
     
     func disableControllerBtns(isEnbled:Bool) -> () {
@@ -1399,9 +1333,6 @@ extension PlayViewController{
         if getWardCodeNumber >= 5 {
             getWardCodeNumber = 0
             wardCode = ""
-//            playResultDialog.isSuccess = false
-//            playResultDialog.createView()
-//            playResultDialog.show()
             self.playGrapFail()
             hidePlayGroup()
             /// 展示再来一局的界面
@@ -1419,17 +1350,10 @@ extension PlayViewController{
                     self.getWardCodeNumber = 0
                     print("抓取成功")
                     self.wardCode = ""
-//                    self.playResultDialog.isSuccess = true
-//                    self.playResultDialog.createView()
-//                    self.playResultDialog.show()
                     self.playGrapSuccess()
                     self.hidePlayGroup()
                     /// 展示再来一局的界面
                     self.showRePlayInfo()
-//                    self.isGameWinner = true
-//                    if self.playSuccess != nil {
-//                        self.playSuccess!(self.deviceId)
-//                    }
                     self.showShardRecordDialog(deviceId: self.deviceId)
                 }else {
                     print("抓取失败")
@@ -1798,6 +1722,9 @@ extension PlayViewController{
     }
     
     @objc func showBannerInfo() -> () {
+        if bottomBannerCardScheme == "" {
+            return
+        }
         if bottomBannerDialog == nil {
             bottomBannerDialog = PlayInfoBannerDialog(frame: UIScreen.main.bounds)
         }

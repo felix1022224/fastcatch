@@ -76,6 +76,7 @@ class MainCustomerLabel: UILabel {
     @objc func copyText() {
         let index = self.text?.index((self.text?.endIndex)!, offsetBy: -7)
         UIPasteboard.general.string = self.text?.substring(from: index!)
+//        UIPasteboard.general.string = String(describing: self.text?[index!...])
     }
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {

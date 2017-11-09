@@ -49,6 +49,7 @@
 		4D4ACE751F51CA0D0011E7F7 /* ProductinfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4ACE741F51CA0D0011E7F7 /* ProductinfoDialog.swift */; };
 		4D4ACE771F51CE410011E7F7 /* GemLackDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4ACE761F51CE410011E7F7 /* GemLackDialog.swift */; };
 		4D4B25D81F5FA64900338CBD /* SharedViewDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B25D71F5FA64900338CBD /* SharedViewDialog.swift */; };
+		4D500B9B1FB429FF0086AC15 /* PointsMallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D500B9A1FB429FF0086AC15 /* PointsMallViewController.swift */; };
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
 		4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D56251C1F2605A700515C98 /* Assets.xcassets */; };
 		4D589C741F386EB500C8DBC7 /* CheckIn7DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */; };
@@ -90,6 +91,10 @@
 		4DA23CEB1F8F920E00B2337E /* PlayUserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA23CEA1F8F920E00B2337E /* PlayUserInfoView.swift */; };
 		4DAD03321F51629B00D7E72F /* CustomerBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAD03311F51629B00D7E72F /* CustomerBannerView.swift */; };
 		4DAD03341F51777200D7E72F /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAD03331F51777200D7E72F /* WebViewController.swift */; };
+		4DAFB22B1FAAC55000F90A08 /* GameSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAFB22A1FAAC55000F90A08 /* GameSceneViewController.swift */; };
+		4DAFB22D1FAACBD700F90A08 /* GameSceneWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAFB22C1FAACBD700F90A08 /* GameSceneWidget.swift */; };
+		4DB08BA01FB08A2000BFB200 /* QueueArriveDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB08B9F1FB08A2000BFB200 /* QueueArriveDialog.swift */; };
+		4DB08BA21FB1822200BFB200 /* GameFailedDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB08BA11FB1822200BFB200 /* GameFailedDialog.swift */; };
 		4DBDE8B61F6AB1F60058E4FE /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DD6C1571F6A81D900007EE6 /* UserNotifications.framework */; };
 		4DCC49CA1F52A65F0017D4A4 /* PlayInfoBannerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCC49C91F52A65F0017D4A4 /* PlayInfoBannerDialog.swift */; };
 		4DCC49CC1F52E0110017D4A4 /* PlayInfoAwardDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCC49CB1F52E0110017D4A4 /* PlayInfoAwardDialog.swift */; };
@@ -126,6 +131,8 @@
 		4DF0587F1F90C1B900E17B75 /* UserTitlesInfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0587E1F90C1B900E17B75 /* UserTitlesInfoDialog.swift */; };
 		4DF058811F90C7EC00E17B75 /* TitlesInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF058801F90C7EC00E17B75 /* TitlesInfoCell.swift */; };
 		4DF058831F90D20500E17B75 /* GameUserInfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF058821F90D20500E17B75 /* GameUserInfoDialog.swift */; };
+		4DFAA6C11FAC38F1005AF710 /* GameSceneLiveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFAA6C01FAC38F1005AF710 /* GameSceneLiveController.swift */; };
+		4DFAA6C31FAC3962005AF710 /* GameSceneAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFAA6C21FAC3962005AF710 /* GameSceneAudioController.swift */; };
 		958698C56D14F18FE0B94475 /* Pods_FelixFastCatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7E009E5610C1572048261D2 /* Pods_FelixFastCatch.framework */; };
 /* End PBXBuildFile section */
 
@@ -176,6 +183,7 @@
 		4D4ACE741F51CA0D0011E7F7 /* ProductinfoDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductinfoDialog.swift; sourceTree = "<group>"; };
 		4D4ACE761F51CE410011E7F7 /* GemLackDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GemLackDialog.swift; sourceTree = "<group>"; };
 		4D4B25D71F5FA64900338CBD /* SharedViewDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SharedViewDialog.swift; path = FelixFastCatch/Classes/Controller/Main/SharedViewDialog.swift; sourceTree = SOURCE_ROOT; };
+		4D500B9A1FB429FF0086AC15 /* PointsMallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsMallViewController.swift; sourceTree = "<group>"; };
 		4D5625121F2605A700515C98 /* FelixFastCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FelixFastCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5625151F2605A700515C98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D56251C1F2605A700515C98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -220,6 +228,10 @@
 		4DAD03311F51629B00D7E72F /* CustomerBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerBannerView.swift; sourceTree = "<group>"; };
 		4DAD03331F51777200D7E72F /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		4DAD03351F518AD700D7E72F /* FelixFastCatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FelixFastCatch.entitlements; sourceTree = "<group>"; };
+		4DAFB22A1FAAC55000F90A08 /* GameSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneViewController.swift; sourceTree = "<group>"; };
+		4DAFB22C1FAACBD700F90A08 /* GameSceneWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneWidget.swift; sourceTree = "<group>"; };
+		4DB08B9F1FB08A2000BFB200 /* QueueArriveDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueArriveDialog.swift; sourceTree = "<group>"; };
+		4DB08BA11FB1822200BFB200 /* GameFailedDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFailedDialog.swift; sourceTree = "<group>"; };
 		4DCC49C91F52A65F0017D4A4 /* PlayInfoBannerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayInfoBannerDialog.swift; sourceTree = "<group>"; };
 		4DCC49CB1F52E0110017D4A4 /* PlayInfoAwardDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayInfoAwardDialog.swift; sourceTree = "<group>"; };
 		4DCC49CD1F52E8B10017D4A4 /* EditInviteCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditInviteCode.swift; sourceTree = "<group>"; };
@@ -256,6 +268,8 @@
 		4DF0587E1F90C1B900E17B75 /* UserTitlesInfoDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTitlesInfoDialog.swift; sourceTree = "<group>"; };
 		4DF058801F90C7EC00E17B75 /* TitlesInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlesInfoCell.swift; sourceTree = "<group>"; };
 		4DF058821F90D20500E17B75 /* GameUserInfoDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameUserInfoDialog.swift; sourceTree = "<group>"; };
+		4DFAA6C01FAC38F1005AF710 /* GameSceneLiveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneLiveController.swift; sourceTree = "<group>"; };
+		4DFAA6C21FAC3962005AF710 /* GameSceneAudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneAudioController.swift; sourceTree = "<group>"; };
 		9DA239CE4A7A8989C9E6EAED /* Pods-FelixFastCatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FelixFastCatch.release.xcconfig"; path = "Pods/Target Support Files/Pods-FelixFastCatch/Pods-FelixFastCatch.release.xcconfig"; sourceTree = "<group>"; };
 		D7E009E5610C1572048261D2 /* Pods_FelixFastCatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FelixFastCatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFC6B4F6BC202EA7BB7FDC1F /* Pods-FelixFastCatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FelixFastCatch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FelixFastCatch/Pods-FelixFastCatch.debug.xcconfig"; sourceTree = "<group>"; };
@@ -545,6 +559,7 @@
 				4DAD03331F51777200D7E72F /* WebViewController.swift */,
 				4DA23CDF1F8F536B00B2337E /* CustomeFlowLayout.swift */,
 				4D05F2FA1F938F5800A8027D /* WelcomeViewController.swift */,
+				4D500B9A1FB429FF0086AC15 /* PointsMallViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -552,10 +567,13 @@
 		4D9EBB891F271C5C002674DE /* PlayInfo */ = {
 			isa = PBXGroup;
 			children = (
+				4DB08B9E1FB089E700BFB200 /* dialog */,
+				4DAFB22E1FAACC0500F90A08 /* UI */,
 				4D64B8921F287FB9002A9BFD /* PlayViewController.swift */,
 				4DD3A4FF1F7A07D8000B5F25 /* GameSceneController.swift */,
 				4DA23CEA1F8F920E00B2337E /* PlayUserInfoView.swift */,
 				4DF058821F90D20500E17B75 /* GameUserInfoDialog.swift */,
+				4DAFB22A1FAAC55000F90A08 /* GameSceneViewController.swift */,
 			);
 			path = PlayInfo;
 			sourceTree = "<group>";
@@ -652,6 +670,25 @@
 				4DF0587E1F90C1B900E17B75 /* UserTitlesInfoDialog.swift */,
 			);
 			path = UserCenter;
+			sourceTree = "<group>";
+		};
+		4DAFB22E1FAACC0500F90A08 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				4DAFB22C1FAACBD700F90A08 /* GameSceneWidget.swift */,
+				4DFAA6C01FAC38F1005AF710 /* GameSceneLiveController.swift */,
+				4DFAA6C21FAC3962005AF710 /* GameSceneAudioController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		4DB08B9E1FB089E700BFB200 /* dialog */ = {
+			isa = PBXGroup;
+			children = (
+				4DB08B9F1FB08A2000BFB200 /* QueueArriveDialog.swift */,
+				4DB08BA11FB1822200BFB200 /* GameFailedDialog.swift */,
+			);
+			path = dialog;
 			sourceTree = "<group>";
 		};
 		4DCD39D91F2F31AB002B7F35 /* Pay */ = {
@@ -864,6 +901,7 @@
 				4DA23CE01F8F536B00B2337E /* CustomeFlowLayout.swift in Sources */,
 				4D28005B1F948196004E9D8B /* SplashView.swift in Sources */,
 				4DD3A5041F7C9CFA000B5F25 /* MainBeginnerGuidPayView.swift in Sources */,
+				4DFAA6C11FAC38F1005AF710 /* GameSceneLiveController.swift in Sources */,
 				4DCC49CC1F52E0110017D4A4 /* PlayInfoAwardDialog.swift in Sources */,
 				4D96D3BF1F5BE14200E614CD /* ProtocolInfoDialog.swift in Sources */,
 				4DCD39EB1F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift in Sources */,
@@ -887,6 +925,7 @@
 				4D64B8A01F29D9DA002A9BFD /* BaseDialog.swift in Sources */,
 				4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */,
 				4D1F59DC1F8CC8EA00806C00 /* TokenHistoryViewController.swift in Sources */,
+				4DAFB22D1FAACBD700F90A08 /* GameSceneWidget.swift in Sources */,
 				4D18ACD41F261378005363A4 /* TencentShared.swift in Sources */,
 				4DCD39DB1F2F31C6002B7F35 /* PayItemTableViewCell.swift in Sources */,
 				4DAD03321F51629B00D7E72F /* CustomerBannerView.swift in Sources */,
@@ -901,6 +940,7 @@
 				4DCD39D81F2F12E9002B7F35 /* PayListDialog.swift in Sources */,
 				4D96D3BD1F5BDE2000E614CD /* HelpDialog.swift in Sources */,
 				4D5BF1C01F3853F60091180B /* InviteDialog.swift in Sources */,
+				4D500B9B1FB429FF0086AC15 /* PointsMallViewController.swift in Sources */,
 				4D2B80121F4008060075D390 /* MailedSuccessDialog.swift in Sources */,
 				4DCD39E81F2F4B2C002B7F35 /* FCMyGiftCell.swift in Sources */,
 				4D4ACE751F51CA0D0011E7F7 /* ProductinfoDialog.swift in Sources */,
@@ -913,6 +953,7 @@
 				4D1DA0F61F2F4C7000B1138D /* FCMailedConfirmDialog.swift in Sources */,
 				4D96D39D1F5BD7CE00E614CD /* InviteFirendsCell.swift in Sources */,
 				4D2B801B1F4C07050075D390 /* SubmitSuccessDialog.swift in Sources */,
+				4DAFB22B1FAAC55000F90A08 /* GameSceneViewController.swift in Sources */,
 				4DCC49CA1F52A65F0017D4A4 /* PlayInfoBannerDialog.swift in Sources */,
 				4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */,
 				4DA23CE21F8F6CF200B2337E /* MainFooterCell.swift in Sources */,
@@ -921,6 +962,7 @@
 				4D4ACE771F51CE410011E7F7 /* GemLackDialog.swift in Sources */,
 				4DA23CE41F8F878D00B2337E /* UserCenterViewController.swift in Sources */,
 				4DCC49D01F52F7D30017D4A4 /* InviteSuccessDialog.swift in Sources */,
+				4DB08BA01FB08A2000BFB200 /* QueueArriveDialog.swift in Sources */,
 				4D589C761F39AC3D00C8DBC7 /* FirstLoginRewardDialog.swift in Sources */,
 				4DCD39DD1F2F3CD5002B7F35 /* UserInfoDialog.swift in Sources */,
 				4D64B89C1F29D984002A9BFD /* FastLoginDialog.swift in Sources */,
@@ -940,7 +982,9 @@
 				4D1F59D91F8CC80100806C00 /* GameHistoryViewController.swift in Sources */,
 				4DF0587F1F90C1B900E17B75 /* UserTitlesInfoDialog.swift in Sources */,
 				4DAD03341F51777200D7E72F /* WebViewController.swift in Sources */,
+				4DFAA6C31FAC3962005AF710 /* GameSceneAudioController.swift in Sources */,
 				4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */,
+				4DB08BA21FB1822200BFB200 /* GameFailedDialog.swift in Sources */,
 				4D1D861D1F333299005210CA /* HideView.swift in Sources */,
 				4D7048A71F908A8600D337F4 /* MailedCashShortDialog.swift in Sources */,
 				4D589C741F386EB500C8DBC7 /* CheckIn7DayView.swift in Sources */,
@@ -1087,13 +1131,14 @@
 					"$(inherited)",
 					"-fobjc-arc",
 					"-all_load",
+					"-w",
 				);
 				PODS_ROOT = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meidaojia.secondcatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/lufan/Developer/ios-git/FelixFastCatch/FelixFastCatch/Login-header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1128,13 +1173,14 @@
 					"$(inherited)",
 					"-fobjc-arc",
 					"-all_load",
+					"-w",
 				);
 				PODS_ROOT = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meidaojia.secondcatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/lufan/Developer/ios-git/FelixFastCatch/FelixFastCatch/Login-header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

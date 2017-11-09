@@ -296,9 +296,6 @@ extension MainViewController:UIScrollViewDelegate{
     }
     
     func setupImages() -> () {
-        
-        print("setupImages")
-        
         //循环增加图片到scrollview当中
         for i:Int in 0..<mainBannersData.count{
             let iv = UIImageView()
@@ -365,7 +362,7 @@ extension MainViewController{
     fileprivate func getBannerList(){
         Alamofire.request(Constants.Network.MAIN_BANNER_LIST, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { (response) in
             if response.error == nil {
-                print("bannerList:\(response.result.value!)")
+//                print("bannerList:\(response.result.value!)")
                 self.mainBannersData.removeAll()
                 
                 let jsonObject = JSON(response.data!)
@@ -670,25 +667,45 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             return
         }
         
-        let playView = PlayViewController()
-        playView.deviceId = mainListData[sender.tag]["deviceId"].stringValue
-        playView.darwCount = mainListData[sender.tag]["darwCount"].intValue
+        let gameSceneViewController = GameSceneViewController()
         
-        playView.needLogin = { [weak self] in
+        gameSceneViewController.deviceId = mainListData[sender.tag]["deviceId"].stringValue
+        
+        gameSceneViewController.needLogin = { [weak self] in
             self?.fastLoginDialog.createView()
             self?.fastLoginDialog.show()
         }
         
-        playView.mainVC = self
+//        gameSceneViewController.mainVC = self
         
-        playView.bottomAwardCardImagePath = mainListData[sender.tag]["award"]["img"].stringValue
-        playView.bootomAwardDescription = mainListData[sender.tag]["award"]["description"].stringValue
-        playView.bottomAwardTitle = mainListData[sender.tag]["award"]["title"].stringValue
+        gameSceneViewController.bottomAwardCardImagePath = mainListData[sender.tag]["award"]["img"].stringValue
+        gameSceneViewController.bootomAwardDescription = mainListData[sender.tag]["award"]["description"].stringValue
+        gameSceneViewController.bottomAwardTitle = mainListData[sender.tag]["award"]["title"].stringValue
         
-        playView.bootomBannerCardImagePath = mainListData[sender.tag]["activity"]["bannerSmallImg"].stringValue
-        playView.bottomBannerCardScheme = mainListData[sender.tag]["activity"]["scheme"].stringValue
+        gameSceneViewController.bootomBannerCardImagePath = mainListData[sender.tag]["activity"]["bannerSmallImg"].stringValue
+        gameSceneViewController.bottomBannerCardScheme = mainListData[sender.tag]["activity"]["scheme"].stringValue
         
-        navigationController?.pushViewController(playView, animated: true)
+        navigationController?.pushViewController(gameSceneViewController, animated: true)
+        
+//        let playView = PlayViewController()
+//        playView.deviceId = mainListData[sender.tag]["deviceId"].stringValue
+//        playView.darwCount = mainListData[sender.tag]["darwCount"].intValue
+//
+//        playView.needLogin = { [weak self] in
+//            self?.fastLoginDialog.createView()
+//            self?.fastLoginDialog.show()
+//        }
+//
+//        playView.mainVC = self
+//
+//        playView.bottomAwardCardImagePath = mainListData[sender.tag]["award"]["img"].stringValue
+//        playView.bootomAwardDescription = mainListData[sender.tag]["award"]["description"].stringValue
+//        playView.bottomAwardTitle = mainListData[sender.tag]["award"]["title"].stringValue
+//
+//        playView.bootomBannerCardImagePath = mainListData[sender.tag]["activity"]["bannerSmallImg"].stringValue
+//        playView.bottomBannerCardScheme = mainListData[sender.tag]["activity"]["scheme"].stringValue
+//
+//        navigationController?.pushViewController(playView, animated: true)
         
     }
     
@@ -697,24 +714,44 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             return
         }
         
-        let playView = PlayViewController()
-        playView.deviceId = mainListData[index]["deviceId"].stringValue
-        playView.darwCount = mainListData[index]["darwCount"].intValue
-        playView.needLogin = { [weak self] in
+        let gameSceneViewController = GameSceneViewController()
+        
+        gameSceneViewController.deviceId = mainListData[index]["deviceId"].stringValue
+        
+        gameSceneViewController.needLogin = { [weak self] in
             self?.fastLoginDialog.createView()
             self?.fastLoginDialog.show()
         }
         
-        playView.mainVC = self
+        //        gameSceneViewController.mainVC = self
         
-        playView.bottomAwardCardImagePath = mainListData[index]["award"]["img"].stringValue
-        playView.bootomAwardDescription = mainListData[index]["award"]["description"].stringValue
-        playView.bottomAwardTitle = mainListData[index]["award"]["title"].stringValue
+        gameSceneViewController.bottomAwardCardImagePath = mainListData[index]["award"]["img"].stringValue
+        gameSceneViewController.bootomAwardDescription = mainListData[index]["award"]["description"].stringValue
+        gameSceneViewController.bottomAwardTitle = mainListData[index]["award"]["title"].stringValue
         
-        playView.bootomBannerCardImagePath = mainListData[index]["activity"]["bannerSmallImg"].stringValue
-        playView.bottomBannerCardScheme = mainListData[index]["activity"]["scheme"].stringValue
+        gameSceneViewController.bootomBannerCardImagePath = mainListData[index]["activity"]["bannerSmallImg"].stringValue
+        gameSceneViewController.bottomBannerCardScheme = mainListData[index]["activity"]["scheme"].stringValue
         
-        navigationController?.pushViewController(playView, animated: true)
+        navigationController?.pushViewController(gameSceneViewController, animated: true)
+        
+//        let playView = PlayViewController()
+//        playView.deviceId = mainListData[index]["deviceId"].stringValue
+//        playView.darwCount = mainListData[index]["darwCount"].intValue
+//        playView.needLogin = { [weak self] in
+//            self?.fastLoginDialog.createView()
+//            self?.fastLoginDialog.show()
+//        }
+//
+//        playView.mainVC = self
+//
+//        playView.bottomAwardCardImagePath = mainListData[index]["award"]["img"].stringValue
+//        playView.bootomAwardDescription = mainListData[index]["award"]["description"].stringValue
+//        playView.bottomAwardTitle = mainListData[index]["award"]["title"].stringValue
+//
+//        playView.bootomBannerCardImagePath = mainListData[index]["activity"]["bannerSmallImg"].stringValue
+//        playView.bottomBannerCardScheme = mainListData[index]["activity"]["scheme"].stringValue
+//
+//        navigationController?.pushViewController(playView, animated: true)
     }
     
     func getPlayVC(index:Int) -> PlayViewController? {
@@ -796,7 +833,10 @@ extension MainViewController{
                 }
                 
                 self.mainListData = self.mainListData + jsonObject["data"]["content"].arrayValue
-                self.dataList.reloadData()
+                
+                UIView.performWithoutAnimation {[weak self] in
+                    self?.dataList.reloadData()
+                }
                 
                 // 如果数据不等于0 页码+1
                 if self.mainListData.count > 0 {
@@ -991,8 +1031,7 @@ extension MainViewController{
     func setupSettings(testImage:UIImageView) {
         
         let testUserIconImage = UIImageView(image: UIImage(named: "daeva_profile"))
-        let testInfoIconImage = UIImageView(image: UIImage(named: "Info-icon"))
-        
+        _ = UIImageView(image: UIImage(named: "Info-icon"))
         
         let settingsY = UIScreen.main.bounds.height - (80 - testImage.bounds.height) - 250 - 14
         let settingsWidth = testImage.bounds.width - 10
@@ -1037,9 +1076,9 @@ extension MainViewController{
             make.centerX.equalTo(settingsGroupView)
         }
         
-        /// 帮助
+        /// 帮助 （修改为积分商城）
         let infoIcon = UIImageView()
-        infoIcon.image = UIImage(named: "Info-icon")
+        infoIcon.image = UIImage(named: "积分商城")
         infoIcon.sizeToFit()
         settingsGroupView.addSubview(infoIcon)
         
@@ -1070,8 +1109,14 @@ extension MainViewController{
     }
     
     @objc func showHelpDialog() -> () {
-        helpDialog.createView()
-        helpDialog.show()
+        if Constants.User.USER_ID == "" {
+            showFastLogin()
+            return
+        }
+        self.navigationController?.pushViewController(PointsMallViewController(), animated: true)
+//        self.present(PointsMallViewController(), animated: true, completion: nil)
+//        helpDialog.createView()
+//        helpDialog.show()
     }
     
     @objc func showGameHistoryView(){

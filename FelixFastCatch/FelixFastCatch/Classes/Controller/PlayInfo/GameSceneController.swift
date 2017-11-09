@@ -13,7 +13,8 @@ import SwiftyJSON
 class GameSceneController: NSObject {
 
     /// 游戏房间的viewcontroller
-    private var playViewController:PlayViewController?
+//    private var playViewController:PlayViewController?
+    private var playViewController:GameSceneViewController?
     
     /// 房间号
     private var deviceId:String = ""
@@ -21,15 +22,20 @@ class GameSceneController: NSObject {
     /// socket 连接
     var socket:SocketIOClient!
     
-    init(playViewController:PlayViewController, deviceId:String) {
+    init(playViewController:GameSceneViewController, deviceId:String) {
         self.playViewController = playViewController
         self.deviceId = deviceId
-        // 中间测试
-//        socket = SocketIOClient(socketURL: URL(string: "http://47.92.72.158:9130?room=" + deviceId)!, config: [.log(false), .compress])
-        // 本地测试
-//        socket = SocketIOClient(socketURL: URL(string: "http://192.168.1.162:9130?room=" + deviceId)!, config: [.log(false), .compress])
-        // 线上正式
-        socket = SocketIOClient(socketURL: URL(string: "http://101.201.68.47:9130?room=" + deviceId)!, config: [.log(false), .compress])
+        
+        if Constants.Network.nService == Constants.Network.MZService.Debug {
+            //测试服务器
+            socket = SocketIOClient(socketURL: URL(string: "http://47.92.72.158:9130?room=" + deviceId)!, config: [.log(false), .compress])
+        }else if Constants.Network.nService == Constants.Network.MZService.Test {
+            //本地测试服务器
+            socket = SocketIOClient(socketURL: URL(string: "http://192.168.1.162:9130?room=" + deviceId)!, config: [.log(false), .compress])
+        }else if Constants.Network.nService == Constants.Network.MZService.Release {
+            ///线上正式
+            socket = SocketIOClient(socketURL: URL(string: "http://101.201.68.47:9130?room=" + deviceId)!, config: [.log(false), .compress])
+        }
     }
     
 }
@@ -40,16 +46,16 @@ extension GameSceneController{
     func connectSocket() -> () {
         /// 连接成功
         socket.on(clientEvent: SocketClientEvent.connect) { [weak self] (data, ack) in
+            print("连接socket")
             self?.onConnectSuccess(data: data, ack: ack)
         }
-        socket.reconnects = true
+//        socket.reconnects = true
         socket.connect()
     }
     
     /// 连接成功
     func onConnectSuccess(data:[Any], ack:SocketAckEmitter) -> () {
         print("connect success")
-        ToastUtils.showLoadingToast(msg: "加入房间中")
         
         socket.on("updateGameNumber") { [weak self] (data, ack) in
             self?.updateGameNumber(data: data, ack: ack)
@@ -97,7 +103,6 @@ extension GameSceneController{
     /// 加入房间成功
     func enterRoomSuccess() -> () {
         print("加入房间成功")
-        ToastUtils.hide()
         
         socket.on("maintain") { [weak self] (data, ack) in
             ToastUtils.showErrorToast(msg: "维护中，请稍后")
@@ -163,7 +168,7 @@ extension GameSceneController{
         
         let resultData = JSON(data[0])
         self.playViewController?.darwCountLabel.text = "游戏" + String(resultData["awardDrawCount"].intValue) + "次"
-        self.playViewController?.updateAwardUI()
+        self.playViewController?.updateDrawUI()
     }
     
 }
@@ -192,7 +197,6 @@ extension GameSceneController{
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {[weak self] in
             self?.playViewController?.getWard()
         }
-        
     }
     
 }
@@ -202,7 +206,6 @@ extension GameSceneController{
     
     /// 加入游戏排队队列
     func enterGameQueue() -> () {
-        
         /// 等待排队
         socket.on("waitqueue") { [weak self] (data, ack) in
             self?.waitQueue(data: data)
@@ -225,10 +228,16 @@ extension GameSceneController{
         }
         if json["tryLock"].bool! == true {
             print("可以开始游戏了")
-            // 可以开始游戏了
-            self.playViewController?.startPlay()
-            self.playViewController?.playQueueNumberStatus.isHidden = true
+            // 可以开始游戏了,此处显示倒计时的dialog
+            self.playViewController?.showQueueArriveDialog()
+            
+//            self.playViewController?.startPlay()
+//            self.playViewController?.playQueueNumberStatus.isHidden = true
+            
+            /// 切换到游戏连麦模式
+            self.playViewController?.switchGameMode()
         }else{
+            ToastUtils.hide()
             print("已经有\(String(describing: json["waitCtlCount"].intValue))人在游戏中，请等候,\(json)")
             
             self.playViewController?.startPlayBtn.isEnabled = false
@@ -264,7 +273,6 @@ extension GameSceneController{
             self.playViewController?.removeGameUserInfo()
         }
     }
-    
 }
 
 

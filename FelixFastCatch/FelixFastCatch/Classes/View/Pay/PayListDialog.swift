@@ -100,6 +100,9 @@ class PayListDialog: BaseDialog {
         scrollHand = UIImageView()
         rightScroll.addSubview(scrollHand)
         
+        rightScroll.layer.masksToBounds = true
+        rightScroll.layer.cornerRadius = rightScroll.frame.size.width*1.5
+        
         scrollHand.frame.size = CGSize(width: scrollBackground.bounds.width, height:topContentHeight!.size.height * 4 - (topContentHeight!.size.height * 4 + 10 * 4 - topContentHeight!.size.height * 4))
         
         scrollHand.image = UIImage(named: "scroll_hand")?.resizableImage(withCapInsets: UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0), resizingMode: UIImageResizingMode.stretch)

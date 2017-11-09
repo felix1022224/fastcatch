@@ -48,20 +48,20 @@ extension UserCenterViewController {
         
         userFaceImageBackground.snp.makeConstraints { (make) in
             make.left.equalTo(view).offset(24)
-            make.top.equalTo(titleImage).offset(titleImage.bounds.height + 25)
+            make.top.equalTo(titleImage).offset(titleImage.bounds.height + 5)
         }
         /// 用户头像
         userFaceImage.frame.size = CGSize(width: userFaceImageBackground.bounds.width * 0.9, height: userFaceImageBackground.bounds.height * 0.9)
         userFaceImage.backgroundColor = UIColor.gray
         userFaceImage.layer.cornerRadius = userFaceImage.bounds.width/2
         userFaceImage.layer.masksToBounds = true
-        userFaceImage.frame = CGRect(x: 24 + userFaceImageBackground.bounds.width/2 - userFaceImage.bounds.width/2, y: titleImage.bounds.height + 25 + UIApplication.shared.statusBarFrame.height + 5 + (userFaceImageBackground.bounds.width/2 - userFaceImage.bounds.width/2), width: userFaceImage.bounds.width, height: userFaceImage.bounds.height)
+        userFaceImage.frame = CGRect(x: 24 + userFaceImageBackground.bounds.width/2 - userFaceImage.bounds.width/2, y: titleImage.bounds.height + 5 + UIApplication.shared.statusBarFrame.height + 5 + (userFaceImageBackground.bounds.width/2 - userFaceImage.bounds.width/2), width: userFaceImage.bounds.width, height: userFaceImage.bounds.height)
         topGroupView.addSubview(userFaceImage)
         
         userFaceImage.kf.setImage(with: URL(string: Constants.User.USER_FACE_IMAGE), placeholder: UIImage(named: "default_user_face"), options: nil, progressBlock: nil, completionHandler: nil)
         
         /// 用户昵称
-        userNickNameLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        userNickNameLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(13))
         userNickNameLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         userNickNameLabel.outTextColor = UIColor.white
         userNickNameLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -77,7 +77,7 @@ extension UserCenterViewController {
         }
         
         /// 用户性别
-        userSexLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        userSexLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(13))
         userSexLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         userSexLabel.outTextColor = UIColor.white
         userSexLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -98,7 +98,7 @@ extension UserCenterViewController {
         }
         
         /// 用户生日
-        userBirthdayLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        userBirthdayLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(13))
         userBirthdayLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         userBirthdayLabel.outTextColor = UIColor.white
         userBirthdayLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -117,14 +117,16 @@ extension UserCenterViewController {
         userIdLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         userIdLabel.outTextColor = UIColor.white
         userIdLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        userIdLabel.numberOfLines = 1
+        userIdLabel.numberOfLines = 2
         userIdLabel.text = "ID:" + Constants.User.USER_ID
         userIdLabel.sizeToFit()
+//        userIdLabel.frame.size = CGSize(width: userFaceImage.bounds.width, height: userIdLabel.bounds.height*2)
         topGroupView.addSubview(userIdLabel)
         
         userIdLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(userFaceImageBackground).offset(userFaceImageBackground.bounds.height + 15)
-            make.centerX.equalTo(userFaceImageBackground)
+            make.top.equalTo(userFaceImageBackground).offset(userFaceImageBackground.bounds.height + 5)
+//            make.centerX.equalTo(userFaceImageBackground)
+            make.left.equalTo(userFaceImageBackground).offset(-5)
         }
         
         // 退出登录
@@ -214,8 +216,8 @@ extension UserCenterViewController {
         ucTitleImage.snp.makeConstraints { (make) in
             make.top.equalTo(view).offset(UIApplication.shared.statusBarFrame.height + 5)
             make.centerX.equalTo(view)
-            make.width.equalTo(200)
-            make.height.equalTo(50)
+            make.width.equalTo(180)
+            make.height.equalTo(45)
         }
         
         backBtn.setImage(UIImage(named: "邮寄返回"), for: .normal)

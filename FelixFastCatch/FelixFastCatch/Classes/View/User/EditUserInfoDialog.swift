@@ -291,7 +291,7 @@ class EditUserInfoDialog: BaseDialog {
 
     /// 检查用户信息
     func checkUserInfo() -> Bool {
-        if (nickNameEdit.text?.characters.count)! <= 0 {
+        if (nickNameEdit.text?.count)! <= 0 {
             ToastUtils.showErrorToast(msg: "请输入昵称")
             return false
         }

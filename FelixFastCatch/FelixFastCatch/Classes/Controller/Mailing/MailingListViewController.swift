@@ -389,7 +389,7 @@ extension MailingListViewController{
     /// 创建已邮寄列表
     func createHasBeenMailedList() -> () {
         // 已邮寄
-        let hasBeenContentBackgroundImage = UIImage(named: "已邮寄item背景")
+        _ = UIImage(named: "已邮寄item背景")
         
         view.addSubview(hasbeenMailedTabView)
         hasbeenMailedTabView.backgroundColor = UIColor.clear
