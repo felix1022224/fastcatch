@@ -50,15 +50,16 @@ class QueueArriveDialog: BaseDialog {
             make.bottom.equalTo(backgroundImage).offset(-15)
         }
         
-        confirmTimeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
-        confirmTimeLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
+        confirmTimeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        confirmTimeLabel.outLineWidth = 3
         confirmTimeLabel.outTextColor = UIColor.white
-        confirmTimeLabel.outLienTextColor = UIColor.gray
-        confirmTimeLabel.text = "立即开始(12s)"
+        confirmTimeLabel.outLienTextColor = UIColor(red: 29/255.0, green: 137/255.0, blue: 0/255.0, alpha: 0.75)
+        confirmTimeLabel.text = "12s"
         addSubview(confirmTimeLabel)
         
         confirmTimeLabel.snp.makeConstraints { (make) in
-            make.center.equalTo(confirmBtn)
+            make.centerY.equalTo(confirmBtn).offset(-1)
+            make.right.equalTo(confirmBtn).offset(-16)
         }
         
         confirmBtn.addTarget(self, action: #selector(confirm), for: .touchUpInside)
@@ -75,13 +76,13 @@ class QueueArriveDialog: BaseDialog {
     fileprivate var remainingSeconds: Int = 0 {
         willSet {
             if newValue < 10 {
-                confirmTimeLabel.text = "立即开始(0\(newValue)s)"
+                confirmTimeLabel.text = "0\(newValue)s"
             }else {
-                confirmTimeLabel.text = "立即开始(\(newValue)s)"
+                confirmTimeLabel.text = "\(newValue)s"
             }
             
             if newValue <= 0 {
-                confirmTimeLabel.text = "立即开始(12s)"
+                confirmTimeLabel.text = "12s"
                 isCounting = false
                 close()
             }

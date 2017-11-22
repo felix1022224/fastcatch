@@ -55,7 +55,7 @@ class PointsMallViewController: UIViewController , UIWebViewDelegate {
             print("exception \(String(describing: exception))")
         }
         
-        webview.loadRequest(URLRequest(url: URL(string: "http://192.168.1.162:9150/market/score.html")!))
+        webview.loadRequest(URLRequest(url: URL(string: "http://47.92.72.158:9150/market/score.html")!))
     }
 
     func webViewDidFinishLoad(_ webView: UIWebView) {

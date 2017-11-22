@@ -19,19 +19,29 @@ extension GameSceneViewController{
     func setupUI() -> () {
         createBackground()
         
+        rootView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        
+        view.addSubview(rootView)
+        
         //顶部的view
-        topGroupView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width - UIApplication.shared.statusBarFrame.height)
-        view.addSubview(topGroupView)
+        topGroupView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.width-10)/3 + UIScreen.main.bounds.width - 17)
+        rootView.addSubview(topGroupView)
         
         //底部的view
         bottomGroupView = UIView(frame: CGRect(x: 0, y: UIScreen.main.bounds.width, width: self.view.bounds.width, height: UIScreen.main.bounds.height - UIScreen.main.bounds.width + UIApplication.shared.statusBarFrame.height))
-        view.addSubview(bottomGroupView)
+        rootView.addSubview(bottomGroupView)
+        
+        bottomGroupView.isHidden = true
         
         setupTopView()
         
         createPlayUserInfo()
         
         setupBottomView()
+        
+        createQueueNumber()
+        
+        rootView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: topGroupView.bounds.height + startBtnBackgroundView.bounds.height + productBackgroundView.bounds.height)
         
     }
     
@@ -67,23 +77,44 @@ extension GameSceneViewController{
     
     //装载顶部的view
     func setupTopView() -> () {
+        
+        let liveBackgroundView = UIImageView()
+        liveBackgroundView.image = UIImage(named: "视频框")
+        liveBackgroundView.sizeToFit()
+        liveBackgroundView.frame = CGRect(x: 5, y: 0, width: UIScreen.main.bounds.width - 10, height: (UIScreen.main.bounds.width-10)/3 + UIScreen.main.bounds.width - 10)
+        topGroupView.addSubview(liveBackgroundView)
+        
         // 直播的view
         liveView.backgroundColor = UIColor.black
-        liveView.frame = topGroupView.frame
-        view.addSubview(liveView)
+//        liveView.frame = CGRect(x: 8.5, y: 12, width: UIScreen.main.bounds.width - 17, height: UIScreen.main.bounds.width/3 + UIScreen.main.bounds.width - 1)
+        liveView.layer.masksToBounds = true
+        liveView.layer.cornerRadius = 8
+        topGroupView.addSubview(liveView)
+        
+        liveView.snp.makeConstraints { (make) in
+            make.center.equalTo(liveBackgroundView)
+            make.width.equalTo(liveBackgroundView.bounds.width * 0.96)
+            make.height.equalTo(liveBackgroundView.bounds.height * 0.97)
+        }
         
         // 初始化直播的框架
         initLive()
         
         setupBtns()
         
-        createStartBtn()
+        let startBtnImage = UIImage(named: "进入")
+        startBtnBackgroundView.frame = CGRect(x: 0, y: topGroupView.bounds.height, width: self.view.bounds.width, height: startBtnImage!.size.height * 1.5 + 25)
+        rootView.addSubview(startBtnBackgroundView)
         
         createNumber()
+        
+        createStartBtn()
         
         createReStartTimeLabel()
         
         createPlayControllerView()
+        
+        setupCoinNumber()
     }
     
     /// 装载按钮
@@ -94,32 +125,32 @@ extension GameSceneViewController{
         let helpBtn = UIButton(type: .custom)
         helpBtn.setImage(UIImage(named: "icon_qa"), for: .normal)
         helpBtn.sizeToFit()
-        view.addSubview(helpBtn)
+        rootView.addSubview(helpBtn)
         
         helpBtn.addTarget(self, action: #selector(showFeedbackView), for: .touchUpInside)
         
         helpBtn.snp.makeConstraints { (make) in
-            make.bottom.equalTo(liveView).offset(-40)
-            make.left.equalTo(self.view).offset(10)
+            make.bottom.equalTo(liveView).offset(-30)
+            make.left.equalTo(liveView).offset(5)
         }
         
         /// 切换摄像头
         lensBtn.setImage(UIImage(named: "icon_lens"), for: .normal)
         lensBtn.sizeToFit()
-        view.addSubview(lensBtn)
+        rootView.addSubview(lensBtn)
         
         lensBtn.addTarget(self, action: #selector(switchCamare), for: .touchUpInside)
         
         lensBtn.snp.makeConstraints { (make) in
             make.centerY.equalTo(helpBtn)
-            make.right.equalTo(self.view).offset(-10)
+            make.right.equalTo(liveView).offset(-5)
         }
         
         /// 音频按钮
         audioBtn = UIButton(type: .custom)
         audioBtn.setImage(UIImage(named: "icon_audio"), for: .normal)
         audioBtn.sizeToFit()
-        view.addSubview(audioBtn)
+        rootView.addSubview(audioBtn)
         
         audioBtn.addTarget(self, action: #selector(switchAudio), for: .touchUpInside)
         
@@ -158,11 +189,11 @@ extension GameSceneViewController{
     func createGemBackground() -> () {
         gemBackground.image = UIImage(named: "bg_gem_number")
         gemBackground.sizeToFit()
-        view.addSubview(gemBackground)
+        topGroupView.addSubview(gemBackground)
         
         gemBackground.snp.makeConstraints { (make) in
             make.centerY.equalTo(backBtn!).offset(-4)
-            make.right.equalTo(self.view).offset(-10)
+            make.right.equalTo(liveView).offset(-5)
         }
         
         gemLabel.text = String(Constants.User.diamondsCount)
@@ -170,7 +201,7 @@ extension GameSceneViewController{
         gemLabel.outTextColor = UIColor.white
         gemLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         gemLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
-        view.addSubview(gemLabel)
+        topGroupView.addSubview(gemLabel)
         
         gemLabel.snp.makeConstraints { (make) in
             make.right.equalTo(gemBackground).offset(-28)
@@ -262,10 +293,15 @@ extension GameSceneViewController{
         backBtn = UIButton(type: UIButtonType.custom)
         backBtn?.setImage(UIImage(named: "icon_back"), for: .normal)
         backBtn?.sizeToFit()
-        view.addSubview(backBtn!)
+        topGroupView.addSubview(backBtn!)
         backBtn?.addTarget(self, action: #selector(backBtnClick), for: .touchUpInside)
         
-        backBtn?.frame = CGRect(x: 10, y: UIApplication.shared.statusBarFrame.height + 10, width: (backBtn?.bounds.width)!, height: (backBtn?.bounds.height)!)
+//        backBtn?.frame = CGRect(x: 10, y: UIApplication.shared.statusBarFrame.height + 10, width: (backBtn?.bounds.width)!, height: (backBtn?.bounds.height)!)
+        
+        backBtn?.snp.makeConstraints({ (make) in
+            make.left.equalTo(liveView).offset(5)
+            make.top.equalTo(liveView).offset(5)
+        })
         
         setupDarwCountNumber()
     }
@@ -281,11 +317,11 @@ extension GameSceneViewController{
         darwCountBgView.backgroundColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.7)
         darwCountBgView.layer.cornerRadius = (darwCountLabel.bounds.height * 1.5)/2
         darwCountBgView.layer.masksToBounds = true
-        view.addSubview(darwCountBgView)
+        topGroupView.addSubview(darwCountBgView)
         
-        view.addSubview(darwCountLabel)
+        topGroupView.addSubview(darwCountLabel)
         
-        darwCountBgView.frame = CGRect(x: self.view.bounds.width - darwCountBgView.bounds.width - 10, y: topGroupView.bounds.height - darwCountBgView.bounds.height - 5, width: darwCountBgView.bounds.width, height: darwCountBgView.bounds.height)
+        darwCountBgView.frame = CGRect(x: self.view.bounds.width - darwCountBgView.bounds.width - 18, y: topGroupView.bounds.height - darwCountBgView.bounds.height - 5, width: darwCountBgView.bounds.width, height: darwCountBgView.bounds.height)
         
         darwCountLabel.center = darwCountBgView.center
     }
@@ -294,7 +330,7 @@ extension GameSceneViewController{
     func updateDrawUI() -> () {
         darwCountLabel.sizeToFit()
         darwCountBgView.frame.size = CGSize(width: darwCountLabel.bounds.width * 1.5, height: darwCountLabel.bounds.height * 1.5)
-        darwCountBgView.frame = CGRect(x: self.view.bounds.width - darwCountBgView.bounds.width - 10, y: topGroupView.bounds.height - darwCountBgView.bounds.height - 5, width: darwCountBgView.bounds.width, height: darwCountBgView.bounds.height)
+        darwCountBgView.frame = CGRect(x: self.view.bounds.width - darwCountBgView.bounds.width - 18, y: topGroupView.bounds.height - darwCountBgView.bounds.height - 5, width: darwCountBgView.bounds.width, height: darwCountBgView.bounds.height)
         
         darwCountLabel.center = darwCountBgView.center
     }
@@ -334,24 +370,23 @@ extension GameSceneViewController{
     
     /// 创建开始游戏的按钮
     func createStartBtn() -> () {
-        let startBtnImage = UIImage(named: "icon_start")
-        startBtnBackgroundView.frame = CGRect(x: 0, y: topGroupView.bounds.height, width: self.view.bounds.width, height: startBtnImage!.size.height * 1.5 + 25)
-        view.addSubview(startBtnBackgroundView)
-        
+        let startBtnImage = UIImage(named: "进入")
         startPlayBtn.setImage(startBtnImage, for: .normal)
-        startPlayBtn.setImage(UIImage(named: "icon_start_h"), for: .highlighted)
+        startPlayBtn.setImage(UIImage(named: "进入点击"), for: .highlighted)
         startPlayBtn.setImage(UIImage(named: "正在游戏中"), for: .disabled)
         startPlayBtn.sizeToFit()
-        startBtnBackgroundView.addSubview(startPlayBtn)
+        rootView.addSubview(startPlayBtn)
+        
+        rootView.isUserInteractionEnabled = true
+        startBtnBackgroundView.isUserInteractionEnabled = true
         
         startPlayBtn.snp.makeConstraints { (make) in
-            make.centerY.equalTo(startBtnBackgroundView)
+            make.top.equalTo(topGroupView).offset(topGroupView.bounds.height + 10)
             make.right.equalTo(self.view).offset(-10)
         }
         
         startPlayBtn.addTarget(self, action: #selector(waitQueue), for: .touchUpInside)
         
-        createQueueNumber()
     }
     
     /// 排队的ui
@@ -359,32 +394,53 @@ extension GameSceneViewController{
         playQueueNumberStatus = UIView()
         view.addSubview(playQueueNumberStatus)
         
-        let backgroundImage = UIImageView(image: UIImage(named: "正在排队图标"))
-        backgroundImage.sizeToFit()
-        playQueueNumberStatus.addSubview(backgroundImage)
+//        let backgroundImage = UIImageView(image: UIImage(named: "取消排队"))
+//        backgroundImage.sizeToFit()
         
+        quitBtn.setBackgroundImage(UIImage(named: "取消排队"), for: .normal)
+        quitBtn.setBackgroundImage(UIImage(named: "取消排队点击"), for: .highlighted)
+        quitBtn.sizeToFit()
+        
+        quitBtn.addTarget(self, action: #selector(quitGameQueue), for: .touchUpInside)
+        
+        rootView.addSubview(quitBtn)
+        
+        playQueueNumberStatus.isUserInteractionEnabled = true
+        
+        quitBtn.snp.makeConstraints { (make) in
+            make.center.equalTo(startPlayBtn)
+        }
+        
+        ///排队人数的显示文案
         playQueueStausNumber = MainCustomerLabel()
         playQueueStausNumber.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         playQueueStausNumber.outTextColor = UIColor.white
         playQueueStausNumber.outLienTextColor = UIColor.gray
-        playQueueStausNumber.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
-        playQueueStausNumber.text = "预约第\(1)位"
+        playQueueStausNumber.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        playQueueStausNumber.text = "排队第0位..."
         playQueueStausNumber.sizeToFit()
         playQueueNumberStatus.addSubview(playQueueStausNumber)
         
+        quitBtn.isHidden = true
         playQueueNumberStatus.isHidden = true
         
         playQueueStausNumber.snp.makeConstraints { (make) in
-            make.center.equalTo(startPlayBtn)
+            make.centerX.equalTo(coinNumber)
+            make.bottom.equalTo(coinNumber).offset(2)
         }
+    }
+    
+    ///退出游戏队列
+    @objc func quitGameQueue() -> () {
+        /// 隐藏排队界面
+        quitBtn.isHidden = true
+        playQueueNumberStatus.isHidden = true
         
-        backgroundImage.snp.makeConstraints { (make) in
-            make.center.equalTo(startPlayBtn)
-        }
+        /// socket执行退出队列
+        gameSceneController.quitQueue()
         
-        playQueueNumberStatus.snp.makeConstraints { (make) in
-            make.center.equalTo(startPlayBtn)
-        }
+        /// 修改开始游戏按钮的状态
+        startPlayBtn.isEnabled = true
     }
     
 }
@@ -423,7 +479,7 @@ extension GameSceneViewController{
         
         queueNumberBackground.snp.makeConstraints { (make) in
             make.left.equalTo(playNumberBackground)
-            make.bottom.equalTo(startBtnBackgroundView).offset(-10)
+            make.bottom.equalTo(startBtnBackgroundView).offset(-5)
         }
         
         queueNumber = MainCustomerLabel()
@@ -447,6 +503,47 @@ extension GameSceneViewController{
     
     /// 底部展示奖品的view
     func createBottomGroup() -> () {
+        
+        productBottomGroup.frame = CGRect(x: 5, y: topGroupView.bounds.height + startBtnBackgroundView.bounds.height, width: UIScreen.main.bounds.width - 10, height: UIScreen.main.bounds.width - 10)
+        
+        productBackgroundView.image = UIImage(named: "底部产品框")
+        productBackgroundView.sizeToFit()
+        productBackgroundView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 10, height: UIScreen.main.bounds.width - 10)
+        
+        productBottomGroup.addSubview(productBackgroundView)
+        
+        let productImage = UIImageView(image: UIImage(named: "底部产品框"))
+        productImage.frame.size = CGSize(width: UIScreen.main.bounds.width / 1.5, height: UIScreen.main.bounds.width / 1.5)
+        productImage.frame = CGRect(x: productBackgroundView.bounds.width/2 - productImage.bounds.width/2, y: 20, width: productImage.bounds.width, height: productImage.bounds.height)
+        
+        productImage.kf.setImage(with: URL(string: bottomAwardCardImagePath), placeholder: UIImage(named: "main_no_value"), options: nil, progressBlock: nil, completionHandler: nil)
+        
+        productBottomGroup.addSubview(productImage)
+        
+        let productInfoLabel = MainCustomerLabel()
+        productInfoLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
+        productInfoLabel.outTextColor = UIColor.white
+        productInfoLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
+        productInfoLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
+        productInfoLabel.text = bottomAwardTitle + "\n" + bootomAwardDescription
+        productInfoLabel.numberOfLines = 2
+        productInfoLabel.textAlignment = .center
+        productInfoLabel.sizeToFit()
+        productBottomGroup.addSubview(productInfoLabel)
+        
+        productInfoLabel.snp.makeConstraints { (make) in
+            make.centerX.equalTo(productBottomGroup)
+            make.width.equalTo(productBottomGroup.bounds.width - 15)
+            make.top.equalTo(productImage).offset(10 + productImage.bounds.height)
+        }
+        
+        rootView.addSubview(productBottomGroup)
+        
+//        productBackgroundView.snp.makeConstraints { (make) in
+//            make.top.equalTo(startBtnBackgroundView).offset(startBtnBackgroundView.bounds.height + 10)
+//        }
+        
+        
         bottomGroupView.frame = CGRect(x: 0, y: UIScreen.main.bounds.width + startBtnBackgroundView.bounds.height, width: self.view.bounds.width, height: UIScreen.main.bounds.height - UIScreen.main.bounds.width + UIApplication.shared.statusBarFrame.height - startBtnBackgroundView.bounds.height)
         
         let cardWidth = (bottomGroupView.bounds.width - 20*2 - 20)/2.1
@@ -536,7 +633,48 @@ extension GameSceneViewController{
     
 }
 
-
+// MARK: - 装载需要扣的游戏币
+extension GameSceneViewController{
+    
+    func setupCoinNumber() -> () {
+        
+        startBtnBackgroundView.addSubview(coinNumber)
+        
+        let coinContentGroup = UIView()
+        coinNumber.addSubview(coinContentGroup)
+        
+        let coinImage = UIImageView(image: UIImage(named: "Coinicon拷贝"))
+        coinImage.sizeToFit()
+        coinImage.frame = CGRect(x: 0, y: 0, width: coinImage.bounds.width, height: coinImage.bounds.height)
+        coinContentGroup.addSubview(coinImage)
+        
+        coinNumberLabel.text = String(startCoinNumber) + "币/次"
+        coinNumberLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
+        coinNumberLabel.outTextColor = UIColor.white
+        coinNumberLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
+        coinNumberLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        coinNumberLabel.sizeToFit()
+        coinContentGroup.addSubview(coinNumberLabel)
+        
+        coinNumberLabel.frame = CGRect(x: coinImage.bounds.width + 5, y: -3, width: coinNumberLabel.bounds.width, height: coinNumberLabel.bounds.height)
+        
+        coinNumber.snp.makeConstraints { (make) in
+            make.width.equalTo(startPlayBtn.bounds.width)
+            make.right.equalTo(view).offset(-10)
+            make.bottom.equalTo(queueNumber)
+            make.height.equalTo(startPlayBtn.bounds.height)
+        }
+        
+        coinContentGroup.snp.makeConstraints { (make) in
+            make.centerX.equalTo(coinNumber)
+            make.bottom.equalTo(coinNumber)
+            make.width.equalTo(5 + coinImage.bounds.width + coinNumberLabel.bounds.width)
+            make.height.equalTo(15)
+        }
+        
+    }
+    
+}
 
 
 

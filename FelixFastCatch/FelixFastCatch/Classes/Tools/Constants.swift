@@ -18,13 +18,13 @@ class Constants: NSObject {
         }
         
         /// 当前环境
-        static let nService = MZService.Test
+        static let nService = MZService.Debug
         
         static var BASE_URL:String {
             get{
                 if Network.nService == MZService.Test {
                     ///本地测试环境
-                    return "http://192.168.1.162:9125/"
+                    return "http://192.168.1.111:9125/"
                 }else if Network.nService == MZService.Debug{
                     ///测试环境
                     return  "http://47.92.72.158:9125/"
@@ -61,6 +61,9 @@ class Constants: NSObject {
         
         /// 苹果内购服务器验证
         static let APPLE_PAY_CHECK = BASE_URL + "trade/applePayOrder"
+        
+        /// 刷新首页的状态
+        static let REFRESH_LIST_STATUS = BASE_URL + "machine/list/status"
         
         /// 游戏房间相关
         struct Machine {

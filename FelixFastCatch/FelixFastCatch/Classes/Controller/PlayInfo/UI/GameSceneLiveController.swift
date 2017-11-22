@@ -87,7 +87,7 @@ extension GameSceneViewController{
         agoraKit.setupLocalVideo(nil)
         agoraKit.enableVideo()
         
-        agoraKit.setVideoProfile(._VideoProfile_480P_3, swapWidthAndHeight: false)
+        agoraKit.setVideoProfile(._VideoProfile_480P, swapWidthAndHeight: false)
         agoraKit.setClientRole(AgoraRtcClientRole.clientRole_Audience, withKey: nil)
         
         let code = agoraKit.joinChannel(byKey: nil, channelName: deviceId, info: nil, uid: 0, joinSuccess: nil)

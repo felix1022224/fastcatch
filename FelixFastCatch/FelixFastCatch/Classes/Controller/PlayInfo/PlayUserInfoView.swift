@@ -30,7 +30,7 @@ extension GameSceneViewController {
         gameUserImage.layer.cornerRadius = 36/2
         gameUserImage.layer.masksToBounds = true
         
-        view.addSubview(gameUserGroup)
+        rootView.addSubview(gameUserGroup)
         
         gameUserNickName.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         gameUserNickName.outLineWidth = Constants.UI.OUT_LINE_WIDTH
@@ -40,7 +40,7 @@ extension GameSceneViewController {
         gameUserNickName.numberOfLines = 1
         gameUserNickName.sizeToFit()
         
-        gameUserNickNameBackground.frame = CGRect(x: 5, y: 2, width: 40 + gameUserNickName.bounds.width, height: 36)
+        gameUserNickNameBackground.frame = CGRect(x: 5, y: 2, width: 40 + gameUserNickName.bounds.width - UIApplication.shared.statusBarFrame.height, height: 36)
         gameUserNickNameBackground.layer.cornerRadius = 36/2
         gameUserNickNameBackground.layer.masksToBounds = true
         gameUserNickNameBackground.backgroundColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.3)
@@ -76,7 +76,7 @@ extension GameSceneViewController {
         
         gameUserBtn.frame.size = CGSize(width: 40 + gameUserNickName.bounds.width + 10, height: 60)
         gameUserBtn.backgroundColor = UIColor.clear
-        view.addSubview(gameUserBtn)
+        rootView.addSubview(gameUserBtn)
         
         gameUserBtn.snp.makeConstraints { (make) in
             make.left.equalTo(gameUserGroup)
@@ -105,7 +105,7 @@ extension GameSceneViewController {
         
         gameUserNickNameBackground.frame = CGRect(x: 5, y: 2, width: width, height: 36)
         
-        gameUserGroup.frame = CGRect(x: UIScreen.main.bounds.width - width - 14, y: UIApplication.shared.statusBarFrame.height + gemBackground.bounds.height + 20, width: width, height: 50)
+        gameUserGroup.frame = CGRect(x: UIScreen.main.bounds.width - width - 22, y: gemBackground.bounds.height + 20, width: width, height: 50)
         
 //        gameUserGroup.snp.makeConstraints { (make) in
 //            make.right.equalTo(view).offset(-10)

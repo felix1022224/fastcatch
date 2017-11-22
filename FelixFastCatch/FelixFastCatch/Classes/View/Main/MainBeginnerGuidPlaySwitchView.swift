@@ -82,5 +82,20 @@ class MainBeginnerGuidPlaySwitchView: BaseDialog {
         self.playviewController = nil
         hide()
     }
+    
+    override func hide() {
+        UIView.animate(withDuration: 0.3, animations: {[weak self] in
+            self?.shadow.alpha = 0.0
+            self?.alpha = 0.0
+        }) { [weak self] (isHide) in
+            self?.alpha = 1
+            self?.isHidden = true
+            self?.shadow.removeFromSuperview()
+            self?.removeFromSuperview()
+            for subview in (self?.subviews)! {
+                subview.removeFromSuperview()
+            }
+        }
+    }
 
 }

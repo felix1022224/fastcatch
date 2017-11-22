@@ -191,6 +191,17 @@ class GameSceneViewController: UIViewController {
     /// 奖品详情
     var bottomAwardDialog:PlayInfoAwardDialog!
     
+    /// 此次游戏需要扣的金币
+    var coinNumber = UIView()
+    
+    var coinNumberLabel = MainCustomerLabel()
+    
+    /// 开始游戏需要扣掉的金币，由前一个页面传入
+    var startCoinNumber = 0
+    
+    /// 取消排队的按钮
+    let quitBtn = UIButton(type: UIButtonType.custom)
+    
     /**** dialog ****/
     
     /// 排队到了的dialog
@@ -203,10 +214,20 @@ class GameSceneViewController: UIViewController {
     ///游戏失败的弹窗
     var gameFailedDialog:GameFailedDialog!
     
+    ///滚动的view
+    var rootView:UIScrollView = UIScrollView()
+    
+    /// 底部详情
+    let productBackgroundView = UIImageView()
+    
+    let productBottomGroup = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.white
+        
+        UIApplication.shared.isIdleTimerDisabled = true
         
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false;   //禁用侧滑手势
         
@@ -223,12 +244,15 @@ class GameSceneViewController: UIViewController {
         gameSceneController = GameSceneController(playViewController: self, deviceId: deviceId)
         gameSceneController.connectSocket()
         
-        if UserDefaults.standard.bool(forKey: Constants.IS_FIRST_OPEN_PLAY) == false {
-            playSwitchGuid = MainBeginnerGuidPlaySwitchView(frame: UIScreen.main.bounds)
-            playSwitchGuid.createView2(playViewController: self)
-            playSwitchGuid.show2()
-            UserDefaults.standard.set(true, forKey: Constants.IS_FIRST_OPEN_PLAY)
-        }
+//        if UserDefaults.standard.bool(forKey: Constants.IS_FIRST_OPEN_PLAY) == false {
+//            playSwitchGuid = MainBeginnerGuidPlaySwitchView(frame: UIScreen.main.bounds)
+//            playSwitchGuid.createView2(playViewController: self)
+//            playSwitchGuid.show2()
+//            UserDefaults.standard.set(true, forKey: Constants.IS_FIRST_OPEN_PLAY)
+//        }
+        
+//        showQueueArriveDialog()
+//        showGameFailedDialog()
     }
 
     override func didReceiveMemoryWarning() {
@@ -321,7 +345,6 @@ class GameSceneViewController: UIViewController {
             bgMusicPlayer.stop()
         }
         wardCode = ""
-        UIApplication.shared.isIdleTimerDisabled = false
     }
     
     @objc func showGameUserInfo() -> () {
@@ -355,14 +378,23 @@ extension GameSceneViewController{
             self?.gameSceneController.quitQueue()//退出队列
             self?.queueArriveDialog = nil
             self?.isShowQueueArriveDialog = false
+            
+            ///隐藏排队相关
+            self?.quitBtn.isHidden = true
+            self?.playQueueNumberStatus.isHidden = true
         }
         
         queueArriveDialog.confirmCallback = {[weak self] in
             //开始游戏
             self?.startPlay()
+            self?.quitBtn.isHidden = true
             self?.playQueueNumberStatus.isHidden = true
             self?.queueArriveDialog = nil
             self?.isShowQueueArriveDialog = false
+            
+            self?.rootView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + UIApplication.shared.statusBarFrame.height)
+            
+            self?.productBottomGroup.isHidden = true
         }
     }
     
@@ -374,16 +406,17 @@ extension GameSceneViewController{
     /// 创建操作界面
     func createPlayControllerView() -> () {
         
-        let topHeight = liveView.bounds.height + startBtnBackgroundView.bounds.height
+        let topHeight = topGroupView.bounds.height
         
-        playGroupView.frame = CGRect(x: 0, y: topHeight, width: self.view.bounds.width, height: self.view.bounds.height - topHeight)
+        playGroupView.frame = CGRect(x: 8, y: topHeight + 10, width: self.view.bounds.width - 16, height: self.view.bounds.height - topGroupView.bounds.height - 25)
         playGroupView.backgroundColor = UIColor.clear
-        view.addSubview(playGroupView)
+        rootView.addSubview(playGroupView)
         
         /// 背景图片
         let backgroundImage = UIImageView()
         backgroundImage.image = UIImage(named: "play_game_background")
-        backgroundImage.frame.size = CGSize(width: self.view.bounds.width, height: self.view.bounds.height - topHeight)
+        backgroundImage.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width - 16, height: self.view.bounds.height - topGroupView.bounds.height - 25)
+//        backgroundImage.frame.size = CGSize(width: self.view.bounds.width, height: self.view.bounds.height - topHeight)
         playGroupView.addSubview(backgroundImage)
         
         let controllerSize = UIScreen.main.bounds.width * 0.12
@@ -515,6 +548,9 @@ extension GameSceneViewController{
     
     /// 展示游戏界面
     func showPlayGroup() -> () {
+        
+        /// 开始游戏之后，隐藏扣币的文字
+        coinNumber.isHidden = true
         
         playGroupView.isHidden = false
         isGrab = false
@@ -891,6 +927,13 @@ extension GameSceneViewController{
             if self?.gameSceneController != nil {
                 self?.gameSceneController.quitQueue()
             }
+            
+            /// 显示扣币文字
+            self?.coinNumber.isHidden = false
+            
+            self?.rootView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: (self?.topGroupView.bounds.height)! + (self?.startBtnBackgroundView.bounds.height)! + (self?.productBackgroundView.bounds.height)!)
+            
+            self?.productBottomGroup.isHidden = false
         }
         
         showOffRecordDialog.confirmCallback = {[weak self] in
@@ -919,10 +962,17 @@ extension GameSceneViewController{
             /// 把直播的镜头切回去
             self?.switchNotGameMode()
             
+            /// 显示扣币文字
+            self?.coinNumber.isHidden = false
+            
             if self?.gameSceneController != nil {
                 self?.gameSceneController.quitQueue()
             }
             self?.gameFailedDialog = nil
+            
+            self?.rootView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: (self?.topGroupView.bounds.height)! + (self?.startBtnBackgroundView.bounds.height)! + (self?.productBackgroundView.bounds.height)!)
+            
+            self?.productBottomGroup.isHidden = false
         }
         
         gameFailedDialog.confirmCallback = {[weak self] in

@@ -180,10 +180,6 @@ class GameUserInfoDialog: BaseDialog {
             make.width.equalTo(backgroundImage.bounds.width*0.82)
             make.height.equalTo(40)
         }
-        
-        
-
-        
     }
     
     func getTitleItem(itemData:JSON) -> UIView {

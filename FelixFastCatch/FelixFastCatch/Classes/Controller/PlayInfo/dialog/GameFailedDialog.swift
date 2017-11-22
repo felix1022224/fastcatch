@@ -49,15 +49,17 @@ class GameFailedDialog: BaseDialog {
             make.centerY.equalTo(cancelGameButton)
         }
         
-        againGameTimeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
-        againGameTimeLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
+        againGameTimeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        againGameTimeLabel.outLineWidth = 3
         againGameTimeLabel.outTextColor = UIColor.white
-        againGameTimeLabel.outLienTextColor = UIColor.gray
-        againGameTimeLabel.text = "再玩一局(15s)"
+        againGameTimeLabel.outLienTextColor = UIColor(red: 29/255.0, green: 137/255.0, blue: 0/255.0, alpha: 0.75)
+        againGameTimeLabel.text = "15s"
+        againGameTimeLabel.sizeToFit()
         addSubview(againGameTimeLabel)
         
         againGameTimeLabel.snp.makeConstraints { (make) in
-            make.center.equalTo(againGameButton)
+            make.centerY.equalTo(againGameButton).offset(-1)
+            make.right.equalTo(againGameButton).offset(-15)
         }
         
         againGameButton.addTarget(self, action: #selector(againGame), for: .touchUpInside)
@@ -82,13 +84,13 @@ class GameFailedDialog: BaseDialog {
     fileprivate var remainingSeconds: Int = 0 {
         willSet {
             if newValue < 10 {
-                againGameTimeLabel.text = "再玩一局(0\(newValue)s)"
+                againGameTimeLabel.text = "0\(newValue)s"
             }else {
-                againGameTimeLabel.text = "再玩一局(\(newValue)s)"
+                againGameTimeLabel.text = "\(newValue)s"
             }
             
             if newValue <= 0 {
-                againGameTimeLabel.text = "再玩一局(15s)"
+                againGameTimeLabel.text = "15s"
                 isCounting = false
                 close()
             }

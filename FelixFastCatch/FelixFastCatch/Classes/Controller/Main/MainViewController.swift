@@ -24,6 +24,9 @@ class MainViewController: UIViewController{
     /// banner images
     fileprivate lazy var bannerView:CustomerBannerView = CustomerBannerView()
     
+    /// 顶部集合
+    fileprivate lazy var bannerGroupView:UIView = UIView()
+    
     // banner 指示器
     fileprivate lazy var pageControl:UIPageControl = UIPageControl()
     
@@ -108,6 +111,15 @@ class MainViewController: UIViewController{
     
     fileprivate var isShowADV = false
     
+    /// 顶部集合
+    fileprivate lazy var topView = UIImageView()
+    
+    /// 换一批的按钮
+    fileprivate lazy var changeListBtn = UIButton(type: UIButtonType.custom)
+    
+    /// 是否允许加载列表的状态
+    var isNotAllowedListStatus = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -117,12 +129,36 @@ class MainViewController: UIViewController{
         backgroundImage.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         view.addSubview(backgroundImage)
         
+        topView.image = UIImage(named: "顶部条")
+        topView.sizeToFit()
+        topView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: topView.bounds.height)
+        
         setupUI()
+        
+        view.addSubview(topView)
+        
+        changeListBtn.setBackgroundImage(UIImage(named: "换一换"), for: .normal)
+        changeListBtn.sizeToFit()
+        view.addSubview(changeListBtn)
+        
+        changeListBtn.snp.makeConstraints { (make) in
+            make.bottom.equalTo(topView).offset(-14)
+            make.right.equalTo(self.view).offset(-8)
+        }
+        
+        changeListBtn.addTarget(self, action: #selector(changeListData), for: .touchUpInside)
         
 //        SplashView.updateSplashData(imgUrl: "http://img0.zgtuku.com/images/front/v/d3/59/235563250418.jpg", actUrl: "http://www.baidu.com")
 //        SplashView.simpleShowSplashView()
         
         getOpenAdv()
+    }
+    
+    /// 切换list
+    @objc func changeListData(){
+        isRefresh = true
+        isNotAllowedListStatus = true
+        getMainListData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -216,30 +252,49 @@ extension MainViewController:UIScrollViewDelegate{
     /// 创建banner的view
     func createBannerView() -> () {
         //设置banner图view的属性
-        bannerView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: getBannerHeight())
-        bannerView.contentSize = CGSize(width: self.view.bounds.width, height: getBannerHeight())
-        bannerView.backgroundColor = UIColor.white
+        bannerView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width - 14, height: getBannerHeight() - 16)
+        bannerView.backgroundColor = UIColor.clear
         bannerView.bounces = false
         bannerView.isPagingEnabled = true
         bannerView.showsHorizontalScrollIndicator = false
         bannerView.showsVerticalScrollIndicator = false
-        view.addSubview(bannerView)
+        
+        bannerView.layer.masksToBounds = true
+        bannerView.layer.cornerRadius = 10
+        
+//        view.addSubview(bannerView)
 
         // 设置代理
         bannerView.delegate = self
         
-        view.addSubview(pageControl)
+        bannerGroupView.frame = CGRect(x: 7, y: 5, width: UIScreen.main.bounds.width - 14, height: getBannerHeight() - 16)
+
+        bannerGroupView.layer.masksToBounds = true
+        bannerGroupView.layer.cornerRadius = 10
+        
+        bannerGroupView.isUserInteractionEnabled = true
+        
+        // 阴影
+        bannerGroupView.layer.shadowColor = UIColor.lightGray.cgColor
+        bannerGroupView.layer.shadowOpacity = 0.4
+        bannerGroupView.layer.shadowRadius = 5
+        bannerGroupView.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+        
+        bannerGroupView.addSubview(bannerView)
+        bannerGroupView.addSubview(pageControl)
+        
+//        view.addSubview(pageControl)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if bannerViewIsTouch {
-            let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+        if !bannerViewIsTouch {
+            let page = Int(scrollView.contentOffset.x / (scrollView.frame.size.width - 14))
             pageControl.currentPage = page
         }
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+        let page = Int(scrollView.contentOffset.x / (scrollView.frame.size.width - 14))
         pageControl.currentPage = page
     }
     
@@ -284,10 +339,10 @@ extension MainViewController:UIScrollViewDelegate{
     
     //创建定时器管理者
     @objc func timerManager() {
-        let contentOffsetX = self.bannerView.contentOffset.x + self.view.frame.size.width
+        let contentOffsetX = self.bannerView.contentOffset.x + self.view.frame.size.width - 14
         let count = CGFloat(mainBannersData.count) - 1
         
-        if contentOffsetX > self.view.frame.size.width * CGFloat(count) {
+        if contentOffsetX > (self.view.frame.size.width - 14) * CGFloat(count) {
             // 当前视图显示的是第三个的时候，设置bottomView的偏移量为0
             self.bannerView.setContentOffset(CGPoint(x:0, y:0), animated: true)
         }else{
@@ -299,19 +354,22 @@ extension MainViewController:UIScrollViewDelegate{
         //循环增加图片到scrollview当中
         for i:Int in 0..<mainBannersData.count{
             let iv = UIImageView()
-            iv.frame = CGRect(x: CGFloat(i) * self.view.bounds.width, y: 0, width: self.view.bounds.width, height: getBannerHeight() + 1)
+            iv.frame = CGRect(x: CGFloat(i) * (self.view.bounds.width - 14), y: 0, width: self.view.bounds.width - 14, height: getBannerHeight() - 18 + 1)
             iv.kf.setImage(with: URL(string: mainBannersData[i]["bannerBigImg"].string!))
             bannerView.addSubview(iv)
             iv.tag = i
             /////设置允许交互属性
             iv.isUserInteractionEnabled = true
             
+            iv.layer.masksToBounds = true
+            iv.layer.cornerRadius = 10
+            
             /////添加tapGuestureRecognizer手势
             let tapGR = UITapGestureRecognizer(target: self, action:#selector(bannerTap(sender:)))
             iv.addGestureRecognizer(tapGR)
         }
         
-        bannerView.contentSize = CGSize(width: self.view.bounds.width * CGFloat(mainBannersData.count), height: getBannerHeight())
+        bannerView.contentSize = CGSize(width: (self.view.bounds.width - 14) * CGFloat(mainBannersData.count), height: getBannerHeight() - 16)
         
         // 设置指示器的属性
         pageControl.numberOfPages = mainBannersData.count
@@ -360,7 +418,10 @@ extension MainViewController{
     
     /// 获取banner图的数据列表
     fileprivate func getBannerList(){
-        Alamofire.request(Constants.Network.MAIN_BANNER_LIST, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { (response) in
+        var params = NetWorkUtils.createBaseParams()
+        params["startswith"] = "1000"
+        
+        Alamofire.request(Constants.Network.MAIN_BANNER_LIST, method: .post, parameters: params).responseJSON { (response) in
             if response.error == nil {
 //                print("bannerList:\(response.result.value!)")
                 self.mainBannersData.removeAll()
@@ -393,7 +454,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         layout.minimumLineSpacing = dataListPadding + 1
         
 //        let main = UIScreen.main.bounds
-        // 設置 header 及 footer 的尺寸
+//        // 設置 header 及 footer 的尺寸
+        layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width - 10, height: getBannerHeight() - 15)
 //        layout.footerReferenceSize = CGSize(width: CGFloat(4) * main.width, height: 90)
         
         // item的宽度
@@ -402,7 +464,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         // 設置每個 cell 的尺寸
 //        layout.itemSize = CGSize(width: itemWidth, height: itemWidth * 1.3)
         
-        dataList = UICollectionView(frame: CGRect(x: 0, y: bannerView.bounds.height, width: self.view.bounds.width, height: self.view.bounds.height - bannerView.bounds.height), collectionViewLayout: layout)
+        dataList = UICollectionView(frame: CGRect(x: 0, y: topView.bounds.height, width: self.view.bounds.width, height: self.view.bounds.height - topView.bounds.height), collectionViewLayout: layout)
         dataList.backgroundColor = UIColor.clear
         
         self.dataList.delegate = self
@@ -414,7 +476,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         dataList.register(MainADVCell.self, forCellWithReuseIdentifier: "AdvCell")
         dataList.register(MainFooterCell.self, forCellWithReuseIdentifier: "FooterCell")
 //        dataList.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "CellId")
-//        dataList.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "footer")
+        dataList.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "header")
         
         //下拉刷新相关设置
         header.setRefreshingTarget(self, refreshingAction: #selector(headerRefresh))
@@ -444,7 +506,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             size = CGSize(width: itemWidth, height: itemWidth/3)
         }
         
-        
         if advList.count > 0 && indexPath.section >= advList.count*2+1 {
             let itemWidth = (CGFloat(UIScreen.main.bounds.width) - 8*2)
             size = CGSize(width: itemWidth, height: 90)
@@ -457,6 +518,14 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             return size
         }
         return size
+    }
+    
+    /// 返回高度
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if section == 0 {
+            return CGSize(width: UIScreen.main.bounds.width - 14, height: getBannerHeight() - 8)
+        }
+        return CGSize(width: 0, height: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -625,19 +694,35 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
-        var footer = UICollectionReusableView()
+        var header = UICollectionReusableView()
         
-        if kind == UICollectionElementKindSectionFooter {
-            footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "footer", for: indexPath)
-            footer.backgroundColor = UIColor.red
-            if indexPath.section == advList.count * 2 + 1 {
-                footer.isHidden = false
+        if kind == UICollectionElementKindSectionHeader {
+            header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "header", for: indexPath)
+            header.addSubview(bannerGroupView)
+            
+            if indexPath.section == 0 {
+                header.isHidden = false
             }else{
-                footer.isHidden = true
+                header.isHidden = true
             }
+            
         }
         
-        return footer
+        return header
+        
+//        var footer = UICollectionReusableView()
+//
+//        if kind == UICollectionElementKindSectionFooter {
+//            footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "footer", for: indexPath)
+//            footer.backgroundColor = UIColor.red
+//            if indexPath.section == advList.count * 2 + 1 {
+//                footer.isHidden = false
+//            }else{
+//                footer.isHidden = true
+//            }
+//        }else
+//
+//        return footer
     }
     
     func loadMore() -> () {
@@ -677,6 +762,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         
 //        gameSceneViewController.mainVC = self
+        
+        gameSceneViewController.startCoinNumber = mainListData[sender.tag]["perDiamondsCount"].intValue
         
         gameSceneViewController.bottomAwardCardImagePath = mainListData[sender.tag]["award"]["img"].stringValue
         gameSceneViewController.bootomAwardDescription = mainListData[sender.tag]["award"]["description"].stringValue
@@ -724,6 +811,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         
         //        gameSceneViewController.mainVC = self
+        
+        gameSceneViewController.startCoinNumber = mainListData[index]["perDiamondsCount"].intValue
         
         gameSceneViewController.bottomAwardCardImagePath = mainListData[index]["award"]["img"].stringValue
         gameSceneViewController.bootomAwardDescription = mainListData[index]["award"]["description"].stringValue
@@ -808,12 +897,28 @@ extension MainViewController{
         isLoadingMainData = true
         
         var params = NetWorkUtils.createBaseParams()
-        params["size"] = "100"
+        params["size"] = "6"
         params["page"] = String(page)
+        params["startswith"] = "1000"
+        if mainListData.count <= 0 {
+            params["excludeids"] = "0"
+        }else{
+            var excludeids = ""
+            for i in 0...mainListData.count - 1 {
+                if i == mainListData.count - 1 {
+                    excludeids = excludeids + mainListData[i]["id"].stringValue
+                }else{
+                    excludeids = excludeids + mainListData[i]["id"].stringValue + ","
+                }
+            }
+            params["excludeids"] = excludeids
+        }
         
         Alamofire.request(Constants.Network.MAIN_LIST, method: .post, parameters: params).responseJSON { (response) in
-//            print("main_list:\(String(describing: response.result.value))")
+            print("main_list:\(String(describing: response.result.value))")
             self.isLoadingMore = false
+            self.isLoadingMainData = false
+            
             if response.error == nil {
                 let jsonObject = JSON(response.data!)
                 
@@ -833,6 +938,8 @@ extension MainViewController{
                 }
                 
                 self.mainListData = self.mainListData + jsonObject["data"]["content"].arrayValue
+                
+                self.isNotAllowedListStatus = false
                 
                 UIView.performWithoutAnimation {[weak self] in
                     self?.dataList.reloadData()
@@ -856,16 +963,16 @@ extension MainViewController{
                     self.setupNoValueView()
                 }
             }
-            
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: { [weak self] in
-                self?.page = 0
-                self?.isRefresh = true
-                self?.isLoadingMainData = false
-                self?.getMainListData()
-            })
-            
             SVProgressHUD.dismiss()
+            
+            self.refreshMainViewControllerList()
         }
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: { [weak self] in
+//            self?.page = 0
+//            self?.isRefresh = true
+//            self?.isLoadingMainData = false
+//            self?.getMainListData()
+//        })
         
         if mainBannersData.count <= 0 {
             getBannerList()
@@ -1078,7 +1185,7 @@ extension MainViewController{
         
         /// 帮助 （修改为积分商城）
         let infoIcon = UIImageView()
-        infoIcon.image = UIImage(named: "积分商城")
+        infoIcon.image = UIImage(named: "Info-icon")
         infoIcon.sizeToFit()
         settingsGroupView.addSubview(infoIcon)
         
@@ -1109,14 +1216,14 @@ extension MainViewController{
     }
     
     @objc func showHelpDialog() -> () {
-        if Constants.User.USER_ID == "" {
-            showFastLogin()
-            return
-        }
-        self.navigationController?.pushViewController(PointsMallViewController(), animated: true)
-//        self.present(PointsMallViewController(), animated: true, completion: nil)
-//        helpDialog.createView()
-//        helpDialog.show()
+//        if Constants.User.USER_ID == "" {
+//            showFastLogin()
+//            return
+//        }
+//        self.navigationController?.pushViewController(PointsMallViewController(), animated: true)
+
+        helpDialog.createView()
+        helpDialog.show()
     }
     
     @objc func showGameHistoryView(){
@@ -1222,7 +1329,47 @@ extension MainViewController {
     
 }
 
-
+/// 刷新列表状态
+extension MainViewController{
+    
+    func refreshMainViewControllerList() -> () {
+        if isNotAllowedListStatus == true || mainListData.count <= 0 {
+            return
+        }
+        
+        var params = NetWorkUtils.createBaseParams()
+        var deviceids = ""
+        for i in 0...mainListData.count - 1 {
+            if i == mainListData.count - 1 {
+                deviceids = deviceids + mainListData[i]["deviceId"].stringValue
+            }else{
+                deviceids = deviceids + mainListData[i]["deviceId"].stringValue + ","
+            }
+        }
+        params["deviceids"] = deviceids
+        
+        Alamofire.request(Constants.Network.REFRESH_LIST_STATUS, method: .post, parameters: params).responseJSON { (dataResponse) in
+            if NetWorkUtils.checkReponse(response: dataResponse) && !self.isNotAllowedListStatus {
+                let json = JSON(data: dataResponse.data!)
+                if json["data"]["content"].arrayValue.count > 0 {
+                    self.mainListData.removeAll()
+                    
+                    if !self.isNotAllowedListStatus {
+                        self.mainListData = self.mainListData + json["data"]["content"].arrayValue
+                        
+                        UIView.performWithoutAnimation {[weak self] in
+                            self?.dataList.reloadData()
+                        }
+                    }
+                }
+            }
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: { [weak self] in
+                self?.refreshMainViewControllerList()
+            })
+        }
+    }
+    
+}
 
 
 
