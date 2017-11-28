@@ -33,7 +33,9 @@ import JavaScriptCore
         if mainVC.mainListData.count <= 0 {
             return
         }
-        mainVC.itemClick(index: index)
+        DispatchQueue.main.async {[weak self] in
+            self?.mainVC.itemClick(index: index)
+        }
     }
     
 }

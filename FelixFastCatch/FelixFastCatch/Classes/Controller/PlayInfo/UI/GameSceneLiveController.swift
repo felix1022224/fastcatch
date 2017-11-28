@@ -101,8 +101,7 @@ extension GameSceneViewController{
             agoraKit.setupRemoteVideo(nil)
             let canvas = AgoraRtcVideoCanvas()
             canvas.view = liveView
-//            canvas.uid = mainLiveCamare!
-            canvas.uid = 2811694384
+            canvas.uid = mainLiveCamare!
             canvas.renderMode = .render_Hidden
             
             agoraKit.setRemoteVideoStream(mainLiveCamare!, type: .videoStream_High)

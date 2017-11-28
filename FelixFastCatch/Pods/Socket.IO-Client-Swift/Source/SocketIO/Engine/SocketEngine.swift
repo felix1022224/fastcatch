@@ -24,12 +24,11 @@
 
 import Dispatch
 import Foundation
-import Starscream
+import StarscreamSocketIO
 
 /// The class that handles the engine.io protocol and transports.
 /// See `SocketEnginePollable` and `SocketEngineWebsocket` for transport specific methods.
-public final class SocketEngine : NSObject, URLSessionDelegate, SocketEnginePollable, SocketEngineWebsocket,
-                                  ConfigSettable {
+public final class SocketEngine : NSObject, URLSessionDelegate, SocketEnginePollable, SocketEngineWebsocket {
     // MARK: Properties
 
     private static let logType = "SocketEngine"
@@ -135,7 +134,7 @@ public final class SocketEngine : NSObject, URLSessionDelegate, SocketEnginePoll
     private var pongsMissedMax = 0
     private var probeWait = ProbeWaitQueue()
     private var secure = false
-    private var security: SocketIO.SSLSecurity?
+    private var security: SSLSecurity?
     private var selfSigned = false
 
     // MARK: Initializers
@@ -148,10 +147,40 @@ public final class SocketEngine : NSObject, URLSessionDelegate, SocketEnginePoll
     public init(client: SocketEngineClient, url: URL, config: SocketIOClientConfiguration) {
         self.client = client
         self.url = url
+        for option in config {
+            switch option {
+            case let .connectParams(params):
+                connectParams = params
+            case let .cookies(cookies):
+                self.cookies = cookies
+            case let .extraHeaders(headers):
+                extraHeaders = headers
+            case let .sessionDelegate(delegate):
+                sessionDelegate = delegate
+            case let .forcePolling(force):
+                forcePolling = force
+            case let .forceWebsockets(force):
+                forceWebsockets = force
+            case let .path(path):
+                socketPath = path
+
+                if !socketPath.hasSuffix("/") {
+                    socketPath += "/"
+                }
+            case let .secure(secure):
+                self.secure = secure
+            case let .selfSigned(selfSigned):
+                self.selfSigned = selfSigned
+            case let .security(security):
+                self.security = security
+            case .compress:
+                self.compress = true
+            default:
+                continue
+            }
+        }
 
         super.init()
-
-        setConfigs(config)
 
         sessionDelegate = sessionDelegate ?? self
 
@@ -163,7 +192,7 @@ public final class SocketEngine : NSObject, URLSessionDelegate, SocketEnginePoll
     /// - parameter client: The client for this engine.
     /// - parameter url: The url for this engine.
     /// - parameter options: The options for this engine.
-    public convenience init(client: SocketEngineClient, url: URL, options: [String: Any]?) {
+    public convenience init(client: SocketEngineClient, url: URL, options: NSDictionary?) {
         self.init(client: client, url: url, config: options?.toSocketConfiguration() ?? [])
     }
 
@@ -281,27 +310,26 @@ public final class SocketEngine : NSObject, URLSessionDelegate, SocketEnginePoll
 
     private func createWebSocketAndConnect() {
         ws?.delegate = nil // TODO this seems a bit defensive, is this really needed?
-        var req = URLRequest(url: urlWebSocketWithSid)
+        ws = WebSocket(url: urlWebSocketWithSid)
 
         if cookies != nil {
             let headers = HTTPCookie.requestHeaderFields(with: cookies!)
-            for (headerName, value) in headers {
-                req.setValue(value, forHTTPHeaderField: headerName)
+            for (key, value) in headers {
+                ws?.headers[key] = value
             }
         }
 
         if extraHeaders != nil {
             for (headerName, value) in extraHeaders! {
-                req.setValue(value, forHTTPHeaderField: headerName)
+                ws?.headers[headerName] = value
             }
         }
 
-        ws = WebSocket(request: req)
         ws?.callbackQueue = engineQueue
         ws?.enableCompression = compress
         ws?.delegate = self
         ws?.disableSSLCertValidation = selfSigned
-        ws?.security = security?.security
+        ws?.security = security
 
         ws?.connect()
     }
@@ -456,8 +484,6 @@ public final class SocketEngine : NSObject, URLSessionDelegate, SocketEnginePoll
         if message == "3probe" {
             upgradeTransport()
         }
-
-        client?.engineDidReceivePong()
     }
 
     /// Parses raw binary received from engine.io.
@@ -491,13 +517,13 @@ public final class SocketEngine : NSObject, URLSessionDelegate, SocketEnginePoll
 
         switch type {
         case .message:
-            handleMessage(String(message.dropFirst()))
+            handleMessage(String(message.characters.dropFirst()))
         case .noop:
             handleNOOP()
         case .pong:
             handlePong(with: message)
         case .open:
-            handleOpen(openData: String(message.dropFirst()))
+            handleOpen(openData: String(message.characters.dropFirst()))
         case .close:
             handleClose(message)
         default:
@@ -536,51 +562,8 @@ public final class SocketEngine : NSObject, URLSessionDelegate, SocketEnginePoll
         pongsMissed += 1
         write("", withType: .ping, withData: [])
 
-        engineQueue.asyncAfter(deadline: DispatchTime.now() + .milliseconds(pingInterval)) {[weak self, id = self.sid] in
-            // Make sure not to ping old connections
-            guard let this = self, this.sid == id else { return }
-
-            this.sendPing()
-        }
-
-        client?.engineDidSendPing()
-    }
-
-    /// Called when the engine should set/update its configs from a given configuration.
-    ///
-    /// parameter config: The `SocketIOClientConfiguration` that should be used to set/update configs.
-    open func setConfigs(_ config: SocketIOClientConfiguration) {
-        for option in config {
-            switch option {
-            case let .connectParams(params):
-                connectParams = params
-            case let .cookies(cookies):
-                self.cookies = cookies
-            case let .extraHeaders(headers):
-                extraHeaders = headers
-            case let .sessionDelegate(delegate):
-                sessionDelegate = delegate
-            case let .forcePolling(force):
-                forcePolling = force
-            case let .forceWebsockets(force):
-                forceWebsockets = force
-            case let .path(path):
-                socketPath = path
-
-                if !socketPath.hasSuffix("/") {
-                    socketPath += "/"
-                }
-            case let .secure(secure):
-                self.secure = secure
-            case let .selfSigned(selfSigned):
-                self.selfSigned = selfSigned
-            case let .security(security):
-                self.security = security
-            case .compress:
-                self.compress = true
-            default:
-                continue
-            }
+        engineQueue.asyncAfter(deadline: DispatchTime.now() + .milliseconds(pingInterval)) {[weak self] in
+            self?.sendPing()
         }
     }
 
@@ -621,7 +604,7 @@ public final class SocketEngine : NSObject, URLSessionDelegate, SocketEnginePoll
     // MARK: Starscream delegate conformance
 
     /// Delegate method for connection.
-    public func websocketDidConnect(socket: WebSocketClient) {
+    public func websocketDidConnect(socket: WebSocket) {
         if !forceWebsockets {
             probing = true
             probeWebSocket()
@@ -633,7 +616,7 @@ public final class SocketEngine : NSObject, URLSessionDelegate, SocketEnginePoll
     }
 
     /// Delegate method for disconnection.
-    public func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
+    public func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
         probing = false
 
         if closed {
@@ -656,12 +639,6 @@ public final class SocketEngine : NSObject, URLSessionDelegate, SocketEnginePoll
         } else {
             client?.engineDidClose(reason: "Socket Disconnected")
         }
-    }
-
-    // Test Properties
-
-    func setConnected(_ value: Bool) {
-        connected = value
     }
 }
 

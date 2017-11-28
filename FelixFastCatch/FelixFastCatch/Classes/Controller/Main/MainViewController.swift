@@ -129,24 +129,24 @@ class MainViewController: UIViewController{
         backgroundImage.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         view.addSubview(backgroundImage)
         
-        topView.image = UIImage(named: "顶部条")
-        topView.sizeToFit()
-        topView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: topView.bounds.height)
+//        topView.image = UIImage(named: "顶部条")
+//        topView.sizeToFit()
+//        topView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: topView.bounds.height)
         
         setupUI()
         
-        view.addSubview(topView)
+//        view.addSubview(topView)
         
-        changeListBtn.setBackgroundImage(UIImage(named: "换一换"), for: .normal)
-        changeListBtn.sizeToFit()
-        view.addSubview(changeListBtn)
-        
-        changeListBtn.snp.makeConstraints { (make) in
-            make.bottom.equalTo(topView).offset(-14)
-            make.right.equalTo(self.view).offset(-8)
-        }
-        
-        changeListBtn.addTarget(self, action: #selector(changeListData), for: .touchUpInside)
+//        changeListBtn.setBackgroundImage(UIImage(named: "换一换"), for: .normal)
+//        changeListBtn.sizeToFit()
+//        view.addSubview(changeListBtn)
+//
+//        changeListBtn.snp.makeConstraints { (make) in
+//            make.bottom.equalTo(topView).offset(-14)
+//            make.right.equalTo(self.view).offset(-8)
+//        }
+//
+//        changeListBtn.addTarget(self, action: #selector(changeListData), for: .touchUpInside)
         
 //        SplashView.updateSplashData(imgUrl: "http://img0.zgtuku.com/images/front/v/d3/59/235563250418.jpg", actUrl: "http://www.baidu.com")
 //        SplashView.simpleShowSplashView()
@@ -464,7 +464,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         // 設置每個 cell 的尺寸
 //        layout.itemSize = CGSize(width: itemWidth, height: itemWidth * 1.3)
         
-        dataList = UICollectionView(frame: CGRect(x: 0, y: topView.bounds.height, width: self.view.bounds.width, height: self.view.bounds.height - topView.bounds.height), collectionViewLayout: layout)
+        dataList = UICollectionView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height - topView.bounds.height), collectionViewLayout: layout)
         dataList.backgroundColor = UIColor.clear
         
         self.dataList.delegate = self
@@ -897,22 +897,22 @@ extension MainViewController{
         isLoadingMainData = true
         
         var params = NetWorkUtils.createBaseParams()
-        params["size"] = "6"
+        params["size"] = "1000"
         params["page"] = String(page)
         params["startswith"] = "1000"
-        if mainListData.count <= 0 {
-            params["excludeids"] = "0"
-        }else{
-            var excludeids = ""
-            for i in 0...mainListData.count - 1 {
-                if i == mainListData.count - 1 {
-                    excludeids = excludeids + mainListData[i]["id"].stringValue
-                }else{
-                    excludeids = excludeids + mainListData[i]["id"].stringValue + ","
-                }
-            }
-            params["excludeids"] = excludeids
-        }
+//        if mainListData.count <= 0 {
+//            params["excludeids"] = "0"
+//        }else{
+//            var excludeids = ""
+//            for i in 0...mainListData.count - 1 {
+//                if i == mainListData.count - 1 {
+//                    excludeids = excludeids + mainListData[i]["id"].stringValue
+//                }else{
+//                    excludeids = excludeids + mainListData[i]["id"].stringValue + ","
+//                }
+//            }
+//            params["excludeids"] = excludeids
+//        }
         
         Alamofire.request(Constants.Network.MAIN_LIST, method: .post, parameters: params).responseJSON { (response) in
             print("main_list:\(String(describing: response.result.value))")

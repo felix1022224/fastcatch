@@ -18,7 +18,7 @@ class Constants: NSObject {
         }
         
         /// 当前环境
-        static let nService = MZService.Debug
+        static let nService = MZService.Release
         
         static var BASE_URL:String {
             get{

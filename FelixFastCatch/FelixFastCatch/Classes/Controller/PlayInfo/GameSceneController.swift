@@ -31,13 +31,13 @@ class GameSceneController: NSObject {
         
         if Constants.Network.nService == Constants.Network.MZService.Debug {
             //测试服务器
-            socket = SocketManager(socketURL: URL(string: "http://47.92.72.158:9130?room=" + deviceId)!, config: [.log(false), .compress]).defaultSocket
+            socket = SocketIOClient(socketURL: URL(string: "http://47.92.72.158:9130?room=" + deviceId)!, config: [.log(false), .compress])
         }else if Constants.Network.nService == Constants.Network.MZService.Test {
             //本地测试服务器
-            socket = SocketManager(socketURL: URL(string: "http://192.168.1.111:9130?room=" + deviceId)!, config: [.log(false), .compress]).defaultSocket
+            socket = SocketIOClient(socketURL: URL(string: "http://192.168.1.111:9130?room=" + deviceId)!, config: [.log(false), .compress])
         }else if Constants.Network.nService == Constants.Network.MZService.Release {
             ///线上正式
-            socket = SocketManager(socketURL: URL(string: "http://101.201.68.47:9130?room=" + deviceId)!, config: [.log(false), .compress]).defaultSocket
+            socket = SocketIOClient(socketURL: URL(string: "http://101.201.68.47:9130?room=" + deviceId)!, config: [.log(false), .compress])
         }
     }
     
