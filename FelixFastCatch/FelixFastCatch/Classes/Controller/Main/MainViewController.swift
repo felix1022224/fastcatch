@@ -602,7 +602,12 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
                 cell?.titleLabel.text = itemData["award"]["title"].string!
             }
             
-            cell?.playBtn.tag = indexPath.row
+            if indexPath.section == 0 {
+                cell?.playBtn.tag = indexPath.row
+            }else{
+                cell?.playBtn.tag = indexPath.row + advList[indexPath.section/2 - 1]["sequence"].intValue
+            }
+            
             cell?.addPlayBtnClick(target: self, action: #selector(showPlay))
             
             cell?.productImage.kf.setImage(with: URL(string: itemData["img"].stringValue))
