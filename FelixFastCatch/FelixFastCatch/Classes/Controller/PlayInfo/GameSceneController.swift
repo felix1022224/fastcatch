@@ -247,6 +247,11 @@ extension GameSceneController{
                 self.playViewController?.playQueueNumberStatus.isHidden = true
                 
                 self.playViewController?.rootView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + UIApplication.shared.statusBarFrame.height)
+                
+                UIView.animate(withDuration: 0.1) {
+                    self.playViewController?.rootView.contentOffset = CGPoint(x: 0, y: -UIApplication.shared.statusBarFrame.height)
+                }
+                
                 self.playViewController?.productBottomGroup.isHidden = true
             }else{
                 // 可以开始游戏了,此处显示倒计时的dialog

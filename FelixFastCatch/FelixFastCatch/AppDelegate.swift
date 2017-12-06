@@ -226,6 +226,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
     }
 
+    var allowRotation = 0
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        if allowRotation == 1 {
+            if !UIApplication.shared.statusBarOrientation.isPortrait {
+                return UIInterfaceOrientationMask.portrait
+            }else{
+                return UIInterfaceOrientationMask.landscapeRight
+            }
+        }else{
+            return UIInterfaceOrientationMask.portrait
+        }
+    }
+    
 }
 
 

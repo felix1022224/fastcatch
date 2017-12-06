@@ -84,7 +84,7 @@ class ShowOffRecordDialog: BaseDialog {
         
         againGameButton.snp.makeConstraints { (make) in
             make.left.equalTo(backgroundImage).offset(backgroundImage.bounds.width/2 + 8)
-            make.centerY.equalTo(nowShardBtn)
+            make.bottom.equalTo(backgroundImage).offset(-15)
         }
         
         againGameTimeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))

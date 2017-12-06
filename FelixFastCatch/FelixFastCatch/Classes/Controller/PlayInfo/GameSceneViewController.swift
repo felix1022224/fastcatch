@@ -222,6 +222,8 @@ class GameSceneViewController: UIViewController {
     
     let productBottomGroup = UIView()
     
+    var countdownDialog = StartGameCountdownDialog(frame: UIScreen.main.bounds)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -238,23 +240,35 @@ class GameSceneViewController: UIViewController {
         /// 装载UI控件
         setupUI()
         
+//        countdownDialog.createView()
+//        countdownDialog.show()
+        
+//        showQueueArriveDialog()
+//        showGameFailedDialog()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
         playBackgroundMusic() //播放背景音乐
         
         /// 初始化
         gameSceneController = GameSceneController(playViewController: self, deviceId: deviceId)
         gameSceneController.connectSocket()
         
-//        if UserDefaults.standard.bool(forKey: Constants.IS_FIRST_OPEN_PLAY) == false {
-//            playSwitchGuid = MainBeginnerGuidPlaySwitchView(frame: UIScreen.main.bounds)
-//            playSwitchGuid.createView2(playViewController: self)
-//            playSwitchGuid.show2()
-//            UserDefaults.standard.set(true, forKey: Constants.IS_FIRST_OPEN_PLAY)
-//        }
-        
-//        showQueueArriveDialog()
-//        showGameFailedDialog()
+        if UserDefaults.standard.bool(forKey: Constants.IS_FIRST_OPEN_PLAY) == false {
+            playSwitchGuid = MainBeginnerGuidPlaySwitchView(frame: UIScreen.main.bounds)
+            playSwitchGuid.createView2(playViewController: self)
+            playSwitchGuid.show2()
+            UserDefaults.standard.set(true, forKey: Constants.IS_FIRST_OPEN_PLAY)
+        }
     }
-
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        UIApplication.shared.isIdleTimerDisabled = false
+        agoraKit.leaveChannel { (starts) in
+            //离开直播间
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -262,10 +276,6 @@ class GameSceneViewController: UIViewController {
     
     deinit {
         print("GameSceneDeinit")
-        UIApplication.shared.isIdleTimerDisabled = false
-        agoraKit.leaveChannel { (starts) in
-            //离开直播间
-        }
     }
     
     /// 隐藏当前页面的状态栏
@@ -394,6 +404,10 @@ extension GameSceneViewController{
             
             self?.rootView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + UIApplication.shared.statusBarFrame.height)
             
+            UIView.animate(withDuration: 0.5) {[weak self] in
+                self?.rootView.contentOffset = CGPoint(x: 0, y: -UIApplication.shared.statusBarFrame.height)
+            }
+            
             self?.productBottomGroup.isHidden = true
         }
     }
@@ -408,14 +422,14 @@ extension GameSceneViewController{
         
         let topHeight = topGroupView.bounds.height
         
-        playGroupView.frame = CGRect(x: 8, y: topHeight + 10, width: self.view.bounds.width - 16, height: self.view.bounds.height - topGroupView.bounds.height - 25)
+        playGroupView.frame = CGRect(x: 8, y: topHeight + 10, width: self.view.bounds.width - 16, height: self.view.bounds.height - topGroupView.bounds.height - UIApplication.shared.statusBarFrame.height - 10)
         playGroupView.backgroundColor = UIColor.clear
         rootView.addSubview(playGroupView)
         
         /// 背景图片
         let backgroundImage = UIImageView()
         backgroundImage.image = UIImage(named: "play_game_background")
-        backgroundImage.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width - 16, height: self.view.bounds.height - topGroupView.bounds.height - 25)
+        backgroundImage.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width - 16, height: self.view.bounds.height - topGroupView.bounds.height - UIApplication.shared.statusBarFrame.height - 10)
 //        backgroundImage.frame.size = CGSize(width: self.view.bounds.width, height: self.view.bounds.height - topHeight)
         playGroupView.addSubview(backgroundImage)
         

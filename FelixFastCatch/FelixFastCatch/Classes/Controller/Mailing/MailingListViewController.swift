@@ -211,7 +211,7 @@ extension MailingListViewController{
         noValueImage.snp.makeConstraints { (make) in
             make.centerY.equalTo(noMailingValueView)
             make.width.equalTo(UIScreen.main.bounds.width)
-            make.height.equalTo(UIScreen.main.bounds.height)
+//            make.height.equalTo(UIScreen.main.bounds.height)
         }
         
         let noValueLabel = MainCustomerLabel()

@@ -68,6 +68,10 @@
 		4D7048A91F909EBC00D337F4 /* UserTitlesGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7048A81F909EBC00D337F4 /* UserTitlesGroup.swift */; };
 		4D7048AC1F90AB8500D337F4 /* TitlesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7048AB1F90AB8500D337F4 /* TitlesCell.swift */; };
 		4D7144831F8B584700B37D8A /* MailingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7144821F8B584700B37D8A /* MailingListViewController.swift */; };
+		4D7468291FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7468281FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift */; };
+		4D74682B1FCFE4C500E8E662 /* HorzontalGameSceneWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D74682A1FCFE4C500E8E662 /* HorzontalGameSceneWidget.swift */; };
+		4D74682D1FD127A500E8E662 /* StartGameCountdownDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D74682C1FD127A500E8E662 /* StartGameCountdownDialog.swift */; };
+		4D74682F1FD12D7700E8E662 /* 横屏开始游戏loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4D74682E1FD12D7700E8E662 /* 横屏开始游戏loading.gif */; };
 		4D7FF4BC1F596FEC00396C00 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7FF4BA1F596FEC00396C00 /* AlipaySDK.framework */; };
 		4D7FF4BD1F596FEC00396C00 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4D7FF4BB1F596FEC00396C00 /* AlipaySDK.bundle */; };
 		4D82A4521F36C7AD007ADE5C /* UserTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D82A4511F36C7AD007ADE5C /* UserTools.swift */; };
@@ -204,6 +208,10 @@
 		4D7048A81F909EBC00D337F4 /* UserTitlesGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTitlesGroup.swift; sourceTree = "<group>"; };
 		4D7048AB1F90AB8500D337F4 /* TitlesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlesCell.swift; sourceTree = "<group>"; };
 		4D7144821F8B584700B37D8A /* MailingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailingListViewController.swift; sourceTree = "<group>"; };
+		4D7468281FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalGameSceneViewController.swift; sourceTree = "<group>"; };
+		4D74682A1FCFE4C500E8E662 /* HorzontalGameSceneWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorzontalGameSceneWidget.swift; sourceTree = "<group>"; };
+		4D74682C1FD127A500E8E662 /* StartGameCountdownDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartGameCountdownDialog.swift; sourceTree = "<group>"; };
+		4D74682E1FD12D7700E8E662 /* 横屏开始游戏loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "横屏开始游戏loading.gif"; sourceTree = "<group>"; };
 		4D7FF4BA1F596FEC00396C00 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		4D7FF4BB1F596FEC00396C00 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		4D82A4511F36C7AD007ADE5C /* UserTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTools.swift; sourceTree = "<group>"; };
@@ -405,6 +413,7 @@
 		4D5625141F2605A700515C98 /* FelixFastCatch */ = {
 			isa = PBXGroup;
 			children = (
+				4D74682E1FD12D7700E8E662 /* 横屏开始游戏loading.gif */,
 				4D38B2561F6A963E0019730A /* UMessage_Sdk_1.5.0a */,
 				4D96D3971F59824600E614CD /* Customized.YWFeedbackBundle.bundle */,
 				4D7FF4BA1F596FEC00396C00 /* AlipaySDK.framework */,
@@ -574,6 +583,7 @@
 				4DA23CEA1F8F920E00B2337E /* PlayUserInfoView.swift */,
 				4DF058821F90D20500E17B75 /* GameUserInfoDialog.swift */,
 				4DAFB22A1FAAC55000F90A08 /* GameSceneViewController.swift */,
+				4D7468281FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift */,
 			);
 			path = PlayInfo;
 			sourceTree = "<group>";
@@ -678,6 +688,7 @@
 				4DAFB22C1FAACBD700F90A08 /* GameSceneWidget.swift */,
 				4DFAA6C01FAC38F1005AF710 /* GameSceneLiveController.swift */,
 				4DFAA6C21FAC3962005AF710 /* GameSceneAudioController.swift */,
+				4D74682A1FCFE4C500E8E662 /* HorzontalGameSceneWidget.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -687,6 +698,7 @@
 			children = (
 				4DB08B9F1FB08A2000BFB200 /* QueueArriveDialog.swift */,
 				4DB08BA11FB1822200BFB200 /* GameFailedDialog.swift */,
+				4D74682C1FD127A500E8E662 /* StartGameCountdownDialog.swift */,
 			);
 			path = dialog;
 			sourceTree = "<group>";
@@ -838,6 +850,7 @@
 				4D82A4591F3721BF007ADE5C /* Fangzhengyuan-cuti.ttf in Resources */,
 				4D82A4551F36D33B007ADE5C /* Skranji-Bold.ttf in Resources */,
 				4D18ACC01F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				4D74682F1FD12D7700E8E662 /* 横屏开始游戏loading.gif in Resources */,
 				4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -929,8 +942,10 @@
 				4D18ACD41F261378005363A4 /* TencentShared.swift in Sources */,
 				4DCD39DB1F2F31C6002B7F35 /* PayItemTableViewCell.swift in Sources */,
 				4DAD03321F51629B00D7E72F /* CustomerBannerView.swift in Sources */,
+				4D74682B1FCFE4C500E8E662 /* HorzontalGameSceneWidget.swift in Sources */,
 				4D1D861B1F32F78F005210CA /* SelectDateView.swift in Sources */,
 				4D879B671F7CABF6009F2ECC /* MainBeginnerGuidGiftView.swift in Sources */,
+				4D74682D1FD127A500E8E662 /* StartGameCountdownDialog.swift in Sources */,
 				4D1D86151F31BA9C005210CA /* EditAddressDialog.swift in Sources */,
 				4D64B8981F29B549002A9BFD /* MainBanner.swift in Sources */,
 				4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */,
@@ -968,6 +983,7 @@
 				4D64B89C1F29D984002A9BFD /* FastLoginDialog.swift in Sources */,
 				4DCD39EC1F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift in Sources */,
 				4DF058831F90D20500E17B75 /* GameUserInfoDialog.swift in Sources */,
+				4D7468291FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift in Sources */,
 				4DCD39B71F2DA5FC002B7F35 /* CustomerControllerButton.swift in Sources */,
 				4D7144831F8B584700B37D8A /* MailingListViewController.swift in Sources */,
 				4DCC49D21F5307220017D4A4 /* ExchangeCodeDialog.swift in Sources */,

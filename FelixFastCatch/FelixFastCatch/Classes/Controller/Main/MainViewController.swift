@@ -243,7 +243,19 @@ class MainViewController: UIViewController{
                 payGemBtn.actionLabel.text = String(Constants.User.diamondsCount)
             }
         }
+        
+        self.creatTimer()
+        self.bannerViewIsTouch = false
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if self.timer != nil {
+            self.timer.invalidate()
+            self.timer = nil
+        }
+        self.bannerViewIsTouch = true
+    }
+    
 }
 
 // MARK: - Banner Images
@@ -753,31 +765,36 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     /// 显示游戏界面
     @objc func showPlay(sender: UIButton) -> () {
-        if !checkDeviceStatus(status: mainListData[sender.tag]["status"].intValue) {
-            return
-        }
+//        if !checkDeviceStatus(status: mainListData[sender.tag]["status"].intValue) {
+//            return
+//        }
         
-        let gameSceneViewController = GameSceneViewController()
+        let horizontalVC = HorizontalGameSceneViewController()
+        horizontalVC.deviceId = mainListData[sender.tag]["deviceId"].stringValue
         
-        gameSceneViewController.deviceId = mainListData[sender.tag]["deviceId"].stringValue
+        self.navigationController?.pushViewController(horizontalVC, animated: false)
         
-        gameSceneViewController.needLogin = { [weak self] in
-            self?.fastLoginDialog.createView()
-            self?.fastLoginDialog.show()
-        }
-        
-//        gameSceneViewController.mainVC = self
-        
-        gameSceneViewController.startCoinNumber = mainListData[sender.tag]["perDiamondsCount"].intValue
-        
-        gameSceneViewController.bottomAwardCardImagePath = mainListData[sender.tag]["award"]["img"].stringValue
-        gameSceneViewController.bootomAwardDescription = mainListData[sender.tag]["award"]["description"].stringValue
-        gameSceneViewController.bottomAwardTitle = mainListData[sender.tag]["award"]["title"].stringValue
-        
-        gameSceneViewController.bootomBannerCardImagePath = mainListData[sender.tag]["activity"]["bannerSmallImg"].stringValue
-        gameSceneViewController.bottomBannerCardScheme = mainListData[sender.tag]["activity"]["scheme"].stringValue
-        
-        navigationController?.pushViewController(gameSceneViewController, animated: true)
+//        let gameSceneViewController = GameSceneViewController()
+//
+//        gameSceneViewController.deviceId = mainListData[sender.tag]["deviceId"].stringValue
+//
+//        gameSceneViewController.needLogin = { [weak self] in
+//            self?.fastLoginDialog.createView()
+//            self?.fastLoginDialog.show()
+//        }
+//
+////        gameSceneViewController.mainVC = self
+//
+//        gameSceneViewController.startCoinNumber = mainListData[sender.tag]["perDiamondsCount"].intValue
+//
+//        gameSceneViewController.bottomAwardCardImagePath = mainListData[sender.tag]["award"]["img"].stringValue
+//        gameSceneViewController.bootomAwardDescription = mainListData[sender.tag]["award"]["description"].stringValue
+//        gameSceneViewController.bottomAwardTitle = mainListData[sender.tag]["award"]["title"].stringValue
+//
+//        gameSceneViewController.bootomBannerCardImagePath = mainListData[sender.tag]["activity"]["bannerSmallImg"].stringValue
+//        gameSceneViewController.bottomBannerCardScheme = mainListData[sender.tag]["activity"]["scheme"].stringValue
+//
+//        navigationController?.pushViewController(gameSceneViewController, animated: true)
         
 //        let playView = PlayViewController()
 //        playView.deviceId = mainListData[sender.tag]["deviceId"].stringValue

@@ -81,7 +81,7 @@ extension GameSceneViewController{
         let liveBackgroundView = UIImageView()
         liveBackgroundView.image = UIImage(named: "视频框")
         liveBackgroundView.sizeToFit()
-        liveBackgroundView.frame = CGRect(x: 5, y: 0, width: UIScreen.main.bounds.width - 10, height: (UIScreen.main.bounds.width-10)/3 + UIScreen.main.bounds.width - 10)
+        liveBackgroundView.frame = CGRect(x: 5, y: 0, width: UIScreen.main.bounds.width - 10 , height: (UIScreen.main.bounds.width-10)/3 + UIScreen.main.bounds.width - 10 )
         topGroupView.addSubview(liveBackgroundView)
         
         // 直播的view

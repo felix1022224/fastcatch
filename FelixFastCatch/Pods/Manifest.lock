@@ -18,6 +18,7 @@ PODS:
     - StarscreamSocketIO (~> 8.0.7)
   - StarscreamSocketIO (8.0.7)
   - SVProgressHUD (2.2.2)
+  - SwiftGifOrigin (1.6.1)
   - SwiftyJSON (3.1.4)
   - UMengAnalytics-NO-IDFA (4.2.5)
   - WechatOpenSDK (1.8.0)
@@ -32,6 +33,7 @@ DEPENDENCIES:
   - SnapKit (~> 3.2.0)
   - Socket.IO-Client-Swift (~> 12.0.0)
   - SVProgressHUD
+  - SwiftGifOrigin (~> 1.6.1)
   - SwiftyJSON (~> 3.1.4)
   - UMengAnalytics-NO-IDFA
   - WechatOpenSDK
@@ -50,10 +52,11 @@ SPEC CHECKSUMS:
   Socket.IO-Client-Swift: 5b0154b42b3892bfb4c44fa138cbeb8afec4f6ef
   StarscreamSocketIO: 00b54e4208481ca5cef089545353aaf126bae16d
   SVProgressHUD: 59b2d3dabacbd051576d21d32293ca7228dc18b0
+  SwiftGifOrigin: d6679d3ebe9df2e049a84bc52582635107b581f6
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   UMengAnalytics-NO-IDFA: 16666e32edce5be44ae5b14aaaa7f3582e09d6ab
   WechatOpenSDK: 0ee07a8d492299d3e47372a33da5af26524a7576
 
-PODFILE CHECKSUM: d69e2b0d95512d03a34a1dd671d8478cf7a09693
+PODFILE CHECKSUM: bb6d29edbf313775a3e75b94579d86bf0674a1a1
 
 COCOAPODS: 1.2.1
