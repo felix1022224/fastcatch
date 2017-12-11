@@ -410,6 +410,9 @@ extension MainViewController:UIScrollViewDelegate{
             let webVC = WebViewController()
             webVC.mainVC = self
             webVC.link = link
+            webVC.shareTitle = self.mainBannersData[(sender.view?.tag)!]["shareTitle"].stringValue
+            webVC.shareInfo = self.mainBannersData[(sender.view?.tag)!]["shareSubtitle"].stringValue
+            webVC.thumbShareImage = self.mainBannersData[(sender.view?.tag)!]["shareImg"].stringValue
             webVC.actionTitle = self.mainBannersData[(sender.view?.tag)!]["title"].stringValue
             self.navigationController?.pushViewController(webVC, animated: true)
         }else if self.mainBannersData[(sender.view?.tag)!]["redirectType"].intValue == 2 {
@@ -695,6 +698,9 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             let webVC = WebViewController()
             webVC.mainVC = self
             webVC.link = link
+            webVC.shareTitle = item["shareTitle"].stringValue
+            webVC.shareInfo = item["shareSubtitle"].stringValue
+            webVC.thumbShareImage = item["shareImg"].stringValue
             webVC.actionTitle = item["name"].stringValue
 //            present(webVC, animated: true, completion: nil)
             self.navigationController?.pushViewController(webVC, animated: true)
@@ -765,57 +771,46 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     /// 显示游戏界面
     @objc func showPlay(sender: UIButton) -> () {
-//        if !checkDeviceStatus(status: mainListData[sender.tag]["status"].intValue) {
-//            return
-//        }
+        if !checkDeviceStatus(status: mainListData[sender.tag]["status"].intValue) {
+            return
+        }
         
-        let horizontalVC = HorizontalGameSceneViewController()
-        horizontalVC.deviceId = mainListData[sender.tag]["deviceId"].stringValue
+        let gameSceneViewController = GameSceneViewController()
+
+        gameSceneViewController.deviceId = mainListData[sender.tag]["deviceId"].stringValue
+
+        gameSceneViewController.needLogin = { [weak self] in
+            self?.fastLoginDialog.createView()
+            self?.fastLoginDialog.show()
+        }
+
+        switch mainListData[sender.tag]["showType"].intValue {
+        case 3:
+            ///杜蕾斯版本
+            gameSceneViewController.isDurexTheme = true
+        default:
+            gameSceneViewController.isDurexTheme = false
+        }
         
-        self.navigationController?.pushViewController(horizontalVC, animated: false)
+        switch mainListData[sender.tag]["gamePeople"].intValue {
+        case 2:
+            //双人
+            gameSceneViewController.isHorizontalGameStuts = true
+        default:
+            //单人
+            gameSceneViewController.isHorizontalGameStuts = false
+        }
         
-//        let gameSceneViewController = GameSceneViewController()
-//
-//        gameSceneViewController.deviceId = mainListData[sender.tag]["deviceId"].stringValue
-//
-//        gameSceneViewController.needLogin = { [weak self] in
-//            self?.fastLoginDialog.createView()
-//            self?.fastLoginDialog.show()
-//        }
-//
-////        gameSceneViewController.mainVC = self
-//
-//        gameSceneViewController.startCoinNumber = mainListData[sender.tag]["perDiamondsCount"].intValue
-//
-//        gameSceneViewController.bottomAwardCardImagePath = mainListData[sender.tag]["award"]["img"].stringValue
-//        gameSceneViewController.bootomAwardDescription = mainListData[sender.tag]["award"]["description"].stringValue
-//        gameSceneViewController.bottomAwardTitle = mainListData[sender.tag]["award"]["title"].stringValue
-//
-//        gameSceneViewController.bootomBannerCardImagePath = mainListData[sender.tag]["activity"]["bannerSmallImg"].stringValue
-//        gameSceneViewController.bottomBannerCardScheme = mainListData[sender.tag]["activity"]["scheme"].stringValue
-//
-//        navigationController?.pushViewController(gameSceneViewController, animated: true)
-        
-//        let playView = PlayViewController()
-//        playView.deviceId = mainListData[sender.tag]["deviceId"].stringValue
-//        playView.darwCount = mainListData[sender.tag]["darwCount"].intValue
-//
-//        playView.needLogin = { [weak self] in
-//            self?.fastLoginDialog.createView()
-//            self?.fastLoginDialog.show()
-//        }
-//
-//        playView.mainVC = self
-//
-//        playView.bottomAwardCardImagePath = mainListData[sender.tag]["award"]["img"].stringValue
-//        playView.bootomAwardDescription = mainListData[sender.tag]["award"]["description"].stringValue
-//        playView.bottomAwardTitle = mainListData[sender.tag]["award"]["title"].stringValue
-//
-//        playView.bootomBannerCardImagePath = mainListData[sender.tag]["activity"]["bannerSmallImg"].stringValue
-//        playView.bottomBannerCardScheme = mainListData[sender.tag]["activity"]["scheme"].stringValue
-//
-//        navigationController?.pushViewController(playView, animated: true)
-        
+        gameSceneViewController.startCoinNumber = mainListData[sender.tag]["perDiamondsCount"].intValue
+
+        gameSceneViewController.bottomAwardCardImagePath = mainListData[sender.tag]["award"]["img"].stringValue
+        gameSceneViewController.bootomAwardDescription = mainListData[sender.tag]["award"]["description"].stringValue
+        gameSceneViewController.bottomAwardTitle = mainListData[sender.tag]["award"]["title"].stringValue
+
+        gameSceneViewController.bootomBannerCardImagePath = mainListData[sender.tag]["activity"]["bannerSmallImg"].stringValue
+        gameSceneViewController.bottomBannerCardScheme = mainListData[sender.tag]["activity"]["scheme"].stringValue
+
+        navigationController?.pushViewController(gameSceneViewController, animated: true)
     }
     
     func itemClick(index:Int) -> () {
@@ -832,7 +827,22 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             self?.fastLoginDialog.show()
         }
         
-        //        gameSceneViewController.mainVC = self
+        switch mainListData[index]["showType"].intValue {
+        case 3:
+            ///杜蕾斯版本
+            gameSceneViewController.isDurexTheme = true
+        default:
+            gameSceneViewController.isDurexTheme = false
+        }
+
+        switch mainListData[index]["gamePeople"].intValue {
+        case 2:
+            //双人
+            gameSceneViewController.isHorizontalGameStuts = true
+        default:
+            //单人
+            gameSceneViewController.isHorizontalGameStuts = false
+        }
         
         gameSceneViewController.startCoinNumber = mainListData[index]["perDiamondsCount"].intValue
         
@@ -937,64 +947,63 @@ extension MainViewController{
 //        }
         
         Alamofire.request(Constants.Network.MAIN_LIST, method: .post, parameters: params).responseJSON { (response) in
-            print("main_list:\(String(describing: response.result.value))")
-            self.isLoadingMore = false
-            self.isLoadingMainData = false
-            
-            if response.error == nil {
-                let jsonObject = JSON(response.data!)
+            DispatchQueue.main.async {[weak self] in
+                self?.isLoadingMore = false
+                self?.isLoadingMainData = false
                 
-                if jsonObject["data"]["content"].arrayValue.count <= 0 {
-                    return
-                }
-                
-                if self.isRefresh {
-                    self.mainListData.removeAll()
-                    self.advList.removeAll()
-                    self.isRefresh = false
-                }
-                
-                if let resultAdvList = jsonObject["data"]["advertiseVO"].array {
-                    self.advList = self.advList + resultAdvList
-                    self.changeAdvList()
-                }
-                
-                self.mainListData = self.mainListData + jsonObject["data"]["content"].arrayValue
-                
-                self.isNotAllowedListStatus = false
-                
-                UIView.performWithoutAnimation {[weak self] in
-                    self?.dataList.reloadData()
-                }
-                
-                // 如果数据不等于0 页码+1
-                if self.mainListData.count > 0 {
-                    self.page += 1
-                    if self.noValueBtn != nil {
-                        self.noValueBtn.isHidden = true
+                if response.error == nil {
+                    let jsonObject = JSON(response.data!)
+                    
+                    if jsonObject["data"]["content"].arrayValue.count <= 0 {
+                        return
                     }
-                    self.dataList.isHidden = false
-                }else{
-                    // 没有数据
-                    self.setupNoValueView()
+                    
+                    self?.isNotAllowedListStatus = false
+                    
+                    if (self?.isRefresh)! {
+                        self?.mainListData.removeAll()
+                        self?.advList.removeAll()
+                        self?.isRefresh = false
+                    }
+                    
+                    if let resultAdvList = jsonObject["data"]["advertiseVO"].array {
+                        self?.advList = (self?.advList)! + resultAdvList
+                        self?.changeAdvList()
+                    }
+                    
+                    self?.mainListData = (self?.mainListData)! + jsonObject["data"]["content"].arrayValue
+                    self?.dataList.reloadData()
+                    
+                    // 如果数据不等于0 页码+1
+                    if (self?.mainListData)!.count > 0 {
+                        self?.page += 1
+                        if self?.noValueBtn != nil {
+                            self?.noValueBtn.isHidden = true
+                        }
+                        self?.dataList.isHidden = false
+                    }else{
+                        // 没有数据
+                        self?.setupNoValueView()
+                    }
+                }else {
+                    // 数量小于等于0
+                    if (self?.mainListData)!.count <= 0 {
+                        // 没有数据
+                        self?.setupNoValueView()
+                    }
                 }
-            }else {
-                // 数量小于等于0
-                if self.mainListData.count <= 0 {
-                    // 没有数据
-                    self.setupNoValueView()
-                }
+                SVProgressHUD.dismiss()
+                
+//                self?.refreshMainViewControllerList()
+                
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: { [weak self] in
+                    self?.page = 0
+                    self?.isRefresh = true
+                    self?.isLoadingMainData = false
+                    self?.getMainListData()
+                })
             }
-            SVProgressHUD.dismiss()
-            
-            self.refreshMainViewControllerList()
         }
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: { [weak self] in
-//            self?.page = 0
-//            self?.isRefresh = true
-//            self?.isLoadingMainData = false
-//            self?.getMainListData()
-//        })
         
         if mainBannersData.count <= 0 {
             getBannerList()
@@ -1373,14 +1382,16 @@ extension MainViewController{
         Alamofire.request(Constants.Network.REFRESH_LIST_STATUS, method: .post, parameters: params).responseJSON { (dataResponse) in
             if NetWorkUtils.checkReponse(response: dataResponse) && !self.isNotAllowedListStatus {
                 let json = JSON(data: dataResponse.data!)
-                if json["data"]["content"].arrayValue.count > 0 {
-                    self.mainListData.removeAll()
-                    
-                    if !self.isNotAllowedListStatus {
-                        self.mainListData = self.mainListData + json["data"]["content"].arrayValue
+                DispatchQueue.main.async {[weak self] in
+                    if json["data"]["content"].arrayValue.count > 0 {
+                        self?.mainListData.removeAll()
                         
-                        UIView.performWithoutAnimation {[weak self] in
-                            self?.dataList.reloadData()
+                        if !(self?.isNotAllowedListStatus)! {
+                            self?.mainListData = (self?.mainListData)! + json["data"]["content"].arrayValue
+                            
+                            UIView.performWithoutAnimation {[weak self] in
+                                self?.dataList.reloadData()
+                            }
                         }
                     }
                 }

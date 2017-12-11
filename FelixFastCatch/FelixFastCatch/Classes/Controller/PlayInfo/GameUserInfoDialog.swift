@@ -96,7 +96,7 @@ class GameUserInfoDialog: BaseDialog {
         sexLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
         if dataSources["gender"].stringValue == "0" {
             sexLabel.text = "性别: 男"
-        }else if Constants.User.USER_SEX == "-1"{
+        }else if dataSources["gender"].stringValue == "-1"{
             sexLabel.text = "性别: 未知"
         }else{
             sexLabel.text = "性别: 女"

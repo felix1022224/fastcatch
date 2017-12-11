@@ -20,8 +20,15 @@ class GameFailedDialog: BaseDialog {
     /// 倒计时的文字
     var againGameTimeLabel:MainCustomerLabel = MainCustomerLabel()
     
+    var isDurexTheme:Bool = false
+    
     override func createView() {
-        createBackgroundImage(imageName: "游戏失败背景")
+        
+        if isDurexTheme {
+            createBackgroundImage(imageName: "杜蕾斯-游戏失败背景")
+        }else{
+            createBackgroundImage(imageName: "游戏失败背景")
+        }
         
         backgroundImage.center = self.center
         

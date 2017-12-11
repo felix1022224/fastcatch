@@ -20,8 +20,15 @@ class ShowOffRecordDialog: BaseDialog {
     /// 倒计时的文字
     var againGameTimeLabel:MainCustomerLabel = MainCustomerLabel()
     
+    var isDurexTheme:Bool = false
+    
     override func createView() {
-        createBackgroundImage(imageName: "游戏成功背景")
+        
+        if isDurexTheme {
+            createBackgroundImage(imageName: "杜蕾斯-游戏成功背景")
+        }else{
+            createBackgroundImage(imageName: "游戏成功背景")
+        }
         
         backgroundImage.center = self.center
         

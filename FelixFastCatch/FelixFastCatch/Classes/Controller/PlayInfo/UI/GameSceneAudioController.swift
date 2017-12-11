@@ -45,7 +45,6 @@ extension GameSceneViewController{
     }
     
     @objc func pauseSong(notification : NSNotification) {
-        print("hello")
         if bgMusicPlayer != nil {
             bgMusicPlayer.pause()
         }

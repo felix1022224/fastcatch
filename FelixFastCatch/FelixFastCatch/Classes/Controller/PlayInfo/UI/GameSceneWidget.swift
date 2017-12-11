@@ -54,7 +54,13 @@ extension GameSceneViewController{
         backgroundImageView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
         view.addSubview(backgroundImageView)
         
-        let playGameBackgroundImage = UIImageView(image: UIImage(named: "play_game_background_blue"))
+        var playGameBackgroundImage:UIImageView
+        if isDurexTheme {
+            playGameBackgroundImage = UIImageView(image: UIImage(named: "杜蕾斯-竖版游戏页背景"))
+        }else{
+            playGameBackgroundImage = UIImageView(image: UIImage(named: "play_game_background_blue"))
+        }
+        
         playGameBackgroundImage.sizeToFit()
         playGameBackgroundImage.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         view.addSubview(playGameBackgroundImage)

@@ -208,7 +208,7 @@ extension GameSceneController{
         socket.emit("catchpress", params)
         self.playViewController?.hidePlayGroup()
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {[weak self] in
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {[weak self] in
             self?.playViewController?.getWard()
         }
     }
@@ -252,7 +252,7 @@ extension GameSceneController{
                     self.playViewController?.rootView.contentOffset = CGPoint(x: 0, y: -UIApplication.shared.statusBarFrame.height)
                 }
                 
-                self.playViewController?.productBottomGroup.isHidden = true
+//                self.playViewController?.productBottomGroup.isHidden = true
             }else{
                 // 可以开始游戏了,此处显示倒计时的dialog
                 self.playViewController?.showQueueArriveDialog()

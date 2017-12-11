@@ -51,7 +51,6 @@
 		4D4B25D81F5FA64900338CBD /* SharedViewDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B25D71F5FA64900338CBD /* SharedViewDialog.swift */; };
 		4D500B9B1FB429FF0086AC15 /* PointsMallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D500B9A1FB429FF0086AC15 /* PointsMallViewController.swift */; };
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
-		4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D56251C1F2605A700515C98 /* Assets.xcassets */; };
 		4D589C741F386EB500C8DBC7 /* CheckIn7DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */; };
 		4D589C761F39AC3D00C8DBC7 /* FirstLoginRewardDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D589C751F39AC3D00C8DBC7 /* FirstLoginRewardDialog.swift */; };
 		4D5BF1BD1F3851570091180B /* CheckInDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5BF1BC1F3851570091180B /* CheckInDialog.swift */; };
@@ -71,7 +70,9 @@
 		4D7468291FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7468281FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift */; };
 		4D74682B1FCFE4C500E8E662 /* HorzontalGameSceneWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D74682A1FCFE4C500E8E662 /* HorzontalGameSceneWidget.swift */; };
 		4D74682D1FD127A500E8E662 /* StartGameCountdownDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D74682C1FD127A500E8E662 /* StartGameCountdownDialog.swift */; };
-		4D74682F1FD12D7700E8E662 /* 横屏开始游戏loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4D74682E1FD12D7700E8E662 /* 横屏开始游戏loading.gif */; };
+		4D7D3F2A1FD930380019B58C /* HorzontalGameSceneAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7D3F291FD930380019B58C /* HorzontalGameSceneAudioController.swift */; };
+		4D7D3F2C1FDA7F830019B58C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D7D3F2B1FDA7F820019B58C /* Assets.xcassets */; };
+		4D7D3F2E1FDE8CC90019B58C /* 开始游戏loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4D7D3F2D1FDE8CC90019B58C /* 开始游戏loading.gif */; };
 		4D7FF4BC1F596FEC00396C00 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7FF4BA1F596FEC00396C00 /* AlipaySDK.framework */; };
 		4D7FF4BD1F596FEC00396C00 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4D7FF4BB1F596FEC00396C00 /* AlipaySDK.bundle */; };
 		4D82A4521F36C7AD007ADE5C /* UserTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D82A4511F36C7AD007ADE5C /* UserTools.swift */; };
@@ -190,7 +191,6 @@
 		4D500B9A1FB429FF0086AC15 /* PointsMallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsMallViewController.swift; sourceTree = "<group>"; };
 		4D5625121F2605A700515C98 /* FelixFastCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FelixFastCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5625151F2605A700515C98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4D56251C1F2605A700515C98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D5625211F2605A700515C98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIn7DayView.swift; sourceTree = "<group>"; };
 		4D589C751F39AC3D00C8DBC7 /* FirstLoginRewardDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstLoginRewardDialog.swift; sourceTree = "<group>"; };
@@ -211,7 +211,9 @@
 		4D7468281FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalGameSceneViewController.swift; sourceTree = "<group>"; };
 		4D74682A1FCFE4C500E8E662 /* HorzontalGameSceneWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorzontalGameSceneWidget.swift; sourceTree = "<group>"; };
 		4D74682C1FD127A500E8E662 /* StartGameCountdownDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartGameCountdownDialog.swift; sourceTree = "<group>"; };
-		4D74682E1FD12D7700E8E662 /* 横屏开始游戏loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "横屏开始游戏loading.gif"; sourceTree = "<group>"; };
+		4D7D3F291FD930380019B58C /* HorzontalGameSceneAudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorzontalGameSceneAudioController.swift; sourceTree = "<group>"; };
+		4D7D3F2B1FDA7F820019B58C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4D7D3F2D1FDE8CC90019B58C /* 开始游戏loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "开始游戏loading.gif"; path = "../../../../Downloads/开始游戏loading.gif"; sourceTree = "<group>"; };
 		4D7FF4BA1F596FEC00396C00 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		4D7FF4BB1F596FEC00396C00 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		4D82A4511F36C7AD007ADE5C /* UserTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTools.swift; sourceTree = "<group>"; };
@@ -413,7 +415,8 @@
 		4D5625141F2605A700515C98 /* FelixFastCatch */ = {
 			isa = PBXGroup;
 			children = (
-				4D74682E1FD12D7700E8E662 /* 横屏开始游戏loading.gif */,
+				4D7D3F2D1FDE8CC90019B58C /* 开始游戏loading.gif */,
+				4D7D3F2B1FDA7F820019B58C /* Assets.xcassets */,
 				4D38B2561F6A963E0019730A /* UMessage_Sdk_1.5.0a */,
 				4D96D3971F59824600E614CD /* Customized.YWFeedbackBundle.bundle */,
 				4D7FF4BA1F596FEC00396C00 /* AlipaySDK.framework */,
@@ -430,7 +433,6 @@
 				4D18ACBE1F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle */,
 				4D5625151F2605A700515C98 /* AppDelegate.swift */,
 				4D9EBB831F271BD2002674DE /* Classes */,
-				4D56251C1F2605A700515C98 /* Assets.xcassets */,
 				4D5625211F2605A700515C98 /* Info.plist */,
 				4D18ACD21F2608F3005363A4 /* Login-header.h */,
 				4D18ACD31F261378005363A4 /* TencentShared.swift */,
@@ -689,6 +691,7 @@
 				4DFAA6C01FAC38F1005AF710 /* GameSceneLiveController.swift */,
 				4DFAA6C21FAC3962005AF710 /* GameSceneAudioController.swift */,
 				4D74682A1FCFE4C500E8E662 /* HorzontalGameSceneWidget.swift */,
+				4D7D3F291FD930380019B58C /* HorzontalGameSceneAudioController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -842,6 +845,7 @@
 			files = (
 				4D96D3981F59824600E614CD /* Customized.YWFeedbackBundle.bundle in Resources */,
 				4D7FF4BD1F596FEC00396C00 /* AlipaySDK.bundle in Resources */,
+				4D7D3F2E1FDE8CC90019B58C /* 开始游戏loading.gif in Resources */,
 				4D17ECF81F3B0355004DD01F /* 镜头切换_音效.wav in Resources */,
 				4D17ECF91F3B0355004DD01F /* 游戏开始_音效.wav in Resources */,
 				4D17ECFA1F3B0355004DD01F /* background_music.mp3 in Resources */,
@@ -850,8 +854,7 @@
 				4D82A4591F3721BF007ADE5C /* Fangzhengyuan-cuti.ttf in Resources */,
 				4D82A4551F36D33B007ADE5C /* Skranji-Bold.ttf in Resources */,
 				4D18ACC01F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
-				4D74682F1FD12D7700E8E662 /* 横屏开始游戏loading.gif in Resources */,
-				4D56251D1F2605A700515C98 /* Assets.xcassets in Resources */,
+				4D7D3F2C1FDA7F830019B58C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -975,6 +978,7 @@
 				4D2B80141F40097E0075D390 /* OutGameDialog.swift in Sources */,
 				4DCC49CE1F52E8B10017D4A4 /* EditInviteCode.swift in Sources */,
 				4D4ACE771F51CE410011E7F7 /* GemLackDialog.swift in Sources */,
+				4D7D3F2A1FD930380019B58C /* HorzontalGameSceneAudioController.swift in Sources */,
 				4DA23CE41F8F878D00B2337E /* UserCenterViewController.swift in Sources */,
 				4DCC49D01F52F7D30017D4A4 /* InviteSuccessDialog.swift in Sources */,
 				4DB08BA01FB08A2000BFB200 /* QueueArriveDialog.swift in Sources */,

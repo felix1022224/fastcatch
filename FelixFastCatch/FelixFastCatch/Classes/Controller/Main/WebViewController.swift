@@ -56,6 +56,12 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     
     var jsContext:JSContext!
     
+    var shareTitle:String!
+    
+    var shareInfo:String!
+    
+    var thumbShareImage:String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -118,6 +124,8 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         
         webview.loadRequest(URLRequest(url: URL(string: link)!))
         
+//        webview.loadRequest(URLRequest(url: URL(string: "https://meizhe.meidaojia.com/makeup/activity/activity_banner/view_128_2?id=110")!))
+        
         /// title
         actionTitleLabel.font = UIFont.systemFont(ofSize: 16)
         actionTitleLabel.text = actionTitle
@@ -144,6 +152,9 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         let sharedView = SharedViewDialog(frame: UIScreen.main.bounds)
         sharedView.createView()
         sharedView.scheme = link
+        sharedView.shareTitle = shareTitle
+        sharedView.shareInfo = shareInfo
+        sharedView.thumbShareImage = thumbShareImage
         sharedView.show()
       
     }

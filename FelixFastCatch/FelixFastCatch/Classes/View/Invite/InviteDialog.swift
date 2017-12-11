@@ -183,6 +183,7 @@ class InviteDialog: BaseDialog {
     
     func showSharedView() -> () {
         sharedView = SharedViewDialog(frame: UIScreen.main.bounds)
+        sharedView.shareTitle = ""
         sharedView.scheme = "https://meizhe.meidaojia.com/makeup/activity/activity_banner/view_8292?code=" + Constants.User.USER_TAG
         sharedView.createView()
         sharedView.show()
