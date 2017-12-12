@@ -184,6 +184,7 @@ class GameSceneViewController: UIViewController {
     
     var bootomBannerCardImagePath:String!
     var bottomBannerCardScheme:String!
+    var bottomBannerCardTitle:String!
     
     /// banner详情
     var bottomBannerDialog:PlayInfoBannerDialog!
@@ -232,6 +233,19 @@ class GameSceneViewController: UIViewController {
     
     /// 是否是杜蕾斯模式
     var isDurexTheme = true
+    
+    /// 底部的活动集合
+    var bottomActivityGroup:UIView = UIView()
+    
+    /// 活动图片
+    var advertiseImg:String = ""
+    
+    var redirectType:Int = 0
+    
+    /// 分享的数据
+    var shareTitle:String!
+    var shareInfo:String!
+    var thumbShareImage:String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -686,6 +700,8 @@ extension GameSceneViewController{
                         Constants.User.diamondsCount = json["data"]["diamondsCount"].intValue
                         
                         self.productBottomGroup.isHidden = true
+                        
+                        self.bottomActivityGroup.isHidden = true
                     }
                 }else if json["data"]["errcode"].intValue == 2 {
                     ///钻石不足
@@ -959,14 +975,14 @@ extension GameSceneViewController{
                 }else {
                     print("抓取失败")
                     self.getWardCodeNumber = self.getWardCodeNumber + 1
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: { [weak self] in
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5, execute: { [weak self] in
                         self?.getWard()
                     })
                 }
             }else{
                 print("抓取失败")
                 self.getWardCodeNumber = self.getWardCodeNumber + 1
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: { [weak self] in
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5, execute: { [weak self] in
                     self?.getWard()
                 })
             }
@@ -1178,9 +1194,11 @@ extension GameSceneViewController{
             self.gameSceneController.quitQueue()
         }
         
-        self.rootView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: self.topGroupView.bounds.height + self.startBtnBackgroundView.bounds.height + self.productBackgroundView.bounds.height)
+        self.rootView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: self.topGroupView.bounds.height + self.startBtnBackgroundView.bounds.height + self.productBackgroundView.bounds.height + self.bottomActivityGroup.bounds.height)
         
         self.productBottomGroup.isHidden = false
+        
+        self.bottomActivityGroup.isHidden = false
     }
 }
 

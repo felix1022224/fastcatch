@@ -208,7 +208,7 @@ extension GameSceneController{
         socket.emit("catchpress", params)
         self.playViewController?.hidePlayGroup()
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {[weak self] in
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {[weak self] in
             self?.playViewController?.getWard()
         }
     }
@@ -240,7 +240,6 @@ extension GameSceneController{
         self.playViewController?.coinNumber.isHidden = true
         
         if json["tryLock"].bool! == true {
-            print("可以开始游戏了")
             if isEnterQueue == false {
                 self.playViewController?.startPlay()
                 self.playViewController?.quitBtn.isHidden = true
@@ -288,6 +287,8 @@ extension GameSceneController{
         
         ///显示扣币的文字
         self.playViewController?.coinNumber.isHidden = false
+        
+        ToastUtils.showInfoToast(msg: "成功退出队列，5秒钟后才可再次预约哦")
     }
     
 }

@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
         
         /// loading 的样式
-        SVProgressHUD.setDefaultStyle(.dark)
+        SVProgressHUD.setDefaultStyle(.light)
         
         /// 友盟推送
         UMessage.start(withAppkey: "59ba3e84c62dca5d7c00004e", launchOptions: launchOptions, httpsEnable: true)

@@ -76,8 +76,8 @@ extension FCMyGiftCell{
         addSubview(productImage)
         
         productImage.snp.makeConstraints { (make) in
-            make.width.equalTo(productBackgroundImage.bounds.width * 0.85)
-            make.height.equalTo(productBackgroundImage.bounds.height * 0.85)
+            make.width.equalTo(productBackgroundImage.bounds.width * 0.9)
+            make.height.equalTo(productBackgroundImage.bounds.height * 0.9)
             make.center.equalTo(productBackgroundImage)
         }
         

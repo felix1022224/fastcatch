@@ -12,6 +12,7 @@ import JavaScriptCore
 @objc protocol webJsDelegate:JSExport {
     func payList()
     func enterRoom(index:Int)
+    func closeWB()
 }
 
 @objc class webJsModel: NSObject, webJsDelegate {
@@ -36,6 +37,10 @@ import JavaScriptCore
         DispatchQueue.main.async {[weak self] in
             self?.mainVC.itemClick(index: index)
         }
+    }
+    
+    func closeWB() {
+        webVC.dismiss(animated: true, completion: nil)
     }
     
 }
@@ -143,7 +148,6 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     }
     
     @objc func shared() -> () {
-        
         if WeChatShared.isInstall() == false {
             ToastUtils.showErrorToast(msg: "暂时无法分享")
             return
@@ -155,6 +159,7 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         sharedView.shareTitle = shareTitle
         sharedView.shareInfo = shareInfo
         sharedView.thumbShareImage = thumbShareImage
+        print("123:\(thumbShareImage)")
         sharedView.show()
       
     }

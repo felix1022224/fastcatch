@@ -404,7 +404,7 @@ extension MailingListViewController{
             make.top.equalTo(tabsBackground).offset(tabsBackground.bounds.height + 10)
             make.centerX.equalTo(view)
             make.bottom.equalTo(view)
-            make.width.equalTo(UIScreen.main.bounds.width * 0.98)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.9)
         }
         
         hasbeenMailedTabView.isHidden = true

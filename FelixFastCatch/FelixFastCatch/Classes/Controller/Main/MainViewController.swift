@@ -702,7 +702,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             webVC.shareInfo = item["shareSubtitle"].stringValue
             webVC.thumbShareImage = item["shareImg"].stringValue
             webVC.actionTitle = item["name"].stringValue
-//            present(webVC, animated: true, completion: nil)
             self.navigationController?.pushViewController(webVC, animated: true)
         }else if item["redirectType"].intValue == 2 {
             let link = item["scheme"].intValue
@@ -775,6 +774,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             return
         }
         
+        print("item:\(mainListData[sender.tag])")
+        
         let gameSceneViewController = GameSceneViewController()
 
         gameSceneViewController.deviceId = mainListData[sender.tag]["deviceId"].stringValue
@@ -800,6 +801,14 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             //单人
             gameSceneViewController.isHorizontalGameStuts = false
         }
+        
+        gameSceneViewController.advertiseImg = mainListData[sender.tag]["activity"]["advertiseImg"].stringValue
+        
+        gameSceneViewController.redirectType = mainListData[sender.tag]["activity"]["redirectType"].intValue
+        
+        gameSceneViewController.shareTitle = mainListData[sender.tag]["activity"]["shareTitle"].stringValue
+        gameSceneViewController.shareInfo = mainListData[sender.tag]["activity"]["shareSubtitle"].stringValue
+        gameSceneViewController.thumbShareImage = mainListData[sender.tag]["activity"]["shareImg"].stringValue
         
         gameSceneViewController.startCoinNumber = mainListData[sender.tag]["perDiamondsCount"].intValue
 
@@ -843,6 +852,14 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             //单人
             gameSceneViewController.isHorizontalGameStuts = false
         }
+        
+        gameSceneViewController.advertiseImg = mainListData[index]["activity"]["advertiseImg"].stringValue
+        
+        gameSceneViewController.redirectType = mainListData[index]["activity"]["redirectType"].intValue
+        
+        gameSceneViewController.shareTitle = mainListData[index]["activity"]["shareTitle"].stringValue
+        gameSceneViewController.shareInfo = mainListData[index]["activity"]["shareSubtitle"].stringValue
+        gameSceneViewController.thumbShareImage = mainListData[index]["activity"]["shareImg"].stringValue
         
         gameSceneViewController.startCoinNumber = mainListData[index]["perDiamondsCount"].intValue
         
@@ -947,70 +964,67 @@ extension MainViewController{
 //        }
         
         Alamofire.request(Constants.Network.MAIN_LIST, method: .post, parameters: params).responseJSON { (response) in
-            DispatchQueue.main.async {[weak self] in
-                self?.isLoadingMore = false
-                self?.isLoadingMainData = false
+            self.isLoadingMore = false
+            self.isLoadingMainData = false
+            
+            if response.error == nil {
+                let jsonObject = JSON(response.data!)
                 
-                if response.error == nil {
-                    let jsonObject = JSON(response.data!)
-                    
-                    if jsonObject["data"]["content"].arrayValue.count <= 0 {
-                        return
-                    }
-                    
-                    self?.isNotAllowedListStatus = false
-                    
-                    if (self?.isRefresh)! {
-                        self?.mainListData.removeAll()
-                        self?.advList.removeAll()
-                        self?.isRefresh = false
-                    }
-                    
-                    if let resultAdvList = jsonObject["data"]["advertiseVO"].array {
-                        self?.advList = (self?.advList)! + resultAdvList
-                        self?.changeAdvList()
-                    }
-                    
-                    self?.mainListData = (self?.mainListData)! + jsonObject["data"]["content"].arrayValue
-                    self?.dataList.reloadData()
-                    
-                    // 如果数据不等于0 页码+1
-                    if (self?.mainListData)!.count > 0 {
-                        self?.page += 1
-                        if self?.noValueBtn != nil {
-                            self?.noValueBtn.isHidden = true
-                        }
-                        self?.dataList.isHidden = false
-                    }else{
-                        // 没有数据
-                        self?.setupNoValueView()
-                    }
-                }else {
-                    // 数量小于等于0
-                    if (self?.mainListData)!.count <= 0 {
-                        // 没有数据
-                        self?.setupNoValueView()
-                    }
+                if jsonObject["data"]["content"].arrayValue.count <= 0 {
+                    return
                 }
-                SVProgressHUD.dismiss()
                 
-//                self?.refreshMainViewControllerList()
+                self.isNotAllowedListStatus = false
                 
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: { [weak self] in
+                if self.isRefresh {
+                    self.mainListData.removeAll()
+                    self.advList.removeAll()
+                    self.isRefresh = false
+                }
+                
+                if let resultAdvList = jsonObject["data"]["advertiseVO"].array {
+                    self.advList = self.advList + resultAdvList
+                    self.changeAdvList()
+                }
+                
+                self.mainListData = self.mainListData + jsonObject["data"]["content"].arrayValue
+                self.dataList.reloadData()
+                
+                // 如果数据不等于0 页码+1
+                if self.mainListData.count > 0 {
+                    self.page += 1
+                    if self.noValueBtn != nil {
+                        self.noValueBtn.isHidden = true
+                    }
+                    self.dataList.isHidden = false
+                }else{
+                    // 没有数据
+                    self.setupNoValueView()
+                }
+            }else {
+                // 数量小于等于0
+                if self.mainListData.count <= 0 {
+                    // 没有数据
+                    self.setupNoValueView()
+                }
+                print("post:\(response.error.debugDescription)")
+            }
+            SVProgressHUD.dismiss()
+            
+            /// 大于0的情况才进行刷新
+            if self.mainListData.count > 0 {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5, execute: { [weak self] in
                     self?.page = 0
                     self?.isRefresh = true
                     self?.isLoadingMainData = false
                     self?.getMainListData()
+                    self?.getsUserInfo()
                 })
             }
         }
         
         if mainBannersData.count <= 0 {
             getBannerList()
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) { [weak self] in
-            self?.getsUserInfo()
         }
         
     }

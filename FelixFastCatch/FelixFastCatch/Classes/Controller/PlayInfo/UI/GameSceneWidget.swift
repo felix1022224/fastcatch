@@ -41,7 +41,7 @@ extension GameSceneViewController{
         
         createQueueNumber()
         
-        rootView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: topGroupView.bounds.height + startBtnBackgroundView.bounds.height + productBackgroundView.bounds.height)
+        rootView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: topGroupView.bounds.height + startBtnBackgroundView.bounds.height + productBackgroundView.bounds.height + bottomActivityGroup.bounds.height)
         
     }
     
@@ -69,6 +69,9 @@ extension GameSceneViewController{
     
     //装载底部的view
     func setupBottomView() -> () {
+        if advertiseImg != "" {
+            createBottomActivityGroup()
+        }
         createBottomGroup()
     }
     
@@ -507,10 +510,85 @@ extension GameSceneViewController{
 /// 底部介绍
 extension GameSceneViewController{
     
+    /// 创建关联的活动
+    func createBottomActivityGroup() -> () {
+        /// 活动标题
+        let activityTitleImage = UIImageView(image: UIImage(named: "活动标题"))
+        activityTitleImage.frame.origin = CGPoint(x: 14, y: 0)
+        activityTitleImage.sizeToFit()
+        bottomActivityGroup.addSubview(activityTitleImage)
+        
+        /// 活动背景图
+        let activityBackgroundImage = UIImageView(image: UIImage(named: "游戏页广告框"))
+        activityBackgroundImage.sizeToFit()
+        activityBackgroundImage.frame.origin = CGPoint(x: UIScreen.main.bounds.width/2 - activityBackgroundImage.bounds.width/2, y:activityTitleImage.bounds.height + 5)
+        bottomActivityGroup.addSubview(activityBackgroundImage)
+        
+        /// 活动图
+        let activityImage = UIImageView()
+        activityImage.frame = CGRect(x: 0, y: 0, width: activityBackgroundImage.bounds.width * 0.96, height: activityBackgroundImage.bounds.height * 0.88)
+        activityImage.center = activityBackgroundImage.center
+        bottomActivityGroup.addSubview(activityImage)
+        
+        activityImage.backgroundColor = UIColor.red
+        activityImage.layer.masksToBounds = true
+        activityImage.layer.cornerRadius = 8
+        
+        activityImage.kf.setImage(with: URL(string: advertiseImg))
+        
+        activityImage.isUserInteractionEnabled = true
+        
+        let activityTap = UITapGestureRecognizer(target: self, action: #selector(clickActivityInfo))
+        activityImage.addGestureRecognizer(activityTap)
+        
+        rootView.addSubview(bottomActivityGroup)
+        
+        bottomActivityGroup.frame = CGRect(x: 0, y: topGroupView.bounds.height + startBtnBackgroundView.bounds.height + 5, width: UIScreen.main.bounds.width, height: activityTitleImage.bounds.height + activityBackgroundImage.bounds.height)
+        
+    }
+    
+    /// 点击活动图
+    @objc func clickActivityInfo() -> () {
+        print("123:\(redirectType)")
+        if  redirectType == 1 {
+            /// 跳转到网页
+            let link = bottomBannerCardScheme
+            // 跳转到网页
+            if link == "" {
+                return
+            }
+            let webVC = WebViewController()
+            webVC.link = link
+            webVC.shareTitle = shareTitle
+            webVC.shareInfo = shareInfo
+            webVC.thumbShareImage = thumbShareImage
+            webVC.actionTitle = bottomBannerCardTitle
+            self.navigationController?.pushViewController(webVC, animated: true)
+        }else if redirectType == 3 {
+            /// 打开站外链接
+            //根据iOS系统版本，分别处理
+            if let url = URL(string: bottomBannerCardScheme!) {
+                //根据iOS系统版本，分别处理
+                if #available(iOS 10, *) {
+                    UIApplication.shared.open(url, options: [:],completionHandler: {(success) in })
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        }else if redirectType == 2{
+            // 其他
+            let link = Int(bottomBannerCardScheme)
+            if link == -1 {
+                showPayDialog()
+                return
+            }
+        }
+    }
+    
     /// 底部展示奖品的view
     func createBottomGroup() -> () {
         
-        productBottomGroup.frame = CGRect(x: 5, y: topGroupView.bounds.height + startBtnBackgroundView.bounds.height, width: UIScreen.main.bounds.width - 10, height: UIScreen.main.bounds.width - 10)
+        productBottomGroup.frame = CGRect(x: 5, y: topGroupView.bounds.height + startBtnBackgroundView.bounds.height + bottomActivityGroup.bounds.height + 10, width: UIScreen.main.bounds.width - 10, height: UIScreen.main.bounds.width - 10)
         
         productBackgroundView.image = UIImage(named: "底部产品框")
         productBackgroundView.sizeToFit()

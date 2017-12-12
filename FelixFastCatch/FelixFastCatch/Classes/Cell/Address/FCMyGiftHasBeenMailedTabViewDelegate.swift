@@ -32,8 +32,6 @@ extension FCMyGiftHasBeenMailedTabViewDelegate:UITableViewDelegate, UITableViewD
         let dfmatter = DateFormatter()
         dfmatter.dateFormat="yyyy.MM.dd hh:ss"
         
-        print("itemData:\(itemData)")
-        
         cell?.hasBeenMailedView.timeLabel.text = "申请时间: " + dfmatter.string(from: Date(timeIntervalSince1970: TimeInterval(itemData["createTime"].int64Value/1000)))
         
         cell?.hasBeenMailedView.mailedTimeLabel.text = "邮寄时间: " + dfmatter.string(from: Date(timeIntervalSince1970: TimeInterval(itemData["updateTime"].int64Value/1000)))
@@ -52,7 +50,7 @@ extension FCMyGiftHasBeenMailedTabViewDelegate:UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let hasBeenMailedView = HasBeenMailedView()
         hasBeenMailedView.setupUIWidget(item: dataSource[indexPath.row])
-        return hasBeenMailedView.getHeight()
+        return hasBeenMailedView.getHeight() + 10
     }
     
 }
