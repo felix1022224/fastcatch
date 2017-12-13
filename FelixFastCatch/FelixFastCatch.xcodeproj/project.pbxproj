@@ -128,6 +128,7 @@
 		4DCD39EC1F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD39E61F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift */; };
 		4DD3A5001F7A07D8000B5F25 /* GameSceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD3A4FF1F7A07D8000B5F25 /* GameSceneController.swift */; };
 		4DD3A5041F7C9CFA000B5F25 /* MainBeginnerGuidPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD3A5031F7C9CFA000B5F25 /* MainBeginnerGuidPayView.swift */; };
+		4DD613F11FE11E9E002FCCCE /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD613F01FE11E9E002FCCCE /* NotificationViewController.swift */; };
 		4DDD2B7C1F283F3D00102A0F /* ToastUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B7B1F283F3D00102A0F /* ToastUtils.swift */; };
 		4DDD2B7F1F2848FC00102A0F /* MainCustomerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B7E1F2848FC00102A0F /* MainCustomerLabel.swift */; };
 		4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B811F2849DC00102A0F /* NetWorkUtils.swift */; };
@@ -269,6 +270,7 @@
 		4DCD39E61F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMyGiftToBeMailedTabViewDelegate.swift; sourceTree = "<group>"; };
 		4DD3A4FF1F7A07D8000B5F25 /* GameSceneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneController.swift; sourceTree = "<group>"; };
 		4DD3A5031F7C9CFA000B5F25 /* MainBeginnerGuidPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBeginnerGuidPayView.swift; sourceTree = "<group>"; };
+		4DD613F01FE11E9E002FCCCE /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		4DD6C1571F6A81D900007EE6 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		4DDD2B7B1F283F3D00102A0F /* ToastUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastUtils.swift; sourceTree = "<group>"; };
 		4DDD2B7E1F2848FC00102A0F /* MainCustomerLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCustomerLabel.swift; sourceTree = "<group>"; };
@@ -509,6 +511,7 @@
 		4D9EBB841F271C3A002674DE /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4DD613EF1FE11E87002FCCCE /* Notification */,
 				4DA23CE51F8F87B600B2337E /* UserCenter */,
 				4D1F59DA1F8CC8D900806C00 /* History */,
 				4D7144811F8B582400B37D8A /* Mailing */,
@@ -733,6 +736,14 @@
 			path = Gift;
 			sourceTree = "<group>";
 		};
+		4DD613EF1FE11E87002FCCCE /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				4DD613F01FE11E9E002FCCCE /* NotificationViewController.swift */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
 		4DDD2B7D1F2848E600102A0F /* widget */ = {
 			isa = PBXGroup;
 			children = (
@@ -917,6 +928,7 @@
 				4DA23CE01F8F536B00B2337E /* CustomeFlowLayout.swift in Sources */,
 				4D28005B1F948196004E9D8B /* SplashView.swift in Sources */,
 				4DD3A5041F7C9CFA000B5F25 /* MainBeginnerGuidPayView.swift in Sources */,
+				4DD613F11FE11E9E002FCCCE /* NotificationViewController.swift in Sources */,
 				4DFAA6C11FAC38F1005AF710 /* GameSceneLiveController.swift in Sources */,
 				4DCC49CC1F52E0110017D4A4 /* PlayInfoAwardDialog.swift in Sources */,
 				4D96D3BF1F5BE14200E614CD /* ProtocolInfoDialog.swift in Sources */,

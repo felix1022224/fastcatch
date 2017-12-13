@@ -50,7 +50,7 @@ class MainCollectionViewCell: UICollectionViewCell{
         
         // 圆角
         rootView.layer.cornerRadius = 10
-        rootView.layer.masksToBounds = true
+//        rootView.layer.masksToBounds = true
         
         // 阴影
         layer.shadowColor = UIColor.lightGray.cgColor
@@ -69,7 +69,6 @@ class MainCollectionViewCell: UICollectionViewCell{
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
 
@@ -80,7 +79,6 @@ extension MainCollectionViewCell{
     fileprivate func setupImage() -> () {
         productImage = UIImageView()
         productImage.frame = CGRect(x: 0, y: 0, width: rootView.bounds.width, height: rootView.bounds.height * 0.75)
-//        productImage.backgroundColor = UIColor.lightGray
         productImage.frame = productImage.frame.insetBy(dx: CGFloat(4), dy: CGFloat(4))
         productImage.layer.cornerRadius = 5
         productImage.layer.masksToBounds = true
@@ -136,7 +134,6 @@ extension MainCollectionViewCell{
             make.top.equalTo(bottomGroup).offset(5)
             make.left.equalTo(bottomGroup).offset(2)
             make.right.equalTo(bottomGroup).offset(-2)
-//            make.bottom.equalTo(playBtn).offset(-(playBtn.bounds.height + 2))
         }
     }
     
@@ -198,8 +195,6 @@ extension MainCollectionViewCell{
         errorStatusView = UIView()
         errorStatusView.frame.size = CGSize(width: self.rootView.bounds.width, height: 20)
         errorStatusView.backgroundColor = UIColor(red: 253/255.0, green: 174/255.0, blue: 29/255.0, alpha: 0.8)
-        
-//        errorStatusView.frame = errorStatusView.frame.insetBy(dx: CGFloat(4), dy: CGFloat(4))
         
         let errorStatusLabel = MainCustomerLabel()
         errorStatusLabel.text = "正在补货中"

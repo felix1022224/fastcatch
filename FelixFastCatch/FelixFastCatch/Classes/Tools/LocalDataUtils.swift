@@ -70,8 +70,6 @@ class LocalDataUtils: NSObject {
             }
         }
         
-//        print("cookieArray:\(String(describing: UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY)))")
-        
         // 用户昵称
         let userNickName = UserDefaults.standard.string(forKey: Constants.User.USER_NICK_NAME_KEY)
         if userNickName == nil {
@@ -146,6 +144,12 @@ class LocalDataUtils: NSObject {
         Constants.User.USER_SEX = ""
         Constants.User.USER_BRITHDAY = ""
         Constants.User.USER_TAG = ""
+        
+        ///清除存储的所有的cookie
+        let cookieArray = HTTPCookieStorage.shared.cookies
+        for httpCookie in cookieArray! {
+            HTTPCookieStorage.shared.deleteCookie(httpCookie)
+        }
     }
     
 }

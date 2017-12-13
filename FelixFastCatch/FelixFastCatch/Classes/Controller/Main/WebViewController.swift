@@ -13,6 +13,8 @@ import JavaScriptCore
     func payList()
     func enterRoom(index:Int)
     func closeWB()
+    func needLogin()
+    func openUrl(url:String)
 }
 
 @objc class webJsModel: NSObject, webJsDelegate {
@@ -20,6 +22,32 @@ import JavaScriptCore
     var mainVC:MainViewController!
 
     var webVC:WebViewController!
+    
+    ///需要登录
+    func needLogin() {
+        closeWB()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {[weak self] in
+            if self?.mainVC != nil {
+                self?.mainVC.showFastLogin()
+            }
+        }
+    }
+    
+    ///打开外部链接
+    func openUrl(url: String) {
+        if url == "" {
+            return
+        }
+        //跳转到外部链接
+        if let url = URL(string: url) {
+            //根据iOS系统版本，分别处理
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url, options: [:],completionHandler: {(success) in })
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
     
     func payList() {
         let payListDialog = PayListDialog(frame: UIScreen.main.bounds)
@@ -40,7 +68,10 @@ import JavaScriptCore
     }
     
     func closeWB() {
-        webVC.dismiss(animated: true, completion: nil)
+        DispatchQueue.main.async {[weak self] in
+            self?.webVC.navigationController?.popViewController(animated: true)
+            self?.webVC.dismiss(animated: true, completion: nil)
+        }
     }
     
 }
@@ -120,16 +151,28 @@ class WebViewController: UIViewController, UIWebViewDelegate {
             print("exception \(String(describing: exception))")
         }
         
-//        let curUrl = webview.request?.URL?.absoluteString    //WebView当前访问页面的链接 可动态注册
-//        self.jsContext.evaluateScript(try? String(contentsOfURL: NSURL(string: curUrl!)!, encoding: NSUTF8StringEncoding))
-//
-//        self.jsContext.exceptionHandler = { (context, exception) in
-//            print("exception：", exception)
-//        }
+        if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
+            for cookieData in cookieArray {
+                if let dict = cookieData as? [HTTPCookiePropertyKey : Any] {
+                    if let cookie = HTTPCookie.init(properties : dict) {
+                        if cookie.name == "SESSION" {
+                            var cookieProperties =  [HTTPCookiePropertyKey : Any]()
+                            cookieProperties[HTTPCookiePropertyKey.name] = cookie.name
+                            cookieProperties[HTTPCookiePropertyKey.value] = cookie.value
+                            cookieProperties[HTTPCookiePropertyKey.domain] = "meizhe.meidaojia.com"
+                            cookieProperties[HTTPCookiePropertyKey.originURL] = "meizhe.meidaojia.com"
+                            cookieProperties[HTTPCookiePropertyKey.path] = "/"
+                            cookieProperties[HTTPCookiePropertyKey.version] = "0"
+                            
+                            let cookie = HTTPCookie(properties: cookieProperties)
+                            HTTPCookieStorage.shared.setCookie(cookie!)
+                        }
+                    }
+                }
+            }
+        }
         
         webview.loadRequest(URLRequest(url: URL(string: link)!))
-        
-//        webview.loadRequest(URLRequest(url: URL(string: "https://meizhe.meidaojia.com/makeup/activity/activity_banner/view_128_2?id=110")!))
         
         /// title
         actionTitleLabel.font = UIFont.systemFont(ofSize: 16)
@@ -159,14 +202,6 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         sharedView.shareTitle = shareTitle
         sharedView.shareInfo = shareInfo
         sharedView.thumbShareImage = thumbShareImage
-        print("123:\(thumbShareImage)")
         sharedView.show()
-      
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
 }

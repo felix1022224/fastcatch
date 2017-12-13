@@ -61,6 +61,9 @@ class UserCenterViewController: UIViewController {
     
     /******** UI ********/
     
+    /// 用户消息
+    var userNotificationIcon = UIButton(type: UIButtonType.custom)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         editUserInfoDialog = EditUserInfoDialog(frame: UIScreen.main.bounds)

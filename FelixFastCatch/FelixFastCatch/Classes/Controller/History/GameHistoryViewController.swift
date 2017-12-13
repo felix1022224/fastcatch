@@ -31,7 +31,6 @@ class GameHistoryViewController: UIViewController {
         createBtnsAndBackground()
         
         customerServiceDialog = CustomerServiceInfoDialog(frame: UIScreen.main.bounds)
-        
     }
 
     /// 创建顶部的图标和背景图
@@ -53,7 +52,6 @@ class GameHistoryViewController: UIViewController {
         
         backBtn.setImage(UIImage(named: "邮寄返回"), for: .normal)
         backBtn.sizeToFit()
-//        backBtn.frame = CGRect(x: 14, y: UIApplication.shared.statusBarFrame.height + 10, width: backBtn.bounds.width, height: backBtn.bounds.height)
         view.addSubview(backBtn)
         
         backBtn.snp.makeConstraints { (make) in
@@ -77,7 +75,6 @@ class GameHistoryViewController: UIViewController {
         }
         
         createGameHistoryList(titilImage: gameHisoryTitleImage)
-        
     }
     
     @objc func showCSDialog(){
@@ -97,13 +94,11 @@ extension GameHistoryViewController: UITableViewDelegate, UITableViewDataSource{
     
     /// 创建游戏记录列表
     func createGameHistoryList(titilImage:UIImageView) -> () {
-//        let itemImage = UIImage(named: "游戏记录背景框")
-        
         gameHistoryList.backgroundColor = UIColor.clear
         gameHistoryList.separatorColor = UIColor.clear
-//        gameHistoryList.showsVerticalScrollIndicator = false
         gameHistoryList.delegate = self
         gameHistoryList.dataSource = self
+        gameHistoryList.rowHeight = (UIScreen.main.bounds.width * 0.98)*0.3
         gameHistoryList.register(GameHistoryCell.self, forCellReuseIdentifier: "cellId")
         view.addSubview(gameHistoryList)
         
@@ -125,20 +120,12 @@ extension GameHistoryViewController: UITableViewDelegate, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as? GameHistoryCell
         
         let item = gameHistoryDataSource[indexPath.row]
-        
         cell?.productTitleLabel.text = item["title"].stringValue
         cell?.productTimeLabel.text = item["createTime"].stringValue
-        
         cell?.changeGameStatus(gameStatus: item["gStatus"].intValue)
-        
         cell?.productImage.kf.setImage(with: URL(string: item["img"].stringValue))
         
         return cell!
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        let itemImage = UIImage(named: "游戏记录背景框")
-        return (UIScreen.main.bounds.width * 0.98)*0.3
     }
 }
 
@@ -153,8 +140,8 @@ extension GameHistoryViewController{
         
         ToastUtils.showLoadingToast(msg: "请稍后……")
         
-        Alamofire.request(Constants.Network.User.GET_GAME_HISTORY, method: HTTPMethod.post, parameters: params).responseJSON { (dataResponse) in
-//            print("GameHistoryList:\(dataResponse.result.value!)")
+        Alamofire.request(Constants.Network.User.GET_GAME_HISTORY, method: HTTPMethod.post, parameters: params)
+            .responseJSON { (dataResponse) in
             ToastUtils.hide()
             if NetWorkUtils.checkReponse(response: dataResponse) {
                 let resultJson = JSON(data: dataResponse.data!)

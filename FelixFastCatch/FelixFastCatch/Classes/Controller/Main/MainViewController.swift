@@ -174,16 +174,47 @@ class MainViewController: UIViewController{
             return
         }
         SplashView.showSplashView(duration: 5, defaultImage: UIImage(named: "Launchplaceholder"), tapSplashImageBlock: { (resultStr) in
-            if let url = URL(string: resultStr!) {
-                //根据iOS系统版本，分别处理
-                if #available(iOS 10, *) {
-                    UIApplication.shared.open(url, options: [:],completionHandler: {(success) in })
-                } else {
-                    UIApplication.shared.openURL(url)
+            if resultStr != "" {
+                switch UserDefaults.standard.integer(forKey: SplashView.OPEN_ADV_URL_TYPE) {
+                case 1:
+                    let link = resultStr
+                    // 跳转到网页
+                    if link == "" {
+                        return
+                    }
+                    let webVC = WebViewController()
+                    webVC.mainVC = self
+                    webVC.link = link
+                    webVC.shareTitle = UserDefaults.standard.string(forKey: SplashView.OPEN_ADV_SHARE_TITLE)
+                    webVC.shareInfo = UserDefaults.standard.string(forKey: SplashView.OPEN_ADV_SHARE_INFO)
+                    webVC.thumbShareImage = UserDefaults.standard.string(forKey: SplashView.OPEN_ADV_SHARE_THUMBIMAGE)
+                    webVC.actionTitle = UserDefaults.standard.string(forKey: SplashView.OPEN_ADV_URL_TITLE)
+                    self.navigationController?.pushViewController(webVC, animated: true)
+                    break
+                case 2:
+                    let link = Int(resultStr!)
+                    if link == -1 {
+                        self.showPayDialog()
+                    }else{
+                        self.itemClick(index: link!)
+                    }
+                    break
+                case 3:
+                    //跳转到外部链接
+                    if let url = URL(string: resultStr!) {
+                        //根据iOS系统版本，分别处理
+                        if #available(iOS 10, *) {
+                            UIApplication.shared.open(url, options: [:],completionHandler: {(success) in })
+                        } else {
+                            UIApplication.shared.openURL(url)
+                        }
+                    }
+                    break
+                default: break
+                    //什么都不干
                 }
             }
         }) { (isDiss) in
-            print("diss\(isDiss)")
             self.isShowADV = true
             
             if Constants.User.USER_ID == "" {
@@ -204,9 +235,6 @@ class MainViewController: UIViewController{
         
         /// 用户信息
         userInfoDialog = UserInfoDialog(frame: UIScreen.main.bounds)
-        
-        /// 我的礼物
-//        myGift = MyGiftDialog(frame: UIScreen.main.bounds)
         
         /// 签到
         checkInDialog = CheckInDialog(frame: UIScreen.main.bounds)
@@ -273,8 +301,6 @@ extension MainViewController:UIScrollViewDelegate{
         
         bannerView.layer.masksToBounds = true
         bannerView.layer.cornerRadius = 10
-        
-//        view.addSubview(bannerView)
 
         // 设置代理
         bannerView.delegate = self
@@ -319,9 +345,6 @@ extension MainViewController:UIScrollViewDelegate{
     
     //创建轮播图定时器
     func creatTimer() {
-        
-        print("createTime")
-        
         if timer != nil {
             timer.invalidate()
             timer = nil
@@ -401,6 +424,7 @@ extension MainViewController:UIScrollViewDelegate{
     }
     
     @objc func bannerTap(sender:UITapGestureRecognizer) -> () {
+        print("webtype:\(self.mainBannersData[(sender.view?.tag)!]["redirectType"].intValue)")
         if self.mainBannersData[(sender.view?.tag)!]["redirectType"].intValue == 1 {
             let link = self.mainBannersData[(sender.view?.tag)!]["scheme"].stringValue
             // 跳转到网页
@@ -423,6 +447,16 @@ extension MainViewController:UIScrollViewDelegate{
             }else{
                 itemClick(index: link)
             }
+        }else if self.mainBannersData[(sender.view?.tag)!]["redirectType"].intValue == 3 {
+            if let url = URL(string: self.mainBannersData[(sender.view?.tag)!]["scheme"].stringValue) {
+                
+                //根据iOS系统版本，分别处理
+                if #available(iOS 10, *) {
+                    UIApplication.shared.open(url, options: [:],completionHandler: {(success) in })
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
         }
     }
     
@@ -438,7 +472,6 @@ extension MainViewController{
         
         Alamofire.request(Constants.Network.MAIN_BANNER_LIST, method: .post, parameters: params).responseJSON { (response) in
             if response.error == nil {
-//                print("bannerList:\(response.result.value!)")
                 self.mainBannersData.removeAll()
                 
                 let jsonObject = JSON(response.data!)
@@ -468,16 +501,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         // 設置每一行的間距
         layout.minimumLineSpacing = dataListPadding + 1
         
-//        let main = UIScreen.main.bounds
-//        // 設置 header 及 footer 的尺寸
+        // 設置 header 及 footer 的尺寸
         layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width - 10, height: getBannerHeight() - 15)
-//        layout.footerReferenceSize = CGSize(width: CGFloat(4) * main.width, height: 90)
-        
-        // item的宽度
-//        let itemWidth = (CGFloat(UIScreen.main.bounds.width) - dataListPadding*2)/2 - 5
-        
-        // 設置每個 cell 的尺寸
-//        layout.itemSize = CGSize(width: itemWidth, height: itemWidth * 1.3)
         
         dataList = UICollectionView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height - topView.bounds.height), collectionViewLayout: layout)
         dataList.backgroundColor = UIColor.clear
@@ -490,7 +515,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         dataList.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: "CellId")
         dataList.register(MainADVCell.self, forCellWithReuseIdentifier: "AdvCell")
         dataList.register(MainFooterCell.self, forCellWithReuseIdentifier: "FooterCell")
-//        dataList.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "CellId")
         dataList.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "header")
         
         //下拉刷新相关设置
@@ -612,7 +636,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
                 itemData = mainListData[indexPath.row]
                 cell?.titleLabel.text = itemData["award"]["title"].string!
             }else{
-//                print("index:\(advList[(indexPath.section - 1)/2]["sequence"].intValue)")
                 itemData = mainListData[indexPath.row + advList[indexPath.section/2-1]["sequence"].intValue]
                 cell?.titleLabel.text = itemData["award"]["title"].string!
             }
@@ -649,43 +672,12 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
                 let advCell = collectionView.dequeueReusableCell(withReuseIdentifier: "AdvCell", for: indexPath) as? MainADVCell
                 
                 advCell?.advImage.kf.setImage(with: URL(string: advList[(indexPath.section-1)/2]["advertiseBigImg"].stringValue))
-                
-//                advCell?.advImage.tag = (indexPath.section-1)/2
-//
-//                advCell?.advImage.isUserInteractionEnabled = true
-//                let advTouch = UITapGestureRecognizer(target: self, action: #selector(advItemClick(itemImage:)))
-//                advCell?.advImage.addGestureRecognizer(advTouch)
-                
                 return advCell!
             }
         }
 
         return cell!
     }
-    
-//    /// 点击广告
-//    @objc func advItemClick(itemImage:UIImageView) -> () {
-//        print("advList:\(advList[itemImage.tag])")
-//        if advList[itemImage.tag]["redirectType"].intValue == 1 {
-//            let link = advList[itemImage.tag]["scheme"].stringValue
-//            // 跳转到网页
-//            if link == "" {
-//                return
-//            }
-//            let webVC = WebViewController()
-//            webVC.link = link
-//            webVC.actionTitle = advList[itemImage.tag]["name"].stringValue
-//            present(webVC, animated: true, completion: nil)
-//        }else if advList[itemImage.tag]["redirectType"].intValue == 2 {
-//            let link = advList[itemImage.tag]["scheme"].intValue
-//            if link == -1 {
-//                showPayDialog()
-//                return
-//            }else{
-//                itemClick(index: link)
-//            }
-//        }
-//    }
     
     /// 点击广告
     func advItemClick(item:JSON) -> () {
@@ -711,6 +703,16 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             }else{
                 itemClick(index: link)
             }
+        }else if item["redirectType"].intValue == 3 {
+            //跳转到外部链接
+            if let url = URL(string: item["scheme"].stringValue) {
+                //根据iOS系统版本，分别处理
+                if #available(iOS 10, *) {
+                    UIApplication.shared.open(url, options: [:],completionHandler: {(success) in })
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
         }
     }
     
@@ -731,27 +733,10 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         
         return header
-        
-//        var footer = UICollectionReusableView()
-//
-//        if kind == UICollectionElementKindSectionFooter {
-//            footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "footer", for: indexPath)
-//            footer.backgroundColor = UIColor.red
-//            if indexPath.section == advList.count * 2 + 1 {
-//                footer.isHidden = false
-//            }else{
-//                footer.isHidden = true
-//            }
-//        }else
-//
-//        return footer
     }
     
     func loadMore() -> () {
-//        if isLoadingMore == false {
-//            isLoadingMore = true
-//            getMainListData()
-//        }
+
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -773,8 +758,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         if !checkDeviceStatus(status: mainListData[sender.tag]["status"].intValue) {
             return
         }
-        
-        print("item:\(mainListData[sender.tag])")
         
         let gameSceneViewController = GameSceneViewController()
 
@@ -871,25 +854,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         gameSceneViewController.bottomBannerCardScheme = mainListData[index]["activity"]["scheme"].stringValue
         
         navigationController?.pushViewController(gameSceneViewController, animated: true)
-        
-//        let playView = PlayViewController()
-//        playView.deviceId = mainListData[index]["deviceId"].stringValue
-//        playView.darwCount = mainListData[index]["darwCount"].intValue
-//        playView.needLogin = { [weak self] in
-//            self?.fastLoginDialog.createView()
-//            self?.fastLoginDialog.show()
-//        }
-//
-//        playView.mainVC = self
-//
-//        playView.bottomAwardCardImagePath = mainListData[index]["award"]["img"].stringValue
-//        playView.bootomAwardDescription = mainListData[index]["award"]["description"].stringValue
-//        playView.bottomAwardTitle = mainListData[index]["award"]["title"].stringValue
-//
-//        playView.bootomBannerCardImagePath = mainListData[index]["activity"]["bannerSmallImg"].stringValue
-//        playView.bottomBannerCardScheme = mainListData[index]["activity"]["scheme"].stringValue
-//
-//        navigationController?.pushViewController(playView, animated: true)
     }
     
     func getPlayVC(index:Int) -> PlayViewController? {
@@ -949,19 +913,6 @@ extension MainViewController{
         params["size"] = "1000"
         params["page"] = String(page)
         params["startswith"] = "1000"
-//        if mainListData.count <= 0 {
-//            params["excludeids"] = "0"
-//        }else{
-//            var excludeids = ""
-//            for i in 0...mainListData.count - 1 {
-//                if i == mainListData.count - 1 {
-//                    excludeids = excludeids + mainListData[i]["id"].stringValue
-//                }else{
-//                    excludeids = excludeids + mainListData[i]["id"].stringValue + ","
-//                }
-//            }
-//            params["excludeids"] = excludeids
-//        }
         
         Alamofire.request(Constants.Network.MAIN_LIST, method: .post, parameters: params).responseJSON { (response) in
             self.isLoadingMore = false
@@ -1130,8 +1081,6 @@ extension MainViewController{
             showFastLogin()
             return
         }
-//        myGift.createView()
-//        myGift.show()
         let mailingListVC = MailingListViewController()
         self.navigationController?.pushViewController(mailingListVC, animated: true)
     }
@@ -1162,10 +1111,6 @@ extension MainViewController{
             showFastLogin()
             return
         }
-//        if WeChatShared.isInstall() == false {
-//            ToastUtils.showErrorToast(msg: "充值支付出错，您还没有安装微信")
-//            return
-//        }
         payGemDialog.createView()
         payGemDialog.show2(mainViewController: self)
     }
@@ -1256,17 +1201,9 @@ extension MainViewController{
         }
         let userCenterVC = UserCenterViewController()
         self.navigationController?.pushViewController(userCenterVC, animated: true)
-//        userInfoDialog.createView()
-//        userInfoDialog.show2(mainViewController: self)
     }
     
     @objc func showHelpDialog() -> () {
-//        if Constants.User.USER_ID == "" {
-//            showFastLogin()
-//            return
-//        }
-//        self.navigationController?.pushViewController(PointsMallViewController(), animated: true)
-
         helpDialog.createView()
         helpDialog.show()
     }
@@ -1362,8 +1299,9 @@ extension MainViewController {
         Alamofire.request(Constants.Network.Machine.GET_OPEN_ADV).responseJSON { (dataResponse) in
             if NetWorkUtils.checkReponse(response: dataResponse) {
                 let json = JSON(data: dataResponse.data!)
+                print("result:\(json)")
                 if json["data"].arrayValue.count > 0 {
-                    SplashView.updateSplashData(imgUrl: json["data"].arrayValue[0]["advertiseBigImg"].stringValue, actUrl: json["data"].arrayValue[0]["scheme"].stringValue)
+                    SplashView.updateSplashData(imgUrl: json["data"].arrayValue[0]["advertiseBigImg"].stringValue, actUrl: json["data"].arrayValue[0]["scheme"].stringValue, shareTitle: json["data"].arrayValue[0]["shareTitle"].stringValue, shareInfo: json["data"].arrayValue[0]["shareSubtitle"].stringValue, shareImage: json["data"].arrayValue[0]["shareImg"].stringValue, urlType: json["data"].arrayValue[0]["redirectType"].intValue, title:json["data"].arrayValue[0]["name"].stringValue )
                 }else{
                     UserDefaults.standard.removeObject(forKey: SplashView.IMG_URL)
                     UserDefaults.standard.removeObject(forKey: SplashView.ACT_URL)

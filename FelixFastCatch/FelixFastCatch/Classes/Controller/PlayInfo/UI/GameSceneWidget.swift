@@ -95,7 +95,6 @@ extension GameSceneViewController{
         
         // 直播的view
         liveView.backgroundColor = UIColor.black
-//        liveView.frame = CGRect(x: 8.5, y: 12, width: UIScreen.main.bounds.width - 17, height: UIScreen.main.bounds.width/3 + UIScreen.main.bounds.width - 1)
         liveView.layer.masksToBounds = true
         liveView.layer.cornerRadius = 8
         topGroupView.addSubview(liveView)
@@ -403,9 +402,6 @@ extension GameSceneViewController{
         playQueueNumberStatus = UIView()
         view.addSubview(playQueueNumberStatus)
         
-//        let backgroundImage = UIImageView(image: UIImage(named: "取消排队"))
-//        backgroundImage.sizeToFit()
-        
         quitBtn.setBackgroundImage(UIImage(named: "取消排队"), for: .normal)
         quitBtn.setBackgroundImage(UIImage(named: "取消排队点击"), for: .highlighted)
         quitBtn.sizeToFit()
@@ -520,8 +516,8 @@ extension GameSceneViewController{
         
         /// 活动背景图
         let activityBackgroundImage = UIImageView(image: UIImage(named: "游戏页广告框"))
-        activityBackgroundImage.sizeToFit()
-        activityBackgroundImage.frame.origin = CGPoint(x: UIScreen.main.bounds.width/2 - activityBackgroundImage.bounds.width/2, y:activityTitleImage.bounds.height + 5)
+        let backgroundWidth = UIScreen.main.bounds.width - 8 * 2
+        activityBackgroundImage.frame = CGRect(x: UIScreen.main.bounds.width/2 - backgroundWidth/2, y: activityTitleImage.bounds.height + 5, width: backgroundWidth, height: backgroundWidth * 0.4)
         bottomActivityGroup.addSubview(activityBackgroundImage)
         
         /// 活动图
@@ -549,7 +545,6 @@ extension GameSceneViewController{
     
     /// 点击活动图
     @objc func clickActivityInfo() -> () {
-        print("123:\(redirectType)")
         if  redirectType == 1 {
             /// 跳转到网页
             let link = bottomBannerCardScheme
@@ -597,7 +592,7 @@ extension GameSceneViewController{
         productBottomGroup.addSubview(productBackgroundView)
         
         let productImage = UIImageView(image: UIImage(named: "底部产品框"))
-        productImage.frame.size = CGSize(width: UIScreen.main.bounds.width / 1.5, height: UIScreen.main.bounds.width / 1.5)
+        productImage.frame.size = CGSize(width: UIScreen.main.bounds.width * 0.6, height: UIScreen.main.bounds.width * 0.6)
         productImage.frame = CGRect(x: productBackgroundView.bounds.width/2 - productImage.bounds.width/2, y: 20, width: productImage.bounds.width, height: productImage.bounds.height)
         
         productImage.kf.setImage(with: URL(string: bottomAwardCardImagePath), placeholder: UIImage(named: "main_no_value"), options: nil, progressBlock: nil, completionHandler: nil)
@@ -610,24 +605,19 @@ extension GameSceneViewController{
         productInfoLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         productInfoLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
         productInfoLabel.text = bottomAwardTitle + "\n" + bootomAwardDescription
-        productInfoLabel.numberOfLines = 2
+        productInfoLabel.numberOfLines = 0
         productInfoLabel.textAlignment = .center
         productInfoLabel.sizeToFit()
         productBottomGroup.addSubview(productInfoLabel)
         
         productInfoLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(productBottomGroup)
-            make.width.equalTo(productBottomGroup.bounds.width - 15)
+            make.width.equalTo(productBottomGroup.bounds.width - 35)
             make.top.equalTo(productImage).offset(10 + productImage.bounds.height)
         }
         
         rootView.addSubview(productBottomGroup)
-        
-//        productBackgroundView.snp.makeConstraints { (make) in
-//            make.top.equalTo(startBtnBackgroundView).offset(startBtnBackgroundView.bounds.height + 10)
-//        }
-        
-        
+    
         bottomGroupView.frame = CGRect(x: 0, y: UIScreen.main.bounds.width + startBtnBackgroundView.bounds.height, width: self.view.bounds.width, height: UIScreen.main.bounds.height - UIScreen.main.bounds.width + UIApplication.shared.statusBarFrame.height - startBtnBackgroundView.bounds.height)
         
         let cardWidth = (bottomGroupView.bounds.width - 20*2 - 20)/2.1

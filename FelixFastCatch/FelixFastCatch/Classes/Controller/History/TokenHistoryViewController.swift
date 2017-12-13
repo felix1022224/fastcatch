@@ -31,8 +31,6 @@ class TokenHistoryViewController: UIViewController {
         createBtnsAndBackground()
         
         customerServiceDialog = CustomerServiceInfoDialog(frame: UIScreen.main.bounds)
-        
-        // Do any additional setup after loading the view.
     }
 
     /// 创建顶部的图标和背景图
@@ -41,14 +39,7 @@ class TokenHistoryViewController: UIViewController {
         gameHistoryBackground.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         view.addSubview(gameHistoryBackground)
         
-        /// 标题
-//        let tokenHisoryTitleImage = UIView()
-//        tokenHisoryTitleImage.backgroundColor = UIColor(patternImage:  UIImage(named: "代币记录顶部")!)
-//        tokenHisoryTitleImage.frame.size = CGSize(width: 220, height: 50)
-//        view.addSubview(tokenHisoryTitleImage)
-        
         let tokenHisoryTitleImage = UIImageView(image: UIImage(named: "代币记录顶部"))
-//        tokenHisoryTitleImage.frame.size = CGSize(width: 200, height: 40)
         tokenHisoryTitleImage.sizeToFit()
         view.addSubview(tokenHisoryTitleImage)
         
@@ -61,7 +52,6 @@ class TokenHistoryViewController: UIViewController {
         
         backBtn.setImage(UIImage(named: "邮寄返回"), for: .normal)
         backBtn.sizeToFit()
-//        backBtn.frame = CGRect(x: 14, y: UIApplication.shared.statusBarFrame.height + 10, width: backBtn.bounds.width, height: backBtn.bounds.height)
         view.addSubview(backBtn)
         
         backBtn.snp.makeConstraints { (make) in
@@ -85,7 +75,6 @@ class TokenHistoryViewController: UIViewController {
         }
         
         createGameHistoryList(titleImage: tokenHisoryTitleImage)
-        
     }
     
     @objc func showCSDialog(){
@@ -105,13 +94,11 @@ extension TokenHistoryViewController: UITableViewDelegate, UITableViewDataSource
     
     /// 创建游戏记录列表
     func createGameHistoryList(titleImage:UIView) -> () {
-//        let itemImage = UIImage(named: "游戏记录背景框")
-        
         tokenHistoryList.backgroundColor = UIColor.clear
         tokenHistoryList.separatorColor = UIColor.clear
-//        tokenHistoryList.showsVerticalScrollIndicator = false
         tokenHistoryList.delegate = self
         tokenHistoryList.dataSource = self
+        tokenHistoryList.rowHeight = (UIScreen.main.bounds.width * 0.98) * 0.3
         tokenHistoryList.register(TokenHistoryCell.self, forCellReuseIdentifier: "cellId")
         view.addSubview(tokenHistoryList)
         
@@ -131,7 +118,6 @@ extension TokenHistoryViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as? TokenHistoryCell
-        
         let item = self.tokenHistoryDataSource[indexPath.row]
         
         cell?.tokenChangeLabel.text = item["mp"].stringValue + " " + item["diamonds"].stringValue + "币"
@@ -175,13 +161,7 @@ extension TokenHistoryViewController: UITableViewDelegate, UITableViewDataSource
         default:
             break
         }
-        
         return cell!
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        let itemImage = UIImage(named: "代币记录背景框")
-        return (UIScreen.main.bounds.width * 0.98) * 0.3
     }
 }
 

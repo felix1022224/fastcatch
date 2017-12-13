@@ -15,6 +15,13 @@ class SplashView: UIView {
     static let ACT_URL = "splash_act_url"
     static let IMG_PATH = String(format: "%@/Documents/splash_image.jpg", NSHomeDirectory())
     
+    static let OPEN_ADV_SHARE_TITLE = "splash_share_title"
+    static let OPEN_ADV_SHARE_INFO = "splash_share_info"
+    static let OPEN_ADV_SHARE_THUMBIMAGE = "splash_thumbShareImage"
+    
+    static let OPEN_ADV_URL_TYPE = "open_adv_url_type"
+    static let OPEN_ADV_URL_TITLE = "open_adv_url_title"
+    
     // in portrait mode
     let screenWidth = UIScreen.main.bounds.size.width
     let screenHeight = UIScreen.main.bounds.size.height
@@ -169,7 +176,7 @@ class SplashView: UIView {
         return nil != latestImgUrl && isFileExists
     }
     
-    class func updateSplashData(imgUrl: String?, actUrl: String?) {
+    class func updateSplashData(imgUrl: String?, actUrl: String?, shareTitle:String?, shareInfo:String?, shareImage:String?, urlType:Int, title:String?) {
         if nil == imgUrl {
             // no data
             return
@@ -177,6 +184,13 @@ class SplashView: UIView {
         
         UserDefaults.standard.setValue(imgUrl, forKey: IMG_URL)
         UserDefaults.standard.setValue(actUrl, forKey: ACT_URL)
+        
+        UserDefaults.standard.setValue(shareTitle, forKey: OPEN_ADV_SHARE_TITLE)
+        UserDefaults.standard.setValue(shareInfo, forKey: OPEN_ADV_SHARE_INFO)
+        UserDefaults.standard.setValue(shareImage, forKey: OPEN_ADV_SHARE_THUMBIMAGE)
+        UserDefaults.standard.setValue(urlType, forKey: OPEN_ADV_URL_TYPE)
+        UserDefaults.standard.setValue(title, forKey: OPEN_ADV_URL_TITLE)
+        
         UserDefaults.standard.synchronize()
         
         DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {

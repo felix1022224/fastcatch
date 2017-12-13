@@ -120,12 +120,10 @@ extension UserCenterViewController {
         userIdLabel.numberOfLines = 2
         userIdLabel.text = "ID:" + Constants.User.USER_ID
         userIdLabel.sizeToFit()
-//        userIdLabel.frame.size = CGSize(width: userFaceImage.bounds.width, height: userIdLabel.bounds.height*2)
         topGroupView.addSubview(userIdLabel)
         
         userIdLabel.snp.makeConstraints { (make) in
             make.top.equalTo(userFaceImageBackground).offset(userFaceImageBackground.bounds.height + 5)
-//            make.centerX.equalTo(userFaceImageBackground)
             make.left.equalTo(userFaceImageBackground).offset(-5)
         }
         
@@ -220,6 +218,7 @@ extension UserCenterViewController {
             make.height.equalTo(45)
         }
         
+        /// 返回按钮
         backBtn.setImage(UIImage(named: "邮寄返回"), for: .normal)
         backBtn.sizeToFit()
         view.addSubview(backBtn)
@@ -231,9 +230,25 @@ extension UserCenterViewController {
         
         backBtn.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         
+        /// 用户消息中心
+        userNotificationIcon.setBackgroundImage(UIImage(named: ""), for: .normal)
+        userNotificationIcon.sizeToFit()
+        view.addSubview(userNotificationIcon)
+        
+        userNotificationIcon.snp.makeConstraints { (make) in
+            make.centerY.equalTo(ucTitleImage)
+            make.right.equalTo(view).offset(-14)
+        }
+        
+        userNotificationIcon.isHidden = true
+        
         setupUserCenterWidget(titleImage: ucTitleImage)
     }
     
+    /// 显示通知页面
+    func showNotifictionVC() {
+        
+    }
     
     
 }

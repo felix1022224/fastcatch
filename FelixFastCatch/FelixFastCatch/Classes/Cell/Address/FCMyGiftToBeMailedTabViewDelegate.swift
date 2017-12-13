@@ -53,10 +53,4 @@ extension FCMyGiftToBeMailedTabViewDelegate : UITableViewDelegate, UITableViewDa
             selectList[sender.tag] = true
         }
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        _ = UIImage(named: "邮寄item背景")
-        return (UIScreen.main.bounds.width * 0.98) * 0.3
-    }
-    
 }

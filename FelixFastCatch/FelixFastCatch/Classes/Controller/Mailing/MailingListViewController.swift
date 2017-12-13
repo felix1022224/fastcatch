@@ -305,11 +305,13 @@ extension MailingListViewController{
     /// 创建待邮寄列表
     func createTobeMailedList() -> () {
         // 待邮寄
-        
         view.addSubview(tobeMailedTabView)
         tobeMailedTabView.backgroundColor = UIColor.clear
         tobeMailedTabView.delegate = tobeMailedDelegate
         tobeMailedTabView.dataSource = tobeMailedDelegate
+        ///固定待邮寄cell的高度
+        tobeMailedTabView.estimatedRowHeight = UIScreen.main.bounds.width * 0.98 * 0.3
+        tobeMailedTabView.rowHeight = UIScreen.main.bounds.width * 0.98 * 0.3
         tobeMailedTabView.separatorColor = UIColor.clear
         tobeMailedTabView.showsVerticalScrollIndicator = false
         tobeMailedTabView.register(FCMyGiftCell.self, forCellReuseIdentifier: "cellId")
@@ -389,12 +391,13 @@ extension MailingListViewController{
     /// 创建已邮寄列表
     func createHasBeenMailedList() -> () {
         // 已邮寄
-        _ = UIImage(named: "已邮寄item背景")
         
         view.addSubview(hasbeenMailedTabView)
         hasbeenMailedTabView.backgroundColor = UIColor.clear
         hasbeenMailedTabView.separatorColor = UIColor.clear
         hasbeenMailedTabView.showsVerticalScrollIndicator = false
+        
+        hasbeenMailedTabView.estimatedRowHeight = UIImage(named: "已邮寄item背景")?.size.height ?? 0
         
         hasbeenMailedTabView.delegate = hasBeenMailedDelegate
         hasbeenMailedTabView.dataSource = hasBeenMailedDelegate
