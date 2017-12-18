@@ -8,12 +8,12 @@
 
 import UIKit
 
+/// 消息列表页面
 class NotificationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
+        setupUI()
     }
 
 }

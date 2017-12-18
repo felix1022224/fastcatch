@@ -268,22 +268,10 @@ class GameSceneViewController: UIViewController {
         /// 初始化
         gameSceneController = GameSceneController(playViewController: self, deviceId: deviceId)
         gameSceneController.connectSocket()
-        
-//        countdownDialog.createView()
-//        countdownDialog.show()
-        
-//        showQueueArriveDialog()
-//        showGameFailedDialog()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         
-//        if UserDefaults.standard.bool(forKey: Constants.IS_FIRST_OPEN_PLAY) == false {
-//            playSwitchGuid = MainBeginnerGuidPlaySwitchView(frame: UIScreen.main.bounds)
-//            playSwitchGuid.createView2(playViewController: self)
-//            playSwitchGuid.show2()
-//            UserDefaults.standard.set(true, forKey: Constants.IS_FIRST_OPEN_PLAY)
-//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -292,20 +280,12 @@ class GameSceneViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         UIApplication.shared.isIdleTimerDisabled = false
-//        agoraKit.leaveChannel { (starts) in
-//            //离开直播间
-//        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         if bgMusicPlayer != nil {
             bgMusicPlayer.stop()
         }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     deinit {
@@ -538,9 +518,6 @@ extension GameSceneViewController{
             make.centerY.equalTo(playGroupView)
         }
         
-        controllerRight.addTarget(self, action: #selector(controllerPathDown(sender:)), for: .touchUpInside)
-        controllerRight.addTarget(self, action: #selector(controllerPathUp(sender:)), for: .touchUpOutside)
-        
         /// 下
         controllerDown = CustomerControllerButton(frame: CGRect.zero, controllerDown: {[weak self] (button) in
             self?.controllerPathDown(sender: button)
@@ -574,9 +551,6 @@ extension GameSceneViewController{
             make.centerX.equalTo(controllerUp)
             make.top.equalTo(controllerLeft).offset(controllerSize)
         }
-        
-        controllerDown.addTarget(self, action: #selector(controllerPathDown(sender:)), for: .touchUpInside)
-        controllerDown.addTarget(self, action: #selector(controllerPathUp(sender:)), for: .touchUpOutside)
         
         /// 下爪
         if isDurexTheme {
@@ -692,7 +666,6 @@ extension GameSceneViewController{
                     }else{
                         /// 切换到另一个房间
                         self.switchGameMode()
-                        
                         //成功
                         self.showPlayGroup()
                         
@@ -706,6 +679,7 @@ extension GameSceneViewController{
                 }else if json["data"]["errcode"].intValue == 2 {
                     ///钻石不足
                     ToastUtils.showErrorToast(msg: "代币不足")
+
                     self.playGroupView.isHidden = true
                     
                     self.startPlayBtn.isEnabled = true
@@ -714,22 +688,25 @@ extension GameSceneViewController{
                     if self.gameSceneController != nil {
                         self.gameSceneController.quitQueue()
                     }
+                    
+                    self.hidePlayGroupView()
                 }else{
                     ToastUtils.showErrorToast(msg: "开始游戏错误")
                     self.playGroupView.isHidden = true
                     
                     self.startPlayBtn.isEnabled = true
-                    self.switchNotGameMode()
                     
                     if self.gameSceneController != nil {
                         self.gameSceneController.quitQueue()
                     }
+                    
+                    self.hidePlayGroupView()
                 }
                 
             }else {
-                //发生错误。切回到观众模式
-                self.switchNotGameMode()
                 print("error:\(String(describing: response.error))")
+                
+                self.hidePlayGroupView()
             }
             self.isStartClick = false
         }
@@ -952,7 +929,6 @@ extension GameSceneViewController{
             self.playGrapFail()
             hidePlayGroup()
             /// 展示再来一局的界面
-//            showRePlayInfo()
             showGameFailedDialog()
             return
         }
@@ -970,7 +946,6 @@ extension GameSceneViewController{
                     self.playGrapSuccess()
                     self.hidePlayGroup()
                     /// 展示再来一局的界面
-//                    self.showRePlayInfo()
                     self.showShardRecordDialog(deviceId: self.deviceId)
                 }else {
                     print("抓取失败")
@@ -1099,32 +1074,6 @@ extension GameSceneViewController{
         
         showOffRecordDialog.cancelCallback = {[weak self] in
             self?.hidePlayGroupView()
-//            if (self?.isHorizontalGameStuts)! {
-//                self?.initLive()
-//                self?.horizontalGameScene.dismiss(animated: false, completion: nil)
-//
-//                self?.horizontalGameScene = nil
-//            }
-//
-//            self?.playGroupView.isHidden = true
-//
-//            self?.startPlayBtn.isEnabled = true
-//
-//            self?.isGameing = false
-//
-//            /// 把直播的镜头切回去
-//            self?.switchNotGameMode()
-//
-//            if self?.gameSceneController != nil {
-//                self?.gameSceneController.quitQueue()
-//            }
-//
-//            /// 显示扣币文字
-//            self?.coinNumber.isHidden = false
-//
-//            self?.rootView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: (self?.topGroupView.bounds.height)! + (self?.startBtnBackgroundView.bounds.height)! + (self?.productBackgroundView.bounds.height)!)
-//
-//            self?.productBottomGroup.isHidden = false
         }
         
         showOffRecordDialog.confirmCallback = {[weak self] in

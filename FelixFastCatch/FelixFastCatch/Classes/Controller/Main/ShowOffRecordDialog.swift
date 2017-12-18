@@ -132,13 +132,13 @@ class ShowOffRecordDialog: BaseDialog {
                 WeChatShared.shareImage(data!, thumbImage: UIImage(named: "shared_logo"), title: "抓中啦", description: "抓到了", to: .Timeline, resuleHandle: { (isSuccess, info) in
                     if isSuccess {
                         ToastUtils.showSuccessToast(msg: "分享成功")
-                        self.hide()
                     }else{
                         ToastUtils.showErrorToast(msg: " 分享失败")
                     }
                 })
             }
         }
+        self.hide()
     }
     
     func getDataFromUrl(url: URL, completion: @escaping (_ data: Data?, _  response: URLResponse?, _ error: Error?) -> Void) {

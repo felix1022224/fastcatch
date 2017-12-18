@@ -30,7 +30,6 @@ class UserTitlesInfoDialog: BaseDialog {
         titlesInfoTabView.frame.size = CGSize(width: itemImage.bounds.width, height: backgroundImage.bounds.height - 80 - 10)
         titlesInfoTabView.backgroundColor = UIColor.clear
         titlesInfoTabView.separatorColor = UIColor.clear
-//        titlesInfoTabView.showsVerticalScrollIndicator = false
         titlesInfoTabView.delegate = self
         titlesInfoTabView.dataSource = self
         titlesInfoTabView.register(TitlesInfoCell.self, forCellReuseIdentifier: "cellId")
@@ -50,8 +49,6 @@ class UserTitlesInfoDialog: BaseDialog {
         dataSources = list
         titlesInfoTabView.reloadData()
     }
-    
-
 }
 
 extension UserTitlesInfoDialog: UITableViewDelegate, UITableViewDataSource{

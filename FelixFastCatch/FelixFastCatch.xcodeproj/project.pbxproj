@@ -134,6 +134,8 @@
 		4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B811F2849DC00102A0F /* NetWorkUtils.swift */; };
 		4DDD2B861F286BC000102A0F /* DeviceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD2B851F286BC000102A0F /* DeviceTools.swift */; };
 		4DE204131F39B8100046B130 /* HasBeenMailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE204121F39B8100046B130 /* HasBeenMailedView.swift */; };
+		4DE6418B1FE2539100589537 /* NotificationListWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE6418A1FE2539100589537 /* NotificationListWidget.swift */; };
+		4DE6418D1FE253AB00589537 /* NotificationUIWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE6418C1FE253AB00589537 /* NotificationUIWidget.swift */; };
 		4DF0587F1F90C1B900E17B75 /* UserTitlesInfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0587E1F90C1B900E17B75 /* UserTitlesInfoDialog.swift */; };
 		4DF058811F90C7EC00E17B75 /* TitlesInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF058801F90C7EC00E17B75 /* TitlesInfoCell.swift */; };
 		4DF058831F90D20500E17B75 /* GameUserInfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF058821F90D20500E17B75 /* GameUserInfoDialog.swift */; };
@@ -277,6 +279,8 @@
 		4DDD2B811F2849DC00102A0F /* NetWorkUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetWorkUtils.swift; sourceTree = "<group>"; };
 		4DDD2B851F286BC000102A0F /* DeviceTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceTools.swift; sourceTree = "<group>"; };
 		4DE204121F39B8100046B130 /* HasBeenMailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasBeenMailedView.swift; sourceTree = "<group>"; };
+		4DE6418A1FE2539100589537 /* NotificationListWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListWidget.swift; sourceTree = "<group>"; };
+		4DE6418C1FE253AB00589537 /* NotificationUIWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationUIWidget.swift; sourceTree = "<group>"; };
 		4DF0587E1F90C1B900E17B75 /* UserTitlesInfoDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTitlesInfoDialog.swift; sourceTree = "<group>"; };
 		4DF058801F90C7EC00E17B75 /* TitlesInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlesInfoCell.swift; sourceTree = "<group>"; };
 		4DF058821F90D20500E17B75 /* GameUserInfoDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameUserInfoDialog.swift; sourceTree = "<group>"; };
@@ -740,6 +744,8 @@
 			isa = PBXGroup;
 			children = (
 				4DD613F01FE11E9E002FCCCE /* NotificationViewController.swift */,
+				4DE6418A1FE2539100589537 /* NotificationListWidget.swift */,
+				4DE6418C1FE253AB00589537 /* NotificationUIWidget.swift */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -953,6 +959,7 @@
 				4D64B8A01F29D9DA002A9BFD /* BaseDialog.swift in Sources */,
 				4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */,
 				4D1F59DC1F8CC8EA00806C00 /* TokenHistoryViewController.swift in Sources */,
+				4DE6418D1FE253AB00589537 /* NotificationUIWidget.swift in Sources */,
 				4DAFB22D1FAACBD700F90A08 /* GameSceneWidget.swift in Sources */,
 				4D18ACD41F261378005363A4 /* TencentShared.swift in Sources */,
 				4DCD39DB1F2F31C6002B7F35 /* PayItemTableViewCell.swift in Sources */,
@@ -978,6 +985,7 @@
 				4D1D86131F306307005210CA /* TobeGiftModel.swift in Sources */,
 				4D879B691F7CAEE8009F2ECC /* MainBeginnerGuidPlaySwitchView.swift in Sources */,
 				4DCD39E11F2F4A2B002B7F35 /* MyGiftDialog.swift in Sources */,
+				4DE6418B1FE2539100589537 /* NotificationListWidget.swift in Sources */,
 				4D82A4521F36C7AD007ADE5C /* UserTools.swift in Sources */,
 				4D1D86171F31D1FE005210CA /* EditUserInfoDialog.swift in Sources */,
 				4D1DA0F61F2F4C7000B1138D /* FCMailedConfirmDialog.swift in Sources */,

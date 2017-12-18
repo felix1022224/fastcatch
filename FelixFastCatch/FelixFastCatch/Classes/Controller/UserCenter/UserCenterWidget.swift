@@ -231,7 +231,7 @@ extension UserCenterViewController {
         backBtn.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         
         /// 用户消息中心
-        userNotificationIcon.setBackgroundImage(UIImage(named: ""), for: .normal)
+        userNotificationIcon.setBackgroundImage(UIImage(named: "用户消息"), for: .normal)
         userNotificationIcon.sizeToFit()
         view.addSubview(userNotificationIcon)
         
@@ -240,14 +240,15 @@ extension UserCenterViewController {
             make.right.equalTo(view).offset(-14)
         }
         
-        userNotificationIcon.isHidden = true
+        userNotificationIcon.addTarget(self, action: #selector(showNotifictionVC), for: .touchUpInside)
         
         setupUserCenterWidget(titleImage: ucTitleImage)
     }
     
     /// 显示通知页面
-    func showNotifictionVC() {
-        
+    @objc private func showNotifictionVC() {
+        let notificationVC = NotificationViewController()
+        self.navigationController?.pushViewController(notificationVC, animated: true)
     }
     
     
