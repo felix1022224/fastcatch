@@ -63,7 +63,7 @@ class PlayInfoAwardDialog: BaseDialog {
         
         awardTitle = MainCustomerLabel()
         awardTitle.text = "谁谁谁"
-        awardTitle.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
+        awardTitle.font = UIFont.getCustomeYuanTiFont(fontSize: 16)
         awardTitle.outTextColor = UIColor.white
         awardTitle.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         awardTitle.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -74,7 +74,7 @@ class PlayInfoAwardDialog: BaseDialog {
         
         awardDescription = MainCustomerLabel()
         awardDescription.text = "谁谁谁"
-        awardDescription.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        awardDescription.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         awardDescription.outTextColor = UIColor.white
         awardDescription.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         awardDescription.outLienTextColor = Constants.UI.OUT_LINE_COLOR

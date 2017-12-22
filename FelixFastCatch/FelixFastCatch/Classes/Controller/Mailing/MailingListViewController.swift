@@ -211,11 +211,10 @@ extension MailingListViewController{
         noValueImage.snp.makeConstraints { (make) in
             make.centerY.equalTo(noMailingValueView)
             make.width.equalTo(UIScreen.main.bounds.width)
-//            make.height.equalTo(UIScreen.main.bounds.height)
         }
         
         let noValueLabel = MainCustomerLabel()
-        noValueLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(22))
+        noValueLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 22)
         noValueLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         noValueLabel.outTextColor = UIColor.white
         noValueLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -238,7 +237,7 @@ extension MailingListViewController{
         postageInfoLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         postageInfoLabel.outTextColor = UIColor.white
         postageInfoLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        postageInfoLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        postageInfoLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         postageInfoLabel.text = "本月剩余免邮次数"
         postageInfoLabel.sizeToFit()
         view.addSubview(postageInfoLabel)

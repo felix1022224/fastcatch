@@ -38,7 +38,7 @@ class TitlesInfoCell: UITableViewCell {
         title.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         title.outTextColor = UIColor.white
         title.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        title.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
+        title.font = UIFont.getCustomeYuanTiFont(fontSize: 16)
         title.text = "萌新"
         title.sizeToFit()
         addSubview(title)
@@ -51,7 +51,7 @@ class TitlesInfoCell: UITableViewCell {
         info.outLineWidth = 3
         info.outTextColor = UIColor.white
         info.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        info.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        info.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         info.text = "萌新\n123333"
         info.numberOfLines = 2
         info.textAlignment = .center

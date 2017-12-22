@@ -26,13 +26,12 @@ extension GameSceneViewController {
         
         gameUserImage.backgroundColor = UIColor.white
         gameUserImage.frame.size = CGSize(width: 36, height: 36)
-//        gameUserImage.center = gameUserImageBackground.center
         gameUserImage.layer.cornerRadius = 36/2
         gameUserImage.layer.masksToBounds = true
         
         rootView.addSubview(gameUserGroup)
         
-        gameUserNickName.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        gameUserNickName.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         gameUserNickName.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         gameUserNickName.outTextColor = UIColor.white
         gameUserNickName.outLienTextColor = Constants.UI.OUT_LINE_COLOR

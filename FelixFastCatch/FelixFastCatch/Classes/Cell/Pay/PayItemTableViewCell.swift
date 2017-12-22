@@ -46,7 +46,7 @@ class PayItemTableViewCell: UITableViewCell {
         }
         
         // 钻石描述
-        gemInfo.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
+        gemInfo.font = UIFont.getCustomeYuanTiFont(fontSize: 11)
         gemInfo.outLineWidth = 1
         gemInfo.outTextColor = UIColor.white
         gemInfo.outLienTextColor = UIColor.gray
@@ -56,7 +56,7 @@ class PayItemTableViewCell: UITableViewCell {
         
         // 购买按钮
         payBtn.setBackgroundImage(UIImage(named: "pay_number"), for: .normal)
-        payBtn.titleLabel?.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
+        payBtn.titleLabel?.font = UIFont.getCustomeYuanTiFont(fontSize: 11)
         payBtn.titleLabel?.textColor = UIColor.white
         payBtn.sizeToFit()
         addSubview(payBtn)
@@ -71,7 +71,7 @@ class PayItemTableViewCell: UITableViewCell {
         payNumberLabel.outLineWidth = 1
         payNumberLabel.outTextColor = UIColor.white
         payNumberLabel.outLienTextColor = UIColor.gray
-        payNumberLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(10))
+        payNumberLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 10)
         payNumberLabel.sizeToFit()
         addSubview(payNumberLabel)
         

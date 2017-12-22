@@ -39,7 +39,7 @@ class InviteSuccessDialog: BaseDialog {
         gemInfo.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         gemInfo.outTextColor = UIColor.white
         gemInfo.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        gemInfo.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
+        gemInfo.font = UIFont.getCustomeYuanTiFont(fontSize: 16)
         gemInfo.text = "+ 25"
         gemInfo.sizeToFit()
         addSubview(gemInfo)

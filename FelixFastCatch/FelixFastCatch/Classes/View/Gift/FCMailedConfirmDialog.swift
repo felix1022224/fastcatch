@@ -102,7 +102,7 @@ class FCMailedConfirmDialog: BaseDialog {
         userInfo.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         userInfo.outTextColor = UIColor.white
         userInfo.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        userInfo.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        userInfo.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         userInfo.text = "收货人 : " + Constants.User.addrName
         userInfo.numberOfLines = 1
         userInfo.sizeToFit()
@@ -114,7 +114,7 @@ class FCMailedConfirmDialog: BaseDialog {
         phoneNumber.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         phoneNumber.outTextColor = UIColor.white
         phoneNumber.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        phoneNumber.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        phoneNumber.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         phoneNumber.text = "手机号 : " + Constants.User.addrPhone
         phoneNumber.numberOfLines = 1
         phoneNumber.sizeToFit()
@@ -127,7 +127,7 @@ class FCMailedConfirmDialog: BaseDialog {
         address.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         address.outTextColor = UIColor.white
         address.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        address.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        address.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         address.text = "地址 : " + Constants.User.addr
         address.numberOfLines = 2
         let paraph = NSMutableParagraphStyle()
@@ -162,7 +162,7 @@ class FCMailedConfirmDialog: BaseDialog {
         postageTitleLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         postageTitleLabel.outTextColor = UIColor.white
         postageTitleLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        postageTitleLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        postageTitleLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         postageTitleLabel.text = "邮费"
         postageTitleLabel.sizeToFit()
         scrollRootView.addSubview(postageTitleLabel)
@@ -176,7 +176,7 @@ class FCMailedConfirmDialog: BaseDialog {
         postageLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         postageLabel.outTextColor = UIColor.white
         postageLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        postageLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        postageLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         if freePostageNumber <= 0 {
             postageLabel.text = String(postageCashNumber) + "代币"
         }else{
@@ -192,7 +192,7 @@ class FCMailedConfirmDialog: BaseDialog {
         freemailNumberLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         freemailNumberLabel.outTextColor = UIColor.white
         freemailNumberLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        freemailNumberLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        freemailNumberLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         freemailNumberLabel.text = "9月30日前限时免邮"
         freemailNumberLabel.sizeToFit()
         scrollRootView.addSubview(freemailNumberLabel)
@@ -342,7 +342,7 @@ extension FCMailedConfirmDialog:UICollectionViewDelegate, UICollectionViewDataSo
             titleLabel.outLineWidth = 1
             titleLabel.outTextColor = UIColor.white
             titleLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-            titleLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+            titleLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
             titleLabel.sizeToFit()
             titleLabel.frame = CGRect(x: 0, y: 10, width: titleLabel.bounds.width, height: titleLabel.bounds.height)
             reusable.addSubview(titleLabel)

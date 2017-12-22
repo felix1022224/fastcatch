@@ -32,7 +32,7 @@ class OutGameDialog: BaseDialog {
         outGameInfo.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         outGameInfo.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         outGameInfo.text = "游戏中不能退出房间"
-        outGameInfo.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(18))
+        outGameInfo.font = UIFont.getCustomeYuanTiFont(fontSize: 18)
         outGameInfo.sizeToFit()
         addSubview(outGameInfo)
         

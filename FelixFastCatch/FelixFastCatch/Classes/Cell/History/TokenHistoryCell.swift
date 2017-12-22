@@ -47,7 +47,7 @@ class TokenHistoryCell: UITableViewCell {
         }
         
         /// 代币变化的label
-        tokenChangeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
+        tokenChangeLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 16)
         tokenChangeLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         tokenChangeLabel.outTextColor = UIColor.white
         tokenChangeLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -61,7 +61,7 @@ class TokenHistoryCell: UITableViewCell {
         }
         
         /// 代币记录的title
-        tokenChangeTitle.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(13))
+        tokenChangeTitle.font = UIFont.getCustomeYuanTiFont(fontSize: 13)
         tokenChangeTitle.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         tokenChangeTitle.outTextColor = UIColor.white
         tokenChangeTitle.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -75,7 +75,7 @@ class TokenHistoryCell: UITableViewCell {
         }
         
         /// 代币记录的时间
-        tokenChangeTime.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
+        tokenChangeTime.font = UIFont.getCustomeYuanTiFont(fontSize: 11)
         tokenChangeTime.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         tokenChangeTime.outTextColor = UIColor.white
         tokenChangeTime.outLienTextColor = Constants.UI.OUT_LINE_COLOR

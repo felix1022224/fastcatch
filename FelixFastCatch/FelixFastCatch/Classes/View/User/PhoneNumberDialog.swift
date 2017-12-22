@@ -10,6 +10,7 @@ import UIKit
 import SVProgressHUD
 import Alamofire
 import SwiftyJSON
+import Foundation
 
 class PhoneNumberDialog: BaseDialog {
 
@@ -55,7 +56,7 @@ class PhoneNumberDialog: BaseDialog {
         phoneNumberLabel.outTextColor = UIColor.white
         phoneNumberLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         phoneNumberLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        phoneNumberLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        phoneNumberLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         phoneNumberLabel.text = "手机号:"
         phoneNumberLabel.sizeToFit()
         addSubview(phoneNumberLabel)
@@ -71,7 +72,7 @@ class PhoneNumberDialog: BaseDialog {
         phoneNumberEdit.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         phoneNumberEdit.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         phoneNumberEdit.placeholder = "请输入手机号码"
-        phoneNumberEdit.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        phoneNumberEdit.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         phoneNumberEdit.keyboardType = .phonePad
         phoneNumberEdit.textAlignment = NSTextAlignment.left
         phoneNumberEdit.textColor = UIColor.white
@@ -91,7 +92,7 @@ class PhoneNumberDialog: BaseDialog {
         verifyLabel.outTextColor = UIColor.white
         verifyLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         verifyLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        verifyLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        verifyLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         verifyLabel.text = "验证码:"
         verifyLabel.sizeToFit()
         addSubview(verifyLabel)
@@ -104,7 +105,7 @@ class PhoneNumberDialog: BaseDialog {
         // 验证码发送按钮
         verifySendBtn.setBackgroundImage(UIImage(named: "login_send"), for: .normal)
         verifySendBtn.setTitle("发送", for: .normal)
-        verifySendBtn.titleLabel?.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        verifySendBtn.titleLabel?.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         verifySendBtn.sizeToFit()
         addSubview(verifySendBtn)
         
@@ -121,7 +122,7 @@ class PhoneNumberDialog: BaseDialog {
         verifyCodeEdit.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         verifyCodeEdit.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         verifyCodeEdit.placeholder = "验证码"
-        verifyCodeEdit.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        verifyCodeEdit.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         verifyCodeEdit.keyboardType = .numberPad
         verifyCodeEdit.textAlignment = NSTextAlignment.left
         verifyCodeEdit.textColor = UIColor.white
@@ -151,7 +152,7 @@ class PhoneNumberDialog: BaseDialog {
         loginBtn.addTarget(self, action: #selector(loginByPhoneNumber), for: .touchUpInside)
         
         let pactInfoLabel = UIButton(type: .custom)
-        pactInfoLabel.titleLabel?.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        pactInfoLabel.titleLabel?.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         pactInfoLabel.titleLabel?.textColor = UIColor.gray
         pactInfoLabel.titleLabel?.textAlignment = .right
         let str1 = NSMutableAttributedString(string: "登录即同意《秒抓APP用户协议》")
@@ -330,9 +331,10 @@ extension PhoneNumberDialog:UITextFieldDelegate{
             
             if (existedLength! - selectedLength + replaceLength >= 12) {
                 let endIndex = textField.text?.index((textField.text?.startIndex)!, offsetBy: 11)
-                
-                textField.text = textField.text?.substring(with: Range<String.Index>(uncheckedBounds: ((textField.text?.startIndex)!, endIndex!)))
-//                textField.text = String(describing: textField.text?[Range<String.Index>(uncheckedBounds: ((textField.text?.startIndex)!, endIndex!))])
+
+                let subString = textField.text?.prefix(upTo: endIndex!)
+                textField.text = String(subString!)
+
                 return false
             }
         }
@@ -345,7 +347,9 @@ extension PhoneNumberDialog:UITextFieldDelegate{
             if (existedLength! - selectedLength + replaceLength >= 7) {
                 let endIndex = textField.text?.index((textField.text?.startIndex)!, offsetBy: 6)
                 
-                textField.text = textField.text?.substring(with: Range<String.Index>(uncheckedBounds: ((textField.text?.startIndex)!, endIndex!)))
+                let subString = textField.text?.prefix(upTo: endIndex!)
+                textField.text = String(subString!)
+
                 return false
             }
         }

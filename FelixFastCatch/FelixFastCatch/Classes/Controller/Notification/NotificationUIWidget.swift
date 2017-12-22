@@ -27,8 +27,8 @@ extension NotificationViewController {
         topTitile.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
             make.top.equalTo(UIApplication.shared.statusBarFrame.height)
-            make.width.equalTo(UIScreen.main.bounds.width * 0.45)
-            make.height.equalTo(UIScreen.main.bounds.width * 0.12)
+            make.width.equalTo(Constants.UI.TITLE_IMAGE_WIDTH)
+            make.height.equalTo(Constants.UI.TITLE_IMAGE_HEIGHT)
         }
         
         /// 返回按钮

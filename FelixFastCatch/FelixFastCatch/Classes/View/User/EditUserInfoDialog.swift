@@ -75,7 +75,7 @@ class EditUserInfoDialog: BaseDialog {
         nickNameLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         nickNameLabel.outTextColor = UIColor.white
         nickNameLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        nickNameLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        nickNameLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         nickNameLabel.text = "昵称:"
         nickNameLabel.frame = CGRect(x: self.bounds.width/2 - backgroundImage.bounds.width/2 + 35, y: self.bounds.height/2 - backgroundImage.bounds.height/2 + 55, width: 0, height: 0)
         nickNameLabel.sizeToFit()
@@ -91,7 +91,7 @@ class EditUserInfoDialog: BaseDialog {
         nickNameEdit.outTextColor = UIColor.white
         nickNameEdit.outLienTextColor = UIColor.black
         nickNameEdit.textAlignment = NSTextAlignment.left
-        nickNameEdit.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        nickNameEdit.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         nickNameEdit.placeholder = "请输入昵称"
         nickNameEdit.text = Constants.User.USER_NICK_NAME
         //        nickNameEdit.delegate = self
@@ -112,7 +112,7 @@ class EditUserInfoDialog: BaseDialog {
         sexLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         sexLabel.outTextColor = UIColor.white
         sexLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        sexLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        sexLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         sexLabel.text = "性别:"
         sexLabel.sizeToFit()
         addSubview(sexLabel)
@@ -167,7 +167,7 @@ class EditUserInfoDialog: BaseDialog {
         brithdayTipsLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         brithdayTipsLabel.outTextColor = UIColor.white
         brithdayTipsLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        brithdayTipsLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        brithdayTipsLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         brithdayTipsLabel.text = "生日:"
         brithdayTipsLabel.sizeToFit()
         addSubview(brithdayTipsLabel)
@@ -202,7 +202,7 @@ class EditUserInfoDialog: BaseDialog {
             brithdaySelectGroup.text = Constants.User.USER_BRITHDAY
         }
         
-        brithdaySelectGroup.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        brithdaySelectGroup.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         brithdaySelectGroup.isUserInteractionEnabled = true
         
         brithdaySelectGroup.snp.makeConstraints { (make) in

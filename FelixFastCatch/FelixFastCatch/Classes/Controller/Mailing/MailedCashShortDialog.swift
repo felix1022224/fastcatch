@@ -21,7 +21,7 @@ class MailedCashShortDialog: BaseDialog {
         cashShortLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         cashShortLabel.outTextColor = UIColor.white
         cashShortLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        cashShortLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(20))
+        cashShortLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 20)
         cashShortLabel.sizeToFit()
         cashShortLabel.center = backgroundImage.center
         addSubview(cashShortLabel)

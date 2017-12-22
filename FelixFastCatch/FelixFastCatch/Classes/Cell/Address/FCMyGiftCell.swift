@@ -40,8 +40,6 @@ class FCMyGiftCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }
@@ -64,7 +62,6 @@ extension FCMyGiftCell{
         
         productBackgroundImage.snp.makeConstraints { (make) in
             make.centerY.equalTo(contentGroup).offset(-2.5)
-//            make.top.equalTo(contentGroup).offset(contentGroup.bounds.height / 2 - productBackgroundImage.bounds.height / 2)
             make.left.equalTo(contentGroup).offset(productBackgroundImage.bounds.width / 2.5)
         }
         
@@ -88,7 +85,6 @@ extension FCMyGiftCell{
         selectBtn.setBackgroundImage(UIImage(named: "邮寄选中"), for: .selected)
         selectBtn.sizeToFit()
         addSubview(selectBtn)
-//        selectBtn.addTarget(self, action: #selector(selectBtnClick), for: .touchUpInside)
         selectBtn.snp.makeConstraints { (make) in
             make.centerY.equalTo(contentGroup)
             make.right.equalTo(contentGroup).offset(-(productBackgroundImage.bounds.width / 2.5))
@@ -97,7 +93,7 @@ extension FCMyGiftCell{
         // 产品名标题
         productTitleLabel = MainCustomerLabel()
         productTitleLabel.numberOfLines = 1
-        productTitleLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(13))
+        productTitleLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 13)
         productTitleLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         productTitleLabel.outTextColor = UIColor.white
         productTitleLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -108,17 +104,7 @@ extension FCMyGiftCell{
             make.right.equalTo(selectBtn).offset(-(selectBtn.bounds.width + 10))
             make.centerY.equalTo(contentGroup)
         }
-        
     }
-    
-//    func selectBtnClick() -> () {
-//        if selectBtn.isSelected {
-//            selectBtn.isSelected = false
-//        }else {
-//            selectBtn.isSelected = true
-//        }
-//    }
-    
 }
 
 

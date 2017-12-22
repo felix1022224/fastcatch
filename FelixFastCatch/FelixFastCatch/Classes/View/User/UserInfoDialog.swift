@@ -84,7 +84,7 @@ class UserInfoDialog: BaseDialog {
         }
         
         // 用户id
-        userIdLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        userIdLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
 //        let index = Constants.User.USER_ID.index(Constants.User.USER_ID.endIndex, offsetBy: -5)
 //        userIdLabel.text = "ID:\(Constants.User.USER_ID.substring(from: index))"
         userIdLabel.text = "ID: " + Constants.User.USER_ID
@@ -100,7 +100,7 @@ class UserInfoDialog: BaseDialog {
         }
         
         // 用户昵称
-        userNickName.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        userNickName.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         userNickName.text = "昵称: \(Constants.User.USER_NICK_NAME)"
         userNickName.outLineWidth = 3
         userNickName.outTextColor = UIColor.white
@@ -115,7 +115,7 @@ class UserInfoDialog: BaseDialog {
         }
         
         // 用户星座
-        constellationLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        constellationLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         constellationLabel.text = "星座: 水瓶座"
         constellationLabel.outLineWidth = 3
         constellationLabel.outTextColor = UIColor.white
@@ -129,7 +129,7 @@ class UserInfoDialog: BaseDialog {
         }
         
         // 用户性别
-        sexLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        sexLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         if Constants.User.USER_SEX == "0" {
             sexLabel.text = "性别: 男"
         }else if Constants.User.USER_SEX == "-1"{

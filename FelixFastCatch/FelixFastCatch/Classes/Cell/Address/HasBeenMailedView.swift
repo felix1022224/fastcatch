@@ -59,7 +59,7 @@ class HasBeenMailedView: UIView {
         
         // 时间标签
         timeLabel = MainCustomerLabel()
-        timeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
+        timeLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 16)
         timeLabel.outLineWidth = 2
         timeLabel.outTextColor = UIColor.white
         timeLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -126,7 +126,7 @@ class HasBeenMailedView: UIView {
         statusLabel.outTextColor = UIColor.white
         statusLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         statusLabel.text = "邮寄状态: 已寄出"
-        statusLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        statusLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         statusLabel.sizeToFit()
         addSubview(statusLabel)
         
@@ -142,7 +142,7 @@ class HasBeenMailedView: UIView {
         mailedTimeLabel.outTextColor = UIColor.white
         mailedTimeLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         mailedTimeLabel.text = "邮寄时间: 2017.8.9 10:00"
-        mailedTimeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        mailedTimeLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         mailedTimeLabel.sizeToFit()
         addSubview(mailedTimeLabel)
         
@@ -161,7 +161,7 @@ class HasBeenMailedView: UIView {
         mailedCodeLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         mailedCodeLabel.text = "邮寄单号: 1231231231231323131"
         mailedCodeLabel.numberOfLines = 1
-        mailedCodeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        mailedCodeLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         mailedCodeLabel.sizeToFit()
         addSubview(mailedCodeLabel)
         

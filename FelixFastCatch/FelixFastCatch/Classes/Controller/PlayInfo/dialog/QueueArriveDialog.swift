@@ -50,7 +50,7 @@ class QueueArriveDialog: BaseDialog {
             make.bottom.equalTo(backgroundImage).offset(-15)
         }
         
-        confirmTimeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        confirmTimeLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         confirmTimeLabel.outLineWidth = 3
         confirmTimeLabel.outTextColor = UIColor.white
         confirmTimeLabel.outLienTextColor = UIColor(red: 29/255.0, green: 137/255.0, blue: 0/255.0, alpha: 0.75)

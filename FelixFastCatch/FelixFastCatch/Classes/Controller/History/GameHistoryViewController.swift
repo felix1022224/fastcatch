@@ -44,10 +44,10 @@ class GameHistoryViewController: UIViewController {
         view.addSubview(gameHisoryTitleImage)
         
         gameHisoryTitleImage.snp.makeConstraints { (make) in
-            make.top.equalTo(view).offset(UIApplication.shared.statusBarFrame.height + 5)
+            make.top.equalTo(view).offset(UIApplication.shared.statusBarFrame.height)
             make.centerX.equalTo(view)
-            make.width.equalTo(200)
-            make.height.equalTo(50)
+            make.width.equalTo(Constants.UI.TITLE_IMAGE_WIDTH)
+            make.height.equalTo(Constants.UI.TITLE_IMAGE_HEIGHT)
         }
         
         backBtn.setImage(UIImage(named: "邮寄返回"), for: .normal)
@@ -103,7 +103,7 @@ extension GameHistoryViewController: UITableViewDelegate, UITableViewDataSource{
         view.addSubview(gameHistoryList)
         
         gameHistoryList.snp.makeConstraints { (make) in
-            make.top.equalTo(titilImage).offset(10 + titilImage.bounds.height)
+            make.top.equalTo(titilImage).offset(titilImage.bounds.height)
             make.centerX.equalTo(view)
             make.bottom.equalTo(view)
             make.width.equalTo(UIScreen.main.bounds.width * 0.98)

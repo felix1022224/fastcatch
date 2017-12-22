@@ -24,7 +24,7 @@ class PlayResultDialog: BaseDialog {
         successTitle.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         successTitle.outTextColor = UIColor.white
         successTitle.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        successTitle.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(20))
+        successTitle.font = UIFont.getCustomeYuanTiFont(fontSize: 20)
         successTitle.text = "抓中啦！"
         successTitle.sizeToFit()
         addSubview(successTitle)
@@ -37,7 +37,7 @@ class PlayResultDialog: BaseDialog {
         successInfo.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         successInfo.outTextColor = UIColor.white
         successInfo.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        successInfo.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(20))
+        successInfo.font = UIFont.getCustomeYuanTiFont(fontSize: 20)
         successInfo.text = "已放入你的奖品背包"
         successInfo.sizeToFit()
         addSubview(successInfo)
@@ -50,7 +50,7 @@ class PlayResultDialog: BaseDialog {
         errorTitle.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         errorTitle.outTextColor = UIColor.white
         errorTitle.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        errorTitle.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(20))
+        errorTitle.font = UIFont.getCustomeYuanTiFont(fontSize: 20)
         errorTitle.text = "啊哦！就差一点点"
         errorTitle.sizeToFit()
         addSubview(errorTitle)

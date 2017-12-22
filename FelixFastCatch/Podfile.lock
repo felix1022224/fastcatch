@@ -1,6 +1,6 @@
 PODS:
-  - AgoraRtcEngine_iOS (1.14.0)
-  - Alamofire (4.5.1)
+  - AgoraRtcEngine_iOS (2.0.2)
+  - Alamofire (4.6.0)
   - AlicloudFeedback (3.2.2):
     - AlicloudUT
     - AlicloudUtils
@@ -10,8 +10,8 @@ PODS:
   - AlicloudUtils (1.2.2):
     - AlicloudUT
     - AlicloudUTDID
-  - Bugly (2.4.8)
-  - Kingfisher (4.3.1)
+  - Bugly (2.5.0)
+  - Kingfisher (4.5.0)
   - MJRefresh (3.1.15.1)
   - SnapKit (3.2.0)
   - Socket.IO-Client-Swift (12.0.0):
@@ -21,7 +21,7 @@ PODS:
   - SwiftGifOrigin (1.6.1)
   - SwiftyJSON (3.1.4)
   - UMengAnalytics-NO-IDFA (4.2.5)
-  - WechatOpenSDK (1.8.0)
+  - WechatOpenSDK (1.8.1)
 
 DEPENDENCIES:
   - AgoraRtcEngine_iOS
@@ -39,14 +39,14 @@ DEPENDENCIES:
   - WechatOpenSDK
 
 SPEC CHECKSUMS:
-  AgoraRtcEngine_iOS: 942902e45104aa75579cd6d2b700357e5106a3cf
-  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
+  AgoraRtcEngine_iOS: 67884f8bbe46aae8ed9af4195b0683562f083fde
+  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   AlicloudFeedback: 0887b49a73d6fc172f4a986cae1f92ae4100341e
   AlicloudUT: 9f20dcfd2753de09261b6c279245da1650a34932
   AlicloudUTDID: f5a7bc1420c5f83e3bd40296e5ab2e5a804a12f8
   AlicloudUtils: 2437ae7fd2b39343539e8f48aa1f7bf6f5a6cff1
-  Bugly: da3c02408c14838d498429320545a8e439392978
-  Kingfisher: 75541c4b62f02e1fde6f9772303de3d9ebe8f5b3
+  Bugly: 00c8701f2bebab4887771ba43afbf51334009742
+  Kingfisher: 26ae0473102b77b575da51960c932431e3745407
   MJRefresh: 5f8552bc25ca8751c010f621c1098dbdaacbccd6
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   Socket.IO-Client-Swift: 5b0154b42b3892bfb4c44fa138cbeb8afec4f6ef
@@ -55,7 +55,7 @@ SPEC CHECKSUMS:
   SwiftGifOrigin: d6679d3ebe9df2e049a84bc52582635107b581f6
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   UMengAnalytics-NO-IDFA: 16666e32edce5be44ae5b14aaaa7f3582e09d6ab
-  WechatOpenSDK: 0ee07a8d492299d3e47372a33da5af26524a7576
+  WechatOpenSDK: 491d965d79335070328571d3e79f714549e79a5e
 
 PODFILE CHECKSUM: bb6d29edbf313775a3e75b94579d86bf0674a1a1
 

@@ -578,7 +578,7 @@ extension GameSceneViewController{
         playTime.outLineWidth = 1
         playTime.outTextColor = UIColor.white
         playTime.outLienTextColor = UIColor.gray
-        playTime.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(18))
+        playTime.font = UIFont.getCustomeYuanTiFont(fontSize: 18)
         playTime.text = "0:30"
         playTime.sizeToFit()
         playTime.textAlignment = .center
@@ -975,7 +975,7 @@ extension GameSceneViewController{
         rePlayGameTimeLabel.outTextColor = UIColor.white
         rePlayGameTimeLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         rePlayGameTimeLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        rePlayGameTimeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
+        rePlayGameTimeLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 16)
         rePlayGameTimeLabel.sizeToFit()
         view.addSubview(rePlayGameTimeLabel)
         

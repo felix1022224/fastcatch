@@ -47,7 +47,7 @@ class InviteListDialog: BaseDialog {
         inviteMember.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         inviteMember.outTextColor = UIColor.white
         inviteMember.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        inviteMember.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        inviteMember.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         inviteMember.text = "已邀请0人"
         inviteMember.sizeToFit()
         addSubview(inviteMember)
@@ -60,7 +60,7 @@ class InviteListDialog: BaseDialog {
         inviteGemNumber.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         inviteGemNumber.outTextColor = UIColor.white
         inviteGemNumber.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        inviteGemNumber.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        inviteGemNumber.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         inviteGemNumber.text = "共获得0代币"
         inviteGemNumber.sizeToFit()
         addSubview(inviteGemNumber)

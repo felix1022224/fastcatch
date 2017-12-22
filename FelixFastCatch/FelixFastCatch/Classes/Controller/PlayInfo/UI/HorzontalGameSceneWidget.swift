@@ -201,7 +201,6 @@ extension HorizontalGameSceneViewController{
             })
         }else {
             print("进入直播房间成功:\(code)")
-            agoraKit.setupRemoteVideo(nil)
             let canvas = AgoraRtcVideoCanvas()
             canvas.view = liveView
             canvas.uid = mainLiveCamare!
@@ -217,7 +216,6 @@ extension HorizontalGameSceneViewController{
     /// 切换摄像头
     @objc func switchCamare() -> () {
         if mainLiveCamare == nowLiveCamare {
-            agoraKit.setupRemoteVideo(nil)
             let canvas = AgoraRtcVideoCanvas()
             canvas.view = liveView
             canvas.uid = sideLiveCamare!
@@ -230,7 +228,6 @@ extension HorizontalGameSceneViewController{
             
             nowCamareDirection = 2
         }else{
-            agoraKit.setupRemoteVideo(nil)
             let canvas = AgoraRtcVideoCanvas()
             canvas.view = liveView
             canvas.uid = mainLiveCamare!
@@ -260,15 +257,15 @@ extension HorizontalGameSceneViewController{
 
 extension HorizontalGameSceneViewController : AgoraRtcEngineDelegate {
     
-    func rtcEngine(_ engine: AgoraRtcEngineKit!, firstRemoteVideoDecodedOfUid uid: UInt, size: CGSize, elapsed: Int) {
+    func rtcEngine(_ engine: AgoraRtcEngineKit, firstRemoteVideoDecodedOfUid uid: UInt, size: CGSize, elapsed: Int) {
         
     }
     
-    func rtcEngine(_ engine: AgoraRtcEngineKit!, firstLocalVideoFrameWith size: CGSize, elapsed: Int) {
+    func rtcEngine(_ engine: AgoraRtcEngineKit, firstLocalVideoFrameWith size: CGSize, elapsed: Int) {
         
     }
     
-    func rtcEngine(_ engine: AgoraRtcEngineKit!, didOfflineOfUid uid: UInt, reason: AgoraRtcUserOfflineReason) {
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didOfflineOfUid uid: UInt, reason: AgoraRtcUserOfflineReason) {
         
     }
 }
@@ -362,7 +359,7 @@ extension HorizontalGameSceneViewController{
         playTime.outLineWidth = 1
         playTime.outTextColor = UIColor.white
         playTime.outLienTextColor = UIColor.gray
-        playTime.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(18))
+        playTime.font = UIFont.getCustomeYuanTiFont(fontSize: 18)
         playTime.text = "0:30"
         playTime.sizeToFit()
         playTime.textAlignment = .center

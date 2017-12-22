@@ -68,7 +68,7 @@ class EditInviteCode: BaseDialog {
         editInviteCodeTextFiled.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         editInviteCodeTextFiled.outTextColor = UIColor.white
         editInviteCodeTextFiled.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        editInviteCodeTextFiled.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        editInviteCodeTextFiled.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         editInviteCodeTextFiled.background = UIImage(named: "bg_username")!
         editInviteCodeTextFiled.frame.size = CGSize(width: backgroundImage.bounds.width * 0.8, height: 40)
         editInviteCodeTextFiled.center = backgroundImage.center
@@ -80,7 +80,7 @@ class EditInviteCode: BaseDialog {
         errorLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         errorLabel.outTextColor = UIColor.white
         errorLabel.outLienTextColor = UIColor.red
-        errorLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        errorLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         errorLabel.text = "邀请码无效"
         errorLabel.sizeToFit()
         addSubview(errorLabel)

@@ -208,7 +208,7 @@ extension GameSceneViewController{
         gemLabel.outLineWidth = 1
         gemLabel.outTextColor = UIColor.white
         gemLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        gemLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
+        gemLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 11)
         topGroupView.addSubview(gemLabel)
         
         gemLabel.snp.makeConstraints { (make) in
@@ -318,7 +318,7 @@ extension GameSceneViewController{
     func setupDarwCountNumber() -> () {
         darwCountLabel.text = "游戏0次"
         darwCountLabel.textColor = UIColor.white
-        darwCountLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        darwCountLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         darwCountLabel.sizeToFit()
         
         darwCountBgView.frame.size = CGSize(width: darwCountLabel.bounds.width * 2, height: darwCountLabel.bounds.height * 1.5)
@@ -421,7 +421,7 @@ extension GameSceneViewController{
         playQueueStausNumber.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         playQueueStausNumber.outTextColor = UIColor.white
         playQueueStausNumber.outLienTextColor = UIColor.gray
-        playQueueStausNumber.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        playQueueStausNumber.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         playQueueStausNumber.text = "排队第0位..."
         playQueueStausNumber.sizeToFit()
         playQueueNumberStatus.addSubview(playQueueStausNumber)
@@ -468,7 +468,7 @@ extension GameSceneViewController{
         playNumber.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         playNumber.outTextColor = UIColor.white
         playNumber.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        playNumber.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        playNumber.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         playNumber.sizeToFit()
         startBtnBackgroundView.addSubview(playNumber)
         
@@ -492,7 +492,7 @@ extension GameSceneViewController{
         queueNumber.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         queueNumber.outTextColor = UIColor.white
         queueNumber.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        queueNumber.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        queueNumber.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         queueNumber.sizeToFit()
         startBtnBackgroundView.addSubview(queueNumber)
         
@@ -603,7 +603,7 @@ extension GameSceneViewController{
         productInfoLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         productInfoLabel.outTextColor = UIColor.white
         productInfoLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        productInfoLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
+        productInfoLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 16)
         productInfoLabel.text = bottomAwardTitle + "\n" + bootomAwardDescription
         productInfoLabel.numberOfLines = 0
         productInfoLabel.textAlignment = .center
@@ -726,7 +726,7 @@ extension GameSceneViewController{
         coinNumberLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         coinNumberLabel.outTextColor = UIColor.white
         coinNumberLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        coinNumberLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        coinNumberLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         coinNumberLabel.sizeToFit()
         coinContentGroup.addSubview(coinNumberLabel)
         

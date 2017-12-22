@@ -35,7 +35,7 @@ class FirstLoginRewardDialog: BaseDialog {
         rewardInfo.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         rewardInfo.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         rewardInfo.text = "获得赠币，赶紧去抓吧"
-        rewardInfo.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(20))
+        rewardInfo.font = UIFont.getCustomeYuanTiFont(fontSize: 20)
         rewardInfo.sizeToFit()
         addSubview(rewardInfo)
         

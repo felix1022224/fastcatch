@@ -35,7 +35,7 @@ Alibaba-INC copyright
 
 ## Bugly
 
-Copyright 2017 tencent.com. All rights reserved.
+Copyright 2017 Bugly Tencent. All rights reserved.
 
 
 ## Kingfisher

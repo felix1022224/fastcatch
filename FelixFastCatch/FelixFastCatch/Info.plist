@@ -96,6 +96,8 @@
 		<string>Skranji-Bold.ttf</string>
 		<string>Fangzhengyuan-cuti.ttf</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array/>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

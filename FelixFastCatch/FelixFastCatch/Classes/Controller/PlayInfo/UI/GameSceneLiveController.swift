@@ -60,11 +60,14 @@ extension GameSceneViewController{
     }
     
     func initLive() -> () {
+        deviceId = "121850"
         
         mainLiveCamare = UInt(deviceId)! + 1
         sideLiveCamare = UInt(deviceId)! + 2
         
         agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: "a61c87d429a748cfbdae28178e082289", delegate: self)
+        
+        agoraKit.delegate = self
         
         /// 默认是直播模式
         agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_LiveBroadcasting)
@@ -79,7 +82,7 @@ extension GameSceneViewController{
         agoraKit.setVideoProfile(._VideoProfile_480P, swapWidthAndHeight: false)
         agoraKit.setClientRole(AgoraRtcClientRole.clientRole_Audience, withKey: nil)
         
-        let code = agoraKit.joinChannel(byKey: nil, channelName: deviceId, info: nil, uid: 0, joinSuccess: nil)
+        let code = agoraKit.joinChannel(byKey: nil, channelName: deviceId, info: nil, uid: 1111110, joinSuccess: nil)
         
         if code != 0 {
             DispatchQueue.main.async(execute: {
@@ -87,7 +90,6 @@ extension GameSceneViewController{
             })
         }else {
             print("进入直播房间成功:\(code)")
-            agoraKit.setupRemoteVideo(nil)
             let canvas = AgoraRtcVideoCanvas()
             canvas.view = liveView
             canvas.uid = mainLiveCamare!
@@ -103,7 +105,6 @@ extension GameSceneViewController{
     /// 切换摄像头
     @objc func switchCamare() -> () {
         if mainLiveCamare == nowLiveCamare {
-            agoraKit.setupRemoteVideo(nil)
             let canvas = AgoraRtcVideoCanvas()
             canvas.view = liveView
             canvas.uid = sideLiveCamare!
@@ -116,7 +117,6 @@ extension GameSceneViewController{
             
             nowCamareDirection = 2
         }else{
-            agoraKit.setupRemoteVideo(nil)
             let canvas = AgoraRtcVideoCanvas()
             canvas.view = liveView
             canvas.uid = mainLiveCamare!
@@ -147,15 +147,15 @@ extension GameSceneViewController{
 
 extension GameSceneViewController : AgoraRtcEngineDelegate {
     
-    func rtcEngine(_ engine: AgoraRtcEngineKit!, firstRemoteVideoDecodedOfUid uid: UInt, size: CGSize, elapsed: Int) {
+    func rtcEngine(_ engine: AgoraRtcEngineKit, firstRemoteVideoDecodedOfUid uid: UInt, size: CGSize, elapsed: Int) {
+        print("success:\(uid)")
+    }
+    
+    func rtcEngine(_ engine: AgoraRtcEngineKit, firstLocalVideoFrameWith size: CGSize, elapsed: Int) {
         
     }
     
-    func rtcEngine(_ engine: AgoraRtcEngineKit!, firstLocalVideoFrameWith size: CGSize, elapsed: Int) {
-        
-    }
-    
-    func rtcEngine(_ engine: AgoraRtcEngineKit!, didOfflineOfUid uid: UInt, reason: AgoraRtcUserOfflineReason) {
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didOfflineOfUid uid: UInt, reason: AgoraRtcUserOfflineReason) {
         
     }
     

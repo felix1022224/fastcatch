@@ -14,7 +14,6 @@
 		4D17ECFA1F3B0355004DD01F /* background_music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4D17ECEE1F3B017B004DD01F /* background_music.mp3 */; };
 		4D17ECFB1F3B0355004DD01F /* 抓取成功_音效.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4D17ECF21F3B017B004DD01F /* 抓取成功_音效.wav */; };
 		4D17ECFC1F3B0355004DD01F /* 抓取失败_音效.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4D17ECF01F3B017B004DD01F /* 抓取失败_音效.wav */; };
-		4D18ACBF1F260801005363A4 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACBD1F260801005363A4 /* TencentOpenAPI.framework */; };
 		4D18ACC01F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4D18ACBE1F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle */; };
 		4D18ACC31F260817005363A4 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACC21F260817005363A4 /* Security.framework */; };
 		4D18ACC51F26081F005363A4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18ACC41F26081F005363A4 /* SystemConfiguration.framework */; };
@@ -45,7 +44,6 @@
 		4D2B80141F40097E0075D390 /* OutGameDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B80131F40097E0075D390 /* OutGameDialog.swift */; };
 		4D2B80161F40263F0075D390 /* ShowOffRecordDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B80151F40263F0075D390 /* ShowOffRecordDialog.swift */; };
 		4D2B801B1F4C07050075D390 /* SubmitSuccessDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2B801A1F4C07050075D390 /* SubmitSuccessDialog.swift */; };
-		4D38B2591F6A963E0019730A /* libUMessage_Sdk_1.5.0a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D38B2571F6A963E0019730A /* libUMessage_Sdk_1.5.0a.a */; };
 		4D4ACE751F51CA0D0011E7F7 /* ProductinfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4ACE741F51CA0D0011E7F7 /* ProductinfoDialog.swift */; };
 		4D4ACE771F51CE410011E7F7 /* GemLackDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4ACE761F51CE410011E7F7 /* GemLackDialog.swift */; };
 		4D4B25D81F5FA64900338CBD /* SharedViewDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B25D71F5FA64900338CBD /* SharedViewDialog.swift */; };
@@ -72,8 +70,6 @@
 		4D74682D1FD127A500E8E662 /* StartGameCountdownDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D74682C1FD127A500E8E662 /* StartGameCountdownDialog.swift */; };
 		4D7D3F2A1FD930380019B58C /* HorzontalGameSceneAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7D3F291FD930380019B58C /* HorzontalGameSceneAudioController.swift */; };
 		4D7D3F2C1FDA7F830019B58C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D7D3F2B1FDA7F820019B58C /* Assets.xcassets */; };
-		4D7D3F2E1FDE8CC90019B58C /* 开始游戏loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4D7D3F2D1FDE8CC90019B58C /* 开始游戏loading.gif */; };
-		4D7FF4BC1F596FEC00396C00 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7FF4BA1F596FEC00396C00 /* AlipaySDK.framework */; };
 		4D7FF4BD1F596FEC00396C00 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4D7FF4BB1F596FEC00396C00 /* AlipaySDK.bundle */; };
 		4D82A4521F36C7AD007ADE5C /* UserTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D82A4511F36C7AD007ADE5C /* UserTools.swift */; };
 		4D82A4551F36D33B007ADE5C /* Skranji-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D82A4531F36D18F007ADE5C /* Skranji-Bold.ttf */; };
@@ -100,6 +96,11 @@
 		4DAFB22D1FAACBD700F90A08 /* GameSceneWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAFB22C1FAACBD700F90A08 /* GameSceneWidget.swift */; };
 		4DB08BA01FB08A2000BFB200 /* QueueArriveDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB08B9F1FB08A2000BFB200 /* QueueArriveDialog.swift */; };
 		4DB08BA21FB1822200BFB200 /* GameFailedDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB08BA11FB1822200BFB200 /* GameFailedDialog.swift */; };
+		4DB1A6051FEB6EDD00BDBE3A /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DB1A6041FEB6EDD00BDBE3A /* AlipaySDK.framework */; };
+		4DB1A6071FEB6EEA00BDBE3A /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DB1A6061FEB6EEA00BDBE3A /* TencentOpenAPI.framework */; };
+		4DB1A6081FEB6F6300BDBE3A /* libUMessage_Sdk_1.5.0a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D38B2571F6A963E0019730A /* libUMessage_Sdk_1.5.0a.a */; };
+		4DB1A60A1FEB704000BDBE3A /* UIFont+CustomeFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB1A6091FEB704000BDBE3A /* UIFont+CustomeFont.swift */; };
+		4DB1A60D1FEBA05E00BDBE3A /* PayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB1A60C1FEBA05E00BDBE3A /* PayViewController.swift */; };
 		4DBDE8B61F6AB1F60058E4FE /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DD6C1571F6A81D900007EE6 /* UserNotifications.framework */; };
 		4DCC49CA1F52A65F0017D4A4 /* PlayInfoBannerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCC49C91F52A65F0017D4A4 /* PlayInfoBannerDialog.swift */; };
 		4DCC49CC1F52E0110017D4A4 /* PlayInfoAwardDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCC49CB1F52E0110017D4A4 /* PlayInfoAwardDialog.swift */; };
@@ -136,6 +137,7 @@
 		4DE204131F39B8100046B130 /* HasBeenMailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE204121F39B8100046B130 /* HasBeenMailedView.swift */; };
 		4DE6418B1FE2539100589537 /* NotificationListWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE6418A1FE2539100589537 /* NotificationListWidget.swift */; };
 		4DE6418D1FE253AB00589537 /* NotificationUIWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE6418C1FE253AB00589537 /* NotificationUIWidget.swift */; };
+		4DE641901FE8C5F100589537 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE6418F1FE8C5F100589537 /* NotificationTableViewCell.swift */; };
 		4DF0587F1F90C1B900E17B75 /* UserTitlesInfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0587E1F90C1B900E17B75 /* UserTitlesInfoDialog.swift */; };
 		4DF058811F90C7EC00E17B75 /* TitlesInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF058801F90C7EC00E17B75 /* TitlesInfoCell.swift */; };
 		4DF058831F90D20500E17B75 /* GameUserInfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF058821F90D20500E17B75 /* GameUserInfoDialog.swift */; };
@@ -152,7 +154,6 @@
 		4D17ECF01F3B017B004DD01F /* 抓取失败_音效.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "抓取失败_音效.wav"; sourceTree = "<group>"; };
 		4D17ECF11F3B017B004DD01F /* 镜头切换_音效.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "镜头切换_音效.wav"; sourceTree = "<group>"; };
 		4D17ECF21F3B017B004DD01F /* 抓取成功_音效.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "抓取成功_音效.wav"; sourceTree = "<group>"; };
-		4D18ACBD1F260801005363A4 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		4D18ACBE1F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
 		4D18ACC21F260817005363A4 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4D18ACC41F26081F005363A4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -216,8 +217,6 @@
 		4D74682C1FD127A500E8E662 /* StartGameCountdownDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartGameCountdownDialog.swift; sourceTree = "<group>"; };
 		4D7D3F291FD930380019B58C /* HorzontalGameSceneAudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorzontalGameSceneAudioController.swift; sourceTree = "<group>"; };
 		4D7D3F2B1FDA7F820019B58C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4D7D3F2D1FDE8CC90019B58C /* 开始游戏loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "开始游戏loading.gif"; path = "../../../../Downloads/开始游戏loading.gif"; sourceTree = "<group>"; };
-		4D7FF4BA1F596FEC00396C00 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		4D7FF4BB1F596FEC00396C00 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		4D82A4511F36C7AD007ADE5C /* UserTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTools.swift; sourceTree = "<group>"; };
 		4D82A4531F36D18F007ADE5C /* Skranji-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Skranji-Bold.ttf"; sourceTree = "<group>"; };
@@ -245,6 +244,10 @@
 		4DAFB22C1FAACBD700F90A08 /* GameSceneWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneWidget.swift; sourceTree = "<group>"; };
 		4DB08B9F1FB08A2000BFB200 /* QueueArriveDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueArriveDialog.swift; sourceTree = "<group>"; };
 		4DB08BA11FB1822200BFB200 /* GameFailedDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFailedDialog.swift; sourceTree = "<group>"; };
+		4DB1A6041FEB6EDD00BDBE3A /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		4DB1A6061FEB6EEA00BDBE3A /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		4DB1A6091FEB704000BDBE3A /* UIFont+CustomeFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+CustomeFont.swift"; sourceTree = "<group>"; };
+		4DB1A60C1FEBA05E00BDBE3A /* PayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayViewController.swift; sourceTree = "<group>"; };
 		4DCC49C91F52A65F0017D4A4 /* PlayInfoBannerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayInfoBannerDialog.swift; sourceTree = "<group>"; };
 		4DCC49CB1F52E0110017D4A4 /* PlayInfoAwardDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayInfoAwardDialog.swift; sourceTree = "<group>"; };
 		4DCC49CD1F52E8B10017D4A4 /* EditInviteCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditInviteCode.swift; sourceTree = "<group>"; };
@@ -281,6 +284,8 @@
 		4DE204121F39B8100046B130 /* HasBeenMailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasBeenMailedView.swift; sourceTree = "<group>"; };
 		4DE6418A1FE2539100589537 /* NotificationListWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListWidget.swift; sourceTree = "<group>"; };
 		4DE6418C1FE253AB00589537 /* NotificationUIWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationUIWidget.swift; sourceTree = "<group>"; };
+		4DE6418F1FE8C5F100589537 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		4DE641931FEB6DE100589537 /* 开始游戏loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "开始游戏loading.gif"; sourceTree = "<group>"; };
 		4DF0587E1F90C1B900E17B75 /* UserTitlesInfoDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTitlesInfoDialog.swift; sourceTree = "<group>"; };
 		4DF058801F90C7EC00E17B75 /* TitlesInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlesInfoCell.swift; sourceTree = "<group>"; };
 		4DF058821F90D20500E17B75 /* GameUserInfoDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameUserInfoDialog.swift; sourceTree = "<group>"; };
@@ -296,20 +301,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DB1A6081FEB6F6300BDBE3A /* libUMessage_Sdk_1.5.0a.a in Frameworks */,
 				4DBDE8B61F6AB1F60058E4FE /* UserNotifications.framework in Frameworks */,
 				4D2B800E1F3BFBF40075D390 /* libresolv.tbd in Frameworks */,
-				4D7FF4BC1F596FEC00396C00 /* AlipaySDK.framework in Frameworks */,
 				4DCD39D61F2F0DDE002B7F35 /* Foundation.framework in Frameworks */,
 				4DCD39D41F2F0DC8002B7F35 /* UIKit.framework in Frameworks */,
 				4DCD39D21F2F0DBB002B7F35 /* CFNetwork.framework in Frameworks */,
+				4DB1A6051FEB6EDD00BDBE3A /* AlipaySDK.framework in Frameworks */,
 				4DCD39D01F2F0D9E002B7F35 /* CoreText.framework in Frameworks */,
 				4DCD39CE1F2F0D86002B7F35 /* QuartzCore.framework in Frameworks */,
 				4DCD39C21F2DBF35002B7F35 /* AVFoundation.framework in Frameworks */,
 				4DCD39C01F2DBF16002B7F35 /* AudioToolbox.framework in Frameworks */,
+				4DB1A6071FEB6EEA00BDBE3A /* TencentOpenAPI.framework in Frameworks */,
 				4DCD39BE1F2DBF09002B7F35 /* VideoToolbox.framework in Frameworks */,
 				4DCD39BC1F2DBEF8002B7F35 /* CoreMotion.framework in Frameworks */,
 				4DCD39BA1F2DBEEB002B7F35 /* CoreMedia.framework in Frameworks */,
-				4D38B2591F6A963E0019730A /* libUMessage_Sdk_1.5.0a.a in Frameworks */,
 				4D18ACD11F26084E005363A4 /* libz.tbd in Frameworks */,
 				4D18ACCF1F260846005363A4 /* libstdc++.tbd in Frameworks */,
 				4D18ACCD1F26083E005363A4 /* libsqlite3.tbd in Frameworks */,
@@ -318,7 +324,6 @@
 				4D18ACC71F260827005363A4 /* CoreGraphics.framework in Frameworks */,
 				4D18ACC51F26081F005363A4 /* SystemConfiguration.framework in Frameworks */,
 				4D18ACC31F260817005363A4 /* Security.framework in Frameworks */,
-				4D18ACBF1F260801005363A4 /* TencentOpenAPI.framework in Frameworks */,
 				958698C56D14F18FE0B94475 /* Pods_FelixFastCatch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -421,28 +426,14 @@
 		4D5625141F2605A700515C98 /* FelixFastCatch */ = {
 			isa = PBXGroup;
 			children = (
-				4D7D3F2D1FDE8CC90019B58C /* 开始游戏loading.gif */,
-				4D7D3F2B1FDA7F820019B58C /* Assets.xcassets */,
-				4D38B2561F6A963E0019730A /* UMessage_Sdk_1.5.0a */,
-				4D96D3971F59824600E614CD /* Customized.YWFeedbackBundle.bundle */,
-				4D7FF4BA1F596FEC00396C00 /* AlipaySDK.framework */,
-				4D7FF4BB1F596FEC00396C00 /* AlipaySDK.bundle */,
-				4DAD03351F518AD700D7E72F /* FelixFastCatch.entitlements */,
-				4D17ECF11F3B017B004DD01F /* 镜头切换_音效.wav */,
-				4D17ECEF1F3B017B004DD01F /* 游戏开始_音效.wav */,
-				4D17ECEE1F3B017B004DD01F /* background_music.mp3 */,
-				4D17ECF21F3B017B004DD01F /* 抓取成功_音效.wav */,
-				4D17ECF01F3B017B004DD01F /* 抓取失败_音效.wav */,
-				4D82A4581F3721A2007ADE5C /* Fangzhengyuan-cuti.ttf */,
-				4D82A4531F36D18F007ADE5C /* Skranji-Bold.ttf */,
-				4D18ACBD1F260801005363A4 /* TencentOpenAPI.framework */,
-				4D18ACBE1F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle */,
-				4D5625151F2605A700515C98 /* AppDelegate.swift */,
 				4D9EBB831F271BD2002674DE /* Classes */,
+				4DE641921FEB6DDA00589537 /* Resources */,
+				4DE641941FEB6E8500589537 /* libs */,
+				4DAD03351F518AD700D7E72F /* FelixFastCatch.entitlements */,
+				4D7D3F2B1FDA7F820019B58C /* Assets.xcassets */,
+				4D5625151F2605A700515C98 /* AppDelegate.swift */,
 				4D5625211F2605A700515C98 /* Info.plist */,
 				4D18ACD21F2608F3005363A4 /* Login-header.h */,
-				4D18ACD31F261378005363A4 /* TencentShared.swift */,
-				4D9EBB801F26F163002674DE /* WeChatShared.swift */,
 			);
 			path = FelixFastCatch;
 			sourceTree = "<group>";
@@ -515,6 +506,7 @@
 		4D9EBB841F271C3A002674DE /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4DB1A60B1FEBA03800BDBE3A /* Pay */,
 				4DD613EF1FE11E87002FCCCE /* Notification */,
 				4DA23CE51F8F87B600B2337E /* UserCenter */,
 				4D1F59DA1F8CC8D900806C00 /* History */,
@@ -537,8 +529,10 @@
 		4D9EBB861F271C3A002674DE /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				4DDD2B801F2849C600102A0F /* Network */,
 				4DDD2B7D1F2848E600102A0F /* widget */,
+				4DDD2B801F2849C600102A0F /* Network */,
+				4D18ACD31F261378005363A4 /* TencentShared.swift */,
+				4D9EBB801F26F163002674DE /* WeChatShared.swift */,
 				4D9EBB951F276822002674DE /* Constants.swift */,
 				4DDD2B7B1F283F3D00102A0F /* ToastUtils.swift */,
 				4DDD2B851F286BC000102A0F /* DeviceTools.swift */,
@@ -646,6 +640,7 @@
 		4D9EBB901F274563002674DE /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				4DE6418E1FE8C5C100589537 /* Notification */,
 				4D7048AA1F90AB5D00D337F4 /* Titles */,
 				4D1F59DD1F8CCD6700806C00 /* History */,
 				4D96D39B1F5BD7B600E614CD /* Invite */,
@@ -713,6 +708,14 @@
 			path = dialog;
 			sourceTree = "<group>";
 		};
+		4DB1A60B1FEBA03800BDBE3A /* Pay */ = {
+			isa = PBXGroup;
+			children = (
+				4DB1A60C1FEBA05E00BDBE3A /* PayViewController.swift */,
+			);
+			path = Pay;
+			sourceTree = "<group>";
+		};
 		4DCD39D91F2F31AB002B7F35 /* Pay */ = {
 			isa = PBXGroup;
 			children = (
@@ -759,6 +762,7 @@
 				4DCD39B61F2DA5FC002B7F35 /* CustomerControllerButton.swift */,
 				4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */,
 				4DAD03311F51629B00D7E72F /* CustomerBannerView.swift */,
+				4DB1A6091FEB704000BDBE3A /* UIFont+CustomeFont.swift */,
 			);
 			path = widget;
 			sourceTree = "<group>";
@@ -777,6 +781,42 @@
 				4D4B25D71F5FA64900338CBD /* SharedViewDialog.swift */,
 			);
 			path = Shard;
+			sourceTree = "<group>";
+		};
+		4DE6418E1FE8C5C100589537 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				4DE6418F1FE8C5F100589537 /* NotificationTableViewCell.swift */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
+		4DE641921FEB6DDA00589537 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4D17ECF11F3B017B004DD01F /* 镜头切换_音效.wav */,
+				4D17ECEF1F3B017B004DD01F /* 游戏开始_音效.wav */,
+				4D17ECEE1F3B017B004DD01F /* background_music.mp3 */,
+				4D17ECF21F3B017B004DD01F /* 抓取成功_音效.wav */,
+				4D17ECF01F3B017B004DD01F /* 抓取失败_音效.wav */,
+				4D82A4581F3721A2007ADE5C /* Fangzhengyuan-cuti.ttf */,
+				4D82A4531F36D18F007ADE5C /* Skranji-Bold.ttf */,
+				4DE641931FEB6DE100589537 /* 开始游戏loading.gif */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4DE641941FEB6E8500589537 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				4DB1A6061FEB6EEA00BDBE3A /* TencentOpenAPI.framework */,
+				4DB1A6041FEB6EDD00BDBE3A /* AlipaySDK.framework */,
+				4D96D3971F59824600E614CD /* Customized.YWFeedbackBundle.bundle */,
+				4D38B2561F6A963E0019730A /* UMessage_Sdk_1.5.0a */,
+				4D7FF4BB1F596FEC00396C00 /* AlipaySDK.bundle */,
+				4D18ACBE1F260801005363A4 /* TencentOpenApi_IOS_Bundle.bundle */,
+			);
+			path = libs;
 			sourceTree = "<group>";
 		};
 		86C29A63B7571C0DB24E59E0 /* Pods */ = {
@@ -862,7 +902,6 @@
 			files = (
 				4D96D3981F59824600E614CD /* Customized.YWFeedbackBundle.bundle in Resources */,
 				4D7FF4BD1F596FEC00396C00 /* AlipaySDK.bundle in Resources */,
-				4D7D3F2E1FDE8CC90019B58C /* 开始游戏loading.gif in Resources */,
 				4D17ECF81F3B0355004DD01F /* 镜头切换_音效.wav in Resources */,
 				4D17ECF91F3B0355004DD01F /* 游戏开始_音效.wav in Resources */,
 				4D17ECFA1F3B0355004DD01F /* background_music.mp3 in Resources */,
@@ -1006,6 +1045,7 @@
 				4DCD39DD1F2F3CD5002B7F35 /* UserInfoDialog.swift in Sources */,
 				4D64B89C1F29D984002A9BFD /* FastLoginDialog.swift in Sources */,
 				4DCD39EC1F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift in Sources */,
+				4DE641901FE8C5F100589537 /* NotificationTableViewCell.swift in Sources */,
 				4DF058831F90D20500E17B75 /* GameUserInfoDialog.swift in Sources */,
 				4D7468291FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift in Sources */,
 				4DCD39B71F2DA5FC002B7F35 /* CustomerControllerButton.swift in Sources */,
@@ -1014,11 +1054,13 @@
 				4D1D861F1F334461005210CA /* ConstellationUtils.swift in Sources */,
 				4D05F2FB1F938F5800A8027D /* WelcomeViewController.swift in Sources */,
 				4D5BF1BD1F3851570091180B /* CheckInDialog.swift in Sources */,
+				4DB1A60A1FEB704000BDBE3A /* UIFont+CustomeFont.swift in Sources */,
 				4DCD39E91F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedCell.swift in Sources */,
 				4D2B80161F40263F0075D390 /* ShowOffRecordDialog.swift in Sources */,
 				4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */,
 				4DD3A5001F7A07D8000B5F25 /* GameSceneController.swift in Sources */,
 				4D4B25D81F5FA64900338CBD /* SharedViewDialog.swift in Sources */,
+				4DB1A60D1FEBA05E00BDBE3A /* PayViewController.swift in Sources */,
 				4D1F59D91F8CC80100806C00 /* GameHistoryViewController.swift in Sources */,
 				4DF0587F1F90C1B900E17B75 /* UserTitlesInfoDialog.swift in Sources */,
 				4DAD03341F51777200D7E72F /* WebViewController.swift in Sources */,
@@ -1158,6 +1200,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/FelixFastCatch",
 					"$(PROJECT_DIR)/FelixFastCatch/feedback",
+					"$(PROJECT_DIR)/FelixFastCatch/libs",
 				);
 				INFOPLIST_FILE = FelixFastCatch/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1165,6 +1208,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FelixFastCatch/UMessage_Sdk_1.5.0a",
+					"$(PROJECT_DIR)/FelixFastCatch/libs/UMessage_Sdk_1.5.0a",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1200,6 +1244,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/FelixFastCatch",
 					"$(PROJECT_DIR)/FelixFastCatch/feedback",
+					"$(PROJECT_DIR)/FelixFastCatch/libs",
 				);
 				INFOPLIST_FILE = FelixFastCatch/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1207,6 +1252,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FelixFastCatch/UMessage_Sdk_1.5.0a",
+					"$(PROJECT_DIR)/FelixFastCatch/libs/UMessage_Sdk_1.5.0a",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",

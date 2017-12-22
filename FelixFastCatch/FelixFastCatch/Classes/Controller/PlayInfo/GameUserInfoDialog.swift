@@ -62,7 +62,7 @@ class GameUserInfoDialog: BaseDialog {
         userFaceImageView.kf.setImage(with: URL(string: dataSources["avatar"].stringValue), placeholder: UIImage(named: "default_user_face"), options: nil, progressBlock: nil, completionHandler: nil)
         
         // 用户昵称
-        userNickName.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        userNickName.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         userNickName.text = "昵称: \(dataSources["nick"].stringValue)"
         userNickName.outLineWidth = 3
         userNickName.outTextColor = UIColor.white
@@ -79,7 +79,7 @@ class GameUserInfoDialog: BaseDialog {
         }
         
         // 用户星座
-        constellationLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        constellationLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         constellationLabel.text = "星座: " + dataSources["constellation"].stringValue
         constellationLabel.outLineWidth = 3
         constellationLabel.outTextColor = UIColor.white
@@ -93,7 +93,7 @@ class GameUserInfoDialog: BaseDialog {
         }
         
         // 用户性别
-        sexLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        sexLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         if dataSources["gender"].stringValue == "0" {
             sexLabel.text = "性别: 男"
         }else if dataSources["gender"].stringValue == "-1"{
@@ -190,16 +190,6 @@ class GameUserInfoDialog: BaseDialog {
         itemView.addSubview(titleImage)
         
         titleImage.kf.setImage(with: URL(string: itemData["achievementImg"].stringValue))
-        
-//        let title = MainCustomerLabel()
-//        title.outLineWidth = Constants.UI.OUT_LINE_WIDTH
-//        title.outTextColor = UIColor.white
-//        title.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-//        title.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
-//        title.text = itemData["name"].stringValue
-//        title.sizeToFit()
-//        title.frame = CGRect(x: 0, y: titleImage.bounds.height + 5, width: title.bounds.width, height: title.bounds.height)
-//        itemView.addSubview(title)
         
         itemView.frame.size = CGSize(width: titleImage.bounds.width, height: titleImage.bounds.height + 5)
         

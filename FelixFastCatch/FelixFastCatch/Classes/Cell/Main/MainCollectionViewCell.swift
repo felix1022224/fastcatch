@@ -97,9 +97,9 @@ extension MainCollectionViewCell{
     fileprivate func createBottomGroup(){
         let testLabel = UILabel()
         if UIScreen.main.bounds.width > 320 {
-            testLabel.font = UIFont.systemFont(ofSize: CGFloat(14))
+            testLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         }else{
-            testLabel.font = UIFont.systemFont(ofSize: CGFloat(11))
+            testLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 11)
         }
         testLabel.text = ""
         testLabel.sizeToFit()
@@ -121,10 +121,11 @@ extension MainCollectionViewCell{
     fileprivate func createTitle(){
         titleLabel = UILabel()
         if UIScreen.main.bounds.width > 320 {
-            titleLabel.font = UIFont.systemFont(ofSize: CGFloat(14))
+            titleLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         }else{
-            titleLabel.font = UIFont.systemFont(ofSize: CGFloat(11))
+            titleLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 11)
         }
+        titleLabel.textColor = UIColor.gray
         titleLabel.text = ""
         titleLabel.sizeToFit()
         titleLabel.numberOfLines = 2
@@ -145,7 +146,7 @@ extension MainCollectionViewCell{
         
         gemNumberLabel = UILabel()
         gemNumberLabel.textColor = Constants.UI.GEM_TEXT_COLOR
-        gemNumberLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
+        gemNumberLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         gemNumberLabel.sizeToFit()
         gemNumberLabel.text = ""
         bottomGroup.addSubview(gemNumberLabel)
@@ -201,7 +202,7 @@ extension MainCollectionViewCell{
         errorStatusLabel.outLineWidth = 1
         errorStatusLabel.outTextColor = UIColor.white
         errorStatusLabel.outLienTextColor = UIColor.yellow
-        errorStatusLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
+        errorStatusLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 11)
         errorStatusLabel.sizeToFit()
         errorStatusView.addSubview(errorStatusLabel)
         
@@ -245,7 +246,7 @@ extension MainCollectionViewCell{
         gameingStatusLabel.outLineWidth = 1
         gameingStatusLabel.outTextColor = UIColor.white
         gameingStatusLabel.outLienTextColor = UIColor.yellow
-        gameingStatusLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
+        gameingStatusLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 11)
         gameingStatusLabel.sizeToFit()
         gameingStatusView.addSubview(gameingStatusLabel)
         

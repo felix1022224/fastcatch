@@ -11,9 +11,14 @@ import UIKit
 /// 消息列表页面
 class NotificationViewController: UIViewController {
 
+    /// 消息列表
+    var notificationListTabView:UITableView = UITableView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
 
+    
+    
 }

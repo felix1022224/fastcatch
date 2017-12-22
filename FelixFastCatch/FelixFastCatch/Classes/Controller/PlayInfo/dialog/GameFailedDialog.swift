@@ -56,7 +56,7 @@ class GameFailedDialog: BaseDialog {
             make.centerY.equalTo(cancelGameButton)
         }
         
-        againGameTimeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        againGameTimeLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         againGameTimeLabel.outLineWidth = 3
         againGameTimeLabel.outTextColor = UIColor.white
         againGameTimeLabel.outLienTextColor = UIColor(red: 29/255.0, green: 137/255.0, blue: 0/255.0, alpha: 0.75)

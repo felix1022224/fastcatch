@@ -18,7 +18,7 @@ class Constants: NSObject {
         }
         
         /// 当前环境
-        static let nService = MZService.Release
+        static let nService = MZService.Debug
         
         static var BASE_URL:String {
             get{
@@ -183,6 +183,12 @@ class Constants: NSObject {
         
         /// 钻石数量的文字颜色
         static let GEM_TEXT_COLOR:UIColor = UIColor(red: 255/255.0, green: 162/255.0, blue: 0.0, alpha: 1)
+        
+        /// 标题图片的宽度
+        static let TITLE_IMAGE_WIDTH = UIScreen.main.bounds.width * 0.45
+        
+        static let TITLE_IMAGE_HEIGHT = TITLE_IMAGE_WIDTH * 0.25
+        
     }
     
     /// 用户

@@ -55,13 +55,13 @@ extension UserCenterViewController {
         userFaceImage.backgroundColor = UIColor.gray
         userFaceImage.layer.cornerRadius = userFaceImage.bounds.width/2
         userFaceImage.layer.masksToBounds = true
-        userFaceImage.frame = CGRect(x: 24 + userFaceImageBackground.bounds.width/2 - userFaceImage.bounds.width/2, y: titleImage.bounds.height + 5 + UIApplication.shared.statusBarFrame.height + 5 + (userFaceImageBackground.bounds.width/2 - userFaceImage.bounds.width/2), width: userFaceImage.bounds.width, height: userFaceImage.bounds.height)
+        userFaceImage.frame = CGRect(x: 24 + userFaceImageBackground.bounds.width/2 - userFaceImage.bounds.width/2, y: titleImage.bounds.height + 5 + UIApplication.shared.statusBarFrame.height + (userFaceImageBackground.bounds.width/2 - userFaceImage.bounds.width/2), width: userFaceImage.bounds.width, height: userFaceImage.bounds.height)
         topGroupView.addSubview(userFaceImage)
         
         userFaceImage.kf.setImage(with: URL(string: Constants.User.USER_FACE_IMAGE), placeholder: UIImage(named: "default_user_face"), options: nil, progressBlock: nil, completionHandler: nil)
         
         /// 用户昵称
-        userNickNameLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(13))
+        userNickNameLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 13)
         userNickNameLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         userNickNameLabel.outTextColor = UIColor.white
         userNickNameLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -77,7 +77,7 @@ extension UserCenterViewController {
         }
         
         /// 用户性别
-        userSexLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(13))
+        userSexLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 13)
         userSexLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         userSexLabel.outTextColor = UIColor.white
         userSexLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -98,7 +98,7 @@ extension UserCenterViewController {
         }
         
         /// 用户生日
-        userBirthdayLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(13))
+        userBirthdayLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 13)
         userBirthdayLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         userBirthdayLabel.outTextColor = UIColor.white
         userBirthdayLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -113,7 +113,7 @@ extension UserCenterViewController {
         
         /// 用户ID
         let userIdLabel = MainCustomerLabel()
-        userIdLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
+        userIdLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 11)
         userIdLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         userIdLabel.outTextColor = UIColor.white
         userIdLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -212,10 +212,10 @@ extension UserCenterViewController {
         view.addSubview(ucTitleImage)
         
         ucTitleImage.snp.makeConstraints { (make) in
-            make.top.equalTo(view).offset(UIApplication.shared.statusBarFrame.height + 5)
+            make.top.equalTo(view).offset(UIApplication.shared.statusBarFrame.height)
             make.centerX.equalTo(view)
-            make.width.equalTo(180)
-            make.height.equalTo(45)
+            make.width.equalTo(Constants.UI.TITLE_IMAGE_WIDTH)
+            make.height.equalTo(Constants.UI.TITLE_IMAGE_HEIGHT)
         }
         
         /// 返回按钮

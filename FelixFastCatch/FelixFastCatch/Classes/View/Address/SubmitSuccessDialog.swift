@@ -36,7 +36,7 @@ class SubmitSuccessDialog: BaseDialog {
         successInfo.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         successInfo.outTextColor = UIColor.white
         successInfo.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        successInfo.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        successInfo.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         successInfo.sizeToFit()
         addSubview(successInfo)
         

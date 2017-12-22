@@ -30,14 +30,13 @@ class GameHistoryCell: UITableViewCell {
         
         /// 背景
         let backgroundImage = UIImageView(image: UIImage(named: "游戏记录背景框"))
-//        backgroundImage.sizeToFit()
-        backgroundImage.frame.size = CGSize(width: (UIScreen.main.bounds.width * 0.98), height: (UIScreen.main.bounds.width * 0.95)*0.3)
+        backgroundImage.frame.size = CGSize(width: (UIScreen.main.bounds.width * 0.98), height: (UIScreen.main.bounds.width * 0.98)*0.3)
         addSubview(backgroundImage)
         
         /// 产品背景图
         let productBackgroundImage = UIImageView(image: UIImage(named: "游戏记录框"))
         productBackgroundImage.sizeToFit()
-        productBackgroundImage.frame = CGRect(x: productBackgroundImage.bounds.width/2.5, y: backgroundImage.bounds.height/2 - productBackgroundImage.bounds.height * 0.8/2, width: productBackgroundImage.bounds.width * 0.8, height: productBackgroundImage.bounds.height * 0.8)
+        productBackgroundImage.frame.origin = CGPoint(x: productBackgroundImage.bounds.width/2.5, y: (backgroundImage.bounds.height - productBackgroundImage.bounds.height)/2 - 2)
         addSubview(productBackgroundImage)
         
         /// 产品图
@@ -51,7 +50,6 @@ class GameHistoryCell: UITableViewCell {
         /// 游戏状态
         productStatusImage.image = UIImage(named: "游戏失败")
         productStatusImage.sizeToFit()
-//        productStatusImage.frame.size = CGSize(width: (productStatusImage.image?.size.width)! * 0.4, height: (productStatusImage.image?.size.height)! * 0.4)
         addSubview(productStatusImage)
         
         productStatusImage.snp.makeConstraints { (make) in
@@ -62,7 +60,7 @@ class GameHistoryCell: UITableViewCell {
         }
         
         /// 产品的标题
-        productTitleLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(13))
+        productTitleLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 13)
         productTitleLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         productTitleLabel.outTextColor = UIColor.white
         productTitleLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -77,7 +75,7 @@ class GameHistoryCell: UITableViewCell {
         }
         
         /// 时间记录
-        productTimeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(11))
+        productTimeLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 11)
         productTimeLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         productTimeLabel.outTextColor = UIColor.white
         productTimeLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR

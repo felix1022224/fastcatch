@@ -24,7 +24,7 @@ extension UserCenterViewController{
         
         /// 称号集合的标题
         let titlesGroupTitleLabel = MainCustomerLabel()
-        titlesGroupTitleLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(20))
+        titlesGroupTitleLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 20)
         titlesGroupTitleLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         titlesGroupTitleLabel.outTextColor = UIColor.white
         titlesGroupTitleLabel.outLienTextColor = UIColor(red: 28/255.0, green: 107/255.0, blue: 101/255.0, alpha: 1)

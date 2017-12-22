@@ -73,7 +73,7 @@ extension InviteFirendsCell{
         // 产品名标题
         userName = MainCustomerLabel()
         userName.numberOfLines = 1
-        userName.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        userName.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         userName.outLineWidth = 1
         userName.outTextColor = UIColor.white
         userName.outLienTextColor = Constants.UI.OUT_LINE_COLOR

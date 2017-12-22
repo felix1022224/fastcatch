@@ -32,32 +32,6 @@ class ShowOffRecordDialog: BaseDialog {
         
         backgroundImage.center = self.center
         
-//        let gemIcon = UIImageView(image: UIImage(named: "战绩钻石"))
-//        gemIcon.sizeToFit()
-//        addSubview(gemIcon)
-//        
-//        gemIcon.snp.makeConstraints { (make) in
-//            make.top.equalTo(backgroundImage).offset(65)
-//            make.centerX.equalTo(backgroundImage)
-//        }
-//        
-//        let sharedInfo = MainCustomerLabel()
-//        sharedInfo.outLineWidth = Constants.UI.OUT_LINE_WIDTH
-//        sharedInfo.outTextColor = UIColor.white
-//        sharedInfo.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-//        sharedInfo.text = "和好友分享你的战绩"
-//        sharedInfo.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
-//        sharedInfo.textAlignment = .center
-//        sharedInfo.lineBreakMode = NSLineBreakMode.byWordWrapping
-//        sharedInfo.numberOfLines = 0
-//        sharedInfo.sizeToFit()
-//        addSubview(sharedInfo)
-//        
-//        sharedInfo.snp.makeConstraints { (make) in
-//            make.top.equalTo(gemIcon).offset(gemIcon.bounds.height + 10)
-//            make.centerX.equalTo(backgroundImage)
-//        }
-        
         let nowShardBtn = UIButton(type: .custom)
         nowShardBtn.setBackgroundImage(UIImage(named: "立即分享"), for: .normal)
         nowShardBtn.setBackgroundImage(UIImage(named: "立即分享点击"), for: .highlighted)
@@ -94,7 +68,7 @@ class ShowOffRecordDialog: BaseDialog {
             make.bottom.equalTo(backgroundImage).offset(-15)
         }
         
-        againGameTimeLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(14))
+        againGameTimeLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
         againGameTimeLabel.outLineWidth = 3
         againGameTimeLabel.outTextColor = UIColor.white
         againGameTimeLabel.outLienTextColor = UIColor(red: 29/255.0, green: 137/255.0, blue: 0/255.0, alpha: 0.75)

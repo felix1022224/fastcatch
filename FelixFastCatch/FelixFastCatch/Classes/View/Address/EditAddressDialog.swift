@@ -57,7 +57,7 @@ class EditAddressDialog: BaseDialog {
         userNameLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         userNameLabel.outTextColor = UIColor.white
         userNameLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        userNameLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        userNameLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         userNameLabel.text = "姓名:"
         userNameLabel.textAlignment = .left
         userNameLabel.sizeToFit()
@@ -72,7 +72,7 @@ class EditAddressDialog: BaseDialog {
         userNameTextField.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         userNameTextField.outTextColor = UIColor.white
         userNameTextField.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        userNameTextField.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        userNameTextField.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         userNameTextField.placeholder = "请输入姓名"
         userNameTextField.background = UIImage(named: "邮寄地址输入框")
         userNameTextField.textColor = UIColor.white
@@ -90,7 +90,7 @@ class EditAddressDialog: BaseDialog {
         phoneNumberLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         phoneNumberLabel.outTextColor = UIColor.white
         phoneNumberLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        phoneNumberLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        phoneNumberLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         phoneNumberLabel.text = "手机:"
         phoneNumberLabel.sizeToFit()
         addSubview(phoneNumberLabel)
@@ -106,7 +106,7 @@ class EditAddressDialog: BaseDialog {
         phoneNumberTextField.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         phoneNumberTextField.outTextColor = UIColor.white
         phoneNumberTextField.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        phoneNumberTextField.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        phoneNumberTextField.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         phoneNumberTextField.placeholder = "请输入手机"
         phoneNumberTextField.background = UIImage(named: "邮寄地址输入框")
         phoneNumberTextField.textColor = UIColor.white
@@ -126,7 +126,7 @@ class EditAddressDialog: BaseDialog {
         addressLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         addressLabel.outTextColor = UIColor.white
         addressLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        addressLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        addressLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         addressLabel.text = "地址:"
         addressLabel.sizeToFit()
         addSubview(addressLabel)
@@ -142,7 +142,7 @@ class EditAddressDialog: BaseDialog {
         addressTextFiled.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         addressTextFiled.outTextColor = UIColor.white
         addressTextFiled.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        addressTextFiled.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        addressTextFiled.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         addressTextFiled.placeholder = "请输入地址"
         addressTextFiled.background = UIImage(named: "邮寄地址输入框")
         addressTextFiled.textColor = UIColor.white
@@ -310,8 +310,10 @@ extension EditAddressDialog:UITextFieldDelegate{
             
             if (existedLength! - selectedLength + replaceLength >= 12) {
                 let endIndex = textField.text?.index((textField.text?.startIndex)!, offsetBy: 11)
-                textField.text = textField.text?.substring(with: Range<String.Index>(uncheckedBounds: ((textField.text?.startIndex)!, endIndex!)))
-//                textField.text = String(describing: textField.text?[Range<String.Index>(uncheckedBounds: ((textField.text?.startIndex)!, endIndex!))])
+
+                let subString = textField.text?.prefix(upTo: endIndex!)
+                textField.text = String(subString!)
+
                 return false
             }
         }

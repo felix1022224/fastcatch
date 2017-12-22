@@ -78,7 +78,7 @@ class CheckInDialog: BaseDialog {
         tipsLabel.outTextColor = UIColor.white
         tipsLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         tipsLabel.text = "已连续签到" + String(Constants.User.checkDays) + "天共获取" + String(Constants.User.checkDays) + "代币"
-        tipsLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        tipsLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         tipsLabel.sizeToFit()
         addSubview(tipsLabel)
 

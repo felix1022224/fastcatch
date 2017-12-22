@@ -35,7 +35,7 @@ class CustomerServiceInfoDialog: BaseDialog {
         }
         
         let qqInfo = MainCustomerLabel()
-        qqInfo.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(16))
+        qqInfo.font = UIFont.getCustomeYuanTiFont(fontSize: 16)
         qqInfo.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         qqInfo.outTextColor = UIColor.white
         qqInfo.outLienTextColor = Constants.UI.OUT_LINE_COLOR
@@ -61,7 +61,7 @@ class CustomerServiceInfoDialog: BaseDialog {
         }
         
         let servicePhoneLabel = MainCustomerLabel()
-        servicePhoneLabel.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        servicePhoneLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         servicePhoneLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         servicePhoneLabel.outTextColor = UIColor.white
         servicePhoneLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR

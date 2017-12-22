@@ -35,7 +35,7 @@ class TitlesCell: UICollectionViewCell {
         title.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         title.outTextColor = UIColor.white
         title.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        title.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(12))
+        title.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         title.text = "萌新"
         title.textAlignment = .center
         title.sizeToFit()
@@ -52,8 +52,7 @@ class TitlesCell: UICollectionViewCell {
         info.outLineWidth = 2
         info.outTextColor = UIColor.white
         info.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        info.font = UIFont(name: "FZY4K--GBK1-0", size: CGFloat(10))
-//        info.text = "萌新\n123333"
+        info.font = UIFont.getCustomeYuanTiFont(fontSize: 10)
         info.numberOfLines = 2
         info.textAlignment = .center
         info.sizeToFit()
