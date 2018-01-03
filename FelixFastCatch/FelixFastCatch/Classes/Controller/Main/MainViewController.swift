@@ -27,6 +27,8 @@ class MainViewController: UIViewController{
     /// 顶部集合
     fileprivate lazy var bannerGroupView:UIView = UIView()
     
+    fileprivate var topBannerView:CustomerBannerWidget!
+    
     // banner 指示器
     fileprivate lazy var pageControl:UIPageControl = UIPageControl()
     
@@ -41,6 +43,7 @@ class MainViewController: UIViewController{
     
     // banner数据
     fileprivate var mainBannersData:[JSON] = [JSON]()
+    fileprivate var mainBannersImages:[String] = [String]()
     
     // 首页列表的数据
     lazy var mainListData:[JSON] = [JSON]()
@@ -107,8 +110,6 @@ class MainViewController: UIViewController{
     
     fileprivate var spiltMachineList:[String: [JSON]] = [String: [JSON]]()
     
-//    fileprivate var splitMachineList:[String: ]
-    
     fileprivate var isShowADV = false
     
     /// 顶部集合
@@ -125,33 +126,13 @@ class MainViewController: UIViewController{
         
         self.navigationController?.navigationBar.isHidden = true
         
-        backgroundImage.image = UIImage(named: "main_background")
+        backgroundImage.image = UIImage(named: "邮寄背景")
         backgroundImage.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         view.addSubview(backgroundImage)
         
-//        topView.image = UIImage(named: "顶部条")
-//        topView.sizeToFit()
-//        topView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: topView.bounds.height)
-        
         setupUI()
-        
-//        view.addSubview(topView)
-        
-//        changeListBtn.setBackgroundImage(UIImage(named: "换一换"), for: .normal)
-//        changeListBtn.sizeToFit()
-//        view.addSubview(changeListBtn)
-//
-//        changeListBtn.snp.makeConstraints { (make) in
-//            make.bottom.equalTo(topView).offset(-14)
-//            make.right.equalTo(self.view).offset(-8)
-//        }
-//
-//        changeListBtn.addTarget(self, action: #selector(changeListData), for: .touchUpInside)
-        
-//        SplashView.updateSplashData(imgUrl: "http://img0.zgtuku.com/images/front/v/d3/59/235563250418.jpg", actUrl: "http://www.baidu.com")
-//        SplashView.simpleShowSplashView()
-        
         getOpenAdv()
+        
     }
     
     /// 切换list
@@ -183,7 +164,7 @@ class MainViewController: UIViewController{
                         return
                     }
                     let webVC = WebViewController()
-                    webVC.mainVC = self
+//                    webVC.mainVC = self
                     webVC.link = link
                     webVC.shareTitle = UserDefaults.standard.string(forKey: SplashView.OPEN_ADV_SHARE_TITLE)
                     webVC.shareInfo = UserDefaults.standard.string(forKey: SplashView.OPEN_ADV_SHARE_INFO)
@@ -218,8 +199,7 @@ class MainViewController: UIViewController{
             self.isShowADV = true
             
             if Constants.User.USER_ID == "" {
-                //            fastLoginDialog.createView()
-                //            fastLoginDialog.show()
+                
             }else {
                 self.getsUserInfo()
             }
@@ -256,11 +236,8 @@ class MainViewController: UIViewController{
     /// 初始化
     func setupUI() -> () {
         createBannerView()
-        
         createDataList()
-        
         createMainBtns()
-    
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -272,7 +249,6 @@ class MainViewController: UIViewController{
             }
         }
         
-        self.creatTimer()
         self.bannerViewIsTouch = false
     }
     
@@ -292,48 +268,18 @@ extension MainViewController:UIScrollViewDelegate{
     /// 创建banner的view
     func createBannerView() -> () {
         //设置banner图view的属性
-        bannerView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width - 14, height: getBannerHeight() - 16)
-        bannerView.backgroundColor = UIColor.clear
-        bannerView.bounces = false
-        bannerView.isPagingEnabled = true
-        bannerView.showsHorizontalScrollIndicator = false
-        bannerView.showsVerticalScrollIndicator = false
+        topBannerView = CustomerBannerWidget(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: getBannerHeight()), delegate: self)
+        topBannerView.isUserInteractionEnabled = true
+        view.addSubview(topBannerView)
         
-        bannerView.layer.masksToBounds = true
-        bannerView.layer.cornerRadius = 10
-
-        // 设置代理
-        bannerView.delegate = self
-        
-        bannerGroupView.frame = CGRect(x: 7, y: 5, width: UIScreen.main.bounds.width - 14, height: getBannerHeight() - 16)
-
-        bannerGroupView.layer.masksToBounds = true
-        bannerGroupView.layer.cornerRadius = 10
-        
-        bannerGroupView.isUserInteractionEnabled = true
-        
-        // 阴影
-        bannerGroupView.layer.shadowColor = UIColor.lightGray.cgColor
-        bannerGroupView.layer.shadowOpacity = 0.4
-        bannerGroupView.layer.shadowRadius = 5
-        bannerGroupView.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
-        
-        bannerGroupView.addSubview(bannerView)
-        bannerGroupView.addSubview(pageControl)
-        
-//        view.addSubview(pageControl)
+        let tapGR = UITapGestureRecognizer(target: self, action:#selector(bannerTap))
+        topBannerView.isUserInteractionEnabled = true
+        topBannerView.addGestureRecognizer(tapGR)
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if !bannerViewIsTouch {
-            let page = Int(scrollView.contentOffset.x / (scrollView.frame.size.width - 14))
-            pageControl.currentPage = page
-        }
-    }
-    
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        let page = Int(scrollView.contentOffset.x / (scrollView.frame.size.width - 14))
-        pageControl.currentPage = page
+    /// banner图的点击效果
+    @objc func bannerTap(){
+        clickBannerItem(index: topBannerView.currentIndex)
     }
     
     /// 获取banner图的高度
@@ -342,113 +288,40 @@ extension MainViewController:UIScrollViewDelegate{
     func getBannerHeight() -> CGFloat {
         return UIScreen.main.bounds.width * 0.45 - 1
     }
+}
+
+/// 首页banner 的代理
+extension MainViewController: BannerDelegate{
     
-    //创建轮播图定时器
-    func creatTimer() {
-        if timer != nil {
-            timer.invalidate()
-            timer = nil
-        }
-        
-        timer =  Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.timerManager), userInfo: nil, repeats: true)
-        
-        //这句话实现多线程，如果你的ScrollView是作为TableView的headerView的话，在拖动tableView的时候让轮播图仍然能轮播就需要用到这句话
-        RunLoop.current.add(timer, forMode: RunLoopMode.commonModes)
-        bannerView.delaysContentTouches = false
-        bannerView.touchBeganFunc = {[weak self] in
-            if self?.timer != nil {
-                self?.timer.invalidate()
-                self?.timer = nil
-            }
-            self?.bannerViewIsTouch = true
-        }
-        
-        bannerView.touchEndFunc = {[weak self] in
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
-                self?.creatTimer()
-                self?.bannerViewIsTouch = false
-            })
-        }
-        
+    func getBannerDataSource() -> [String] {
+        return self.mainBannersImages
     }
     
-    //创建定时器管理者
-    @objc func timerManager() {
-        let contentOffsetX = self.bannerView.contentOffset.x + self.view.frame.size.width - 14
-        let count = CGFloat(mainBannersData.count) - 1
-        
-        if contentOffsetX > (self.view.frame.size.width - 14) * CGFloat(count) {
-            // 当前视图显示的是第三个的时候，设置bottomView的偏移量为0
-            self.bannerView.setContentOffset(CGPoint(x:0, y:0), animated: true)
-        }else{
-            self.bannerView.setContentOffset(CGPoint(x:contentOffsetX,y:0), animated: true)
-        }
-    }
-    
-    func setupImages() -> () {
-        //循环增加图片到scrollview当中
-        for i:Int in 0..<mainBannersData.count{
-            let iv = UIImageView()
-            iv.frame = CGRect(x: CGFloat(i) * (self.view.bounds.width - 14), y: 0, width: self.view.bounds.width - 14, height: getBannerHeight() - 18 + 1)
-            iv.kf.setImage(with: URL(string: mainBannersData[i]["bannerBigImg"].string!))
-            bannerView.addSubview(iv)
-            iv.tag = i
-            /////设置允许交互属性
-            iv.isUserInteractionEnabled = true
-            
-            iv.layer.masksToBounds = true
-            iv.layer.cornerRadius = 10
-            
-            /////添加tapGuestureRecognizer手势
-            let tapGR = UITapGestureRecognizer(target: self, action:#selector(bannerTap(sender:)))
-            iv.addGestureRecognizer(tapGR)
-        }
-        
-        bannerView.contentSize = CGSize(width: (self.view.bounds.width - 14) * CGFloat(mainBannersData.count), height: getBannerHeight() - 16)
-        
-        // 设置指示器的属性
-        pageControl.numberOfPages = mainBannersData.count
-        pageControl.backgroundColor = UIColor.clear
-        pageControl.currentPage = 0
-        pageControl.sizeToFit()
-        pageControl.currentPageIndicatorTintColor = UIColor.yellow
-        pageControl.pageIndicatorTintColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 0.8)
-        
-        // 设置指示器的约束
-        pageControl.frame = CGRect(x: self.view.bounds.width/2 - pageControl.bounds.width/2, y: bannerView.bounds.height - pageControl.bounds.height, width: pageControl.bounds.width, height: pageControl.bounds.height)
-        
-        if mainBannersData.count <= 1 {
-            return
-        }
-        creatTimer()
-    }
-    
-    @objc func bannerTap(sender:UITapGestureRecognizer) -> () {
-        print("webtype:\(self.mainBannersData[(sender.view?.tag)!]["redirectType"].intValue)")
-        if self.mainBannersData[(sender.view?.tag)!]["redirectType"].intValue == 1 {
-            let link = self.mainBannersData[(sender.view?.tag)!]["scheme"].stringValue
+    func clickBannerItem(index: Int) {
+        if self.mainBannersData[index]["redirectType"].intValue == 1 {
+            let link = self.mainBannersData[index]["scheme"].stringValue
             // 跳转到网页
             if link == "" {
                 return
             }
             let webVC = WebViewController()
-            webVC.mainVC = self
+//            webVC.mainVC = self
             webVC.link = link
-            webVC.shareTitle = self.mainBannersData[(sender.view?.tag)!]["shareTitle"].stringValue
-            webVC.shareInfo = self.mainBannersData[(sender.view?.tag)!]["shareSubtitle"].stringValue
-            webVC.thumbShareImage = self.mainBannersData[(sender.view?.tag)!]["shareImg"].stringValue
-            webVC.actionTitle = self.mainBannersData[(sender.view?.tag)!]["title"].stringValue
+            webVC.shareTitle = self.mainBannersData[index]["shareTitle"].stringValue
+            webVC.shareInfo = self.mainBannersData[index]["shareSubtitle"].stringValue
+            webVC.thumbShareImage = self.mainBannersData[index]["shareImg"].stringValue
+            webVC.actionTitle = self.mainBannersData[index]["title"].stringValue
             self.navigationController?.pushViewController(webVC, animated: true)
-        }else if self.mainBannersData[(sender.view?.tag)!]["redirectType"].intValue == 2 {
-            let link = self.mainBannersData[(sender.view?.tag)!]["scheme"].intValue
+        }else if self.mainBannersData[index]["redirectType"].intValue == 2 {
+            let link = self.mainBannersData[index]["scheme"].intValue
             if link == -1 {
                 showPayDialog()
                 return
             }else{
                 itemClick(index: link)
             }
-        }else if self.mainBannersData[(sender.view?.tag)!]["redirectType"].intValue == 3 {
-            if let url = URL(string: self.mainBannersData[(sender.view?.tag)!]["scheme"].stringValue) {
+        }else if self.mainBannersData[index]["redirectType"].intValue == 3 {
+            if let url = URL(string: self.mainBannersData[index]["scheme"].stringValue) {
                 
                 //根据iOS系统版本，分别处理
                 if #available(iOS 10, *) {
@@ -458,6 +331,10 @@ extension MainViewController:UIScrollViewDelegate{
                 }
             }
         }
+    }
+    
+    func isRoundCorners() -> Bool {
+        return true
     }
     
 }
@@ -473,12 +350,16 @@ extension MainViewController{
         Alamofire.request(Constants.Network.MAIN_BANNER_LIST, method: .post, parameters: params).responseJSON { (response) in
             if response.error == nil {
                 self.mainBannersData.removeAll()
+                self.mainBannersImages.removeAll()
                 
                 let jsonObject = JSON(response.data!)
                 self.mainBannersData = jsonObject["data"].arrayValue
                 
-                self.setupImages()
+                for itemData in self.mainBannersData {
+                    self.mainBannersImages.append(itemData["bannerBigImg"].stringValue)
+                }
                 
+                self.topBannerView.reloadData()
             }else{
                 print("error:\(String(describing: response.error))")
             }
@@ -688,7 +569,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
                 return
             }
             let webVC = WebViewController()
-            webVC.mainVC = self
+//            webVC.mainVC = self
             webVC.link = link
             webVC.shareTitle = item["shareTitle"].stringValue
             webVC.shareInfo = item["shareSubtitle"].stringValue
@@ -722,7 +603,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         
         if kind == UICollectionElementKindSectionHeader {
             header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "header", for: indexPath)
-            header.addSubview(bannerGroupView)
+            header.addSubview(topBannerView)
             
             if indexPath.section == 0 {
                 header.isHidden = false
@@ -811,7 +692,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         
         let gameSceneViewController = GameSceneViewController()
-        
         gameSceneViewController.deviceId = mainListData[index]["deviceId"].stringValue
         
         gameSceneViewController.needLogin = { [weak self] in
@@ -843,13 +723,10 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         gameSceneViewController.shareTitle = mainListData[index]["activity"]["shareTitle"].stringValue
         gameSceneViewController.shareInfo = mainListData[index]["activity"]["shareSubtitle"].stringValue
         gameSceneViewController.thumbShareImage = mainListData[index]["activity"]["shareImg"].stringValue
-        
         gameSceneViewController.startCoinNumber = mainListData[index]["perDiamondsCount"].intValue
-        
         gameSceneViewController.bottomAwardCardImagePath = mainListData[index]["award"]["img"].stringValue
         gameSceneViewController.bootomAwardDescription = mainListData[index]["award"]["description"].stringValue
         gameSceneViewController.bottomAwardTitle = mainListData[index]["award"]["title"].stringValue
-        
         gameSceneViewController.bootomBannerCardImagePath = mainListData[index]["activity"]["bannerSmallImg"].stringValue
         gameSceneViewController.bottomBannerCardScheme = mainListData[index]["activity"]["scheme"].stringValue
         
@@ -895,7 +772,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         return true
     }
-    
 }
 
 
@@ -1072,7 +948,7 @@ extension MainViewController{
             return
         }
         inviteDialog.createView()
-        inviteDialog.show2(mainController: self)
+//        inviteDialog.show2(mainController: self)
     }
     
     /// 显示我的礼物
@@ -1087,7 +963,7 @@ extension MainViewController{
     
     func showFastLogin() -> () {
         fastLoginDialog.createView()
-        fastLoginDialog.show2(mainViewController: self)
+//        fastLoginDialog.show2(mainViewController: self)
     }
     
     
@@ -1111,6 +987,8 @@ extension MainViewController{
             showFastLogin()
             return
         }
+//        let payViewController = PayViewController()
+//        self.navigationController?.pushViewController(payViewController, animated: true)
         payGemDialog.createView()
         payGemDialog.show2(mainViewController: self)
     }
@@ -1263,30 +1141,17 @@ extension MainViewController{
             return
         }
         Alamofire.request(Constants.Network.GET_SYS_INFO_VERSION, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { (response) in
-//            print("versionValue:\(response.result.value!)")
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(data: response.data!)
                 let infoDictionary = Bundle.main.infoDictionary!
                 if let buildVersion = (infoDictionary["CFBundleVersion"] as? NSString)?.doubleValue {
-//                    print("buildVersion:\(buildVersion)")
                     if json["data"].doubleValue >= buildVersion {
                         print("正式")
                         self.payGemBtn.isHidden = false
-//                        Constants.isShowPay = true
                     }else{
                         print("提审")
-                        
-//                        self.payGemBtn.isHidden = true
-//                        Constants.isShowPay = false
                     }
-                }else {
-//                    self.payGemBtn.isHidden = true
-//                    Constants.isShowPay = false
                 }
-            }else{
-                /// 发生异常
-//                self.payGemBtn.isHidden = true
-//                Constants.isShowPay = false
             }
         }
     }
@@ -1353,10 +1218,7 @@ extension MainViewController{
             })
         }
     }
-    
 }
-
-
 
 
 

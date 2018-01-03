@@ -127,16 +127,8 @@ class EditInviteCode: BaseDialog {
         }
     }
     
-    private var mainvc:MainViewController!
-    
-    func show2(mainViewController:MainViewController) -> () {
-        mainvc = mainViewController
-        show()
-    }
-    
     override func hide() {
         super.hide()
-        self.mainvc = nil
     }
     
     func showInviteSuccessDialog() -> () {

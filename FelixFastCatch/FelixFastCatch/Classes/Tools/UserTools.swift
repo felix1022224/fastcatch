@@ -18,6 +18,10 @@ class UserTools: NSObject {
             if NetWorkUtils.checkReponse(response: response) {
                 /// 更新用户信息
                 let json = JSON(response.result.value!)
+                
+                Constants.User.vip = json["data"]["vip"].intValue
+                Constants.User.vipDay = json["data"]["vipDay"].intValue
+                
                 Constants.User.addrName = json["data"]["pav"]["name"].stringValue
                 Constants.User.addr = json["data"]["pav"]["addr"].stringValue
                 Constants.User.addrPhone = json["data"]["pav"]["phone"].stringValue

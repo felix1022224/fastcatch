@@ -55,7 +55,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         UMessage.setLogEnabled(true)
         
         window = UIWindow()
-        let vc = MainViewController()
+//        let vc = MainViewController()
+        let vc = HomeViewController()
         let nav = UINavigationController(rootViewController: vc)
         window?.rootViewController = nav
         window?.makeKeyAndVisible()

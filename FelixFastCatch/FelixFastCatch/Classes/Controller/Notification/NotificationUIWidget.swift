@@ -16,9 +16,7 @@ extension NotificationViewController {
     
     func setupUI() {
         /// 设置背景
-        let backgroundImage = UIImageView(image: UIImage(named: "邮寄背景"))
-        backgroundImage.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-        view.addSubview(backgroundImage)
+        setBackgroundImage(rootView: view, imgName: "邮寄背景")
         
         /// 顶部标题
         let topTitile = UIImageView(image: UIImage(named: "消息列表顶部标题"))

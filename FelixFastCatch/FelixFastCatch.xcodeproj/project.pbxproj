@@ -68,12 +68,24 @@
 		4D7468291FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7468281FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift */; };
 		4D74682B1FCFE4C500E8E662 /* HorzontalGameSceneWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D74682A1FCFE4C500E8E662 /* HorzontalGameSceneWidget.swift */; };
 		4D74682D1FD127A500E8E662 /* StartGameCountdownDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D74682C1FD127A500E8E662 /* StartGameCountdownDialog.swift */; };
+		4D7AB3B81FF24A2200270A62 /* SPPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7AB3AB1FF24A2200270A62 /* SPPageController.m */; };
+		4D7AB3B91FF24A2200270A62 /* SPTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7AB3AD1FF24A2200270A62 /* SPTabController.m */; };
+		4D7AB3BA1FF24A2200270A62 /* SPCoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7AB3AF1FF24A2200270A62 /* SPCoverController.m */; };
+		4D7AB3BB1FF24A2200270A62 /* SPPageTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7AB3B21FF24A2200270A62 /* SPPageTagView.m */; };
+		4D7AB3BC1FF24A2200270A62 /* SPTagBarScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7AB3B51FF24A2200270A62 /* SPTagBarScrollView.m */; };
+		4D7AB3BD1FF24A2200270A62 /* SPPageContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7AB3B61FF24A2200270A62 /* SPPageContentView.m */; };
+		4D7AB3BF1FF24C8700270A62 /* MainListWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7AB3BE1FF24C8700270A62 /* MainListWidget.swift */; };
+		4D7AB3C21FF2639400270A62 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7AB3C11FF2639400270A62 /* HomeViewController.swift */; };
+		4D7AB3C41FF4A9AF00270A62 /* CustomerHomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7AB3C31FF4A9AF00270A62 /* CustomerHomeTabView.swift */; };
+		4D7AB3C71FF4CB1C00270A62 /* DHOutLineLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7AB3C61FF4CB1C00270A62 /* DHOutLineLabel.m */; };
+		4D7AB3CA1FF4DBDD00270A62 /* TabContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7AB3C91FF4DBDD00270A62 /* TabContentView.m */; };
 		4D7D3F2A1FD930380019B58C /* HorzontalGameSceneAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7D3F291FD930380019B58C /* HorzontalGameSceneAudioController.swift */; };
 		4D7D3F2C1FDA7F830019B58C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D7D3F2B1FDA7F820019B58C /* Assets.xcassets */; };
 		4D7FF4BD1F596FEC00396C00 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4D7FF4BB1F596FEC00396C00 /* AlipaySDK.bundle */; };
 		4D82A4521F36C7AD007ADE5C /* UserTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D82A4511F36C7AD007ADE5C /* UserTools.swift */; };
 		4D82A4551F36D33B007ADE5C /* Skranji-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D82A4531F36D18F007ADE5C /* Skranji-Bold.ttf */; };
 		4D82A4591F3721BF007ADE5C /* Fangzhengyuan-cuti.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D82A4581F3721A2007ADE5C /* Fangzhengyuan-cuti.ttf */; };
+		4D87008F1FF626E6005F5645 /* DHImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D87008E1FF626E6005F5645 /* DHImageView.m */; };
 		4D879B671F7CABF6009F2ECC /* MainBeginnerGuidGiftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D879B661F7CABF6009F2ECC /* MainBeginnerGuidGiftView.swift */; };
 		4D879B691F7CAEE8009F2ECC /* MainBeginnerGuidPlaySwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D879B681F7CAEE8009F2ECC /* MainBeginnerGuidPlaySwitchView.swift */; };
 		4D96D3981F59824600E614CD /* Customized.YWFeedbackBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4D96D3971F59824600E614CD /* Customized.YWFeedbackBundle.bundle */; };
@@ -101,6 +113,11 @@
 		4DB1A6081FEB6F6300BDBE3A /* libUMessage_Sdk_1.5.0a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D38B2571F6A963E0019730A /* libUMessage_Sdk_1.5.0a.a */; };
 		4DB1A60A1FEB704000BDBE3A /* UIFont+CustomeFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB1A6091FEB704000BDBE3A /* UIFont+CustomeFont.swift */; };
 		4DB1A60D1FEBA05E00BDBE3A /* PayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB1A60C1FEBA05E00BDBE3A /* PayViewController.swift */; };
+		4DB1A60F1FF0CBAD00BDBE3A /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB1A60E1FF0CBAD00BDBE3A /* UIViewController+Extension.swift */; };
+		4DB1A6111FF0CCB000BDBE3A /* PayVCWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB1A6101FF0CCB000BDBE3A /* PayVCWidget.swift */; };
+		4DB1A6141FF0D0D000BDBE3A /* CustomerBannerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB1A6131FF0D0D000BDBE3A /* CustomerBannerWidget.swift */; };
+		4DB1A6161FF10B8100BDBE3A /* PayVCRootWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB1A6151FF10B8100BDBE3A /* PayVCRootWidget.swift */; };
+		4DB1A6191FF2227E00BDBE3A /* MainVCUIWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB1A6181FF2227E00BDBE3A /* MainVCUIWidget.swift */; };
 		4DBDE8B61F6AB1F60058E4FE /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DD6C1571F6A81D900007EE6 /* UserNotifications.framework */; };
 		4DCC49CA1F52A65F0017D4A4 /* PlayInfoBannerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCC49C91F52A65F0017D4A4 /* PlayInfoBannerDialog.swift */; };
 		4DCC49CC1F52E0110017D4A4 /* PlayInfoAwardDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCC49CB1F52E0110017D4A4 /* PlayInfoAwardDialog.swift */; };
@@ -215,12 +232,36 @@
 		4D7468281FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalGameSceneViewController.swift; sourceTree = "<group>"; };
 		4D74682A1FCFE4C500E8E662 /* HorzontalGameSceneWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorzontalGameSceneWidget.swift; sourceTree = "<group>"; };
 		4D74682C1FD127A500E8E662 /* StartGameCountdownDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartGameCountdownDialog.swift; sourceTree = "<group>"; };
+		4D7AB3A71FF24A2200270A62 /* SPPageProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPPageProtocol.h; sourceTree = "<group>"; };
+		4D7AB3A81FF24A2200270A62 /* SPTabProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTabProtocol.h; sourceTree = "<group>"; };
+		4D7AB3A91FF24A2200270A62 /* SPCoverProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPCoverProtocol.h; sourceTree = "<group>"; };
+		4D7AB3AB1FF24A2200270A62 /* SPPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPPageController.m; sourceTree = "<group>"; };
+		4D7AB3AC1FF24A2200270A62 /* SPCoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPCoverController.h; sourceTree = "<group>"; };
+		4D7AB3AD1FF24A2200270A62 /* SPTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTabController.m; sourceTree = "<group>"; };
+		4D7AB3AE1FF24A2200270A62 /* SPPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPPageController.h; sourceTree = "<group>"; };
+		4D7AB3AF1FF24A2200270A62 /* SPCoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPCoverController.m; sourceTree = "<group>"; };
+		4D7AB3B01FF24A2200270A62 /* SPTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTabController.h; sourceTree = "<group>"; };
+		4D7AB3B21FF24A2200270A62 /* SPPageTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPPageTagView.m; sourceTree = "<group>"; };
+		4D7AB3B31FF24A2200270A62 /* SPPageContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPPageContentView.h; sourceTree = "<group>"; };
+		4D7AB3B41FF24A2200270A62 /* SPTagBarScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTagBarScrollView.h; sourceTree = "<group>"; };
+		4D7AB3B51FF24A2200270A62 /* SPTagBarScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTagBarScrollView.m; sourceTree = "<group>"; };
+		4D7AB3B61FF24A2200270A62 /* SPPageContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPPageContentView.m; sourceTree = "<group>"; };
+		4D7AB3B71FF24A2200270A62 /* SPPageTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPPageTagView.h; sourceTree = "<group>"; };
+		4D7AB3BE1FF24C8700270A62 /* MainListWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListWidget.swift; sourceTree = "<group>"; };
+		4D7AB3C11FF2639400270A62 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		4D7AB3C31FF4A9AF00270A62 /* CustomerHomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerHomeTabView.swift; sourceTree = "<group>"; };
+		4D7AB3C51FF4CB1B00270A62 /* DHOutLineLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHOutLineLabel.h; sourceTree = "<group>"; };
+		4D7AB3C61FF4CB1C00270A62 /* DHOutLineLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHOutLineLabel.m; sourceTree = "<group>"; };
+		4D7AB3C81FF4DBDD00270A62 /* TabContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TabContentView.h; sourceTree = "<group>"; };
+		4D7AB3C91FF4DBDD00270A62 /* TabContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TabContentView.m; sourceTree = "<group>"; };
 		4D7D3F291FD930380019B58C /* HorzontalGameSceneAudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorzontalGameSceneAudioController.swift; sourceTree = "<group>"; };
 		4D7D3F2B1FDA7F820019B58C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D7FF4BB1F596FEC00396C00 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		4D82A4511F36C7AD007ADE5C /* UserTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTools.swift; sourceTree = "<group>"; };
 		4D82A4531F36D18F007ADE5C /* Skranji-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Skranji-Bold.ttf"; sourceTree = "<group>"; };
 		4D82A4581F3721A2007ADE5C /* Fangzhengyuan-cuti.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fangzhengyuan-cuti.ttf"; sourceTree = "<group>"; };
+		4D87008D1FF626E6005F5645 /* DHImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHImageView.h; sourceTree = "<group>"; };
+		4D87008E1FF626E6005F5645 /* DHImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHImageView.m; sourceTree = "<group>"; };
 		4D879B661F7CABF6009F2ECC /* MainBeginnerGuidGiftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBeginnerGuidGiftView.swift; sourceTree = "<group>"; };
 		4D879B681F7CAEE8009F2ECC /* MainBeginnerGuidPlaySwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBeginnerGuidPlaySwitchView.swift; sourceTree = "<group>"; };
 		4D96D3971F59824600E614CD /* Customized.YWFeedbackBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Customized.YWFeedbackBundle.bundle; sourceTree = "<group>"; };
@@ -248,6 +289,11 @@
 		4DB1A6061FEB6EEA00BDBE3A /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		4DB1A6091FEB704000BDBE3A /* UIFont+CustomeFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+CustomeFont.swift"; sourceTree = "<group>"; };
 		4DB1A60C1FEBA05E00BDBE3A /* PayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayViewController.swift; sourceTree = "<group>"; };
+		4DB1A60E1FF0CBAD00BDBE3A /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		4DB1A6101FF0CCB000BDBE3A /* PayVCWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayVCWidget.swift; sourceTree = "<group>"; };
+		4DB1A6131FF0D0D000BDBE3A /* CustomerBannerWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerBannerWidget.swift; sourceTree = "<group>"; };
+		4DB1A6151FF10B8100BDBE3A /* PayVCRootWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayVCRootWidget.swift; sourceTree = "<group>"; };
+		4DB1A6181FF2227E00BDBE3A /* MainVCUIWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVCUIWidget.swift; sourceTree = "<group>"; };
 		4DCC49C91F52A65F0017D4A4 /* PlayInfoBannerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayInfoBannerDialog.swift; sourceTree = "<group>"; };
 		4DCC49CB1F52E0110017D4A4 /* PlayInfoAwardDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayInfoAwardDialog.swift; sourceTree = "<group>"; };
 		4DCC49CD1F52E8B10017D4A4 /* EditInviteCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditInviteCode.swift; sourceTree = "<group>"; };
@@ -483,6 +529,68 @@
 			path = Mailing;
 			sourceTree = "<group>";
 		};
+		4D7AB3A51FF24A2200270A62 /* SPPage */ = {
+			isa = PBXGroup;
+			children = (
+				4D7AB3A61FF24A2200270A62 /* Protocol */,
+				4D7AB3AA1FF24A2200270A62 /* Controller */,
+				4D7AB3B11FF24A2200270A62 /* View */,
+			);
+			path = SPPage;
+			sourceTree = "<group>";
+		};
+		4D7AB3A61FF24A2200270A62 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				4D7AB3A71FF24A2200270A62 /* SPPageProtocol.h */,
+				4D7AB3A81FF24A2200270A62 /* SPTabProtocol.h */,
+				4D7AB3A91FF24A2200270A62 /* SPCoverProtocol.h */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		4D7AB3AA1FF24A2200270A62 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4D7AB3AB1FF24A2200270A62 /* SPPageController.m */,
+				4D7AB3AC1FF24A2200270A62 /* SPCoverController.h */,
+				4D7AB3AD1FF24A2200270A62 /* SPTabController.m */,
+				4D7AB3AE1FF24A2200270A62 /* SPPageController.h */,
+				4D7AB3AF1FF24A2200270A62 /* SPCoverController.m */,
+				4D7AB3B01FF24A2200270A62 /* SPTabController.h */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		4D7AB3B11FF24A2200270A62 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4D87008D1FF626E6005F5645 /* DHImageView.h */,
+				4D87008E1FF626E6005F5645 /* DHImageView.m */,
+				4D7AB3C51FF4CB1B00270A62 /* DHOutLineLabel.h */,
+				4D7AB3C61FF4CB1C00270A62 /* DHOutLineLabel.m */,
+				4D7AB3B21FF24A2200270A62 /* SPPageTagView.m */,
+				4D7AB3B31FF24A2200270A62 /* SPPageContentView.h */,
+				4D7AB3B41FF24A2200270A62 /* SPTagBarScrollView.h */,
+				4D7AB3B51FF24A2200270A62 /* SPTagBarScrollView.m */,
+				4D7AB3B61FF24A2200270A62 /* SPPageContentView.m */,
+				4D7AB3B71FF24A2200270A62 /* SPPageTagView.h */,
+				4D7AB3C81FF4DBDD00270A62 /* TabContentView.h */,
+				4D7AB3C91FF4DBDD00270A62 /* TabContentView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4D7AB3C01FF2638200270A62 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				4D7AB3BE1FF24C8700270A62 /* MainListWidget.swift */,
+				4D7AB3C11FF2639400270A62 /* HomeViewController.swift */,
+				4D7AB3C31FF4A9AF00270A62 /* CustomerHomeTabView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		4D96D39B1F5BD7B600E614CD /* Invite */ = {
 			isa = PBXGroup;
 			children = (
@@ -565,6 +673,8 @@
 		4D9EBB881F271C5C002674DE /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				4D7AB3C01FF2638200270A62 /* UI */,
+				4DB1A6171FF2226800BDBE3A /* MainVCWidget */,
 				4D28005A1F948196004E9D8B /* SplashView.swift */,
 				4D9EBB8A1F271C80002674DE /* MainViewController.swift */,
 				4D1D861A1F32F78F005210CA /* SelectDateView.swift */,
@@ -712,8 +822,26 @@
 			isa = PBXGroup;
 			children = (
 				4DB1A60C1FEBA05E00BDBE3A /* PayViewController.swift */,
+				4DB1A6101FF0CCB000BDBE3A /* PayVCWidget.swift */,
+				4DB1A6151FF10B8100BDBE3A /* PayVCRootWidget.swift */,
 			);
 			path = Pay;
+			sourceTree = "<group>";
+		};
+		4DB1A6121FF0D09200BDBE3A /* Banner */ = {
+			isa = PBXGroup;
+			children = (
+				4DB1A6131FF0D0D000BDBE3A /* CustomerBannerWidget.swift */,
+			);
+			path = Banner;
+			sourceTree = "<group>";
+		};
+		4DB1A6171FF2226800BDBE3A /* MainVCWidget */ = {
+			isa = PBXGroup;
+			children = (
+				4DB1A6181FF2227E00BDBE3A /* MainVCUIWidget.swift */,
+			);
+			path = MainVCWidget;
 			sourceTree = "<group>";
 		};
 		4DCD39D91F2F31AB002B7F35 /* Pay */ = {
@@ -756,6 +884,8 @@
 		4DDD2B7D1F2848E600102A0F /* widget */ = {
 			isa = PBXGroup;
 			children = (
+				4D7AB3A51FF24A2200270A62 /* SPPage */,
+				4DB1A6121FF0D09200BDBE3A /* Banner */,
 				4DDD2B7E1F2848FC00102A0F /* MainCustomerLabel.swift */,
 				4D64B8941F2885AA002A9BFD /* MainFloatMenu.swift */,
 				4D64B8A11F2ADC50002A9BFD /* MainCustomerTextField.swift */,
@@ -763,6 +893,7 @@
 				4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */,
 				4DAD03311F51629B00D7E72F /* CustomerBannerView.swift */,
 				4DB1A6091FEB704000BDBE3A /* UIFont+CustomeFont.swift */,
+				4DB1A60E1FF0CBAD00BDBE3A /* UIViewController+Extension.swift */,
 			);
 			path = widget;
 			sourceTree = "<group>";
@@ -972,11 +1103,14 @@
 				4D7048AC1F90AB8500D337F4 /* TitlesCell.swift in Sources */,
 				4DA23CE01F8F536B00B2337E /* CustomeFlowLayout.swift in Sources */,
 				4D28005B1F948196004E9D8B /* SplashView.swift in Sources */,
+				4DB1A6111FF0CCB000BDBE3A /* PayVCWidget.swift in Sources */,
 				4DD3A5041F7C9CFA000B5F25 /* MainBeginnerGuidPayView.swift in Sources */,
+				4D7AB3B81FF24A2200270A62 /* SPPageController.m in Sources */,
 				4DD613F11FE11E9E002FCCCE /* NotificationViewController.swift in Sources */,
 				4DFAA6C11FAC38F1005AF710 /* GameSceneLiveController.swift in Sources */,
 				4DCC49CC1F52E0110017D4A4 /* PlayInfoAwardDialog.swift in Sources */,
 				4D96D3BF1F5BE14200E614CD /* ProtocolInfoDialog.swift in Sources */,
+				4DB1A6161FF10B8100BDBE3A /* PayVCRootWidget.swift in Sources */,
 				4DCD39EB1F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift in Sources */,
 				4DDD2B7C1F283F3D00102A0F /* ToastUtils.swift in Sources */,
 				4D1D86191F31DA17005210CA /* PlayResultDialog.swift in Sources */,
@@ -984,6 +1118,7 @@
 				4D64B8951F2885AA002A9BFD /* MainFloatMenu.swift in Sources */,
 				4DF058811F90C7EC00E17B75 /* TitlesInfoCell.swift in Sources */,
 				4D64B8A21F2ADC50002A9BFD /* MainCustomerTextField.swift in Sources */,
+				4D7AB3BD1FF24A2200270A62 /* SPPageContentView.m in Sources */,
 				4DDD2B7F1F2848FC00102A0F /* MainCustomerLabel.swift in Sources */,
 				4DA23CDE1F8F4C5100B2337E /* MainADVCell.swift in Sources */,
 				4DE204131F39B8100046B130 /* HasBeenMailedView.swift in Sources */,
@@ -1006,6 +1141,7 @@
 				4D74682B1FCFE4C500E8E662 /* HorzontalGameSceneWidget.swift in Sources */,
 				4D1D861B1F32F78F005210CA /* SelectDateView.swift in Sources */,
 				4D879B671F7CABF6009F2ECC /* MainBeginnerGuidGiftView.swift in Sources */,
+				4D7AB3C41FF4A9AF00270A62 /* CustomerHomeTabView.swift in Sources */,
 				4D74682D1FD127A500E8E662 /* StartGameCountdownDialog.swift in Sources */,
 				4D1D86151F31BA9C005210CA /* EditAddressDialog.swift in Sources */,
 				4D64B8981F29B549002A9BFD /* MainBanner.swift in Sources */,
@@ -1040,21 +1176,31 @@
 				4D7D3F2A1FD930380019B58C /* HorzontalGameSceneAudioController.swift in Sources */,
 				4DA23CE41F8F878D00B2337E /* UserCenterViewController.swift in Sources */,
 				4DCC49D01F52F7D30017D4A4 /* InviteSuccessDialog.swift in Sources */,
+				4D7AB3C21FF2639400270A62 /* HomeViewController.swift in Sources */,
+				4D7AB3BA1FF24A2200270A62 /* SPCoverController.m in Sources */,
+				4DB1A6141FF0D0D000BDBE3A /* CustomerBannerWidget.swift in Sources */,
+				4D7AB3BB1FF24A2200270A62 /* SPPageTagView.m in Sources */,
 				4DB08BA01FB08A2000BFB200 /* QueueArriveDialog.swift in Sources */,
+				4D87008F1FF626E6005F5645 /* DHImageView.m in Sources */,
 				4D589C761F39AC3D00C8DBC7 /* FirstLoginRewardDialog.swift in Sources */,
 				4DCD39DD1F2F3CD5002B7F35 /* UserInfoDialog.swift in Sources */,
 				4D64B89C1F29D984002A9BFD /* FastLoginDialog.swift in Sources */,
+				4DB1A60F1FF0CBAD00BDBE3A /* UIViewController+Extension.swift in Sources */,
 				4DCD39EC1F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift in Sources */,
 				4DE641901FE8C5F100589537 /* NotificationTableViewCell.swift in Sources */,
 				4DF058831F90D20500E17B75 /* GameUserInfoDialog.swift in Sources */,
 				4D7468291FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift in Sources */,
 				4DCD39B71F2DA5FC002B7F35 /* CustomerControllerButton.swift in Sources */,
 				4D7144831F8B584700B37D8A /* MailingListViewController.swift in Sources */,
+				4D7AB3C71FF4CB1C00270A62 /* DHOutLineLabel.m in Sources */,
 				4DCC49D21F5307220017D4A4 /* ExchangeCodeDialog.swift in Sources */,
+				4D7AB3BF1FF24C8700270A62 /* MainListWidget.swift in Sources */,
+				4D7AB3CA1FF4DBDD00270A62 /* TabContentView.m in Sources */,
 				4D1D861F1F334461005210CA /* ConstellationUtils.swift in Sources */,
 				4D05F2FB1F938F5800A8027D /* WelcomeViewController.swift in Sources */,
 				4D5BF1BD1F3851570091180B /* CheckInDialog.swift in Sources */,
 				4DB1A60A1FEB704000BDBE3A /* UIFont+CustomeFont.swift in Sources */,
+				4D7AB3BC1FF24A2200270A62 /* SPTagBarScrollView.m in Sources */,
 				4DCD39E91F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedCell.swift in Sources */,
 				4D2B80161F40263F0075D390 /* ShowOffRecordDialog.swift in Sources */,
 				4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */,
@@ -1065,10 +1211,12 @@
 				4DF0587F1F90C1B900E17B75 /* UserTitlesInfoDialog.swift in Sources */,
 				4DAD03341F51777200D7E72F /* WebViewController.swift in Sources */,
 				4DFAA6C31FAC3962005AF710 /* GameSceneAudioController.swift in Sources */,
+				4DB1A6191FF2227E00BDBE3A /* MainVCUIWidget.swift in Sources */,
 				4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */,
 				4DB08BA21FB1822200BFB200 /* GameFailedDialog.swift in Sources */,
 				4D1D861D1F333299005210CA /* HideView.swift in Sources */,
 				4D7048A71F908A8600D337F4 /* MailedCashShortDialog.swift in Sources */,
+				4D7AB3B91FF24A2200270A62 /* SPTabController.m in Sources */,
 				4D589C741F386EB500C8DBC7 /* CheckIn7DayView.swift in Sources */,
 				4D9EBB961F276822002674DE /* Constants.swift in Sources */,
 			);

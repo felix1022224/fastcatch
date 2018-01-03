@@ -42,7 +42,6 @@ extension GameSceneViewController{
         createQueueNumber()
         
         rootView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: topGroupView.bounds.height + startBtnBackgroundView.bounds.height + productBackgroundView.bounds.height + bottomActivityGroup.bounds.height)
-        
     }
     
     /// 创建背景板
@@ -58,7 +57,8 @@ extension GameSceneViewController{
         if isDurexTheme {
             playGameBackgroundImage = UIImageView(image: UIImage(named: "杜蕾斯-竖版游戏页背景"))
         }else{
-            playGameBackgroundImage = UIImageView(image: UIImage(named: "play_game_background_blue"))
+            let blueBackgroundImage = UIImage(named: "play_game_background_blue")?.stretchableImage(withLeftCapWidth: 0, topCapHeight: 0)
+            playGameBackgroundImage = UIImageView(image: blueBackgroundImage)
         }
         
         playGameBackgroundImage.sizeToFit()

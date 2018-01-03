@@ -11,7 +11,7 @@ import JavaScriptCore
 
 @objc protocol webJsDelegate:JSExport {
     func payList()
-    func enterRoom(index:Int)
+    func enterRoom(deviceId:String)
     func closeWB()
     func needLogin()
     func openUrl(url:String)
@@ -19,7 +19,7 @@ import JavaScriptCore
 
 @objc class webJsModel: NSObject, webJsDelegate {
     
-    var mainVC:MainViewController!
+    var mainVC:HomeViewController!
 
     var webVC:WebViewController!
     
@@ -55,16 +55,12 @@ import JavaScriptCore
         payListDialog.show()
     }
     
-    func enterRoom(index: Int) {
+    func enterRoom(deviceId: String) {
         if mainVC == nil {
             return
         }
-        if mainVC.mainListData.count <= 0 {
-            return
-        }
-        DispatchQueue.main.async {[weak self] in
-            self?.mainVC.itemClick(index: index)
-        }
+        mainVC.getDataByDeviceId(deviceId: deviceId)
+        closeWB()
     }
     
     func closeWB() {
@@ -78,7 +74,7 @@ import JavaScriptCore
 
 class WebViewController: UIViewController, UIWebViewDelegate {
 
-    var mainVC:MainViewController!
+    var mainVC:HomeViewController!
     
     /// 要跳转的url地址
     var link:String!

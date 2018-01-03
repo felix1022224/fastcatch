@@ -10,9 +10,23 @@ import UIKit
 
 class PayViewController: UIViewController {
 
+    /// 我的余额
+    var myBalanceLabel:MainCustomerLabel = MainCustomerLabel()
+    
+    /// 我的余额背景
+    lazy var balanceBackgroundView = UIView()
+    
+    /// 根view
+    lazy var rootView:UIView = UIView()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupUI()
     }
-    
+
 }
+
+
+

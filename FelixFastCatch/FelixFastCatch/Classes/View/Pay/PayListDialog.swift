@@ -37,8 +37,6 @@ class PayListDialog: BaseDialog {
         backgroundImage.frame.size = CGSize(width: 290, height: 410)
         backgroundImage.center = self.center
         
-//        SKPaymentQueue.default().restoreCompletedTransactions()
-        
         createCloseBtn()
         
         /// 创建购买列表

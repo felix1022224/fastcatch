@@ -38,4 +38,13 @@
 //bugly
 #import <Bugly/Bugly.h>
 
+//首页第三方框架
+#import "Classes/Tools/widget/SPPage/Protocol/SPPageProtocol.h"
+#import "Classes/Tools/widget/SPPage/Protocol/SPTabProtocol.h"
+#import "Classes/Tools/widget/SPPage/Protocol/SPCoverProtocol.h"
+#import "Classes/Tools/widget/SPPage/Controller/SPCoverController.h"
+#import "Classes/Tools/widget/SPPage/Controller/SPPageController.h"
+#import "Classes/Tools/widget/SPPage/Controller/SPTabController.h"
+
+
 #endif /* Login_header_h */

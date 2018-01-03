@@ -26,7 +26,7 @@ class NotificationTableViewCell: UITableViewCell {
         
         /// 背景图
         let backgroundImage = UIImageView(image: UIImage(named: "消息列表item背景"))
-        backgroundImage.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width * 0.95, height: UIScreen.main.bounds.width * 0.95 * 0.35)
+        backgroundImage.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width * 0.98, height: UIScreen.main.bounds.width * 0.98 * 0.35)
         addSubview(backgroundImage)
         
         let labelWidth = (backgroundImage.bounds.width - 30)
@@ -39,7 +39,7 @@ class NotificationTableViewCell: UITableViewCell {
         titleLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         titleLabel.text = "标题"
         titleLabel.sizeToFit()
-        titleLabel.frame = CGRect(x: 15, y: 15, width: labelWidth * 0.6, height: titleLabel.bounds.height)
+        titleLabel.frame = CGRect(x: 24, y: 15, width: labelWidth * 0.6, height: titleLabel.bounds.height)
         addSubview(titleLabel)
         
         /// 时间
@@ -50,7 +50,7 @@ class NotificationTableViewCell: UITableViewCell {
         timeLabel.text = "2008-8-17 3:45"
         timeLabel.textAlignment = .right
         timeLabel.sizeToFit()
-        timeLabel.frame = CGRect(x: labelWidth - labelWidth * 0.4 + 15, y: 15, width: labelWidth * 0.4, height: timeLabel.bounds.height)
+        timeLabel.frame = CGRect(x: labelWidth - labelWidth * 0.4 + 10, y: 15, width: labelWidth * 0.4, height: timeLabel.bounds.height)
         timeLabel.center.y = titleLabel.center.y
         addSubview(timeLabel)
         
@@ -67,7 +67,7 @@ class NotificationTableViewCell: UITableViewCell {
         
         infoLabel.snp.makeConstraints { (make) in
             make.top.equalTo(titleLabel).offset(timeLabel.bounds.height + 5)
-            make.width.equalTo(labelWidth)
+            make.width.equalTo(labelWidth - 20)
             make.centerX.equalTo(backgroundImage)
         }
     }

@@ -26,14 +26,15 @@ extension NotificationViewController : UITableViewDelegate, UITableViewDataSourc
     /// 创建消息列表
     func createNotificationList() {
         ///设置每一行的行高
-        notificationListTabView.rowHeight = UIScreen.main.bounds.width * 0.95 * 0.35 + 5
+        notificationListTabView.rowHeight = UIScreen.main.bounds.width * 0.98 * 0.35 + 5
         
         let insetTop = UIScreen.main.bounds.width * 0.45 * 0.25 + 5 + UIApplication.shared.statusBarFrame.height
         
-        notificationListTabView.frame = CGRect(x: UIScreen.main.bounds.width * 0.025, y: insetTop, width: UIScreen.main.bounds.width * 0.95, height: UIScreen.main.bounds.height - insetTop)
+        notificationListTabView.frame = CGRect(x: UIScreen.main.bounds.width * 0.02, y: insetTop, width: UIScreen.main.bounds.width * 0.98, height: UIScreen.main.bounds.height - insetTop)
         notificationListTabView.delegate = self
         notificationListTabView.dataSource = self
         notificationListTabView.backgroundColor = UIColor.clear
+        notificationListTabView.separatorColor = UIColor.clear
         notificationListTabView.register(NotificationTableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(notificationListTabView)
         

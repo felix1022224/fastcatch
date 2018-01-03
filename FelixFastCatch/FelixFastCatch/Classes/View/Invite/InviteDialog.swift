@@ -154,7 +154,7 @@ class InviteDialog: BaseDialog {
             editInviteCodeDialog = EditInviteCode(frame: UIScreen.main.bounds)
         }
         editInviteCodeDialog.createView()
-        editInviteCodeDialog.show2(mainViewController: self.mainController)
+        editInviteCodeDialog.show()
     }
     
     @objc func showMyInviteDialog() -> () {
@@ -172,13 +172,6 @@ class InviteDialog: BaseDialog {
             return
         }
         showSharedView()
-//        WeChatShared.shareURL("https://meizhe.meidaojia.com/makeup/activity/activity_banner/view_8292?code=" + Constants.User.USER_TAG, title: "免费抓娃娃啦，快来领游戏币！", description: "今年最火爆的明星和网红疯狂在抓的互联网实景娃娃机！", thumbImg: UIImage(named: "shared_logo"), to: LDWechatScene.Timeline) { (isSuccess, desc) in
-//            if isSuccess == true {
-//                ToastUtils.showSuccessToast(msg: "分享成功")
-//            }else{
-//                ToastUtils.showErrorToast(msg: "分享失败")
-//            }
-//        }
     }
     
     func showSharedView() -> () {
@@ -187,13 +180,6 @@ class InviteDialog: BaseDialog {
         sharedView.scheme = "https://meizhe.meidaojia.com/makeup/activity/activity_banner/view_8292?code=" + Constants.User.USER_TAG
         sharedView.createView()
         sharedView.show()
-    }
-    
-    private var mainController:MainViewController!
-    
-    func show2(mainController:MainViewController) -> () {
-        self.mainController = mainController
-        show()
     }
     
 }

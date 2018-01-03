@@ -26,6 +26,9 @@ class LocalDataUtils: NSObject {
         UserDefaults.standard.set(resultData["data"]["tag"].stringValue, forKey: Constants.User.USER_TAG_KEY)
         UserDefaults.standard.set(String(resultData["data"]["id"].intValue), forKey: Constants.User.ID_KEY)
         
+        UserDefaults.standard.set(resultData["data"]["vip"].intValue, forKey: Constants.User.USER_VIP_KEY)
+        UserDefaults.standard.set(resultData["data"]["vipDay"].intValue, forKey: Constants.User.USER_VIP_DAY_KEY)
+        
         if dataResponse != nil {
             let headerFields = dataResponse?.response?.allHeaderFields as! [String: String]
             let url = dataResponse?.request?.url
@@ -45,6 +48,8 @@ class LocalDataUtils: NSObject {
             print("cookies:\(String(describing: UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY)))")
         }
         
+        Constants.User.vip = resultData["data"]["vip"].intValue
+        Constants.User.vipDay = resultData["data"]["vipDay"].intValue
         
         Constants.User.checkDays = resultData["data"]["checkDays"].intValue
         Constants.User.diamondsCount = resultData["data"]["diamondsCount"].intValue
@@ -125,8 +130,15 @@ class LocalDataUtils: NSObject {
         }else {
             Constants.User.USER_TAG = userTag!
         }
+        
+        //用户vip
+        let vip = UserDefaults.standard.integer(forKey: Constants.User.USER_VIP_KEY)
+        Constants.User.vip = vip
+        
+        //用户vip剩余天数
+        let vipDay = UserDefaults.standard.integer(forKey: Constants.User.USER_VIP_DAY_KEY)
+        Constants.User.vipDay = vipDay
     }
-    
     
     /// 清除数据
     class func clearLoaclData() -> () {
@@ -137,6 +149,8 @@ class LocalDataUtils: NSObject {
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_SEX_KEY)
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_BRITHDAY)
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_TAG_KEY)
+        UserDefaults.standard.removeObject(forKey: Constants.User.USER_VIP_KEY)
+        UserDefaults.standard.removeObject(forKey: Constants.User.USER_VIP_DAY_KEY)
         
         Constants.User.USER_NICK_NAME = ""
         Constants.User.USER_ID = ""
@@ -144,6 +158,8 @@ class LocalDataUtils: NSObject {
         Constants.User.USER_SEX = ""
         Constants.User.USER_BRITHDAY = ""
         Constants.User.USER_TAG = ""
+        Constants.User.vip = 0
+        Constants.User.vipDay = 0
         
         ///清除存储的所有的cookie
         let cookieArray = HTTPCookieStorage.shared.cookies

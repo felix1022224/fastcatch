@@ -197,9 +197,9 @@ class FastLoginDialog: BaseDialog {
         Constants.isFastLoginShow = true
     }
     
-    fileprivate var mainVC:MainViewController!
+    fileprivate var mainVC:HomeViewController!
     
-    func show2(mainViewController:MainViewController) -> () {
+    func show2(mainViewController:HomeViewController) -> () {
         mainVC = mainViewController
         show()
     }

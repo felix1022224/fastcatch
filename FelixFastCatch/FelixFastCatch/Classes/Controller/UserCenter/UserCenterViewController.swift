@@ -59,6 +59,9 @@ class UserCenterViewController: UIViewController {
     /// 用户成就详情
     var userTitlesInfoDialog:UserTitlesInfoDialog!
     
+    /// vip标签
+    var vipImage = UIImageView()
+    
     /******** UI ********/
     
     /// 用户消息

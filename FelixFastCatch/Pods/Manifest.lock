@@ -13,6 +13,9 @@ PODS:
   - Bugly (2.5.0)
   - Kingfisher (4.5.0)
   - MJRefresh (3.1.15.1)
+  - SDWebImage (4.2.2):
+    - SDWebImage/Core (= 4.2.2)
+  - SDWebImage/Core (4.2.2)
   - SnapKit (3.2.0)
   - Socket.IO-Client-Swift (12.0.0):
     - StarscreamSocketIO (~> 8.0.7)
@@ -30,6 +33,7 @@ DEPENDENCIES:
   - Bugly
   - Kingfisher (~> 4.0)
   - MJRefresh
+  - SDWebImage (~> 4.0)
   - SnapKit (~> 3.2.0)
   - Socket.IO-Client-Swift (~> 12.0.0)
   - SVProgressHUD
@@ -48,6 +52,7 @@ SPEC CHECKSUMS:
   Bugly: 00c8701f2bebab4887771ba43afbf51334009742
   Kingfisher: 26ae0473102b77b575da51960c932431e3745407
   MJRefresh: 5f8552bc25ca8751c010f621c1098dbdaacbccd6
+  SDWebImage: 89a9d32cd520bbb46eb14e541d5109b3564af198
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   Socket.IO-Client-Swift: 5b0154b42b3892bfb4c44fa138cbeb8afec4f6ef
   StarscreamSocketIO: 00b54e4208481ca5cef089545353aaf126bae16d
@@ -57,6 +62,6 @@ SPEC CHECKSUMS:
   UMengAnalytics-NO-IDFA: 16666e32edce5be44ae5b14aaaa7f3582e09d6ab
   WechatOpenSDK: 491d965d79335070328571d3e79f714549e79a5e
 
-PODFILE CHECKSUM: bb6d29edbf313775a3e75b94579d86bf0674a1a1
+PODFILE CHECKSUM: 992a686ed10ba4b30c18516c3cefee6f9dba9a58
 
 COCOAPODS: 1.2.1

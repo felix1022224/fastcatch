@@ -60,6 +60,27 @@ extension UserCenterViewController {
         
         userFaceImage.kf.setImage(with: URL(string: Constants.User.USER_FACE_IMAGE), placeholder: UIImage(named: "default_user_face"), options: nil, progressBlock: nil, completionHandler: nil)
         
+        /// vip标签
+        if Constants.User.vip == 100000 {
+            /// vip
+            vipImage.image = UIImage(named: "VIP标签")
+            vipImage.isHidden = false
+        }else if Constants.User.vip == 110000 {
+            /// svip
+            vipImage.image = UIImage(named: "SVIP标签")
+            vipImage.isHidden = false
+        }else{
+            vipImage.isHidden = true
+        }
+        vipImage.sizeToFit()
+        
+        topGroupView.addSubview(vipImage)
+        
+        vipImage.snp.makeConstraints { (make) in
+            make.centerX.equalTo(userFaceImage)
+            make.bottom.equalTo(userFaceImage).offset(vipImage.bounds.height/2)
+        }
+        
         /// 用户昵称
         userNickNameLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 13)
         userNickNameLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
@@ -128,18 +149,20 @@ extension UserCenterViewController {
         }
         
         // 退出登录
-        let logoutBtnImage = UIImage(named: "btn_logout")
+        let logoutBtnImage = UIImage(named: "退出登录")
         logoutBtn = UIButton(type: .custom)
         logoutBtn.setBackgroundImage(logoutBtnImage, for: .normal)
+        logoutBtn.setBackgroundImage(UIImage(named: "退出登录点击"), for: .highlighted)
         logoutBtn.sizeToFit()
         view.addSubview(logoutBtn)
         
         logoutBtn.addTarget(self, action: #selector(logOut), for: .touchUpInside)
         
         // 编辑资料
-        let changeUserInfoImage = UIImage(named: "change_user_info")
+        let changeUserInfoImage = UIImage(named: "个人中心编辑资料")
         changeInfoBtn = UIButton(type: .custom)
         changeInfoBtn.setBackgroundImage(changeUserInfoImage, for: .normal)
+        changeInfoBtn.setBackgroundImage(UIImage(named: "个人中心编辑资料点击"), for: .highlighted)
         changeInfoBtn.sizeToFit()
         view.addSubview(changeInfoBtn)
         changeInfoBtn.addTarget(self, action: #selector(editUserInfo), for: .touchUpInside)

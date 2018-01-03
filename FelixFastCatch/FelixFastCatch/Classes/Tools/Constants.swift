@@ -45,7 +45,7 @@ class Constants: NSObject {
         static let MAIN_BANNER_LIST = BASE_URL + "activity/bannerlist"
         
         /// 首页的数据
-        static let MAIN_LIST = BASE_URL + "machine/list"
+        static let MAIN_LIST = BASE_URL + "machine/listbytype"
         
         /// 发送验证码的接口
         static let SEND_VERIFY_CODE = BASE_URL + "user/sendcode"
@@ -64,6 +64,9 @@ class Constants: NSObject {
         
         /// 刷新首页的状态
         static let REFRESH_LIST_STATUS = BASE_URL + "machine/list/status"
+        
+        /// 首页的tabs
+        static let MAIN_TABS = BASE_URL + "award/type"
         
         /// 游戏房间相关
         struct Machine {
@@ -225,6 +228,8 @@ class Constants: NSObject {
         static let USER_ID_KEY = "userId"
         static let USER_FACE_IMAGE_KEY = "userFaceImage"
         static let USER_TAG_KEY = "userTag"
+        static let USER_VIP_KEY = "userVipKey"
+        static let USER_VIP_DAY_KEY = "userVipDayKey"
         
         /// 钻石数
         static var diamondsCount = 0
@@ -243,6 +248,12 @@ class Constants: NSObject {
         
         /// 地址详情
         static var addr = ""
+        
+        /// vip的参数， 100000是vip 1100000是svip
+        static var vip = 0
+        
+        /// vip剩余的参数
+        static var vipDay = 0
         
         /// 地址ID
         static var addressId = ""

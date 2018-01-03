@@ -60,8 +60,6 @@ extension GameSceneViewController{
     }
     
     func initLive() -> () {
-        deviceId = "121850"
-        
         mainLiveCamare = UInt(deviceId)! + 1
         sideLiveCamare = UInt(deviceId)! + 2
         
@@ -82,7 +80,7 @@ extension GameSceneViewController{
         agoraKit.setVideoProfile(._VideoProfile_480P, swapWidthAndHeight: false)
         agoraKit.setClientRole(AgoraRtcClientRole.clientRole_Audience, withKey: nil)
         
-        let code = agoraKit.joinChannel(byKey: nil, channelName: deviceId, info: nil, uid: 1111110, joinSuccess: nil)
+        let code = agoraKit.joinChannel(byKey: nil, channelName: deviceId, info: nil, uid: 0, joinSuccess: nil)
         
         if code != 0 {
             DispatchQueue.main.async(execute: {

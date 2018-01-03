@@ -35,9 +35,11 @@ class HelpDialog: BaseDialog {
         closeBtn.addTarget(self, action: #selector(hide), for: .touchUpInside)
         
         webview = UIWebView()
-        webview.frame.size = CGSize(width: backgroundImage.bounds.width * 0.88, height: backgroundImage.bounds.height * 0.88)
+        webview.frame.size = CGSize(width: backgroundImage.bounds.width * 0.85, height: backgroundImage.bounds.height * 0.88)
         webview.center = backgroundImage.center
         webview.layer.masksToBounds = true
+        webview.isOpaque = false
+        webview.backgroundColor = UIColor.clear
         webview.layer.cornerRadius = 5
         addSubview(webview)
         
