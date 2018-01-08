@@ -9,14 +9,8 @@
 import UIKit
 
 class HelpDialog: BaseDialog {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+    
+    private var link:String = "https://meizhe.meidaojia.com/makeup/activity/activity_banner/view_815"
     
     private var webview:UIWebView!
     
@@ -43,9 +37,14 @@ class HelpDialog: BaseDialog {
         webview.layer.cornerRadius = 5
         addSubview(webview)
         
-        webview.loadRequest(URLRequest(url: URL(string: "https://meizhe.meidaojia.com/makeup/activity/activity_banner/view_815")!))
+        webview.loadRequest(URLRequest(url: URL(string: link)!))
         
         addDialogToWindow()
+    }
+    
+    func createViewByLink(link:String) {
+        self.link = link
+        createView()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -41,7 +41,11 @@ class PayViewController: UIViewController {
     /// 支付列表的数据
     var payListDataSource : [JSON] = [JSON]()
     
+    /// 代币充值列表的标题
     let listTitle = UIImageView(image: UIImage(named: "代币充值标题"))
+    
+    /// 优惠券按钮
+    let couponListLabel = MainCustomerLabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()

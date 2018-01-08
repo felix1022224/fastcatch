@@ -29,7 +29,6 @@ class MainFloatMenu: UIView {
         actionLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
         actionLabel.outTextColor = UIColor.white
         actionLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-//        actionLabel.font = UIFont.systemFont(ofSize: CGFloat(12))
         actionLabel.textAlignment = .center
         actionLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
         actionLabel.sizeToFit()

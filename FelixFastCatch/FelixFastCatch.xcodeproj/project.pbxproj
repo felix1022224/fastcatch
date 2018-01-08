@@ -50,6 +50,8 @@
 		4D4ACE751F51CA0D0011E7F7 /* ProductinfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4ACE741F51CA0D0011E7F7 /* ProductinfoDialog.swift */; };
 		4D4ACE771F51CE410011E7F7 /* GemLackDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4ACE761F51CE410011E7F7 /* GemLackDialog.swift */; };
 		4D4B25D81F5FA64900338CBD /* SharedViewDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B25D71F5FA64900338CBD /* SharedViewDialog.swift */; };
+		4D4B67E7200362B900455C04 /* CouponTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B67E6200362B900455C04 /* CouponTableViewCell.swift */; };
+		4D4B67E920037DE300455C04 /* CouponHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B67E820037DE300455C04 /* CouponHistoryTableViewCell.swift */; };
 		4D500B9B1FB429FF0086AC15 /* PointsMallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D500B9A1FB429FF0086AC15 /* PointsMallViewController.swift */; };
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
 		4D589C741F386EB500C8DBC7 /* CheckIn7DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */; };
@@ -215,6 +217,8 @@
 		4D4ACE741F51CA0D0011E7F7 /* ProductinfoDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductinfoDialog.swift; sourceTree = "<group>"; };
 		4D4ACE761F51CE410011E7F7 /* GemLackDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GemLackDialog.swift; sourceTree = "<group>"; };
 		4D4B25D71F5FA64900338CBD /* SharedViewDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SharedViewDialog.swift; path = FelixFastCatch/Classes/Controller/Main/SharedViewDialog.swift; sourceTree = SOURCE_ROOT; };
+		4D4B67E6200362B900455C04 /* CouponTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponTableViewCell.swift; sourceTree = "<group>"; };
+		4D4B67E820037DE300455C04 /* CouponHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		4D500B9A1FB429FF0086AC15 /* PointsMallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsMallViewController.swift; sourceTree = "<group>"; };
 		4D5625121F2605A700515C98 /* FelixFastCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FelixFastCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5625151F2605A700515C98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -455,6 +459,15 @@
 				4D38B2581F6A963E0019730A /* UMessage.h */,
 			);
 			path = UMessage_Sdk_1.5.0a;
+			sourceTree = "<group>";
+		};
+		4D4B67E52003629400455C04 /* Coupon */ = {
+			isa = PBXGroup;
+			children = (
+				4D4B67E6200362B900455C04 /* CouponTableViewCell.swift */,
+				4D4B67E820037DE300455C04 /* CouponHistoryTableViewCell.swift */,
+			);
+			path = Coupon;
 			sourceTree = "<group>";
 		};
 		4D5625091F2605A700515C98 = {
@@ -756,6 +769,7 @@
 		4D9EBB901F274563002674DE /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				4D4B67E52003629400455C04 /* Coupon */,
 				4DE6418E1FE8C5C100589537 /* Notification */,
 				4D7048AA1F90AB5D00D337F4 /* Titles */,
 				4D1F59DD1F8CCD6700806C00 /* History */,
@@ -1125,6 +1139,7 @@
 				4D1D86191F31DA17005210CA /* PlayResultDialog.swift in Sources */,
 				4DDD2B861F286BC000102A0F /* DeviceTools.swift in Sources */,
 				4D64B8951F2885AA002A9BFD /* MainFloatMenu.swift in Sources */,
+				4D4B67E920037DE300455C04 /* CouponHistoryTableViewCell.swift in Sources */,
 				4DF058811F90C7EC00E17B75 /* TitlesInfoCell.swift in Sources */,
 				4D64B8A21F2ADC50002A9BFD /* MainCustomerTextField.swift in Sources */,
 				4D7AB3BD1FF24A2200270A62 /* SPPageContentView.m in Sources */,
@@ -1226,6 +1241,7 @@
 				4DB1A6191FF2227E00BDBE3A /* MainVCUIWidget.swift in Sources */,
 				4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */,
 				4DB08BA21FB1822200BFB200 /* GameFailedDialog.swift in Sources */,
+				4D4B67E7200362B900455C04 /* CouponTableViewCell.swift in Sources */,
 				4D1D861D1F333299005210CA /* HideView.swift in Sources */,
 				4D7048A71F908A8600D337F4 /* MailedCashShortDialog.swift in Sources */,
 				4D7AB3B91FF24A2200270A62 /* SPTabController.m in Sources */,

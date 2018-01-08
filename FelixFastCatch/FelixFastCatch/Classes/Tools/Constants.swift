@@ -17,6 +17,8 @@ class Constants: NSObject {
             case Release,Debug,Test
         }
         
+        static let COUPON_HELP_H5_LINK = "http://www.baidu.com"
+        
         /// 当前环境
         static let nService = MZService.Debug
         
@@ -165,6 +167,9 @@ class Constants: NSObject {
             
             /// 获取消息列表
             static let GET_USER_NOTIFICATION_LIST = BASE_URL + "push/list"
+            
+            /// 获取优惠券列表
+            static let GET_USER_COUPON_LIST = BASE_URL + "usercards/list"
         }
     }
     
@@ -233,6 +238,7 @@ class Constants: NSObject {
         static let USER_TAG_KEY = "userTag"
         static let USER_VIP_KEY = "userVipKey"
         static let USER_VIP_DAY_KEY = "userVipDayKey"
+        static let USER_COUPON_NUMBER_KEY = "userCouponNumberKey"
         
         /// 钻石数
         static var diamondsCount = 0
@@ -260,6 +266,9 @@ class Constants: NSObject {
         
         /// 地址ID
         static var addressId = ""
+        
+        /// 可用优惠券数量s
+        static var userCouponNumber = 0
         
         /// 音频开关设置
         static let USER_AUDIO_SETTING = "userAudioSetting"

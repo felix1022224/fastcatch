@@ -78,6 +78,25 @@ extension PayViewController {
         listTitle.sizeToFit()
         rootView.addSubview(listTitle)
         
+        ///优惠券
+        couponListLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 17)
+        couponListLabel.outLineWidth = 2
+        couponListLabel.outTextColor = UIColor.white
+        couponListLabel.outLienTextColor = UIColor(red: 18/255.0, green: 70/255.0, blue: 66/255.0, alpha: 1.0)
+        if Constants.User.userCouponNumber <= 0 {
+            couponListLabel.text = "优惠券＞"
+        }else{
+            couponListLabel.text = "有\(Constants.User.userCouponNumber)张优惠券＞"
+        }
+        couponListLabel.sizeToFit()
+        couponListLabel.frame = CGRect(x: rootView.bounds.width - couponListLabel.bounds.width - 10, y: listTitle.frame.origin.y - 2, width: couponListLabel.bounds.width, height: couponListLabel.bounds.height)
+        rootView.addSubview(couponListLabel)
+        
+        couponListLabel.isUserInteractionEnabled = true
+        
+        let tapCouponGR = UITapGestureRecognizer(target: self, action: #selector(tapCoupon))
+        couponListLabel.addGestureRecognizer(tapCouponGR)
+        
         payTableView.separatorColor = UIColor.clear
         payTableView.backgroundColor = UIColor.clear
         payTableView.isScrollEnabled = false
@@ -89,6 +108,11 @@ extension PayViewController {
         rootView.addSubview(payTableView)
         
         getPayListDataSource()
+    }
+    
+    /// 点击优惠券
+    @objc func tapCoupon() {
+        self.navigationController?.pushViewController(CouponListViewController(), animated: true)
     }
     
     /// 计算rootview的高度

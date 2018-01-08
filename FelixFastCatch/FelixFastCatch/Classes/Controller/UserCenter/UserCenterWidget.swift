@@ -295,9 +295,9 @@ extension UserCenterViewController{
         vipGroupView.addSubview(vipLabel)
         
         if Constants.User.vipDay <= 0 {
-            switchVIPOpenedButton(isVip: true)
+            switchVIPOpenedButton(isVip: false)
         }else{
-           switchVIPOpenedButton(isVip: false)
+           switchVIPOpenedButton(isVip: true)
         }
         
         vipOpenedButton.sizeToFit()

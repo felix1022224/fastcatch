@@ -28,6 +28,7 @@ class LocalDataUtils: NSObject {
         
         UserDefaults.standard.set(resultData["data"]["vip"].intValue, forKey: Constants.User.USER_VIP_KEY)
         UserDefaults.standard.set(resultData["data"]["vipDay"].intValue, forKey: Constants.User.USER_VIP_DAY_KEY)
+        UserDefaults.standard.set(resultData["data"]["couponNumber"].intValue, forKey: Constants.User.USER_COUPON_NUMBER_KEY)
         
         if dataResponse != nil {
             let headerFields = dataResponse?.response?.allHeaderFields as! [String: String]
@@ -59,6 +60,8 @@ class LocalDataUtils: NSObject {
         Constants.User.addrPhone = resultData["data"]["pav"]["phone"].stringValue
         Constants.User.addr = resultData["data"]["pav"]["addr"].stringValue
         Constants.User.addressId = String(resultData["data"]["pav"]["id"].intValue)
+        
+        Constants.User.userCouponNumber = resultData["data"]["couponNumber"].intValue
         
         initUserInfo()
     }
@@ -138,6 +141,11 @@ class LocalDataUtils: NSObject {
         //用户vip剩余天数
         let vipDay = UserDefaults.standard.integer(forKey: Constants.User.USER_VIP_DAY_KEY)
         Constants.User.vipDay = vipDay
+        
+        // 用户剩余可用优惠券
+        let couponNumber = UserDefaults.standard.integer(forKey: Constants.User.USER_COUPON_NUMBER_KEY)
+        Constants.User.userCouponNumber = couponNumber
+        
     }
     
     /// 清除数据
@@ -151,6 +159,7 @@ class LocalDataUtils: NSObject {
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_TAG_KEY)
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_VIP_KEY)
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_VIP_DAY_KEY)
+        UserDefaults.standard.removeObject(forKey: Constants.User.USER_COUPON_NUMBER_KEY)
         
         Constants.User.USER_NICK_NAME = ""
         Constants.User.USER_ID = ""
@@ -160,6 +169,7 @@ class LocalDataUtils: NSObject {
         Constants.User.USER_TAG = ""
         Constants.User.vip = 0
         Constants.User.vipDay = 0
+        Constants.User.userCouponNumber = 0
         
         ///清除存储的所有的cookie
         let cookieArray = HTTPCookieStorage.shared.cookies
