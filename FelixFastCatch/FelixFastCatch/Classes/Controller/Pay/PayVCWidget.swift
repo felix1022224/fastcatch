@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 extension PayViewController {
     
@@ -17,10 +19,15 @@ extension PayViewController {
         
         setupTopGroup()
         
-        rootView.frame = CGRect(x: 0, y: UIApplication.shared.statusBarFrame.height + Constants.UI.TITLE_IMAGE_HEIGHT, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - UIApplication.shared.statusBarFrame.height - Constants.UI.TITLE_IMAGE_HEIGHT)
+        rootView.frame = CGRect(x: 20, y: UIApplication.shared.statusBarFrame.height + Constants.UI.TITLE_IMAGE_HEIGHT, width: UIScreen.main.bounds.width - 40, height: UIScreen.main.bounds.height - UIApplication.shared.statusBarFrame.height - Constants.UI.TITLE_IMAGE_HEIGHT)
+        rootView.showsVerticalScrollIndicator = false
         self.view.addSubview(rootView)
         
         setupMyBalance()
+        
+        setupVIPPayModel()
+        
+        setupVIPListModel()
     }
     
     /// 装载顶部的UI
@@ -60,12 +67,60 @@ extension PayViewController {
             make.height.equalTo(exchangeBtn.bounds.height * 0.9)
         }
         
+        exchangeBtn.isHidden = true
+        hideShowExchangeBtn(exchangeBtn: exchangeBtn)
+        
         backBtn.addTarget(self, action: #selector(closeVC), for: .touchUpInside)
+        
+        exchangeBtn.addTarget(self, action: #selector(showExchangeDialog), for: .touchUpInside)
+        
     }
     
     /// 关闭页面
     @objc func closeVC() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    /// 显示兑换码弹窗
+    @objc func showExchangeDialog() -> () {
+        if exchangeCodeDialog == nil {
+            exchangeCodeDialog = ExchangeCodeDialog(frame: UIScreen.main.bounds)
+        }
+        exchangeCodeDialog.successCallback = {
+            UserTools.getUserInfo(callback: { [weak self] in
+                /// 如果兑换成功，更新余额
+                self?.updateMyBalance(myBalance: Constants.User.diamondsCount)
+            })
+        }
+        exchangeCodeDialog.createView()
+        exchangeCodeDialog.show()
+    }
+    
+    /// 显示或隐藏兑换码的按钮
+    func hideShowExchangeBtn(exchangeBtn:UIButton){
+        /// 获取版本号，来判断显不显示微信支付
+        Alamofire.request(Constants.Network.GET_SYS_INFO_VERSION, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { (response) in
+            print("versionValue:\(response.result.value!)")
+            if NetWorkUtils.checkReponse(response: response) {
+                let json = JSON(data: response.data!)
+                let infoDictionary = Bundle.main.infoDictionary!
+                if let buildVersion = (infoDictionary["CFBundleVersion"] as? NSString)?.doubleValue {
+                    print("buildVersion:\(buildVersion)")
+                    if json["data"].doubleValue >= buildVersion {
+                        print("正式")
+                        exchangeBtn.isHidden = false
+                    }else{
+                        print("提审")
+                        exchangeBtn.isHidden = true
+                    }
+                }else {
+                    exchangeBtn.isHidden = true
+                }
+            }else{
+                /// 发生异常
+                exchangeBtn.isHidden = true
+            }
+        }
     }
     
 }

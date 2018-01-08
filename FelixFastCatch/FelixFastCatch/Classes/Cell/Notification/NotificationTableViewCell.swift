@@ -39,7 +39,7 @@ class NotificationTableViewCell: UITableViewCell {
         titleLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         titleLabel.text = "标题"
         titleLabel.sizeToFit()
-        titleLabel.frame = CGRect(x: 24, y: 15, width: labelWidth * 0.6, height: titleLabel.bounds.height)
+        titleLabel.frame = CGRect(x: 24, y: 20, width: labelWidth * 0.6, height: titleLabel.bounds.height)
         addSubview(titleLabel)
         
         /// 时间
@@ -50,7 +50,7 @@ class NotificationTableViewCell: UITableViewCell {
         timeLabel.text = "2008-8-17 3:45"
         timeLabel.textAlignment = .right
         timeLabel.sizeToFit()
-        timeLabel.frame = CGRect(x: labelWidth - labelWidth * 0.4 + 10, y: 15, width: labelWidth * 0.4, height: timeLabel.bounds.height)
+        timeLabel.frame = CGRect(x: labelWidth - labelWidth * 0.4 + 10, y: 20, width: labelWidth * 0.4, height: timeLabel.bounds.height)
         timeLabel.center.y = titleLabel.center.y
         addSubview(timeLabel)
         

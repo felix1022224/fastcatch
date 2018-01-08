@@ -59,6 +59,7 @@ class MainListWidget: UIViewController, SPPageSubControllerDataSource {
     func preferScrollView() -> UIScrollView! {
         return collectionView
     }
+    
 }
 
 // MARK: - 获取网络数据

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SwiftyJSON
+import Alamofire
 
 class NotificationListWidget: NSObject {
 
@@ -15,11 +17,17 @@ class NotificationListWidget: NSObject {
 extension NotificationViewController : UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return notificationDataSource.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? NotificationTableViewCell
+        
+        cell?.titleLabel.text = notificationDataSource[indexPath.row]["title"].stringValue
+        cell?.infoLabel.text = notificationDataSource[indexPath.row]["body"].stringValue
+        
+        cell?.timeLabel.text = notificationDataSource[indexPath.row]["startTime"].stringValue
+        
         return cell!
     }
     
@@ -38,8 +46,27 @@ extension NotificationViewController : UITableViewDelegate, UITableViewDataSourc
         notificationListTabView.register(NotificationTableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(notificationListTabView)
         
+        getNotificationList()
+    }
+    
+    func getNotificationList() {
+        var params = NetWorkUtils.createBaseParams()
+        params["size"] = "10000"
+        params["page"] = "0"
         
+        ToastUtils.showLoadingToast(msg: "请稍后……")
         
+        Alamofire.request(Constants.Network.User.GET_USER_NOTIFICATION_LIST, method: HTTPMethod.post, parameters: params)
+            .responseJSON { (dataResponse) in
+                ToastUtils.hide()
+                if NetWorkUtils.checkReponse(response: dataResponse) {
+                    let resultJson = JSON(data: dataResponse.data!)
+                    if let resultArray = resultJson["data"]["content"].array {
+                        self.notificationDataSource = self.notificationDataSource + resultArray
+                    }
+                    self.notificationListTabView.reloadData()
+                }
+        }
     }
     
 }

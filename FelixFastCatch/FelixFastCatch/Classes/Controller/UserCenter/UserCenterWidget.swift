@@ -19,6 +19,8 @@ extension UserCenterViewController {
     func setupUI() -> () {
         createBackground()
         createTitlesGroup()
+        
+        createVIPModelView()
     }
     
     /// 创建背景图片
@@ -273,6 +275,79 @@ extension UserCenterViewController {
         let notificationVC = NotificationViewController()
         self.navigationController?.pushViewController(notificationVC, animated: true)
     }
+}
+
+// MARK: - vip 模块
+extension UserCenterViewController{
     
+    func createVIPModelView() {
+        vipGroupView.frame = CGRect(x: 0, y: topGroupView.bounds.height * 0.9, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 0.08)
+        vipGroupView.backgroundColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.5)
+        view.addSubview(vipGroupView)
+        
+        vipLabel.outLineWidth = Constants.UI.OUT_LINE_WIDTH
+        vipLabel.outTextColor = UIColor.white
+        vipLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
+        vipLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
+        changeVIPLabel()
+        vipLabel.sizeToFit()
+        vipLabel.frame.origin = CGPoint(x: 15, y: vipGroupView.bounds.height/2 - vipLabel.bounds.height/2)
+        vipGroupView.addSubview(vipLabel)
+        
+        if Constants.User.vipDay <= 0 {
+            switchVIPOpenedButton(isVip: true)
+        }else{
+           switchVIPOpenedButton(isVip: false)
+        }
+        
+        vipOpenedButton.sizeToFit()
+        vipOpenedButton.frame = CGRect(x: UIScreen.main.bounds.width - 15 - vipOpenedButton.bounds.width, y: vipGroupView.bounds.height/2 - vipOpenedButton.bounds.height/2 + 2, width: vipOpenedButton.bounds.width, height: vipOpenedButton.bounds.height)
+        vipGroupView.addSubview(vipOpenedButton)
+        
+        vipOpenedButton.addTarget(self, action: #selector(clickVIPOpened), for: .touchUpInside)
+        
+    }
+    
+    /// 切换vip开通按钮的状态
+    func switchVIPOpenedButton(isVip:Bool) -> () {
+        if isVip {
+            /// 已经是vip了
+            vipOpenedButton.setBackgroundImage(UIImage(named: "立即续费"), for: .normal)
+            vipOpenedButton.setBackgroundImage(UIImage(named: "立即续费点击"), for: .highlighted)
+        }else{
+            /// 还不是vip
+            vipOpenedButton.setBackgroundImage(UIImage(named: "立即开通"), for: .normal)
+            vipOpenedButton.setBackgroundImage(UIImage(named: "立即开通点击"), for: .highlighted)
+        }
+    }
+    
+    /// 修改vip描述的内容
+    func changeVIPLabel() -> () {
+        var currentDate = Date()
+        currentDate.addTimeInterval(TimeInterval(Constants.User.vipDay * 24 * 3600))
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current // 设置时区
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        if Constants.User.vip == 100000 {
+            //vip
+            vipLabel.text = "VIP会员：\(dateFormatter.string(from: currentDate))到期"
+        }else if Constants.User.vip == 110000 {
+            //svip
+            vipLabel.text = "SVIP会员：\(dateFormatter.string(from: currentDate))到期"
+        }else{
+            //不是vip
+            vipLabel.text = "开通VIP，送480币+充值八折特权"
+        }
+    }
+    
+    /// 点击立即开通按钮
+    @objc func clickVIPOpened(){
+        let payVC = PayViewController()
+        payVC.userStatusCallback = {[weak self] in
+            
+        }
+        self.navigationController?.pushViewController(payVC, animated: true)
+    }
     
 }
+

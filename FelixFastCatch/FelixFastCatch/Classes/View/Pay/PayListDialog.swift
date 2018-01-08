@@ -514,20 +514,16 @@ extension PayListDialog{
                     print("buildVersion:\(buildVersion)")
                     if json["data"].doubleValue >= buildVersion {
                         print("正式")
-//                        self.wechatBtn.isSelected = true
                         self.exchangeCode.isHidden = false
                     }else{
                         print("提审")
-//                        self.wechatBtn.isSelected = false
                         self.exchangeCode.isHidden = true
                     }
                 }else {
-//                    self.wechatBtn.isSelected = false
                     self.exchangeCode.isHidden = true
                 }
             }else{
                 /// 发生异常
-//                self.wechatBtn.isSelected = false
                 self.exchangeCode.isHidden = true
             }
         }

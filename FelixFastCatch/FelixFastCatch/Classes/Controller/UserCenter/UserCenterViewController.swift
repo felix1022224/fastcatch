@@ -62,6 +62,15 @@ class UserCenterViewController: UIViewController {
     /// vip标签
     var vipImage = UIImageView()
     
+    /// vip展示元素集合
+    var vipGroupView = UIView()
+    
+    /// vip剩余日期label
+    var vipLabel = MainCustomerLabel()
+    
+    /// vip开通或续费的按钮
+    var vipOpenedButton = UIButton(type: UIButtonType.custom)
+    
     /******** UI ********/
     
     /// 用户消息

@@ -186,6 +186,14 @@ class HomeViewController: SPCoverController {
         return UIScreen.main.bounds.width - 14
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        print("viewDidAppear")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print("willDisappear")
+    }
+    
     override func scroll(withPageOffset realOffset: CGFloat, index: Int) {
         super.scroll(withPageOffset: realOffset, index: index)
         UIView.animate(withDuration: 0.1) {[weak self] in

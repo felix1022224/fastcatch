@@ -32,6 +32,9 @@ class ExchangeCodeDialog: BaseDialog {
     /// 使用成功
     private var inviteSuccessDialog:InviteSuccessDialog!
     
+    /// 使用成功的回调
+    var successCallback:(()->())!
+    
     override func createView() {
         createBackgroundImage(imageName: "兑换码背景")
         
@@ -114,6 +117,10 @@ class ExchangeCodeDialog: BaseDialog {
                 ToastUtils.hide()
                 if self.mainvc != nil {
                     self.mainvc.getsUserInfo()
+                }
+                /// 通知上一个界面，兑换成功
+                if self.successCallback != nil {
+                    self.successCallback!()
                 }
                 self.hide()
             }else{

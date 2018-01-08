@@ -162,6 +162,9 @@ class Constants: NSObject {
             
             /// 获取成就列表
             static let GET_USER_TITLES_LIST = BASE_URL + "user/achievement"
+            
+            /// 获取消息列表
+            static let GET_USER_NOTIFICATION_LIST = BASE_URL + "push/list"
         }
     }
     

@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 /// 消息列表页面
 class NotificationViewController: UIViewController {
 
     /// 消息列表
     var notificationListTabView:UITableView = UITableView()
+    
+    var notificationDataSource:[JSON] = [JSON]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

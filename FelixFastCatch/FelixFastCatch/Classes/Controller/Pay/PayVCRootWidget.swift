@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 extension PayViewController {
     
@@ -16,19 +18,23 @@ extension PayViewController {
         myBalanceLabel.outTextColor = UIColor.white
         myBalanceLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         myBalanceLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 16)
-        myBalanceLabel.text = "我的余额 : " + String(Constants.User.diamondsCount)
+        myBalanceLabel.text = "我的余额:"
         myBalanceLabel.sizeToFit()
         
         let balanceBackgroundWidth = myBalanceLabel.bounds.width * 1.2
         
-        balanceBackgroundView.frame = CGRect(x: UIScreen.main.bounds.width / 2 - balanceBackgroundWidth / 2, y: 15, width: balanceBackgroundWidth, height: myBalanceLabel.bounds.height * 1.5)
+        balanceBackgroundView.frame = CGRect(x: rootView.bounds.width / 2 - balanceBackgroundWidth / 2, y: 0, width: balanceBackgroundWidth, height: myBalanceLabel.bounds.height * 1.5)
         balanceBackgroundView.layer.cornerRadius = balanceBackgroundView.bounds.height/2
         balanceBackgroundView.layer.masksToBounds = true
         balanceBackgroundView.backgroundColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.5)
+        
+        balanceBackgroundView.addSubview(myBalanceLabel)
+        
         rootView.addSubview(balanceBackgroundView)
         
-        myBalanceLabel.center = balanceBackgroundView.center
-        rootView.addSubview(myBalanceLabel)
+        myBalanceLabel.frame.origin = CGPoint(x: balanceBackgroundView.bounds.width/2 - myBalanceLabel.bounds.width/2, y: balanceBackgroundView.bounds.height/2 - myBalanceLabel.bounds.height/2)
+        
+        updateMyBalance(myBalance: Constants.User.diamondsCount)
     }
     
     /// 更新我的余额
@@ -36,8 +42,118 @@ extension PayViewController {
         myBalanceLabel.text = "我的余额 : " + String(myBalance)
         myBalanceLabel.sizeToFit()
         let balanceBackgroundWidth = myBalanceLabel.bounds.width * 1.2
-        balanceBackgroundView.frame = CGRect(x: UIScreen.main.bounds.width / 2 - balanceBackgroundWidth / 2, y: 15, width: balanceBackgroundWidth, height: myBalanceLabel.bounds.height * 1.5)
+        balanceBackgroundView.frame = CGRect(x: rootView.bounds.width / 2 - balanceBackgroundWidth / 2, y: 15, width: balanceBackgroundWidth, height: myBalanceLabel.bounds.height * 1.5)
+        balanceBackgroundView.layer.cornerRadius = balanceBackgroundView.bounds.height/2
+        balanceBackgroundView.layer.masksToBounds = true
+        myBalanceLabel.frame.origin = CGPoint(x: balanceBackgroundView.bounds.width/2 - myBalanceLabel.bounds.width/2, y: balanceBackgroundView.bounds.height/2 - myBalanceLabel.bounds.height/2)
+    }
+    
+    /// 装载vip充值模块
+    func setupVIPPayModel() -> () {
+        vipTitle.image = UIImage(named: "VIP月卡标题")
+        vipTitle.sizeToFit()
+        vipTitle.frame.origin = CGPoint(x: 10, y: myBalanceLabel.bounds.height + 35)
+        rootView.addSubview(vipTitle)
         
+        let vipModelWidth = (UIScreen.main.bounds.width - 45) / 2
+        
+        /// 充值vip模块
+        vipModel.frame = CGRect(x: 0, y: vipTitle.frame.origin.y + vipTitle.bounds.height + 10, width: vipModelWidth, height: vipModelWidth * 1.1)
+        vipModel.layer.contents = UIImage(named: "VIP")?.cgImage
+        rootView.addSubview(vipModel)
+        
+        svipModel.frame = CGRect(x: rootView.bounds.width - vipModelWidth, y: vipModel.frame.origin.y, width: vipModelWidth, height: vipModelWidth * 1.1)
+        svipModel.layer.contents = UIImage(named: "SVIP")?.cgImage
+        rootView.addSubview(svipModel)
+        
+        setupVIPListModel()
+        
+        /// 装载完所有内容之后，重新计算RootView的contentSize
+        countRootViewHeight()
+    }
+    
+    /// 装载vip档列表
+    func setupVIPListModel() {
+        listTitle.frame.origin = CGPoint(x: 10, y: vipModel.frame.origin.y + vipModel.bounds.height + 10)
+        listTitle.sizeToFit()
+        rootView.addSubview(listTitle)
+        
+        payTableView.separatorColor = UIColor.clear
+        payTableView.backgroundColor = UIColor.clear
+        payTableView.isScrollEnabled = false
+        payTableView.rowHeight = (UIScreen.main.bounds.width - 40) * 0.3
+        payTableView.frame = CGRect(x: 0, y: listTitle.frame.origin.y + listTitle.bounds.height + 10, width: rootView.bounds.width, height: UIScreen.main.bounds.height)
+        payTableView.delegate = self
+        payTableView.dataSource = self
+        payTableView.register(PayListTableViewCell.self, forCellReuseIdentifier: "cellId")
+        rootView.addSubview(payTableView)
+        
+        getPayListDataSource()
+    }
+    
+    /// 计算rootview的高度
+    func countRootViewHeight() {
+        rootView.contentSize = CGSize(width: rootView.bounds.width, height: vipModel.frame.origin.y + vipModel.bounds.height + 10 + listTitle.bounds.height + 10 + payTableView.rowHeight * CGFloat(payListDataSource.count))
+    }
+}
+
+extension PayViewController: UITableViewDelegate, UITableViewDataSource{
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return payListDataSource.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as? PayListTableViewCell
+        
+        cell?.gemTitle.text = payListDataSource[indexPath.row]["name"].stringValue
+        cell?.gemInfo.text = payListDataSource[indexPath.row]["description"].stringValue
+        cell?.payNumberLabel.text = payListDataSource[indexPath.row]["value"].stringValue
+        
+        if payListDataSource[indexPath.row]["status"].intValue == 0 {
+            cell?.payBtn.setBackgroundImage(UIImage(named: "普通充值按钮"), for: .normal)
+            
+            cell?.gemInfo.isHidden = true
+            
+            cell?.gemTitle.snp.makeConstraints({ (make) in
+                make.left.equalTo((cell?.gem)!).offset((cell?.gem.bounds.width)! + 10)
+                make.centerY.equalTo((cell?.gem)!)
+            })
+        }else{
+            cell?.payBtn.setBackgroundImage(UIImage(named: "新用户充值按钮"), for: .normal)
+            
+            cell?.gemInfo.isHidden = false
+            
+            cell?.gemTitle.snp.makeConstraints({ (make) in
+                make.top.equalTo((cell?.gem)!)
+                make.left.equalTo((cell?.gem)!).offset((cell?.gem.bounds.width)! + 10)
+            })
+        }
+        
+        return cell!
+    }
+    
+    /// 从服务器获取支付列表
+    func getPayListDataSource() {
+        ToastUtils.showLoadingToast(msg: "正在获取支付列表")
+        var params = NetWorkUtils.createBaseParams()
+        params["status"] = "1"
+        
+        Alamofire.request(Constants.Network.GET_PAY_LIST, method: .post, parameters: params).responseJSON { (response) in
+            if NetWorkUtils.checkReponse(response: response) {
+                ToastUtils.hide()
+                let json = JSON(data: response.data!)
+                /// 获取数据成功，重新加载数据
+                print("data\(json)")
+                self.payListDataSource.removeAll()
+                self.payListDataSource = json["data"].arrayValue
+                self.payTableView.reloadData()
+                self.countRootViewHeight()
+            }else{
+                ToastUtils.showErrorToast(msg: "获取套餐列表失败")
+            }
+        }
     }
     
 }
+
