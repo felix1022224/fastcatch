@@ -124,11 +124,15 @@ extension WeChatShared {
         
         print("result:\(json)")
         
-        req.partnerId = json["partnerid"].string!
-        req.prepayId = json["prepayid"].string!
-        req.package = json["_package"].string!
-        req.nonceStr = json["noncestr"].string!
-        req.timeStamp = UInt32(json["timestamp"].string!)!
+        if json["partnerid"].stringValue == "" {
+            return
+        }
+        
+        req.partnerId = json["partnerid"].stringValue
+        req.prepayId = json["prepayid"].stringValue
+        req.package = json["_package"].stringValue
+        req.nonceStr = json["noncestr"].stringValue
+        req.timeStamp = UInt32(json["timestamp"].stringValue)!
         req.sign = json["sign"].string!
         
         WXApi.send(req)

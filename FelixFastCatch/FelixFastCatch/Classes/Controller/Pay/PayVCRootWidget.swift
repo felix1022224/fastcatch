@@ -62,6 +62,9 @@ extension PayViewController {
         vipModel.layer.contents = UIImage(named: "VIP")?.cgImage
         rootView.addSubview(vipModel)
         
+        
+        
+        /// svip 模块
         svipModel.frame = CGRect(x: rootView.bounds.width - vipModelWidth, y: vipModel.frame.origin.y, width: vipModelWidth, height: vipModelWidth * 1.1)
         svipModel.layer.contents = UIImage(named: "SVIP")?.cgImage
         rootView.addSubview(svipModel)
@@ -154,7 +157,31 @@ extension PayViewController: UITableViewDelegate, UITableViewDataSource{
             })
         }
         
+        cell?.payBtn.tag = indexPath.row
+        
+        cell?.payBtn.addTarget(self, action: #selector(showSettlementView(payBtn:)), for: .touchUpInside)
+        
         return cell!
+    }
+    
+    /// 更新当前页面
+    func updateInfo() {
+        UserTools.getUserInfo {[weak self] in
+            self?.updateMyBalance(myBalance: Constants.User.diamondsCount)
+            self?.getPayListDataSource()
+            
+            if Constants.User.userCouponNumber <= 0 {
+                self?.couponListLabel.text = "优惠券＞"
+            }else{
+                self?.couponListLabel.text = "有\(Constants.User.userCouponNumber)张优惠券＞"
+            }
+        }
+    }
+    
+    @objc func showSettlementView(payBtn:UIButton) {
+        settlementView.dataSource = payListDataSource[payBtn.tag]
+        settlementView.updateInfo()
+        settlementView.show()
     }
     
     /// 从服务器获取支付列表

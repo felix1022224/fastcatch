@@ -239,6 +239,8 @@ class Constants: NSObject {
         static let USER_VIP_KEY = "userVipKey"
         static let USER_VIP_DAY_KEY = "userVipDayKey"
         static let USER_COUPON_NUMBER_KEY = "userCouponNumberKey"
+        static let USER_CHECK_DAY_KEY = "userCheckDaysKey"
+        static let USER_TODAY_CHECKED_KEY = "userTodayChecked"
         
         /// 钻石数
         static var diamondsCount = 0
@@ -288,4 +290,10 @@ class Constants: NSObject {
     
     /// 是否第一次打开游戏界面
     public static var IS_FIRST_OPEN_PLAY = "isFirstOpenPlay"
+    
+    /// 是否绑定了友盟的推送
+    public static var IS_BIND_UMENG_ID = false
+    
+    /// 是否弹出了签到的界面
+    public static var IS_SHOW_CHECKIN_DIALOG = false
 }

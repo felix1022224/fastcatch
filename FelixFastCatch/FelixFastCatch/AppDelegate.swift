@@ -10,6 +10,7 @@ import UIKit
 import UserNotifications
 import CoreLocation
 import SVProgressHUD
+import SwiftyJSON
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate{
@@ -20,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     var tencentAuth: TencentOAuth!
 
     var locationManager:CLLocationManager!
+    
+    let vc = HomeViewController()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -56,7 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         window = UIWindow()
 //        let vc = MainViewController()
-        let vc = HomeViewController()
         let nav = UINavigationController(rootViewController: vc)
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
@@ -196,18 +198,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     //iOS10以下使用这个方法接收通知
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-        UMessage.setAutoAlert(true)
+        UMessage.setAutoAlert(false)
         UMessage.didReceiveRemoteNotification(userInfo)
+        
+        if UIApplication.shared.applicationState == UIApplicationState.active {
+            let json = JSON(userInfo["aps"] ?? "")
+            let alertView = UIAlertController(title: json["alert"]["title"].stringValue, message: json["alert"]["body"].stringValue, preferredStyle: UIAlertControllerStyle.alert)
+            alertView.addAction(UIAlertAction(title: "确定", style: UIAlertActionStyle.cancel, handler: nil))
+            UIViewController.currentViewController()?.present(alertView, animated: true, completion: nil)
+        }
     }
+    
     @available(iOS 10.0, *)
     func userNotificationCenter(center: UNUserNotificationCenter, willPresentNotification notification: UNNotification, withCompletionHandler completionHandler: (UNNotificationPresentationOptions) -> Void){
         let userInfo = notification.request.content.userInfo
         if (notification.request.trigger?.isKind(of: UNPushNotificationTrigger.superclass()!))! {
             //应用处于前台时的远程推送接受
             //关闭友盟自带的弹出框
-            UMessage.setAutoAlert(true)
+            UMessage.setAutoAlert(false)
             //必须加这句代码
             UMessage.didReceiveRemoteNotification(userInfo)
+            
+            
+            
         }else{
             //应用处于前台时的本地推送接受
         }
@@ -220,13 +233,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         if (response.notification.request.trigger?.isKind(of: UNPushNotificationTrigger.superclass()!))! {
             //应用处于前台时的远程推送接受
             //必须加这句代码
-            UMessage.setAutoAlert(true)
+            UMessage.setAutoAlert(false)
             UMessage.didReceiveRemoteNotification(userInfo)
         }else{
             //应用处于前台时的本地推送接受
         }
     }
-
+    
     var allowRotation = 0
     
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
@@ -242,6 +255,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
 }
+
+extension UIViewController {
+    class func currentViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        if let nav = base as? UINavigationController {
+            return currentViewController(base: nav.visibleViewController)
+        }
+        if let tab = base as? UITabBarController {
+            return currentViewController(base: tab.selectedViewController)
+        }
+        if let presented = base?.presentedViewController {
+            return currentViewController(base: presented)
+        }
+        return base
+    }
+}
+
 
 
 

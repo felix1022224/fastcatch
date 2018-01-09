@@ -16,6 +16,8 @@ class CouponListViewController: UIViewController {
     /// 是否来选择优惠券
     var isSelectCoupon:Bool = false
     
+    var selectCallback:((_ result:JSON)->())!
+    
     /// 优惠券列表
     var couponList:UITableView = UITableView()
     
@@ -144,7 +146,23 @@ extension CouponListViewController:UITableViewDelegate , UITableViewDataSource{
         
         cell?.updateDiscount()
         
+        cell?.selectedBackgroundView = UIView()
+        cell?.selectedBackgroundView?.backgroundColor = UIColor.clear
+        
+        cell?.tag = indexPath.row
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(itemCallback(cell:)))
+        cell?.isUserInteractionEnabled = true
+        cell?.addGestureRecognizer(tap)
+        
         return cell!
+    }
+    
+    @objc func itemCallback(cell:UITapGestureRecognizer) {
+        if selectCallback != nil {
+            selectCallback!(dataSource[(cell.view?.tag)!])
+        }
+        self.navigationController?.popViewController(animated: true)
     }
     
 }

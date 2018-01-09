@@ -30,6 +30,11 @@ class LocalDataUtils: NSObject {
         UserDefaults.standard.set(resultData["data"]["vipDay"].intValue, forKey: Constants.User.USER_VIP_DAY_KEY)
         UserDefaults.standard.set(resultData["data"]["couponNumber"].intValue, forKey: Constants.User.USER_COUPON_NUMBER_KEY)
         
+        if !Constants.IS_BIND_UMENG_ID {
+            Constants.IS_BIND_UMENG_ID = true
+            UMessage.addAlias(String(resultData["data"]["id"].intValue), type: "mzid", response: nil)
+        }
+        
         if dataResponse != nil {
             let headerFields = dataResponse?.response?.allHeaderFields as! [String: String]
             let url = dataResponse?.request?.url
@@ -46,15 +51,17 @@ class LocalDataUtils: NSObject {
                     HTTPCookieStorage.shared.setCookie(cookie)
                 }
             }
-            print("cookies:\(String(describing: UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY)))")
         }
         
         Constants.User.vip = resultData["data"]["vip"].intValue
         Constants.User.vipDay = resultData["data"]["vipDay"].intValue
         
         Constants.User.checkDays = resultData["data"]["checkDays"].intValue
+        UserDefaults.standard.set(resultData["data"]["checkDays"].intValue, forKey: Constants.User.USER_CHECK_DAY_KEY)
+        
         Constants.User.diamondsCount = resultData["data"]["diamondsCount"].intValue
         Constants.User.todayChecked = resultData["data"]["todayChecked"].boolValue
+        UserDefaults.standard.set(resultData["data"]["todayChecked"].boolValue, forKey: Constants.User.USER_TODAY_CHECKED_KEY)
         
         Constants.User.addrName = resultData["data"]["pav"]["name"].stringValue
         Constants.User.addrPhone = resultData["data"]["pav"]["phone"].stringValue
@@ -134,6 +141,14 @@ class LocalDataUtils: NSObject {
             Constants.User.USER_TAG = userTag!
         }
         
+        // 签到天数
+        let checkinDay = UserDefaults.standard.integer(forKey: Constants.User.USER_CHECK_DAY_KEY)
+        Constants.User.checkDays = checkinDay
+        
+        // 今天是否已经签到了
+        let todayIsChecked = UserDefaults.standard.bool(forKey: Constants.User.USER_TODAY_CHECKED_KEY)
+        Constants.User.todayChecked = todayIsChecked
+        
         //用户vip
         let vip = UserDefaults.standard.integer(forKey: Constants.User.USER_VIP_KEY)
         Constants.User.vip = vip
@@ -150,6 +165,10 @@ class LocalDataUtils: NSObject {
     
     /// 清除数据
     class func clearLoaclData() -> () {
+
+        UMessage.removeAlias(UserDefaults.standard.string(forKey: Constants.User.USER_ID_KEY)!, type: "mzid", response: nil)
+        Constants.IS_BIND_UMENG_ID = false
+        
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_ID_KEY)
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_SESSION_KEY)
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_FACE_IMAGE_KEY)
@@ -160,6 +179,8 @@ class LocalDataUtils: NSObject {
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_VIP_KEY)
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_VIP_DAY_KEY)
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_COUPON_NUMBER_KEY)
+        UserDefaults.standard.removeObject(forKey: Constants.User.USER_CHECK_DAY_KEY)
+        UserDefaults.standard.removeObject(forKey: Constants.User.USER_TODAY_CHECKED_KEY)
         
         Constants.User.USER_NICK_NAME = ""
         Constants.User.USER_ID = ""
@@ -170,6 +191,9 @@ class LocalDataUtils: NSObject {
         Constants.User.vip = 0
         Constants.User.vipDay = 0
         Constants.User.userCouponNumber = 0
+        Constants.User.todayChecked = false
+        
+        Constants.IS_SHOW_CHECKIN_DIALOG = false
         
         ///清除存储的所有的cookie
         let cookieArray = HTTPCookieStorage.shared.cookies

@@ -28,6 +28,10 @@ extension PayViewController {
         setupVIPPayModel()
         
         setupVIPListModel()
+        
+        settlementView.vc = self
+        /// 把支付界面添加到根布局
+        self.view.addSubview(settlementView)
     }
     
     /// 装载顶部的UI

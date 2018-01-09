@@ -47,9 +47,18 @@ class PayViewController: UIViewController {
     /// 优惠券按钮
     let couponListLabel = MainCustomerLabel()
     
+    /// 结算页面
+    let settlementView : SettlementView = SettlementView(frame: UIScreen.main.bounds)
+    
+    let vipDialog = VIPDialog(frame: UIScreen.main.bounds)
+    let svipDialog = SVIPDialog(frame: UIScreen.main.bounds)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
+        vipDialog.createView()
+        vipDialog.show()
     }
 
     

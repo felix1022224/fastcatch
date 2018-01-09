@@ -92,7 +92,7 @@ class HomeViewController: SPCoverController {
         
         getOpenAdv()
     }
-
+    
     /// banner图的点击效果
     @objc func bannerTap(){
         clickBannerItem(index: bannerView.currentIndex)
@@ -128,7 +128,7 @@ class HomeViewController: SPCoverController {
     }
     
     override func title(for index: Int) -> String! {
-        return "普通抓"
+        return "普通"
     }
     
     override func preferTabY() -> CGFloat {
@@ -188,6 +188,11 @@ class HomeViewController: SPCoverController {
     
     override func viewDidAppear(_ animated: Bool) {
         print("viewDidAppear")
+        if !Constants.IS_SHOW_CHECKIN_DIALOG &&
+            Constants.User.USER_ID != "" && checkInDialog != nil && !Constants.User.todayChecked{
+            showCheckInDialog()
+            Constants.IS_SHOW_CHECKIN_DIALOG = true
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

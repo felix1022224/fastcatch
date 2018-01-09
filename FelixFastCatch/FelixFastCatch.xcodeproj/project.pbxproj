@@ -52,6 +52,9 @@
 		4D4B25D81F5FA64900338CBD /* SharedViewDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B25D71F5FA64900338CBD /* SharedViewDialog.swift */; };
 		4D4B67E7200362B900455C04 /* CouponTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B67E6200362B900455C04 /* CouponTableViewCell.swift */; };
 		4D4B67E920037DE300455C04 /* CouponHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B67E820037DE300455C04 /* CouponHistoryTableViewCell.swift */; };
+		4D4B67EB2004A3BE00455C04 /* SettlementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B67EA2004A3BE00455C04 /* SettlementView.swift */; };
+		4D4B67F02004D28300455C04 /* VIPDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B67EF2004D28300455C04 /* VIPDialog.swift */; };
+		4D4B67F22004D31E00455C04 /* SVIPDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B67F12004D31E00455C04 /* SVIPDialog.swift */; };
 		4D500B9B1FB429FF0086AC15 /* PointsMallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D500B9A1FB429FF0086AC15 /* PointsMallViewController.swift */; };
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
 		4D589C741F386EB500C8DBC7 /* CheckIn7DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */; };
@@ -219,6 +222,9 @@
 		4D4B25D71F5FA64900338CBD /* SharedViewDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SharedViewDialog.swift; path = FelixFastCatch/Classes/Controller/Main/SharedViewDialog.swift; sourceTree = SOURCE_ROOT; };
 		4D4B67E6200362B900455C04 /* CouponTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponTableViewCell.swift; sourceTree = "<group>"; };
 		4D4B67E820037DE300455C04 /* CouponHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponHistoryTableViewCell.swift; sourceTree = "<group>"; };
+		4D4B67EA2004A3BE00455C04 /* SettlementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettlementView.swift; sourceTree = "<group>"; };
+		4D4B67EF2004D28300455C04 /* VIPDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VIPDialog.swift; path = ../../../../../../../../Documents/VIPDialog.swift; sourceTree = "<group>"; };
+		4D4B67F12004D31E00455C04 /* SVIPDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SVIPDialog.swift; path = ../../../../../../../../Documents/SVIPDialog.swift; sourceTree = "<group>"; };
 		4D500B9A1FB429FF0086AC15 /* PointsMallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsMallViewController.swift; sourceTree = "<group>"; };
 		4D5625121F2605A700515C98 /* FelixFastCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FelixFastCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5625151F2605A700515C98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -468,6 +474,15 @@
 				4D4B67E820037DE300455C04 /* CouponHistoryTableViewCell.swift */,
 			);
 			path = Coupon;
+			sourceTree = "<group>";
+		};
+		4D4B67EC2004D1A200455C04 /* Dialog */ = {
+			isa = PBXGroup;
+			children = (
+				4D4B67EF2004D28300455C04 /* VIPDialog.swift */,
+				4D4B67F12004D31E00455C04 /* SVIPDialog.swift */,
+			);
+			path = Dialog;
 			sourceTree = "<group>";
 		};
 		4D5625091F2605A700515C98 = {
@@ -841,11 +856,13 @@
 		4DB1A60B1FEBA03800BDBE3A /* Pay */ = {
 			isa = PBXGroup;
 			children = (
+				4D4B67EC2004D1A200455C04 /* Dialog */,
 				4DB1A60C1FEBA05E00BDBE3A /* PayViewController.swift */,
 				4DB1A6101FF0CCB000BDBE3A /* PayVCWidget.swift */,
 				4DB1A6151FF10B8100BDBE3A /* PayVCRootWidget.swift */,
 				4D2354391FFE3EFF00E09EA2 /* CouponListViewController.swift */,
 				4D23543B1FFE403300E09EA2 /* CouponHistoryViewController.swift */,
+				4D4B67EA2004A3BE00455C04 /* SettlementView.swift */,
 			);
 			path = Pay;
 			sourceTree = "<group>";
@@ -1193,8 +1210,10 @@
 				4DAFB22B1FAAC55000F90A08 /* GameSceneViewController.swift in Sources */,
 				4DCC49CA1F52A65F0017D4A4 /* PlayInfoBannerDialog.swift in Sources */,
 				4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */,
+				4D4B67EB2004A3BE00455C04 /* SettlementView.swift in Sources */,
 				4DA23CE21F8F6CF200B2337E /* MainFooterCell.swift in Sources */,
 				4D2B80141F40097E0075D390 /* OutGameDialog.swift in Sources */,
+				4D4B67F02004D28300455C04 /* VIPDialog.swift in Sources */,
 				4DCC49CE1F52E8B10017D4A4 /* EditInviteCode.swift in Sources */,
 				4D4ACE771F51CE410011E7F7 /* GemLackDialog.swift in Sources */,
 				4D7D3F2A1FD930380019B58C /* HorzontalGameSceneAudioController.swift in Sources */,
@@ -1214,6 +1233,7 @@
 				4DE641901FE8C5F100589537 /* NotificationTableViewCell.swift in Sources */,
 				4DF058831F90D20500E17B75 /* GameUserInfoDialog.swift in Sources */,
 				4D7468291FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift in Sources */,
+				4D4B67F22004D31E00455C04 /* SVIPDialog.swift in Sources */,
 				4DCD39B71F2DA5FC002B7F35 /* CustomerControllerButton.swift in Sources */,
 				4D7144831F8B584700B37D8A /* MailingListViewController.swift in Sources */,
 				4D7AB3C71FF4CB1C00270A62 /* DHOutLineLabel.m in Sources */,

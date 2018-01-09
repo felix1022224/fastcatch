@@ -86,7 +86,7 @@
     for (int i=0;i<[self.tabDataSource numberOfTab];i++) {
         NSInteger tagWidth = [self.tabDataSource respondsToSelector:@selector(tabWidthForIndex:)]?[self.tabDataSource tabWidthForIndex:i]:73;
         CGFloat top = [self.tabDataSource respondsToSelector:@selector(tabTopForIndex:)]? [self.tabDataSource tabTopForIndex:i]:0;
-        SPPageTagTitleView *titleView = [[SPPageTagTitleView alloc] initWithFrame:CGRectMake(offset, top, tagWidth, self.frame.size.height)];
+        SPPageTagTitleView *titleView = [[SPPageTagTitleView alloc] initWithFrame:CGRectMake(offset + 6, top, tagWidth, self.frame.size.height)];
         if ([self.tabDataSource respondsToSelector:@selector(titleColorForIndex:)]) {
             titleView.normalTitleColor = [self.tabDataSource titleColorForIndex:i];
         }
@@ -97,6 +97,8 @@
         titleView.contentView.tag = i;
         
         [titleView.titleImage setImageUrlStr:[self.tabDataSource imageForIndex:i] ];
+        
+        [titleView.titleImage setHidden:NO];
         
         titleView.userInteractionEnabled = YES;
 
@@ -110,7 +112,7 @@
 
     [self reloadHighlight];
 
-    self.contentSize = CGSizeMake(offset, self.frame.size.height);
+    self.contentSize = CGSizeMake(offset + 6, self.frame.size.height);
     self.backgroundColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1.0];
     
     self.layer.cornerRadius = 10;

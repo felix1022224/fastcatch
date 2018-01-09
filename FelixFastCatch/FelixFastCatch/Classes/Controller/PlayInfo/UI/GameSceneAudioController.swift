@@ -19,17 +19,12 @@ extension GameSceneViewController{
     /// 播放背景声音
     func playBackgroundMusic() -> () {
         
-        do {
-            try AVAudioSession.sharedInstance().overrideOutputAudioPort(AVAudioSessionPortOverride.speaker)
-        } catch _ {
-        }
         //获取bg.mp3文件地址
         let bgMusicURL =  Bundle.main.path(forResource: "background_music", ofType: "mp3")!
         //地址转换
         let baseURL = URL(fileURLWithPath: bgMusicURL)
         //根据背景音乐地址生成播放器
         try? bgMusicPlayer = AVAudioPlayer(contentsOf: baseURL)
-        bgMusicPlayer.volume = 10.0
         //设置为循环播放
         bgMusicPlayer.numberOfLoops = -1
         //准备播放音乐
