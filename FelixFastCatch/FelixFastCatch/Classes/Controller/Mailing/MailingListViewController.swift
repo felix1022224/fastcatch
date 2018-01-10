@@ -563,7 +563,7 @@ extension MailingListViewController: UITableViewDelegate, UITableViewDataSource{
         convertedTabView.separatorColor = UIColor.clear
         convertedTabView.showsVerticalScrollIndicator = false
         
-        convertedTabView.rowHeight = (UIScreen.main.bounds.width * 0.9) * 0.35
+        convertedTabView.rowHeight = (UIScreen.main.bounds.width * 0.98) * 0.3
         
         convertedTabView.estimatedRowHeight = UIImage(named: "已邮寄item背景")?.size.height ?? 0
         
@@ -575,7 +575,7 @@ extension MailingListViewController: UITableViewDelegate, UITableViewDataSource{
             make.top.equalTo(tabsBackground).offset(tabsBackground.bounds.height + 10)
             make.centerX.equalTo(view)
             make.bottom.equalTo(view)
-            make.width.equalTo(UIScreen.main.bounds.width * 0.9)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.98)
         }
         
         convertedTabView.isHidden = true

@@ -42,6 +42,13 @@ extension GameSceneViewController{
         createQueueNumber()
         
         rootView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: topGroupView.bounds.height + startBtnBackgroundView.bounds.height + productBackgroundView.bounds.height + bottomActivityGroup.bounds.height)
+        
+        createZeroView()
+    }
+    
+    func createZeroView() {
+        zeroCatchView = ZeroCatchView(frame: UIScreen.main.bounds)
+        view.addSubview(zeroCatchView)
     }
     
     /// 创建背景板

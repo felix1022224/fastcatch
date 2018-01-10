@@ -292,6 +292,8 @@ extension MainListWidget:UICollectionViewDelegateFlowLayout, UICollectionViewDat
             return
         }
         
+        print("result:\(mainListData[sender.tag])")
+        
         let gameSceneViewController = GameSceneViewController()
         
         gameSceneViewController.deviceId = mainListData[sender.tag]["deviceId"].stringValue
@@ -335,6 +337,9 @@ extension MainListWidget:UICollectionViewDelegateFlowLayout, UICollectionViewDat
         gameSceneViewController.bootomBannerCardImagePath = mainListData[sender.tag]["activity"]["bannerSmallImg"].stringValue
         gameSceneViewController.bottomBannerCardScheme = mainListData[sender.tag]["activity"]["scheme"].stringValue
         
+        /// 商品的信息
+        gameSceneViewController.awardDataSource = mainListData[sender.tag]["award"]
+        
         navigationController?.pushViewController(gameSceneViewController, animated: true)
     }
     
@@ -342,6 +347,8 @@ extension MainListWidget:UICollectionViewDelegateFlowLayout, UICollectionViewDat
         if !checkDeviceStatus(status: mainListData[index]["status"].intValue) {
             return
         }
+        
+        print("result:\(mainListData[index])")
         
         let gameSceneViewController = GameSceneViewController()
         gameSceneViewController.deviceId = mainListData[index]["deviceId"].stringValue
@@ -381,6 +388,9 @@ extension MainListWidget:UICollectionViewDelegateFlowLayout, UICollectionViewDat
         gameSceneViewController.bottomAwardTitle = mainListData[index]["award"]["title"].stringValue
         gameSceneViewController.bootomBannerCardImagePath = mainListData[index]["activity"]["bannerSmallImg"].stringValue
         gameSceneViewController.bottomBannerCardScheme = mainListData[index]["activity"]["scheme"].stringValue
+        
+        /// 商品的信息
+        gameSceneViewController.awardDataSource = mainListData[index]["award"]
         
         navigationController?.pushViewController(gameSceneViewController, animated: true)
     }

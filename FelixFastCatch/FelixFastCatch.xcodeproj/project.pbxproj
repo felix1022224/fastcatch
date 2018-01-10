@@ -57,6 +57,7 @@
 		4D4B67F22004D31E00455C04 /* SVIPDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B67F12004D31E00455C04 /* SVIPDialog.swift */; };
 		4D4B67F42005EA2E00455C04 /* ExchangePointsDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B67F32005EA2E00455C04 /* ExchangePointsDialog.swift */; };
 		4D4B67F62005F2EE00455C04 /* HasBeenConvertedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B67F52005F2EE00455C04 /* HasBeenConvertedTableViewCell.swift */; };
+		4D4B67F820060A2800455C04 /* ZeroCatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B67F720060A2800455C04 /* ZeroCatchView.swift */; };
 		4D500B9B1FB429FF0086AC15 /* PointsMallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D500B9A1FB429FF0086AC15 /* PointsMallViewController.swift */; };
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
 		4D589C741F386EB500C8DBC7 /* CheckIn7DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */; };
@@ -229,6 +230,7 @@
 		4D4B67F12004D31E00455C04 /* SVIPDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SVIPDialog.swift; path = ../../../../../../../../Documents/SVIPDialog.swift; sourceTree = "<group>"; };
 		4D4B67F32005EA2E00455C04 /* ExchangePointsDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangePointsDialog.swift; sourceTree = "<group>"; };
 		4D4B67F52005F2EE00455C04 /* HasBeenConvertedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasBeenConvertedTableViewCell.swift; sourceTree = "<group>"; };
+		4D4B67F720060A2800455C04 /* ZeroCatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroCatchView.swift; sourceTree = "<group>"; };
 		4D500B9A1FB429FF0086AC15 /* PointsMallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsMallViewController.swift; sourceTree = "<group>"; };
 		4D5625121F2605A700515C98 /* FelixFastCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FelixFastCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5625151F2605A700515C98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -855,6 +857,7 @@
 				4DB08B9F1FB08A2000BFB200 /* QueueArriveDialog.swift */,
 				4DB08BA11FB1822200BFB200 /* GameFailedDialog.swift */,
 				4D74682C1FD127A500E8E662 /* StartGameCountdownDialog.swift */,
+				4D4B67F720060A2800455C04 /* ZeroCatchView.swift */,
 			);
 			path = dialog;
 			sourceTree = "<group>";
@@ -1244,6 +1247,7 @@
 				4DCD39B71F2DA5FC002B7F35 /* CustomerControllerButton.swift in Sources */,
 				4D7144831F8B584700B37D8A /* MailingListViewController.swift in Sources */,
 				4D7AB3C71FF4CB1C00270A62 /* DHOutLineLabel.m in Sources */,
+				4D4B67F820060A2800455C04 /* ZeroCatchView.swift in Sources */,
 				4DCC49D21F5307220017D4A4 /* ExchangeCodeDialog.swift in Sources */,
 				4D7AB3BF1FF24C8700270A62 /* MainListWidget.swift in Sources */,
 				4D7AB3CA1FF4DBDD00270A62 /* TabContentView.m in Sources */,

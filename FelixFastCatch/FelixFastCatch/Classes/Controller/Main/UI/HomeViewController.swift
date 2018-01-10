@@ -465,6 +465,9 @@ extension HomeViewController{
         gameSceneViewController.bootomBannerCardImagePath = item["activity"]["bannerSmallImg"].stringValue
         gameSceneViewController.bottomBannerCardScheme = item["activity"]["scheme"].stringValue
         
+        /// 商品的信息
+        gameSceneViewController.awardDataSource = item["award"]
+        
         navigationController?.pushViewController(gameSceneViewController, animated: true)
     }
     

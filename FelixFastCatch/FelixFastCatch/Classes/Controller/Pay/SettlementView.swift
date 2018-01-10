@@ -52,6 +52,11 @@ class SettlementView: UIView {
     
     var vipRP = 0
     
+    var aid = -1
+    
+    /// 支付成功的回调，用于游戏界面0元抓
+    var successCallback:(()->())!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -245,6 +250,11 @@ class SettlementView: UIView {
         discountNumber = -1
         couponId = ""
         payType = 0
+        
+        isVip = false
+        vipRP = -1
+        vipNumber = 0.0
+        aid = -1
     }
     
     func show() {
@@ -290,6 +300,11 @@ class SettlementView: UIView {
             params["cid"] = couponId
         }
         
+        if aid != -1 {
+            params["aid"] = String(aid)
+            params["rp"] = "-10"
+        }
+        
         Alamofire.request(Constants.Network.WECHAT_PAY_URL, method: .post, parameters: params).responseJSON { (response) in
             ToastUtils.hide()
             if response.error == nil && response.data != nil {
@@ -298,11 +313,20 @@ class SettlementView: UIView {
                     WeChatShared.pay(to: "main", jsonData["data"], resultHandle: { (result, identifier) in
                         switch(result){
                         case .Success:
-                            ToastUtils.showSuccessToast(msg: "支付成功")
+                            if self.aid != -1 {
+                                ToastUtils.showSuccessToast(msg: "购买成功，请到奖品中查看")
+                            }else{
+                                ToastUtils.showSuccessToast(msg: "支付成功")
+                            }
                             self.hide()
-                            self.vc.updateInfo()
-                            if self.vc.userStatusCallback != nil {
-                                self.vc.userStatusCallback!()
+                            if self.vc != nil {
+                                self.vc.updateInfo()
+                                if self.vc.userStatusCallback != nil {
+                                    self.vc.userStatusCallback!()
+                                }
+                            }
+                            if self.successCallback != nil {
+                                self.successCallback!()
                             }
                             break;
                         case .Failed:
@@ -339,6 +363,11 @@ class SettlementView: UIView {
             params["cid"] = couponId
         }
         
+        if aid != -1 {
+            params["aid"] = String(aid)
+            params["rp"] = "-10"
+        }
+        
         Alamofire.request(Constants.Network.ALIPAY_URL, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             ToastUtils.hide()
             if response.error == nil && response.data != nil {
@@ -372,12 +401,21 @@ class SettlementView: UIView {
                 let resultStatus = Alipayjson.value(forKey: "resultStatus") as! String
                 if resultStatus == "9000"{
                     print("OK")
-                    self.hide()
-                    self.vc.updateInfo()
-                    if self.vc.userStatusCallback != nil {
-                        self.vc.userStatusCallback!()
+                    if self.aid != -1 {
+                        ToastUtils.showSuccessToast(msg: "购买成功，请到奖品中查看")
+                    }else{
+                        ToastUtils.showSuccessToast(msg: "支付成功")
                     }
-                    ToastUtils.showSuccessToast(msg: "支付成功")
+                    self.hide()
+                    if self.vc != nil {
+                        self.vc.updateInfo()
+                        if self.vc.userStatusCallback != nil {
+                            self.vc.userStatusCallback!()
+                        }
+                    }
+                    if self.successCallback != nil {
+                        self.successCallback!()
+                    }
                 }else if resultStatus == "8000" {
                     print("正在处理中")
                 }else if resultStatus == "4000" {

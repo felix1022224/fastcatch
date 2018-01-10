@@ -36,7 +36,7 @@ class HasBeenConvertedTableViewCell: UITableViewCell {
         selectionStyle = UITableViewCellSelectionStyle.none
         
         contentGroup = UIImageView()
-        contentGroup.frame.size = CGSize(width: (UIScreen.main.bounds.width * 0.9), height: ((UIScreen.main.bounds.width * 0.9))*0.35)
+        contentGroup.frame.size = CGSize(width: (UIScreen.main.bounds.width * 0.98), height: ((UIScreen.main.bounds.width * 0.98))*0.3)
         contentGroup.image = UIImage(named: "已兑换背景")?.stretchableImage(withLeftCapWidth: 0, topCapHeight: 0)
         addSubview(contentGroup)
         
@@ -74,7 +74,7 @@ class HasBeenConvertedTableViewCell: UITableViewCell {
         addSubview(pointsLabel)
         
         pointsLabel.snp.makeConstraints { (make) in
-            make.right.equalTo(contentGroup).offset(-15)
+            make.right.equalTo(contentGroup).offset(-20)
             make.centerY.equalTo(contentGroup)
         }
         

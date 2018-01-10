@@ -247,6 +247,15 @@ class GameSceneViewController: UIViewController {
     var shareInfo:String!
     var thumbShareImage:String!
     
+    /// 商品的信息
+    var awardDataSource:JSON!
+    
+    /// 0元抓的view
+    var zeroCatchView:ZeroCatchView!
+    
+    /// 支付结算的view
+    var settlementView:SettlementView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -262,6 +271,11 @@ class GameSceneViewController: UIViewController {
         
         /// 装载UI控件
         setupUI()
+        
+        settlementView = SettlementView(frame: UIScreen.main.bounds)
+        view.addSubview(settlementView)
+        
+        showShardRecordDialog(deviceId: deviceId)
         
         playBackgroundMusic() //播放背景音乐
         
@@ -1064,6 +1078,22 @@ extension GameSceneViewController{
     
     /// 显示分享战绩的dialog
     func showShardRecordDialog(deviceId:String) -> () {
+        
+        if startCoinNumber <= 0 {
+            /// 这是个0元抓
+            
+            zeroCatchView.productImage.kf.setImage(with: URL(string: awardDataSource["img"].stringValue))
+            zeroCatchView.productTitle.text = awardDataSource["title"].stringValue
+            zeroCatchView.productDesc.text = awardDataSource["description"].stringValue
+            zeroCatchView.updateProductPriceNumber(price: awardDataSource["buyPrice"].doubleValue, oPrice: awardDataSource["otherPrice"].stringValue)
+            
+            zeroCatchView.show()
+            
+            zeroCatchView.payButton.addTarget(self, action: #selector(payProduct), for: .touchUpInside)
+            
+            return
+        }
+        
         if showOffRecordDialog == nil {
             /// 分享战绩
             showOffRecordDialog = ShowOffRecordDialog(frame: UIScreen.main.bounds)
@@ -1081,8 +1111,22 @@ extension GameSceneViewController{
                 self?.startPlay()
             }
         }
-        
     }
+    
+    /// 购买商品
+    @objc func payProduct(){
+        settlementView.isVip = true
+        settlementView.aid = awardDataSource["id"].intValue
+        settlementView.vipRP = -10
+        settlementView.vipNumber = awardDataSource["buyPrice"].doubleValue
+        settlementView.updateInfo()
+        settlementView.show()
+        
+        settlementView.successCallback = {[weak self] in
+            self?.zeroCatchView.hide()
+        }
+    }
+    
 }
 
 // MARK: - 游戏失败的弹窗
