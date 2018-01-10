@@ -9,6 +9,7 @@
 #import "SPTagBarScrollView.h"
 #import "SPPageTagView.h"
 #import <SDWebImage/NSImage+WebCache.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface SPTagBarScrollView () <UIScrollViewDelegate>
 
@@ -96,7 +97,7 @@
         titleView.tag = i;
         titleView.contentView.tag = i;
         
-        [titleView.titleImage setImageUrlStr:[self.tabDataSource imageForIndex:i] ];
+        [titleView.titleImage sd_setImageWithURL:[[NSURL alloc] initWithString:[self.tabDataSource imageForIndex:i]]];
         
         [titleView.titleImage setHidden:NO];
         

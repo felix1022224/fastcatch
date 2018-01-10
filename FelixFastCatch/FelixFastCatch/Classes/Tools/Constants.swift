@@ -26,7 +26,7 @@ class Constants: NSObject {
             get{
                 if Network.nService == MZService.Test {
                     ///本地测试环境
-                    return "http://192.168.1.111:9125/"
+                    return "http://192.168.2.47:9125/"
                 }else if Network.nService == MZService.Debug{
                     ///测试环境
                     return  "http://47.92.72.158:9125/"
