@@ -25,6 +25,12 @@ class FCMyGiftCell: UITableViewCell {
     // 产品名称
     var productTitleLabel:MainCustomerLabel!
     
+    /// 剩余时间
+    var timeLabel:MainCustomerLabel!
+    
+    let timeBackgroundView = UIView()
+    var integralLabel:MainCustomerLabel!
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -102,10 +108,67 @@ extension FCMyGiftCell{
         productTitleLabel.snp.makeConstraints { (make) in
             make.left.equalTo(productBackgroundImage).offset(productBackgroundImage.bounds.width + 10)
             make.right.equalTo(selectBtn).offset(-(selectBtn.bounds.width + 10))
-            make.centerY.equalTo(contentGroup)
+            make.top.equalTo(productImage).offset(5)
         }
+        
+        // 剩余时间
+        timeLabel = MainCustomerLabel()
+        timeLabel.text = "申请提取剩余时间:100天"
+        timeLabel.numberOfLines = 1
+        timeLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 11)
+        timeLabel.outLineWidth = 2
+        timeLabel.outTextColor = UIColor.white
+        timeLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
+        timeLabel.sizeToFit()
+        addSubview(timeLabel)
+        
+        timeLabel.snp.makeConstraints { (make) in
+            make.bottom.equalTo(productImage).offset(-5)
+            make.left.equalTo(productTitleLabel)
+            make.right.equalTo(productTitleLabel)
+        }
+        
+        // 积分背景
+        timeBackgroundView.frame = CGRect(x: productBackgroundImage.bounds.width / 2.5 + 1, y: contentGroup.bounds.height - productBackgroundImage.bounds.height/2 - (productBackgroundImage.bounds.height * 0.25)/2, width: productBackgroundImage.bounds.width - 2, height: productBackgroundImage.bounds.height * 0.25)
+        timeBackgroundView.backgroundColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.5)
+        let corners: UIRectCorner = [.bottomLeft,.bottomRight]
+        timeBackgroundView.corner(byRoundingCorners: corners, radii: 6)
+        addSubview(timeBackgroundView)
+        
+        // 积分label
+        integralLabel = MainCustomerLabel()
+        integralLabel.text = "9999积分"
+        integralLabel.numberOfLines = 1
+        integralLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 11)
+        integralLabel.outLineWidth = 1
+        integralLabel.outTextColor = UIColor.white
+        integralLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
+        integralLabel.textAlignment = .center
+        integralLabel.sizeToFit()
+        integralLabel.frame.size = CGSize(width: productBackgroundImage.bounds.width, height: productBackgroundImage.bounds.height * 0.3)
+        addSubview(integralLabel)
+        
+        integralLabel.center = timeBackgroundView.center
+        
     }
 }
+
+extension UIView {
+    
+    /// 部分圆角
+    ///
+    /// - Parameters:
+    ///   - corners: 需要实现为圆角的角，可传入多个
+    ///   - radii: 圆角半径
+    func corner(byRoundingCorners corners: UIRectCorner, radii: CGFloat) {
+        let maskPath = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radii, height: radii))
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = self.bounds
+        maskLayer.path = maskPath.cgPath
+        self.layer.mask = maskLayer
+    }
+}
+
 
 
 

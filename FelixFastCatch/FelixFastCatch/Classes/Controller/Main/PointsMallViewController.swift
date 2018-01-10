@@ -30,7 +30,7 @@ import JavaScriptCore
 }
 
 /// 积分商城
-class PointsMallViewController: UIViewController , UIWebViewDelegate {
+class PointsMallViewController: UIViewController , UIWebViewDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
 
     /// 加载url
     var webview:UIWebView!
@@ -46,6 +46,8 @@ class PointsMallViewController: UIViewController , UIWebViewDelegate {
         webview.delegate = self
         view.addSubview(webview)
         
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
         self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
         let model = pointsJsModel()
         model.vc = self
@@ -55,9 +57,34 @@ class PointsMallViewController: UIViewController , UIWebViewDelegate {
             print("exception \(String(describing: exception))")
         }
         
-        webview.loadRequest(URLRequest(url: URL(string: "http://47.92.72.158:9150/market/score.html")!))
+        if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
+            for cookieData in cookieArray {
+                if let dict = cookieData as? [HTTPCookiePropertyKey : Any] {
+                    if let cookie = HTTPCookie.init(properties : dict) {
+                        if cookie.name == "SESSION" {
+                            var cookieProperties =  [HTTPCookiePropertyKey : Any]()
+                            cookieProperties[HTTPCookiePropertyKey.name] = cookie.name
+                            cookieProperties[HTTPCookiePropertyKey.value] = cookie.value
+                            cookieProperties[HTTPCookiePropertyKey.domain] = "api.mz.meidaojia.com"
+                            cookieProperties[HTTPCookiePropertyKey.originURL] = "http://api.mz.meidaojia.com"
+                            cookieProperties[HTTPCookiePropertyKey.path] = "/"
+                            cookieProperties[HTTPCookiePropertyKey.version] = "0"
+                            
+                            let cookie = HTTPCookie(properties: cookieProperties)
+                            HTTPCookieStorage.shared.setCookie(cookie!)
+                        }
+                    }
+                }
+            }
+        }
+        
+        webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/market/score.html")!))
     }
 
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
     func webViewDidFinishLoad(_ webView: UIWebView) {
         self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
         let model = pointsJsModel()
@@ -67,16 +94,27 @@ class PointsMallViewController: UIViewController , UIWebViewDelegate {
         self.jsContext.exceptionHandler = { (context, exception) in
             print("exception \(String(describing: exception))")
         }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    /// 隐藏当前页面的状态栏
-    override var prefersStatusBarHidden: Bool{
-        return true
+        
+        if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
+            for cookieData in cookieArray {
+                if let dict = cookieData as? [HTTPCookiePropertyKey : Any] {
+                    if let cookie = HTTPCookie.init(properties : dict) {
+                        if cookie.name == "SESSION" {
+                            var cookieProperties =  [HTTPCookiePropertyKey : Any]()
+                            cookieProperties[HTTPCookiePropertyKey.name] = cookie.name
+                            cookieProperties[HTTPCookiePropertyKey.value] = cookie.value
+                            cookieProperties[HTTPCookiePropertyKey.domain] = "api.mz.meidaojia.com"
+                            cookieProperties[HTTPCookiePropertyKey.originURL] = "http://api.mz.meidaojia.com"
+                            cookieProperties[HTTPCookiePropertyKey.path] = "/"
+                            cookieProperties[HTTPCookiePropertyKey.version] = "0"
+                            
+                            let cookie = HTTPCookie(properties: cookieProperties)
+                            HTTPCookieStorage.shared.setCookie(cookie!)
+                        }
+                    }
+                }
+            }
+        }
     }
     
     deinit {

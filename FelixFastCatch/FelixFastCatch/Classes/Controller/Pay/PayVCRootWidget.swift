@@ -62,17 +62,62 @@ extension PayViewController {
         vipModel.layer.contents = UIImage(named: "VIP")?.cgImage
         rootView.addSubview(vipModel)
         
+        vipButton.setBackgroundImage(UIImage(named: "VIP充值按钮"), for: .normal)
+        vipButton.sizeToFit()
+        rootView.addSubview(vipButton)
         
+        vipButton.snp.makeConstraints { (make) in
+            make.centerX.equalTo(vipModel)
+            make.bottom.equalTo(vipModel).offset(-25)
+        }
+        
+        vipButton.addTarget(self, action: #selector(vipClick(sender:)), for: .touchUpInside)
         
         /// svip 模块
         svipModel.frame = CGRect(x: rootView.bounds.width - vipModelWidth, y: vipModel.frame.origin.y, width: vipModelWidth, height: vipModelWidth * 1.1)
         svipModel.layer.contents = UIImage(named: "SVIP")?.cgImage
         rootView.addSubview(svipModel)
         
+        svipButton.setBackgroundImage(UIImage(named: "SVIP充值按钮"), for: .normal)
+        svipButton.sizeToFit()
+        rootView.addSubview(svipButton)
+        
+        svipButton.addTarget(self, action: #selector(vipClick(sender:)), for: .touchUpInside)
+        
+        svipButton.snp.makeConstraints { (make) in
+            make.centerX.equalTo(svipModel)
+            make.bottom.equalTo(svipModel).offset(-25)
+        }
+        
         setupVIPListModel()
         
         /// 装载完所有内容之后，重新计算RootView的contentSize
         countRootViewHeight()
+    }
+    
+    @objc func vipClick(sender:UIButton){
+        if sender == vipButton {
+            ///点击了vip
+            vipDialog.vipCallback = {[weak self] in
+                self?.settlementView.isVip = true
+                self?.settlementView.vipRP = 100000
+                self?.settlementView.vipNumber = 9.9
+                self?.settlementView.updateInfo()
+                self?.settlementView.show()
+            }
+            vipDialog.createView()
+            vipDialog.show()
+        }else{
+            svipDialog.svipCallback = {[weak self] in
+                self?.settlementView.isVip = true
+                self?.settlementView.vipRP = 110000
+                self?.settlementView.vipNumber = 19.9
+                self?.settlementView.updateInfo()
+                self?.settlementView.show()
+            }
+            svipDialog.createView()
+            svipDialog.show()
+        }
     }
     
     /// 装载vip档列表

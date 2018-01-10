@@ -45,6 +45,13 @@ class SettlementView: UIView {
     /// 优惠券ID
     var couponId = ""
     
+    /// 是否是充值vip
+    var isVip = false
+    
+    var vipNumber = 0.0
+    
+    var vipRP = 0
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -157,6 +164,13 @@ class SettlementView: UIView {
         
         switchPayType(payType: 0)
         
+        if isVip {
+            selectCouponLabel.isHidden = true
+            afterDiscountLabel.text = String(vipNumber) + "元"
+        }else{
+            selectCouponLabel.isHidden = false
+        }
+        
     }
     
     /// 前往选择优惠券
@@ -175,23 +189,29 @@ class SettlementView: UIView {
     
     /// 更新信息
     func updateInfo() {
-        if discountNumber == -1 {
-            selectCouponLabel.text = "优惠券 >"
+        if  isVip {
+            selectCouponLabel.isHidden = true
+            afterDiscountLabel.text = String(vipNumber) + "元"
             originalLabel.isHidden = true
-            afterDiscountLabel.text = dataSource["value"].stringValue + "元"
         }else{
-            selectCouponLabel.text = String(discountNumber) + "折 >"
-            originalLabel.isHidden = false
-            let afterDiscountNumber = String(dataSource["value"].floatValue * (discountNumber / 10))
-            afterDiscountLabel.text = afterDiscountNumber + "元"
-            afterDiscountLabel.sizeToFit()
-            let priceString = NSMutableAttributedString.init(string: dataSource["value"].stringValue + "元")
-            priceString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: NSNumber.init(value: 1), range: NSRange(location: 0, length: priceString.length))
-            originalLabel.attributedText = priceString
-            originalLabel.sizeToFit()
-            
-            originalLabel.frame.origin = CGPoint(x: 20 + afterDiscountLabel.bounds.width + 10, y: 0)
-            originalLabel.center.y = afterDiscountLabel.center.y
+            if discountNumber == -1 {
+                selectCouponLabel.text = "优惠券 >"
+                originalLabel.isHidden = true
+                afterDiscountLabel.text = dataSource["value"].stringValue + "元"
+            }else{
+                selectCouponLabel.text = String(discountNumber) + "折 >"
+                originalLabel.isHidden = false
+                let afterDiscountNumber = String(dataSource["value"].floatValue * (discountNumber / 10))
+                afterDiscountLabel.text = afterDiscountNumber + "元"
+                afterDiscountLabel.sizeToFit()
+                let priceString = NSMutableAttributedString.init(string: dataSource["value"].stringValue + "元")
+                priceString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: NSNumber.init(value: 1), range: NSRange(location: 0, length: priceString.length))
+                originalLabel.attributedText = priceString
+                originalLabel.sizeToFit()
+                
+                originalLabel.frame.origin = CGPoint(x: 20 + afterDiscountLabel.bounds.width + 10, y: 0)
+                originalLabel.center.y = afterDiscountLabel.center.y
+            }
         }
     }
     
@@ -242,9 +262,17 @@ class SettlementView: UIView {
     @objc func pay(){
         print("data:\(dataSource)")
         if payType == 0 {
-            wechatPay(rp: dataSource["id"].intValue)
+            if isVip {
+                wechatPay(rp: vipRP)
+            }else{
+                wechatPay(rp: dataSource["id"].intValue)
+            }
         }else if payType == 1 {
-            aliPay(rp: dataSource["id"].intValue)
+            if isVip {
+                aliPay(rp: vipRP)
+            }else{
+                aliPay(rp: dataSource["id"].intValue)
+            }
         }
     }
     
@@ -273,6 +301,9 @@ class SettlementView: UIView {
                             ToastUtils.showSuccessToast(msg: "支付成功")
                             self.hide()
                             self.vc.updateInfo()
+                            if self.vc.userStatusCallback != nil {
+                                self.vc.userStatusCallback!()
+                            }
                             break;
                         case .Failed:
                             ToastUtils.showErrorToast(msg: "支付失败")
@@ -343,6 +374,9 @@ class SettlementView: UIView {
                     print("OK")
                     self.hide()
                     self.vc.updateInfo()
+                    if self.vc.userStatusCallback != nil {
+                        self.vc.userStatusCallback!()
+                    }
                     ToastUtils.showSuccessToast(msg: "支付成功")
                 }else if resultStatus == "8000" {
                     print("正在处理中")

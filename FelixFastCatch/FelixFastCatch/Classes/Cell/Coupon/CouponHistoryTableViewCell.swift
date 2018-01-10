@@ -24,6 +24,7 @@ class CouponHistoryTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.backgroundColor = UIColor.clear
+        selectionStyle = UITableViewCellSelectionStyle.none
         
         backgroundImage.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 30, height: (UIScreen.main.bounds.width - 30) * 0.25)
         backgroundImage.image = UIImage(named: "优惠券已过期item")?.stretchableImage(withLeftCapWidth: 0, topCapHeight: 0)

@@ -55,6 +55,8 @@
 		4D4B67EB2004A3BE00455C04 /* SettlementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B67EA2004A3BE00455C04 /* SettlementView.swift */; };
 		4D4B67F02004D28300455C04 /* VIPDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B67EF2004D28300455C04 /* VIPDialog.swift */; };
 		4D4B67F22004D31E00455C04 /* SVIPDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B67F12004D31E00455C04 /* SVIPDialog.swift */; };
+		4D4B67F42005EA2E00455C04 /* ExchangePointsDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B67F32005EA2E00455C04 /* ExchangePointsDialog.swift */; };
+		4D4B67F62005F2EE00455C04 /* HasBeenConvertedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B67F52005F2EE00455C04 /* HasBeenConvertedTableViewCell.swift */; };
 		4D500B9B1FB429FF0086AC15 /* PointsMallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D500B9A1FB429FF0086AC15 /* PointsMallViewController.swift */; };
 		4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5625151F2605A700515C98 /* AppDelegate.swift */; };
 		4D589C741F386EB500C8DBC7 /* CheckIn7DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D589C731F386EB500C8DBC7 /* CheckIn7DayView.swift */; };
@@ -225,6 +227,8 @@
 		4D4B67EA2004A3BE00455C04 /* SettlementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettlementView.swift; sourceTree = "<group>"; };
 		4D4B67EF2004D28300455C04 /* VIPDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VIPDialog.swift; path = ../../../../../../../../Documents/VIPDialog.swift; sourceTree = "<group>"; };
 		4D4B67F12004D31E00455C04 /* SVIPDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SVIPDialog.swift; path = ../../../../../../../../Documents/SVIPDialog.swift; sourceTree = "<group>"; };
+		4D4B67F32005EA2E00455C04 /* ExchangePointsDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangePointsDialog.swift; sourceTree = "<group>"; };
+		4D4B67F52005F2EE00455C04 /* HasBeenConvertedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasBeenConvertedTableViewCell.swift; sourceTree = "<group>"; };
 		4D500B9A1FB429FF0086AC15 /* PointsMallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsMallViewController.swift; sourceTree = "<group>"; };
 		4D5625121F2605A700515C98 /* FelixFastCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FelixFastCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5625151F2605A700515C98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -559,6 +563,7 @@
 			children = (
 				4D7144821F8B584700B37D8A /* MailingListViewController.swift */,
 				4D7048A61F908A8600D337F4 /* MailedCashShortDialog.swift */,
+				4D4B67F32005EA2E00455C04 /* ExchangePointsDialog.swift */,
 			);
 			path = Mailing;
 			sourceTree = "<group>";
@@ -806,6 +811,7 @@
 				4DCD39E51F2F4B2C002B7F35 /* FCMyGiftHasBeenProductsDelegate.swift */,
 				4DCD39E61F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift */,
 				4DE204121F39B8100046B130 /* HasBeenMailedView.swift */,
+				4D4B67F52005F2EE00455C04 /* HasBeenConvertedTableViewCell.swift */,
 			);
 			path = Address;
 			sourceTree = "<group>";
@@ -1192,6 +1198,7 @@
 				4D1F59E11F8CD9D600806C00 /* TokenHistoryCell.swift in Sources */,
 				4DCD39D81F2F12E9002B7F35 /* PayListDialog.swift in Sources */,
 				4D96D3BD1F5BDE2000E614CD /* HelpDialog.swift in Sources */,
+				4D4B67F62005F2EE00455C04 /* HasBeenConvertedTableViewCell.swift in Sources */,
 				4D5BF1C01F3853F60091180B /* InviteDialog.swift in Sources */,
 				4D500B9B1FB429FF0086AC15 /* PointsMallViewController.swift in Sources */,
 				4D2B80121F4008060075D390 /* MailedSuccessDialog.swift in Sources */,
@@ -1241,6 +1248,7 @@
 				4D7AB3BF1FF24C8700270A62 /* MainListWidget.swift in Sources */,
 				4D7AB3CA1FF4DBDD00270A62 /* TabContentView.m in Sources */,
 				4D1D861F1F334461005210CA /* ConstellationUtils.swift in Sources */,
+				4D4B67F42005EA2E00455C04 /* ExchangePointsDialog.swift in Sources */,
 				4D05F2FB1F938F5800A8027D /* WelcomeViewController.swift in Sources */,
 				4D5BF1BD1F3851570091180B /* CheckInDialog.swift in Sources */,
 				4DB1A60A1FEB704000BDBE3A /* UIFont+CustomeFont.swift in Sources */,

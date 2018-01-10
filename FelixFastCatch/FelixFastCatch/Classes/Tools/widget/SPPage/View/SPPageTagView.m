@@ -40,11 +40,15 @@
         self.contentView = [TabContentView new];
         self.contentView.userInteractionEnabled = YES;
         
+        UIImageView * testImage = [UIImageView new];
+        testImage.image = [UIImage imageNamed:@"普通抓"];
+        [testImage sizeToFit];
+        
         self.titleImage = [DHImageView new];
-        self.titleImage.image = [UIImage imageNamed:@"普通抓"];
-        [self.titleImage sizeToFit];
-        [self.titleImage setHidden:true];
-        self.titleImage.frame = CGRectMake(0, 0, self.titleImage.bounds.size.width, self.titleImage.bounds.size.height);
+//        self.titleImage.image = [UIImage imageNamed:@"普通抓"];
+//        [self.titleImage sizeToFit];
+//        [self.titleImage setHidden:true];
+        self.titleImage.frame = CGRectMake(0, 0, testImage.bounds.size.width, testImage.bounds.size.height);
         
         self.title = [DHOutLineLabel new];
 

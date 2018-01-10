@@ -17,7 +17,7 @@ class Constants: NSObject {
             case Release,Debug,Test
         }
         
-        static let COUPON_HELP_H5_LINK = "http://www.baidu.com"
+        static let COUPON_HELP_H5_LINK = "http://api.mz.meidaojia.com/html/view_815.html"
         
         /// 当前环境
         static let nService = MZService.Debug
@@ -121,6 +121,9 @@ class Constants: NSObject {
             /// 获取已邮寄列表
             static let GET_MAILED_GIFT_LIST = BASE_URL + "draworder/postagedlist"
             
+            /// 获取已兑换的列表
+            static let GET_CONVERTED_LIST = BASE_URL + "er/list"
+            
         }
         
         /// 用户相关
@@ -170,6 +173,9 @@ class Constants: NSObject {
             
             /// 获取优惠券列表
             static let GET_USER_COUPON_LIST = BASE_URL + "usercards/list"
+            
+            /// 兑换积分
+            static let EXCHANGE_POINTS = BASE_URL + "er/award/integral"
         }
     }
     

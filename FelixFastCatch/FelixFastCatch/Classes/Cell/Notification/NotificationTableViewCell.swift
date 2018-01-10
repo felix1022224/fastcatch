@@ -23,6 +23,7 @@ class NotificationTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         backgroundColor = UIColor.clear
+        selectionStyle = UITableViewCellSelectionStyle.none
         
         /// 背景图
         let backgroundImage = UIImageView(image: UIImage(named: "消息列表item背景"))

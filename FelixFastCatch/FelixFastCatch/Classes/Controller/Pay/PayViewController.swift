@@ -50,6 +50,9 @@ class PayViewController: UIViewController {
     /// 结算页面
     let settlementView : SettlementView = SettlementView(frame: UIScreen.main.bounds)
     
+    let vipButton = UIButton(type: UIButtonType.custom)
+    let svipButton = UIButton(type: UIButtonType.custom)
+    
     let vipDialog = VIPDialog(frame: UIScreen.main.bounds)
     let svipDialog = SVIPDialog(frame: UIScreen.main.bounds)
     
@@ -57,8 +60,8 @@ class PayViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         
-        vipDialog.createView()
-        vipDialog.show()
+//        vipDialog.createView()
+//        vipDialog.show()
     }
 
     

@@ -41,6 +41,12 @@ extension FCMyGiftToBeMailedTabViewDelegate : UITableViewDelegate, UITableViewDa
         
         cell?.selectBtn.addTarget(self, action: #selector(selectClick(sender:)), for: .touchUpInside)
         
+        cell?.integralLabel.text = dataSource[indexPath.row]["conversionIntegral"].stringValue + "积分"
+        cell?.timeLabel.text = "申请提取剩余时间:\(dataSource[indexPath.row]["remainingTime"].stringValue)"
+        
+        cell?.integralLabel.sizeToFit()
+        cell?.integralLabel.center = (cell?.timeBackgroundView.center)!
+        
         return cell!
     }
     

@@ -50,9 +50,14 @@ import JavaScriptCore
     }
     
     func payList() {
-        let payListDialog = PayListDialog(frame: UIScreen.main.bounds)
-        payListDialog.createView()
-        payListDialog.show()
+        if Constants.User.USER_ID == "" {
+            needLogin()
+            return
+        }
+        DispatchQueue.main.async {[weak self] in
+            let payVC = PayViewController()
+            self?.mainVC.navigationController?.pushViewController(payVC, animated: true)
+        }
     }
     
     func enterRoom(deviceId: String) {

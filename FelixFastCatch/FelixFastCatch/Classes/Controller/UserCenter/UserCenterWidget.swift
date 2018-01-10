@@ -344,9 +344,16 @@ extension UserCenterViewController{
     @objc func clickVIPOpened(){
         let payVC = PayViewController()
         payVC.userStatusCallback = {[weak self] in
-            
+            self?.updateUserVIPInfo()
         }
         self.navigationController?.pushViewController(payVC, animated: true)
+    }
+    
+    /// 更新vip信息
+    func updateUserVIPInfo() {
+        UserTools.getUserInfo {[weak self] in
+            self?.changeVIPLabel()
+        }
     }
     
 }

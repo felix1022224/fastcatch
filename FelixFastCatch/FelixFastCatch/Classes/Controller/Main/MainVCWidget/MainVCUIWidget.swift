@@ -122,7 +122,7 @@ extension HomeViewController{
         userInfoDialog = UserInfoDialog(frame: UIScreen.main.bounds)
         
         /// 签到
-        checkInDialog = CheckInDialog(frame: UIScreen.main.bounds)
+//        checkInDialog = CheckInDialog(frame: UIScreen.main.bounds)
         
         /// 邀请
         inviteDialog = InviteDialog(frame: UIScreen.main.bounds)
@@ -166,8 +166,8 @@ extension HomeViewController{
         
         inviteBtn.addBtnClickAction(target: self, action: #selector(showInviteDialog))
         
-        /// 签到
-        let checkInBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 3 - settingsBtn.bounds.width * 3, y: UIScreen.main.bounds.height - 90, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "Achievements-btn"), actionTitle: "签到")
+        /// 签到 （修改为积分商城）
+        let checkInBtn = MainFloatMenu(frame: CGRect(x: self.view.bounds.width - 10 * 3 - settingsBtn.bounds.width * 3, y: UIScreen.main.bounds.height - 90, width: settingsBtn.bounds.width, height: settingsBtn.bounds.height), image: UIImage(named: "首页积分商城"), actionTitle: "积分商城")
         view.addSubview(checkInBtn)
         checkInBtn.addBtnClickAction(target: self, action: #selector(showCheckInDialog))
         
@@ -213,15 +213,16 @@ extension HomeViewController{
         self.navigationController?.pushViewController(mailingListVC, animated: true)
     }
     
-    /// 显示签到的dialog
+    /// 显示签到的dialog （ 修改为积分商城）
     @objc func showCheckInDialog() -> () {
         if Constants.User.USER_ID == "" {
             showFastLogin()
             return
         }
-        checkInDialog.createView()
-        checkInDialog.initCheckIn7DayView()
-        checkInDialog.show()
+//        checkInDialog.createView()
+//        checkInDialog.initCheckIn7DayView()
+//        checkInDialog.show()
+        self.navigationController?.pushViewController(PointsMallViewController(), animated: true)
     }
     
     // 点击展开隐藏设置按钮
@@ -282,7 +283,7 @@ extension HomeViewController{
             make.centerX.equalTo(settingsGroupView)
         }
         
-        /// 帮助 （修改为积分商城）
+        /// 帮助
         let infoIcon = UIImageView()
         infoIcon.image = UIImage(named: "Info-icon")
         infoIcon.sizeToFit()
