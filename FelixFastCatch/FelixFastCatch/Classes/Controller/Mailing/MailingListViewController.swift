@@ -375,6 +375,25 @@ extension MailingListViewController{
             ToastUtils.showErrorToast(msg: "请选择要邮寄的产品")
             return
         }
+        
+        var awardType0 = false
+        var awardType1 = false
+        for key in Array(tobeMailedDelegate.selectList.keys) {
+            if tobeMailedDelegate.selectList[key] == true {
+                if tobeMailedDelegate.dataSource[key]["awardType"].intValue == 0 {
+                    awardType0 = true
+                }
+                if tobeMailedDelegate.dataSource[key]["awardType"].intValue == 1 {
+                    awardType1 = true
+                }
+            }
+        }
+        
+        if awardType0 && awardType1 {
+            ToastUtils.showErrorToast(msg: "虚拟奖品与实物奖品无法同时发货,请重新选择")
+            return
+        }
+        
         /// 组装数据
         var sendData = [JSON]()
         for key in Array(tobeMailedDelegate.selectList.keys) {
@@ -392,6 +411,12 @@ extension MailingListViewController{
         
         mailedConfirmDialog.sendData.removeAll()
         mailedConfirmDialog.sendData = sendData
+        
+        if awardType1 == true {
+            mailedConfirmDialog.isOnline = true
+        }else{
+            mailedConfirmDialog.isOnline = false
+        }
         
         mailedConfirmDialog.postageCashNumber = self.postageCashNumber
         mailedConfirmDialog.freePostageNumber = self.freePostageNumber
@@ -437,7 +462,6 @@ extension MailingListViewController{
         Alamofire.request(Constants.Network.Gift.GET_TOBE_MAILED_GIFT_LIST, method: .post, parameters: params).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(response.result.value!)
-                print("mailed:\(json)")
                 if isRefresh {
                     self.tobeMailedDelegate.selectList.removeAll()
                     self.tobeMailedDelegate.dataSource.removeAll()
@@ -528,6 +552,7 @@ extension MailingListViewController{
         Alamofire.request(Constants.Network.Gift.GET_MAILED_GIFT_LIST, method: .post, parameters: params).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(response.result.value!)
+                print("已邮寄:\(json)")
                 if isRefresh {
                     self.hasBeenMailedDelegate.dataSource.removeAll()
                 }

@@ -353,6 +353,26 @@ extension UserCenterViewController{
     func updateUserVIPInfo() {
         UserTools.getUserInfo {[weak self] in
             self?.changeVIPLabel()
+            
+            if Constants.User.vipDay <= 0 {
+                self?.switchVIPOpenedButton(isVip: false)
+            }else{
+                self?.switchVIPOpenedButton(isVip: true)
+            }
+            
+            /// vip标签
+            if Constants.User.vip == 100000 {
+                /// vip
+                self?.vipImage.image = UIImage(named: "VIP标签")
+                self?.vipImage.isHidden = false
+            }else if Constants.User.vip == 110000 {
+                /// svip
+                self?.vipImage.image = UIImage(named: "SVIP标签")
+                self?.vipImage.isHidden = false
+            }else{
+                self?.vipImage.isHidden = true
+            }
+            self?.vipImage.sizeToFit()
         }
     }
     

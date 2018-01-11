@@ -34,14 +34,26 @@ extension FCMyGiftHasBeenMailedTabViewDelegate:UITableViewDelegate, UITableViewD
         
         cell?.hasBeenMailedView.timeLabel.text = "申请时间: " + dfmatter.string(from: Date(timeIntervalSince1970: TimeInterval(itemData["createTime"].int64Value/1000)))
         
-        cell?.hasBeenMailedView.mailedTimeLabel.text = "邮寄时间: " + dfmatter.string(from: Date(timeIntervalSince1970: TimeInterval(itemData["updateTime"].int64Value/1000)))
-        
-        cell?.hasBeenMailedView.mailedCodeLabel.text = "邮寄单号:" + itemData["sid"].stringValue
-        
-        if itemData["status"].intValue == 1 {
-            cell?.hasBeenMailedView.statusLabel.text = "邮寄状态: 已寄出"
+        if itemData["awards"][0]["type"].intValue == 0 {
+            cell?.hasBeenMailedView.mailedTimeLabel.text = "邮寄时间: " + dfmatter.string(from: Date(timeIntervalSince1970: TimeInterval(itemData["updateTime"].int64Value/1000)))
+            
+            cell?.hasBeenMailedView.mailedCodeLabel.text = "邮寄单号:" + itemData["sid"].stringValue
+            
+            if itemData["status"].intValue == 1 {
+                cell?.hasBeenMailedView.statusLabel.text = "邮寄状态: 已寄出"
+            }else{
+                cell?.hasBeenMailedView.statusLabel.text = "邮寄状态: 未寄出"
+            }
         }else{
-            cell?.hasBeenMailedView.statusLabel.text = "邮寄状态: 未寄出"
+            cell?.hasBeenMailedView.mailedTimeLabel.text = "提取时间: " + dfmatter.string(from: Date(timeIntervalSince1970: TimeInterval(itemData["updateTime"].int64Value/1000)))
+            
+            cell?.hasBeenMailedView.mailedCodeLabel.text = "提取单号:" + itemData["sid"].stringValue
+            
+            if itemData["status"].intValue == 1 {
+                cell?.hasBeenMailedView.statusLabel.text = "提取状态: 已发货"
+            }else{
+                cell?.hasBeenMailedView.statusLabel.text = "提取状态: 未发货"
+            }
         }
         
         return cell!

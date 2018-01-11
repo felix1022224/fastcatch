@@ -155,6 +155,7 @@ class HomeViewController: SPCoverController {
         if pagerContentController.count <= 0 {
             return MainListWidget()
         }
+        pagerContentController[index].getMainData()
         return pagerContentController[index]
     }
     
@@ -187,6 +188,7 @@ class HomeViewController: SPCoverController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         print("viewDidAppear")
         if !Constants.IS_SHOW_CHECKIN_DIALOG &&
             Constants.User.USER_ID != "" && checkInDialog != nil && !Constants.User.todayChecked{
@@ -255,7 +257,6 @@ extension HomeViewController {
                         itemPageContent.index = i
                         itemPageContent.listType = self.tabsDataSource[i]["id"].intValue
                         itemPageContent.homeViewController = self
-                        itemPageContent.getMainData()
                         self.pagerContentController.append(itemPageContent)
                     }
                     

@@ -112,6 +112,9 @@ extension PayViewController {
                 self?.settlementView.isVip = true
                 self?.settlementView.vipRP = 110000
                 self?.settlementView.vipNumber = 19.9
+                if Constants.User.vip == 100000 {
+                    self?.settlementView.vipNumber = Double(Constants.User.vipDay) * 0.33
+                }
                 self?.settlementView.updateInfo()
                 self?.settlementView.show()
             }
@@ -220,6 +223,8 @@ extension PayViewController: UITableViewDelegate, UITableViewDataSource{
             }else{
                 self?.couponListLabel.text = "有\(Constants.User.userCouponNumber)张优惠券＞"
             }
+            self?.couponListLabel.sizeToFit()
+            self?.couponListLabel.frame.origin = CGPoint(x: (self?.rootView.bounds.width)! - (self?.couponListLabel.bounds.width)! - 10, y: (self?.couponListLabel.frame.origin.y)!)
         }
     }
     

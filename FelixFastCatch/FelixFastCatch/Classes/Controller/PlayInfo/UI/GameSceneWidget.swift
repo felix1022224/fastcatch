@@ -243,16 +243,22 @@ extension GameSceneViewController{
     
     /// 显示购买的dialog
     @objc func showPayDialog(){
-        if payDialog == nil {
-            payDialog = PayListDialog(frame: UIScreen.main.bounds)
-        }
-        payDialog.createView()
-        payDialog.show()
+//        if payDialog == nil {
+//            payDialog = PayListDialog(frame: UIScreen.main.bounds)
+//        }
+//        payDialog.createView()
+//        payDialog.show()
         
         /// 回调
-        payDialog.paySuccessCallback = {[weak self] in
+//        payDialog.paySuccessCallback = {[weak self] in
+//            self?.getsUserInfo()
+//        }
+        
+        let payVC = PayViewController()
+        payVC.userStatusCallback = {[weak self] in
             self?.getsUserInfo()
         }
+        self.navigationController?.pushViewController(payVC, animated: true)
     }
     
     /// 获取用户信息

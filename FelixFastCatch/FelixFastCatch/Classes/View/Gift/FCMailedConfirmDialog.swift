@@ -25,6 +25,9 @@ class FCMailedConfirmDialog: BaseDialog {
     var phoneNumberData = ""
     var addressData = ""
     
+    /// 是否是线上奖品
+    var isOnline = false
+    
     /// 要发送的礼品
     var sendData = [JSON]()
     
@@ -58,7 +61,11 @@ class FCMailedConfirmDialog: BaseDialog {
     fileprivate var cashShortDialog:MailedCashShortDialog!
     
     override func createView() {
-        createBackgroundImage(imageName: "信息确认背景")
+        if isOnline {
+            createBackgroundImage(imageName: "提取信息背景")
+        }else{
+            createBackgroundImage(imageName: "信息确认背景")
+        }
         
         backgroundImage.frame.size = CGSize(width: 290, height: 388)
         backgroundImage.center = self.center
@@ -177,10 +184,14 @@ class FCMailedConfirmDialog: BaseDialog {
         postageLabel.outTextColor = UIColor.white
         postageLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         postageLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
-        if freePostageNumber <= 0 {
-            postageLabel.text = String(postageCashNumber) + "代币"
-        }else{
+        if isOnline {
             postageLabel.text = "免费"
+        }else{
+            if freePostageNumber <= 0 {
+                postageLabel.text = String(postageCashNumber) + "代币"
+            }else{
+                postageLabel.text = "免费"
+            }
         }
         postageLabel.textAlignment = .right
         postageLabel.sizeToFit()
@@ -219,7 +230,11 @@ class FCMailedConfirmDialog: BaseDialog {
         changeAddressBtn.addTarget(self, action: #selector(editAddress), for: .touchUpInside)
         
         /// 确认邮寄按钮
-        confirmBtn.setImage(UIImage(named:"邮寄信息确认按钮"), for: .normal)
+        if isOnline {
+            confirmBtn.setImage(UIImage(named:"确认提取按钮"), for: .normal)
+        }else{
+            confirmBtn.setImage(UIImage(named:"邮寄信息确认按钮"), for: .normal)
+        }
         confirmBtn.sizeToFit()
         addSubview(confirmBtn)
         
@@ -282,9 +297,8 @@ extension FCMailedConfirmDialog:UICollectionViewDelegate, UICollectionViewDataSo
     
     /// 创建发送数据的Group
     func createSendDataGroup() -> () {
-        hasBeenContentBackgroundImage = UIImage(named: "has_been_content_background")
+        hasBeenContentBackgroundImage = UIImage(named: "has_been_content_background")?.stretchableImage(withLeftCapWidth: 0, topCapHeight: 0)
         contentBacngroundImage = UIImageView()
-        contentBacngroundImage.image = hasBeenContentBackgroundImage
         scrollRootView.addSubview(contentBacngroundImage)
         
         let hasBeenProductBackground = UIImage(named: "产品框")
@@ -316,6 +330,7 @@ extension FCMailedConfirmDialog:UICollectionViewDelegate, UICollectionViewDataSo
         productsGroup.isScrollEnabled = false
         
         contentBacngroundImage.frame = CGRect(x: 0, y: groupY, width: scrollRootView.bounds.width, height: productsGroup.bounds.height + 8)
+        contentBacngroundImage.image = hasBeenContentBackgroundImage
         
         scrollRootView.addSubview(productsGroup)
     }
@@ -362,8 +377,8 @@ extension FCMailedConfirmDialog{
     
     /// 通知后台，开始邮寄
     @objc func maild() -> () {
-        if !checkAddress() {
-            return
+        if !checkAddress() && isOnline == false {
+            return /// 非实物奖品，有没有地址无所谓
         }
         
         ToastUtils.showLoadingToast(msg: "请稍后……")

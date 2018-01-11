@@ -59,8 +59,20 @@ class ZeroCatchView: UIView {
         closeView.isUserInteractionEnabled = true
         closeView.addGestureRecognizer(tap)
         
+        let dialogTitle = UILabel()
+        dialogTitle.font = UIFont.getCustomeYuanTiFont(fontSize: 18)
+        dialogTitle.text = "抓中啦"
+        dialogTitle.sizeToFit()
+        addSubview(dialogTitle)
+        
+        dialogTitle.snp.makeConstraints { (make) in
+            make.top.equalTo(backgroundImageView).offset(10)
+            make.centerX.equalTo(backgroundImageView)
+        }
+        
+        
         /// 商品图片
-        productImage.frame = CGRect(x: Int(self.bounds.width/2 - 70), y: Int(self.bounds.height/2 - backgroundImageView.bounds.height/2 + 20), width: 140, height: 140)
+        productImage.frame = CGRect(x: Int(self.bounds.width/2 - 60), y: Int(self.bounds.height/2 - backgroundImageView.bounds.height/2 + 20 + dialogTitle.bounds.height), width: 120, height: 120)
         addSubview(productImage)
         
         ///商品名称

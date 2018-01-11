@@ -51,7 +51,7 @@ class NotificationTableViewCell: UITableViewCell {
         timeLabel.text = "2008-8-17 3:45"
         timeLabel.textAlignment = .right
         timeLabel.sizeToFit()
-        timeLabel.frame = CGRect(x: labelWidth - labelWidth * 0.4 + 10, y: 20, width: labelWidth * 0.45, height: timeLabel.bounds.height)
+        timeLabel.frame = CGRect(x: labelWidth - labelWidth * 0.45 + 10, y: 20, width: labelWidth * 0.45, height: timeLabel.bounds.height)
         timeLabel.center.y = titleLabel.center.y
         addSubview(timeLabel)
         
