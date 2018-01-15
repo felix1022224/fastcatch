@@ -361,7 +361,7 @@ extension MainViewController{
                 
                 self.topBannerView.reloadData()
             }else{
-                print("error:\(String(describing: response.error))")
+                
             }
         }
     }
@@ -834,7 +834,6 @@ extension MainViewController{
                     // 没有数据
                     self.setupNoValueView()
                 }
-                print("post:\(response.error.debugDescription)")
             }
             SVProgressHUD.dismiss()
             
@@ -1164,7 +1163,6 @@ extension MainViewController {
         Alamofire.request(Constants.Network.Machine.GET_OPEN_ADV).responseJSON { (dataResponse) in
             if NetWorkUtils.checkReponse(response: dataResponse) {
                 let json = JSON(data: dataResponse.data!)
-                print("result:\(json)")
                 if json["data"].arrayValue.count > 0 {
                     SplashView.updateSplashData(imgUrl: json["data"].arrayValue[0]["advertiseBigImg"].stringValue, actUrl: json["data"].arrayValue[0]["scheme"].stringValue, shareTitle: json["data"].arrayValue[0]["shareTitle"].stringValue, shareInfo: json["data"].arrayValue[0]["shareSubtitle"].stringValue, shareImage: json["data"].arrayValue[0]["shareImg"].stringValue, urlType: json["data"].arrayValue[0]["redirectType"].intValue, title:json["data"].arrayValue[0]["name"].stringValue )
                 }else{

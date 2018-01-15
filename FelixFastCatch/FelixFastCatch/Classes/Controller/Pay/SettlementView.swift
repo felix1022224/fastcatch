@@ -199,6 +199,7 @@ class SettlementView: UIView {
             afterDiscountLabel.text = String(vipNumber) + "元"
             originalLabel.isHidden = true
         }else{
+            selectCouponLabel.isHidden = false
             if discountNumber == -1 {
                 selectCouponLabel.text = "优惠券 >"
                 originalLabel.isHidden = true
@@ -251,6 +252,8 @@ class SettlementView: UIView {
         couponId = ""
         payType = 0
         
+        switchPayType(payType: 0)
+        
         isVip = false
         vipRP = -1
         vipNumber = 0.0
@@ -270,7 +273,6 @@ class SettlementView: UIView {
     }
     
     @objc func pay(){
-        print("data:\(dataSource)")
         if payType == 0 {
             if isVip {
                 wechatPay(rp: vipRP)
@@ -349,7 +351,7 @@ class SettlementView: UIView {
                     ToastUtils.showErrorToast(msg: "您不具备首充资格，请刷新")
                 }
             }else{
-                print("error:\(String(describing: response.error))")
+                
             }
         }
     }
@@ -396,11 +398,9 @@ class SettlementView: UIView {
     func aliPayOrder(orderBody:String) -> () {
         AlipaySDK.defaultService().payOrder(orderBody, fromScheme: "alipay2017071707787463", callback: { (result) in
             /// 使用web支付会走到这里
-            print("result:\(String(describing: result))")
             if let Alipayjson = result as NSDictionary?{
                 let resultStatus = Alipayjson.value(forKey: "resultStatus") as! String
                 if resultStatus == "9000"{
-                    print("OK")
                     if self.aid != -1 {
                         ToastUtils.showSuccessToast(msg: "购买成功，请到奖品中查看")
                     }else{

@@ -11,7 +11,6 @@ import UIKit
 class CustomeFlowLayout: UICollectionViewFlowLayout {
 
     override var collectionViewContentSize: CGSize{
-        print("3333333")
         let width = collectionView!.bounds.size.width - collectionView!.contentInset.left
             - collectionView!.contentInset.right
         let height = CGFloat((collectionView!.numberOfItems(inSection: 0) + 1) / 3)
@@ -20,13 +19,11 @@ class CustomeFlowLayout: UICollectionViewFlowLayout {
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        print("22222222")
         return super.layoutAttributesForElements(in: rect)
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         //当前单元格布局属性
-        print("12333333333333333333333333333")
         let attribute =  UICollectionViewLayoutAttributes(forCellWith:indexPath)
         if indexPath.section % 2 == 0 {
             /// 机器

@@ -245,7 +245,6 @@ extension PayViewController: UITableViewDelegate, UITableViewDataSource{
                 ToastUtils.hide()
                 let json = JSON(data: response.data!)
                 /// 获取数据成功，重新加载数据
-                print("data\(json)")
                 self.payListDataSource.removeAll()
                 self.payListDataSource = json["data"].arrayValue
                 self.payTableView.reloadData()

@@ -105,7 +105,7 @@ class HorizontalGameSceneViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        print("value:\(UIInterfaceOrientation.portrait.rawValue)")
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {

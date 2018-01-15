@@ -139,7 +139,7 @@ class ZeroCatchView: UIView {
     
     /// 更新价格
     func updateProductPriceNumber(price:Double, oPrice:String) {
-        let attrText = NSMutableAttributedString.init(string: "抓中价:\(price)元")
+        let attrText = NSMutableAttributedString.init(string: "秒抓价:\(price)元")
         attrText.addAttribute(NSAttributedStringKey.font, value: UIFont.getCustomeYuanTiFont(fontSize: 16), range: NSRange(location: 4, length:String(price).count))
         attrText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.red, range: NSRange(location: 4, length:String(price).count))
         productPrice.attributedText = attrText

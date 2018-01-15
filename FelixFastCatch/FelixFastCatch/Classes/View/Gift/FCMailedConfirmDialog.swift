@@ -398,7 +398,6 @@ extension FCMailedConfirmDialog{
         Alamofire.request(Constants.Network.Gift.CREATE_POSTAGE + "?" + ids, method: .get).responseJSON { (response) in
             ToastUtils.hide()
             if response.error == nil && response.data != nil {
-                print("result:\(response.result.value!)")
                 let jsonData = JSON(data: response.data!)
                 if jsonData["code"].int! == 0 {
                     if self.mailedSuccessCallback != nil {

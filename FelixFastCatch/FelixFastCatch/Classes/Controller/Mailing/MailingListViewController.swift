@@ -337,10 +337,10 @@ extension MailingListViewController{
     
     /// 显示兑换积分的弹窗
     @objc func showExchangePointsDialog(){
-        if tobeMailedDelegate.selectList.count <= 0 {
-            ToastUtils.showErrorToast(msg: "请选择要兑换的产品")
-            return
-        }
+//        if tobeMailedDelegate.selectList.count <= 0 {
+//            ToastUtils.showErrorToast(msg: "请选择要兑换的产品")
+//            return
+//        }
         
         /// 组装数据
         var sendData = [JSON]()
@@ -348,6 +348,11 @@ extension MailingListViewController{
             if tobeMailedDelegate.selectList[key] == true {
                 sendData.append(tobeMailedDelegate.dataSource[key])
             }
+        }
+        
+        if sendData.count <= 0 {
+            ToastUtils.showErrorToast(msg: "请选择要兑换的产品")
+            return
         }
         
         if exchangePointsDialog == nil {
@@ -371,11 +376,6 @@ extension MailingListViewController{
     
     // 展示邮件信息确认页面
     @objc func showMailedConfirmDialog() -> () {
-        if tobeMailedDelegate.selectList.count <= 0 {
-            ToastUtils.showErrorToast(msg: "请选择要邮寄的产品")
-            return
-        }
-        
         var awardType0 = false
         var awardType1 = false
         for key in Array(tobeMailedDelegate.selectList.keys) {
@@ -400,6 +400,11 @@ extension MailingListViewController{
             if tobeMailedDelegate.selectList[key] == true {
                 sendData.append(tobeMailedDelegate.dataSource[key])
             }
+        }
+        
+        if sendData.count <= 0 {
+            ToastUtils.showErrorToast(msg: "请选择要邮寄的产品")
+            return
         }
         
         mailedConfirmDialog.mailedSuccessCallback = {[weak self] in
@@ -552,7 +557,6 @@ extension MailingListViewController{
         Alamofire.request(Constants.Network.Gift.GET_MAILED_GIFT_LIST, method: .post, parameters: params).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(response.result.value!)
-                print("已邮寄:\(json)")
                 if isRefresh {
                     self.hasBeenMailedDelegate.dataSource.removeAll()
                 }

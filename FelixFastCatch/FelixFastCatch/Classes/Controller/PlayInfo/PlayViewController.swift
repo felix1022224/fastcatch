@@ -839,7 +839,6 @@ extension PlayViewController: AgoraRtcEngineDelegate {
         print("到这里了")
         // 初始化成功
         if isLive {
-            print("live-uid:\(uid)")
             let canvas = AgoraRtcVideoCanvas()
             canvas.view = videoView
             canvas.uid = uid

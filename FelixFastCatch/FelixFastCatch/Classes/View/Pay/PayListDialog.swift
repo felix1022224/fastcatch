@@ -485,11 +485,9 @@ extension PayListDialog{
         params["status"] = "1"
         
         Alamofire.request(Constants.Network.GET_PAY_LIST, method: .post, parameters: params).responseJSON { (response) in
-            print("reponse:\(response.result.value!)")
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(data: response.data!)
                 /// 获取数据成功，重新加载数据
-                print("data\(json)")
                 self.payListDataSource.removeAll()
                 self.payListDataSource = json["data"].arrayValue
                 self.payList.reloadData()
@@ -506,12 +504,10 @@ extension PayListDialog{
     /// 获取版本号，来判断显不显示微信支付
     func getAppReleaseVersion() -> () {
         Alamofire.request(Constants.Network.GET_SYS_INFO_VERSION, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { (response) in
-            print("versionValue:\(response.result.value!)")
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(data: response.data!)
                 let infoDictionary = Bundle.main.infoDictionary!
                 if let buildVersion = (infoDictionary["CFBundleVersion"] as? NSString)?.doubleValue {
-                    print("buildVersion:\(buildVersion)")
                     if json["data"].doubleValue >= buildVersion {
                         print("正式")
                         self.exchangeCode.isHidden = false

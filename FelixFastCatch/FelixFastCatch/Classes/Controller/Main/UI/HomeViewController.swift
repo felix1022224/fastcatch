@@ -189,16 +189,20 @@ class HomeViewController: SPCoverController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print("viewDidAppear")
         if !Constants.IS_SHOW_CHECKIN_DIALOG &&
-            Constants.User.USER_ID != "" && checkInDialog != nil && !Constants.User.todayChecked{
-            showCheckInDialog()
+            Constants.User.USER_ID != "" && !Constants.User.todayChecked{
+            if checkInDialog == nil {
+                checkInDialog = CheckInDialog(frame: UIScreen.main.bounds)
+            }
+            checkInDialog.createView()
+            checkInDialog.initCheckIn7DayView()
+            checkInDialog.show()
             Constants.IS_SHOW_CHECKIN_DIALOG = true
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        print("willDisappear")
+        
     }
     
     override func scroll(withPageOffset realOffset: CGFloat, index: Int) {
@@ -388,7 +392,7 @@ extension HomeViewController: BannerDelegate{
                 
                 self.bannerView.reloadData()
             }else{
-                print("error:\(String(describing: response.error))")
+                
             }
         }
     }

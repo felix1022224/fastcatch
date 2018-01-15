@@ -292,8 +292,6 @@ extension MainListWidget:UICollectionViewDelegateFlowLayout, UICollectionViewDat
             return
         }
         
-        print("result:\(mainListData[sender.tag])")
-        
         let gameSceneViewController = GameSceneViewController()
         
         gameSceneViewController.deviceId = mainListData[sender.tag]["deviceId"].stringValue
@@ -347,8 +345,6 @@ extension MainListWidget:UICollectionViewDelegateFlowLayout, UICollectionViewDat
         if !checkDeviceStatus(status: mainListData[index]["status"].intValue) {
             return
         }
-        
-        print("result:\(mainListData[index])")
         
         let gameSceneViewController = GameSceneViewController()
         gameSceneViewController.deviceId = mainListData[index]["deviceId"].stringValue

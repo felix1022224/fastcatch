@@ -61,7 +61,7 @@ class InviteListDialog: BaseDialog {
         inviteGemNumber.outTextColor = UIColor.white
         inviteGemNumber.outLienTextColor = Constants.UI.OUT_LINE_COLOR
         inviteGemNumber.font = UIFont.getCustomeYuanTiFont(fontSize: 12)
-        inviteGemNumber.text = "共获得0代币"
+        inviteGemNumber.text = "共获得0积分"
         inviteGemNumber.sizeToFit()
         addSubview(inviteGemNumber)
         

@@ -110,17 +110,17 @@ extension CouponHistoryViewController:UITableViewDelegate , UITableViewDataSourc
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as? CouponHistoryTableViewCell
         
         if dataSource[indexPath.row]["status"].intValue == 2 {
-            // 已过期
-            cell?.backgroundImage.image = UIImage(named: "优惠券已过期item")?.stretchableImage(withLeftCapWidth: 0, topCapHeight: 0)
-        }else if dataSource[indexPath.row]["status"].intValue == 3 {
             // 已使用
             cell?.backgroundImage.image = UIImage(named: "优惠券已使用item")?.stretchableImage(withLeftCapWidth: 0, topCapHeight: 0)
+        }else if dataSource[indexPath.row]["status"].intValue == 3 {
+            // 已过期
+            cell?.backgroundImage.image = UIImage(named: "优惠券已过期item")?.stretchableImage(withLeftCapWidth: 0, topCapHeight: 0)
         }
         
         cell?.couponTitle.text = dataSource[indexPath.row]["name"].stringValue
         let date = Date(timeIntervalSince1970: TimeInterval(dataSource[indexPath.row]["expireTime"].intValue/1000))
         let dateFormat = DateFormatter()
-        dateFormat.dateFormat = "yyyy-MM-dd hh:ss"
+        dateFormat.dateFormat = "yyyy-MM-dd HH:mm"
         cell?.couponTime.text = "有效期至: " + dateFormat.string(from: date)
         cell?.couponInfo.text = dataSource[indexPath.row]["description"].stringValue
         cell?.discount.text = dataSource[indexPath.row]["discount"].stringValue + "折"

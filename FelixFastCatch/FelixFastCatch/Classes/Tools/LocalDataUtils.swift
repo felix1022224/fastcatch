@@ -166,7 +166,9 @@ class LocalDataUtils: NSObject {
     /// 清除数据
     class func clearLoaclData() -> () {
 
-        UMessage.removeAlias(UserDefaults.standard.string(forKey: Constants.User.USER_ID_KEY)!, type: "mzid", response: nil)
+        if Constants.IS_BIND_UMENG_ID {
+            UMessage.removeAlias(UserDefaults.standard.string(forKey: Constants.User.USER_ID_KEY)!, type: "mzid", response: nil)
+        }
         Constants.IS_BIND_UMENG_ID = false
         
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_ID_KEY)

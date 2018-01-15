@@ -260,10 +260,6 @@ extension PhoneNumberDialog{
             if response.error == nil && response.data != nil {
                 let resultJson = JSON(data: response.data!)
                 if NetWorkUtils.checkReponse(response: response) {
-                    print("qqqqqq:\(response.response?.allHeaderFields as! [String: String] )")
-                    
-                    print("userId:\(resultJson)")
-                    
                     LocalDataUtils.updateLocalUserData(resultData: resultJson, response)
                     ToastUtils.showSuccessToast(msg: "登录成功")
                     self.hide()

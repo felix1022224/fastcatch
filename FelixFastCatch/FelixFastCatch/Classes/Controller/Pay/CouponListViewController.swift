@@ -139,7 +139,7 @@ extension CouponListViewController:UITableViewDelegate , UITableViewDataSource{
         cell?.couponTitle.text = dataSource[indexPath.row]["name"].stringValue
         let date = Date(timeIntervalSince1970: TimeInterval(dataSource[indexPath.row]["expireTime"].intValue/1000))
         let dateFormat = DateFormatter()
-        dateFormat.dateFormat = "yyyy-MM-dd hh:ss"
+        dateFormat.dateFormat = "yyyy-MM-dd HH:mm"
         cell?.couponTime.text = "有效期至: " + dateFormat.string(from: date)
         cell?.couponInfo.text = dataSource[indexPath.row]["description"].stringValue
         cell?.discount.text = dataSource[indexPath.row]["discount"].stringValue + "折"

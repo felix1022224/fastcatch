@@ -122,8 +122,6 @@ extension WeChatShared {
         
         let req = PayReq()
         
-        print("result:\(json)")
-        
         if json["partnerid"].stringValue == "" {
             return
         }

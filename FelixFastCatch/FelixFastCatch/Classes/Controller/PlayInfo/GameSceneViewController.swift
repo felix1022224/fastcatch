@@ -272,11 +272,6 @@ class GameSceneViewController: UIViewController {
         /// 装载UI控件
         setupUI()
         
-        settlementView = SettlementView(frame: UIScreen.main.bounds)
-        view.addSubview(settlementView)
-        
-        showShardRecordDialog(deviceId: deviceId)
-        
         playBackgroundMusic() //播放背景音乐
         
         /// 初始化
@@ -307,7 +302,11 @@ class GameSceneViewController: UIViewController {
     }
     
     /// 隐藏当前页面的状态栏
-    override var prefersStatusBarHidden: Bool{
+    override open var prefersStatusBarHidden: Bool{
+        if UIDevice.current.isX() {
+            ///如果是iPhone X不隐藏
+            return false
+        }
         return true
     }
 
@@ -718,8 +717,6 @@ extension GameSceneViewController{
                 }
                 
             }else {
-                print("error:\(String(describing: response.error))")
-                
                 self.hidePlayGroupView()
             }
             self.isStartClick = false
@@ -1192,6 +1189,16 @@ extension GameSceneViewController{
         self.productBottomGroup.isHidden = false
         
         self.bottomActivityGroup.isHidden = false
+    }
+}
+
+extension UIDevice {
+    public func isX() -> Bool {
+        if UIScreen.main.bounds.height == 812 {
+            return true
+        }
+        
+        return false
     }
 }
 

@@ -43,11 +43,15 @@ extension GameSceneViewController{
         
         rootView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: topGroupView.bounds.height + startBtnBackgroundView.bounds.height + productBackgroundView.bounds.height + bottomActivityGroup.bounds.height)
         
-        createZeroView()
+//        createZeroView()
+        
+//        settlementView = SettlementView(frame: UIScreen.main.bounds)
+//        view.addSubview(settlementView)
     }
     
     func createZeroView() {
         zeroCatchView = ZeroCatchView(frame: UIScreen.main.bounds)
+        zeroCatchView.isHidden = true
         view.addSubview(zeroCatchView)
     }
     
@@ -266,7 +270,7 @@ extension GameSceneViewController{
         if Constants.User.USER_ID == "" {
             return
         }
-        print("获取用户信息")
+        
         UserTools.getUserInfo(callback: { [weak self] in
             if self?.gemLabel != nil {
                 self?.gemLabel.text = String(Constants.User.diamondsCount)

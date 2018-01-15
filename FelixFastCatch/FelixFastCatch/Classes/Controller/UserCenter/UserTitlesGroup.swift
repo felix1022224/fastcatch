@@ -133,7 +133,6 @@ extension UserCenterViewController{
         Alamofire.request(Constants.Network.User.GET_USER_TITLES_LIST, method: .post, parameters: NetWorkUtils.createBaseParams())
             .responseJSON { (dataResponse) in
                 if NetWorkUtils.checkReponse(response: dataResponse) {
-                    print("result:\(dataResponse.result.value!)")
                     let resultJson = JSON(data: dataResponse.data!)
                     let titlesArray = resultJson["data"].array!
                     if !titlesArray.isEmpty {

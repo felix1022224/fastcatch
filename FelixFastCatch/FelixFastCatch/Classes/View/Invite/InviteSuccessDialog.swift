@@ -26,7 +26,7 @@ class InviteSuccessDialog: BaseDialog {
         backgroundImage.frame.size = CGSize(width: 290, height: 265)
         backgroundImage.center = self.center
         
-        let gemIcon = UIImageView(image: UIImage(named: "战绩钻石"))
+        let gemIcon = UIImageView(image: UIImage(named: "积分标"))
         gemIcon.sizeToFit()
         addSubview(gemIcon)
         

@@ -22,8 +22,6 @@ class StartGameCountdownDialog: BaseDialog {
             let data = NSData(contentsOfFile: path),
             let imageSource = CGImageSourceCreateWithData(data, nil) else { return }
         
-        print("path:\(path)")
-        
         var images = [UIImage]()
         var totalDuration : TimeInterval = 0
         for i in 0..<CGImageSourceGetCount(imageSource) {

@@ -219,9 +219,6 @@ extension HomeViewController{
             showFastLogin()
             return
         }
-//        checkInDialog.createView()
-//        checkInDialog.initCheckIn7DayView()
-//        checkInDialog.show()
         self.navigationController?.pushViewController(PointsMallViewController(), animated: true)
     }
     
