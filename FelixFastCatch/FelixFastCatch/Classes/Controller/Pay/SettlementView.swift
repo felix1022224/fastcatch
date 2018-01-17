@@ -273,6 +273,10 @@ class SettlementView: UIView {
     }
     
     @objc func pay(){
+        if Constants.User.vipDay <= 7 {
+            ToastUtils.showErrorToast(msg: "剩余时间小于7天，无法升级")
+            return
+        }
         if payType == 0 {
             if isVip {
                 wechatPay(rp: vipRP)
@@ -311,6 +315,7 @@ class SettlementView: UIView {
             ToastUtils.hide()
             if response.error == nil && response.data != nil {
                 let jsonData = JSON(data: response.data!)
+                print("jsonData:\(jsonData)")
                 if jsonData["code"].int! == 0 {
                     WeChatShared.pay(to: "main", jsonData["data"], resultHandle: { (result, identifier) in
                         switch(result){
@@ -374,6 +379,7 @@ class SettlementView: UIView {
             ToastUtils.hide()
             if response.error == nil && response.data != nil {
                 let jsonData = JSON(data: response.data!)
+                print("jsonData:\(jsonData)")
                 if jsonData["code"].int! == 0 {
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: { [weak self] in
                         self?.aliPayOrder(orderBody: jsonData["data"]["orderBody"].string!)

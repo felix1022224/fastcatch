@@ -934,7 +934,7 @@ extension GameSceneViewController{
         }
         
         /// 调用接口超过5次，默认失败
-        if getWardCodeNumber >= 5 {
+        if getWardCodeNumber >= 8 {
             getWardCodeNumber = 0
             wardCode = ""
             self.playGrapFail()
@@ -1137,6 +1137,12 @@ extension GameSceneViewController{
     func showGameFailedDialog() -> () {
         gameFailedDialog = GameFailedDialog(frame: UIScreen.main.bounds)
         gameFailedDialog.isDurexTheme = isDurexTheme
+        if startCoinNumber <= 0 {
+            gameFailedDialog.isZeroGame = true
+            self.hidePlayGroup()
+        }else{
+            gameFailedDialog.isZeroGame = false
+        }
         gameFailedDialog.createView()
         gameFailedDialog.show()
         

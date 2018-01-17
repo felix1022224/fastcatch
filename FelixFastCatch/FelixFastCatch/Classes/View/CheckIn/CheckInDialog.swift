@@ -77,15 +77,19 @@ class CheckInDialog: BaseDialog {
         tipsLabel.outLineWidth = 1
         tipsLabel.outTextColor = UIColor.white
         tipsLabel.outLienTextColor = Constants.UI.OUT_LINE_COLOR
-        if Constants.User.vip == 0 {
-            /// 不是vip
-            tipsLabel.text = "已连续签到" + String(Constants.User.checkDays) + "天共获取" + String(Constants.User.checkDays + 1) + "代币"
-        }else if Constants.User.vip == 100000{
-            /// 是vip
-            tipsLabel.text = "VIP:已连续签到" + String(Constants.User.checkDays) + "天共获取" + String((Constants.User.checkDays+1) * 2) + "代币"
-        }else if Constants.User.vip == 110000 {
-            /// 是svip
-            tipsLabel.text = "SVIP:已连续签到" + String(Constants.User.checkDays) + "天共获取" + String((Constants.User.checkDays+1) * 3) + "代币"
+        if Constants.User.checkDays == 0 {
+            tipsLabel.text = "已连续签到" + String(Constants.User.checkDays) + "天共获取0代币"
+        }else{
+            if Constants.User.vip == 0 {
+                /// 不是vip
+                tipsLabel.text = "已连续签到" + String(Constants.User.checkDays) + "天共获取" + String(Constants.User.checkDays + 1) + "代币"
+            }else if Constants.User.vip == 100000{
+                /// 是vip
+                tipsLabel.text = "VIP:已连续签到" + String(Constants.User.checkDays) + "天共获取" + String((Constants.User.checkDays+1) * 2) + "代币"
+            }else if Constants.User.vip == 110000 {
+                /// 是svip
+                tipsLabel.text = "SVIP:已连续签到" + String(Constants.User.checkDays) + "天共获取" + String((Constants.User.checkDays+1) * 3) + "代币"
+            }
         }
         
         tipsLabel.font = UIFont.getCustomeYuanTiFont(fontSize: 14)
@@ -236,15 +240,19 @@ extension CheckInDialog{
                     tipsLabel.text = "SVIP:已连续签到" + String(Constants.User.checkDays) + "天共获取24代币"
                 }
             }else {
-                if Constants.User.vip == 0 {
-                    /// 不是vip
-                    tipsLabel.text = "已连续签到" + String(Constants.User.checkDays) + "天共获取" + String(Constants.User.checkDays+1) + "代币"
-                }else if Constants.User.vip == 100000{
-                    /// 是vip
-                    tipsLabel.text = "VIP:已连续签到" + String(Constants.User.checkDays) + "天共获取" + String((Constants.User.checkDays+1) * 2) + "代币"
-                }else if Constants.User.vip == 110000 {
-                    /// 是svip
-                    tipsLabel.text = "SVIP:已连续签到" + String(Constants.User.checkDays) + "天共获取" + String((Constants.User.checkDays+1) * 3) + "代币"
+                if Constants.User.checkDays == 0 {
+                    tipsLabel.text = "已连续签到" + String(Constants.User.checkDays) + "天共获取0代币"
+                }else{
+                    if Constants.User.vip == 0 {
+                        /// 不是vip
+                        tipsLabel.text = "已连续签到" + String(Constants.User.checkDays) + "天共获取" + String(Constants.User.checkDays+1) + "代币"
+                    }else if Constants.User.vip == 100000{
+                        /// 是vip
+                        tipsLabel.text = "VIP:已连续签到" + String(Constants.User.checkDays) + "天共获取" + String((Constants.User.checkDays+1) * 2) + "代币"
+                    }else if Constants.User.vip == 110000 {
+                        /// 是svip
+                        tipsLabel.text = "SVIP:已连续签到" + String(Constants.User.checkDays) + "天共获取" + String((Constants.User.checkDays+1) * 3) + "代币"
+                    }
                 }
             }
             tipsLabel.sizeToFit()

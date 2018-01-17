@@ -22,6 +22,9 @@ class GameFailedDialog: BaseDialog {
     
     var isDurexTheme:Bool = false
     
+    /// 是否是0元抓
+    var isZeroGame = false
+    
     override func createView() {
         
         if isDurexTheme {
@@ -38,10 +41,10 @@ class GameFailedDialog: BaseDialog {
         cancelGameButton.setBackgroundImage(UIImage(named: "无力再战点击"), for: .highlighted)
         self.addSubview(cancelGameButton)
         
-        cancelGameButton.snp.makeConstraints { (make) in
-            make.bottom.equalTo(backgroundImage).offset(-15)
-            make.right.equalTo(backgroundImage).offset(-backgroundImage.bounds.width/2 - 8)
-        }
+//        cancelGameButton.snp.makeConstraints { (make) in
+//            make.bottom.equalTo(backgroundImage).offset(-15)
+//            make.right.equalTo(backgroundImage).offset(-backgroundImage.bounds.width/2 - 8)
+//        }
         
         cancelGameButton.addTarget(self, action: #selector(close), for: .touchUpInside)
         
@@ -71,8 +74,26 @@ class GameFailedDialog: BaseDialog {
         
         againGameButton.addTarget(self, action: #selector(againGame), for: .touchUpInside)
         
-        //开始倒计时
-        isCounting = true
+        if isZeroGame {
+            cancelGameButton.snp.makeConstraints({ (make) in
+                make.centerX.equalTo(backgroundImage)
+                make.bottom.equalTo(backgroundImage).offset(-15)
+            })
+            againGameButton.isHidden = true
+            againGameTimeLabel.isHidden = true
+            
+            isCounting = false
+        }else{
+            cancelGameButton.snp.makeConstraints({ (make) in
+                make.bottom.equalTo(backgroundImage).offset(-15)
+                make.right.equalTo(backgroundImage).offset(-backgroundImage.bounds.width/2 - 8)
+            })
+            againGameButton.isHidden = false
+            againGameTimeLabel.isHidden = false
+            
+            //开始倒计时
+            isCounting = true
+        }
         
         addDialogToWindow()
     }
