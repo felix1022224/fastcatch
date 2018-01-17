@@ -112,7 +112,7 @@ class ShowOffRecordDialog: BaseDialog {
                 })
             }
         }
-        self.hide()
+        self.close()
     }
     
     func getDataFromUrl(url: URL, completion: @escaping (_ data: Data?, _  response: URLResponse?, _ error: Error?) -> Void) {

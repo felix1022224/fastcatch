@@ -1079,6 +1079,8 @@ extension GameSceneViewController{
         if startCoinNumber <= 0 {
             /// 这是个0元抓
             
+            print("award:\(awardDataSource)")
+            
             zeroCatchView.productImage.kf.setImage(with: URL(string: awardDataSource["img"].stringValue))
             zeroCatchView.productTitle.text = awardDataSource["title"].stringValue
             zeroCatchView.productDesc.text = awardDataSource["description"].stringValue
@@ -1087,6 +1089,8 @@ extension GameSceneViewController{
             zeroCatchView.show()
             
             zeroCatchView.payButton.addTarget(self, action: #selector(payProduct), for: .touchUpInside)
+            
+            self.hidePlayGroupView()
             
             return
         }

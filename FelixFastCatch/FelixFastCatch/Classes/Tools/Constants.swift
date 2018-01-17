@@ -20,7 +20,7 @@ class Constants: NSObject {
         static let COUPON_HELP_H5_LINK = "http://api.mz.meidaojia.com/html/view_815.html"
         
         /// 当前环境
-        static let nService = MZService.Debug
+        static let nService = MZService.Release
         
         static var BASE_URL:String {
             get{

@@ -43,10 +43,10 @@ extension GameSceneViewController{
         
         rootView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: topGroupView.bounds.height + startBtnBackgroundView.bounds.height + productBackgroundView.bounds.height + bottomActivityGroup.bounds.height)
         
-//        createZeroView()
+        createZeroView()
         
-//        settlementView = SettlementView(frame: UIScreen.main.bounds)
-//        view.addSubview(settlementView)
+        settlementView = SettlementView(frame: UIScreen.main.bounds)
+        view.addSubview(settlementView)
     }
     
     func createZeroView() {
