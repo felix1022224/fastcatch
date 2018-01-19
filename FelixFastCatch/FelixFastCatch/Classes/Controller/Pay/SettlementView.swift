@@ -273,10 +273,6 @@ class SettlementView: UIView {
     }
     
     @objc func pay(){
-        if Constants.User.vipDay <= 7 {
-            ToastUtils.showErrorToast(msg: "剩余时间小于7天，无法升级")
-            return
-        }
         if payType == 0 {
             if isVip {
                 wechatPay(rp: vipRP)
