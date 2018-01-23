@@ -13,7 +13,8 @@ import SwiftyJSON
 extension HomeViewController{
     
     func setupUI() -> () {
-        view.layer.contents = UIImage(named: "邮寄背景")!.cgImage
+        self.view.backgroundColor = UIColor.white
+        
         
         createMainBtns()
     }

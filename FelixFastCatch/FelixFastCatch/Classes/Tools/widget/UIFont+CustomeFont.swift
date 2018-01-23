@@ -11,7 +11,8 @@ import UIKit
 extension UIFont {
     
     class func getCustomeYuanTiFont(fontSize:Float) -> UIFont {
-        return UIFont(name: "FZY4K--GBK1-0", size: CGFloat(fontSize))!
+//        return UIFont(name: "FZY4K--GBK1-0", size: CGFloat(fontSize))!
+        return UIFont.systemFont(ofSize: CGFloat(fontSize))
     }
     
 }

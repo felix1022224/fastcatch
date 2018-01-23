@@ -39,8 +39,8 @@ class CustomerBannerWidget: UIView, UIScrollViewDelegate , UIGestureRecognizerDe
     // banner 指示器
     fileprivate lazy var pageControl:UIPageControl = UIPageControl()
     
-    let scrollItemWidth = UIScreen.main.bounds.width - 14
-    let scrollItemHeight = (UIScreen.main.bounds.width - 14) * 0.45
+    let scrollItemWidth = UIScreen.main.bounds.width
+    let scrollItemHeight = UIScreen.main.bounds.width * 0.45
     
     //自动滚动计时器
     var autoScrollTimer:Timer?
@@ -53,6 +53,10 @@ class CustomerBannerWidget: UIView, UIScrollViewDelegate , UIGestureRecognizerDe
     
     /// 装载UI
     func setupUI() -> () {
+        let topImage = UIImageView(image: UIImage(named: "首页顶部矩形"))
+        topImage.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 0.5)
+        addSubview(topImage)
+        
         dataSource = delegate.getBannerDataSource()
         
         initScrollerView()
@@ -84,10 +88,10 @@ class CustomerBannerWidget: UIView, UIScrollViewDelegate , UIGestureRecognizerDe
             self.scrollerView.layer.cornerRadius = 10
         }
         
-        self.frame.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 0.45)
-        self.scrollerView.frame.size = CGSize(width: scrollItemWidth, height: scrollItemHeight)
+        self.frame.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 0.6)
+        self.scrollerView.frame = CGRect(x: 0, y: UIApplication.shared.statusBarFrame.height, width: scrollItemWidth, height: scrollItemHeight)
         
-        self.scrollerView.center = self.center
+//        self.scrollerView.center = self.center
         
         self.addSubview(self.scrollerView)
         
@@ -103,7 +107,6 @@ class CustomerBannerWidget: UIView, UIScrollViewDelegate , UIGestureRecognizerDe
     
     /// 初始化图片的集合
     func initImageViews() -> () {
-        
         self.leftImage = UIImageView(frame: CGRect(x: 0, y: 0, width: scrollItemWidth, height: scrollItemHeight))
         self.middleImage = UIImageView(frame: CGRect(x: scrollItemWidth, y: 0, width: scrollItemWidth, height: scrollItemHeight))
         self.rightImage = UIImageView(frame: CGRect(x: scrollItemWidth * 2, y: 0, width: scrollItemWidth, height: scrollItemHeight))

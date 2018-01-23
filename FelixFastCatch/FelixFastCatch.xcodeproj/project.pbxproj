@@ -97,6 +97,15 @@
 		4D87008F1FF626E6005F5645 /* DHImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D87008E1FF626E6005F5645 /* DHImageView.m */; };
 		4D879B671F7CABF6009F2ECC /* MainBeginnerGuidGiftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D879B661F7CABF6009F2ECC /* MainBeginnerGuidGiftView.swift */; };
 		4D879B691F7CAEE8009F2ECC /* MainBeginnerGuidPlaySwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D879B681F7CAEE8009F2ECC /* MainBeginnerGuidPlaySwitchView.swift */; };
+		4D8924802015DFCF00BDA812 /* GameRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D89247F2015DFCF00BDA812 /* GameRoomViewController.swift */; };
+		4D8924822015E57100BDA812 /* GameRoomLiveWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8924812015E57100BDA812 /* GameRoomLiveWidget.swift */; };
+		4D8924842015E99C00BDA812 /* GameRoomControllerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8924832015E99C00BDA812 /* GameRoomControllerWidget.swift */; };
+		4D8924862015E9DB00BDA812 /* GameRoomProductInfoWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8924852015E9DB00BDA812 /* GameRoomProductInfoWidget.swift */; };
+		4D8924882017157600BDA812 /* GameRoomAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8924872017157600BDA812 /* GameRoomAudioController.swift */; };
+		4D89248A2017366200BDA812 /* GameRoomNetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8924892017366200BDA812 /* GameRoomNetworkController.swift */; };
+		4D89248D20173B6C00BDA812 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D89248C20173B6C00BDA812 /* LoginViewController.swift */; };
+		4D94590D2010500900145C2B /* HomeBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D94590C2010500900145C2B /* HomeBannerView.swift */; };
+		4D94590F2010D26300145C2B /* HomeTabItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D94590E2010D26300145C2B /* HomeTabItemView.swift */; };
 		4D96D3981F59824600E614CD /* Customized.YWFeedbackBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4D96D3971F59824600E614CD /* Customized.YWFeedbackBundle.bundle */; };
 		4D96D39D1F5BD7CE00E614CD /* InviteFirendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D96D39C1F5BD7CE00E614CD /* InviteFirendsCell.swift */; };
 		4D96D3BD1F5BDE2000E614CD /* HelpDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D96D3BC1F5BDE2000E614CD /* HelpDialog.swift */; };
@@ -171,6 +180,10 @@
 		4DF058831F90D20500E17B75 /* GameUserInfoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF058821F90D20500E17B75 /* GameUserInfoDialog.swift */; };
 		4DFAA6C11FAC38F1005AF710 /* GameSceneLiveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFAA6C01FAC38F1005AF710 /* GameSceneLiveController.swift */; };
 		4DFAA6C31FAC3962005AF710 /* GameSceneAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFAA6C21FAC3962005AF710 /* GameSceneAudioController.swift */; };
+		4DFBC7BB200DE4BD0065F08E /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFBC7BA200DE4BD0065F08E /* HomeTabViewController.swift */; };
+		4DFBC7BD200DE4E50065F08E /* MainTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFBC7BC200DE4E50065F08E /* MainTabsViewController.swift */; };
+		4DFBC831200F63410065F08E /* HomeTabItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFBC830200F63410065F08E /* HomeTabItemViewController.swift */; };
+		4DFBC834200F65170065F08E /* HomeTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFBC833200F65170065F08E /* HomeTabCell.swift */; };
 		958698C56D14F18FE0B94475 /* Pods_FelixFastCatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7E009E5610C1572048261D2 /* Pods_FelixFastCatch.framework */; };
 /* End PBXBuildFile section */
 
@@ -284,6 +297,15 @@
 		4D87008E1FF626E6005F5645 /* DHImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHImageView.m; sourceTree = "<group>"; };
 		4D879B661F7CABF6009F2ECC /* MainBeginnerGuidGiftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBeginnerGuidGiftView.swift; sourceTree = "<group>"; };
 		4D879B681F7CAEE8009F2ECC /* MainBeginnerGuidPlaySwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBeginnerGuidPlaySwitchView.swift; sourceTree = "<group>"; };
+		4D89247F2015DFCF00BDA812 /* GameRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRoomViewController.swift; sourceTree = "<group>"; };
+		4D8924812015E57100BDA812 /* GameRoomLiveWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRoomLiveWidget.swift; sourceTree = "<group>"; };
+		4D8924832015E99C00BDA812 /* GameRoomControllerWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRoomControllerWidget.swift; sourceTree = "<group>"; };
+		4D8924852015E9DB00BDA812 /* GameRoomProductInfoWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRoomProductInfoWidget.swift; sourceTree = "<group>"; };
+		4D8924872017157600BDA812 /* GameRoomAudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRoomAudioController.swift; sourceTree = "<group>"; };
+		4D8924892017366200BDA812 /* GameRoomNetworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRoomNetworkController.swift; sourceTree = "<group>"; };
+		4D89248C20173B6C00BDA812 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		4D94590C2010500900145C2B /* HomeBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBannerView.swift; sourceTree = "<group>"; };
+		4D94590E2010D26300145C2B /* HomeTabItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabItemView.swift; sourceTree = "<group>"; };
 		4D96D3971F59824600E614CD /* Customized.YWFeedbackBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Customized.YWFeedbackBundle.bundle; sourceTree = "<group>"; };
 		4D96D39C1F5BD7CE00E614CD /* InviteFirendsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFirendsCell.swift; sourceTree = "<group>"; };
 		4D96D3BC1F5BDE2000E614CD /* HelpDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpDialog.swift; sourceTree = "<group>"; };
@@ -359,6 +381,10 @@
 		4DF058821F90D20500E17B75 /* GameUserInfoDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameUserInfoDialog.swift; sourceTree = "<group>"; };
 		4DFAA6C01FAC38F1005AF710 /* GameSceneLiveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneLiveController.swift; sourceTree = "<group>"; };
 		4DFAA6C21FAC3962005AF710 /* GameSceneAudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneAudioController.swift; sourceTree = "<group>"; };
+		4DFBC7BA200DE4BD0065F08E /* HomeTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
+		4DFBC7BC200DE4E50065F08E /* MainTabsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabsViewController.swift; sourceTree = "<group>"; };
+		4DFBC830200F63410065F08E /* HomeTabItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabItemViewController.swift; sourceTree = "<group>"; };
+		4DFBC833200F65170065F08E /* HomeTabCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabCell.swift; sourceTree = "<group>"; };
 		9DA239CE4A7A8989C9E6EAED /* Pods-FelixFastCatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FelixFastCatch.release.xcconfig"; path = "Pods/Target Support Files/Pods-FelixFastCatch/Pods-FelixFastCatch.release.xcconfig"; sourceTree = "<group>"; };
 		D7E009E5610C1572048261D2 /* Pods_FelixFastCatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FelixFastCatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFC6B4F6BC202EA7BB7FDC1F /* Pods-FelixFastCatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FelixFastCatch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FelixFastCatch/Pods-FelixFastCatch.debug.xcconfig"; sourceTree = "<group>"; };
@@ -617,10 +643,30 @@
 			isa = PBXGroup;
 			children = (
 				4D7AB3BE1FF24C8700270A62 /* MainListWidget.swift */,
-				4D7AB3C11FF2639400270A62 /* HomeViewController.swift */,
 				4D7AB3C31FF4A9AF00270A62 /* CustomerHomeTabView.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		4D89247E2015DFA500BDA812 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				4D89247F2015DFCF00BDA812 /* GameRoomViewController.swift */,
+				4D8924812015E57100BDA812 /* GameRoomLiveWidget.swift */,
+				4D8924832015E99C00BDA812 /* GameRoomControllerWidget.swift */,
+				4D8924852015E9DB00BDA812 /* GameRoomProductInfoWidget.swift */,
+				4D8924872017157600BDA812 /* GameRoomAudioController.swift */,
+				4D8924892017366200BDA812 /* GameRoomNetworkController.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		4D89248B20173B5D00BDA812 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				4D89248C20173B6C00BDA812 /* LoginViewController.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		4D96D39B1F5BD7B600E614CD /* Invite */ = {
@@ -634,6 +680,7 @@
 		4D9EBB831F271BD2002674DE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				4DFBC7B4200DE4310065F08E /* NewProject */,
 				4D9EBB901F274563002674DE /* Cell */,
 				4D9EBB841F271C3A002674DE /* Controller */,
 				4D9EBB851F271C3A002674DE /* Model */,
@@ -705,6 +752,7 @@
 		4D9EBB881F271C5C002674DE /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				4D7AB3C11FF2639400270A62 /* HomeViewController.swift */,
 				4D7AB3C01FF2638200270A62 /* UI */,
 				4DB1A6171FF2226800BDBE3A /* MainVCWidget */,
 				4D28005A1F948196004E9D8B /* SplashView.swift */,
@@ -999,6 +1047,61 @@
 			path = VIPDialog;
 			sourceTree = "<group>";
 		};
+		4DFBC7B4200DE4310065F08E /* NewProject */ = {
+			isa = PBXGroup;
+			children = (
+				4DFBC832200F64EC0065F08E /* Cell */,
+				4DFBC7B6200DE45C0065F08E /* Controller */,
+				4DFBC7B7200DE45C0065F08E /* Model */,
+				4DFBC7B5200DE45C0065F08E /* View */,
+			);
+			path = NewProject;
+			sourceTree = "<group>";
+		};
+		4DFBC7B5200DE45C0065F08E /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4DFBC7B6200DE45C0065F08E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4D89248B20173B5D00BDA812 /* Login */,
+				4D89247E2015DFA500BDA812 /* Game */,
+				4DFBC7B9200DE4A20065F08E /* Home */,
+				4DFBC7BC200DE4E50065F08E /* MainTabsViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		4DFBC7B7200DE45C0065F08E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4DFBC7B9200DE4A20065F08E /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				4DFBC7BA200DE4BD0065F08E /* HomeTabViewController.swift */,
+				4DFBC830200F63410065F08E /* HomeTabItemViewController.swift */,
+				4D94590C2010500900145C2B /* HomeBannerView.swift */,
+				4D94590E2010D26300145C2B /* HomeTabItemView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		4DFBC832200F64EC0065F08E /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				4DFBC833200F65170065F08E /* HomeTabCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		86C29A63B7571C0DB24E59E0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1152,6 +1255,7 @@
 				4D7048AC1F90AB8500D337F4 /* TitlesCell.swift in Sources */,
 				4DA23CE01F8F536B00B2337E /* CustomeFlowLayout.swift in Sources */,
 				4D28005B1F948196004E9D8B /* SplashView.swift in Sources */,
+				4DFBC831200F63410065F08E /* HomeTabItemViewController.swift in Sources */,
 				4DEA1342200626ED0090AA00 /* VIPDialog.swift in Sources */,
 				4DB1A6111FF0CCB000BDBE3A /* PayVCWidget.swift in Sources */,
 				4DD3A5041F7C9CFA000B5F25 /* MainBeginnerGuidPayView.swift in Sources */,
@@ -1185,8 +1289,11 @@
 				4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */,
 				4D1F59DC1F8CC8EA00806C00 /* TokenHistoryViewController.swift in Sources */,
 				4DE6418D1FE253AB00589537 /* NotificationUIWidget.swift in Sources */,
+				4D94590D2010500900145C2B /* HomeBannerView.swift in Sources */,
 				4DAFB22D1FAACBD700F90A08 /* GameSceneWidget.swift in Sources */,
+				4D89248A2017366200BDA812 /* GameRoomNetworkController.swift in Sources */,
 				4D18ACD41F261378005363A4 /* TencentShared.swift in Sources */,
+				4D8924802015DFCF00BDA812 /* GameRoomViewController.swift in Sources */,
 				4DCD39DB1F2F31C6002B7F35 /* PayItemTableViewCell.swift in Sources */,
 				4DAD03321F51629B00D7E72F /* CustomerBannerView.swift in Sources */,
 				4D74682B1FCFE4C500E8E662 /* HorzontalGameSceneWidget.swift in Sources */,
@@ -1194,6 +1301,7 @@
 				4D879B671F7CABF6009F2ECC /* MainBeginnerGuidGiftView.swift in Sources */,
 				4D7AB3C41FF4A9AF00270A62 /* CustomerHomeTabView.swift in Sources */,
 				4D74682D1FD127A500E8E662 /* StartGameCountdownDialog.swift in Sources */,
+				4DFBC7BD200DE4E50065F08E /* MainTabsViewController.swift in Sources */,
 				4D1D86151F31BA9C005210CA /* EditAddressDialog.swift in Sources */,
 				4D64B8981F29B549002A9BFD /* MainBanner.swift in Sources */,
 				4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */,
@@ -1207,6 +1315,7 @@
 				4D500B9B1FB429FF0086AC15 /* PointsMallViewController.swift in Sources */,
 				4D2B80121F4008060075D390 /* MailedSuccessDialog.swift in Sources */,
 				4DCD39E81F2F4B2C002B7F35 /* FCMyGiftCell.swift in Sources */,
+				4D8924862015E9DB00BDA812 /* GameRoomProductInfoWidget.swift in Sources */,
 				4D4ACE751F51CA0D0011E7F7 /* ProductinfoDialog.swift in Sources */,
 				4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */,
 				4D1D86131F306307005210CA /* TobeGiftModel.swift in Sources */,
@@ -1219,12 +1328,14 @@
 				4D96D39D1F5BD7CE00E614CD /* InviteFirendsCell.swift in Sources */,
 				4D2B801B1F4C07050075D390 /* SubmitSuccessDialog.swift in Sources */,
 				4DAFB22B1FAAC55000F90A08 /* GameSceneViewController.swift in Sources */,
+				4D89248D20173B6C00BDA812 /* LoginViewController.swift in Sources */,
 				4DCC49CA1F52A65F0017D4A4 /* PlayInfoBannerDialog.swift in Sources */,
 				4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */,
 				4D4B67EB2004A3BE00455C04 /* SettlementView.swift in Sources */,
 				4DA23CE21F8F6CF200B2337E /* MainFooterCell.swift in Sources */,
 				4D2B80141F40097E0075D390 /* OutGameDialog.swift in Sources */,
 				4DCC49CE1F52E8B10017D4A4 /* EditInviteCode.swift in Sources */,
+				4D8924842015E99C00BDA812 /* GameRoomControllerWidget.swift in Sources */,
 				4D4ACE771F51CE410011E7F7 /* GemLackDialog.swift in Sources */,
 				4D7D3F2A1FD930380019B58C /* HorzontalGameSceneAudioController.swift in Sources */,
 				4DA23CE41F8F878D00B2337E /* UserCenterViewController.swift in Sources */,
@@ -1245,15 +1356,18 @@
 				4DF058831F90D20500E17B75 /* GameUserInfoDialog.swift in Sources */,
 				4D7468291FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift in Sources */,
 				4DCD39B71F2DA5FC002B7F35 /* CustomerControllerButton.swift in Sources */,
+				4D8924822015E57100BDA812 /* GameRoomLiveWidget.swift in Sources */,
 				4D7144831F8B584700B37D8A /* MailingListViewController.swift in Sources */,
 				4D7AB3C71FF4CB1C00270A62 /* DHOutLineLabel.m in Sources */,
 				4D4B67F820060A2800455C04 /* ZeroCatchView.swift in Sources */,
 				4DCC49D21F5307220017D4A4 /* ExchangeCodeDialog.swift in Sources */,
+				4DFBC7BB200DE4BD0065F08E /* HomeTabViewController.swift in Sources */,
 				4D7AB3BF1FF24C8700270A62 /* MainListWidget.swift in Sources */,
 				4D7AB3CA1FF4DBDD00270A62 /* TabContentView.m in Sources */,
 				4D1D861F1F334461005210CA /* ConstellationUtils.swift in Sources */,
 				4D4B67F42005EA2E00455C04 /* ExchangePointsDialog.swift in Sources */,
 				4D05F2FB1F938F5800A8027D /* WelcomeViewController.swift in Sources */,
+				4D8924882017157600BDA812 /* GameRoomAudioController.swift in Sources */,
 				4D5BF1BD1F3851570091180B /* CheckInDialog.swift in Sources */,
 				4DB1A60A1FEB704000BDBE3A /* UIFont+CustomeFont.swift in Sources */,
 				4D7AB3BC1FF24A2200270A62 /* SPTagBarScrollView.m in Sources */,
@@ -1267,6 +1381,7 @@
 				4DF0587F1F90C1B900E17B75 /* UserTitlesInfoDialog.swift in Sources */,
 				4DAD03341F51777200D7E72F /* WebViewController.swift in Sources */,
 				4D2354381FFE17EA00E09EA2 /* PayListTableViewCell.swift in Sources */,
+				4D94590F2010D26300145C2B /* HomeTabItemView.swift in Sources */,
 				4DFAA6C31FAC3962005AF710 /* GameSceneAudioController.swift in Sources */,
 				4D23543A1FFE3EFF00E09EA2 /* CouponListViewController.swift in Sources */,
 				4D23543C1FFE403300E09EA2 /* CouponHistoryViewController.swift in Sources */,
@@ -1274,6 +1389,7 @@
 				4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */,
 				4DB08BA21FB1822200BFB200 /* GameFailedDialog.swift in Sources */,
 				4D4B67E7200362B900455C04 /* CouponTableViewCell.swift in Sources */,
+				4DFBC834200F65170065F08E /* HomeTabCell.swift in Sources */,
 				4D1D861D1F333299005210CA /* HideView.swift in Sources */,
 				4D7048A71F908A8600D337F4 /* MailedCashShortDialog.swift in Sources */,
 				4D7AB3B91FF24A2200270A62 /* SPTabController.m in Sources */,

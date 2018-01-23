@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     var locationManager:CLLocationManager!
     
-    let vc = HomeViewController()
+    let vc = MainTabsViewController()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -58,14 +58,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         UMessage.setLogEnabled(true)
         
         window = UIWindow()
-//        let vc = MainViewController()
         let nav = UINavigationController(rootViewController: vc)
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
         
         LocalDataUtils.initUserInfo()
         
-        vc.loadDialogToWindow()
+//        vc.loadDialogToWindow()
         
         locationManager = CLLocationManager()
         //设置定位服务管理器代理

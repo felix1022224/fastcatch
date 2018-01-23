@@ -26,7 +26,7 @@ class Constants: NSObject {
             get{
                 if Network.nService == MZService.Test {
                     ///本地测试环境
-                    return "http://192.168.2.47:9125/"
+                    return "http://192.168.2.174:9125/"
                 }else if Network.nService == MZService.Debug{
                     ///测试环境
                     return  "http://47.92.72.158:9125/"
@@ -99,7 +99,6 @@ class Constants: NSObject {
             
             /// 获取开屏页
             static let GET_OPEN_ADV = BASE_URL + "advertise/list?showPage=0"
-            
             
         }
         
@@ -193,10 +192,11 @@ class Constants: NSObject {
     /// 控件
     struct UI {
         /// 描边颜色
-        static let OUT_LINE_COLOR:UIColor = UIColor(red: 160/255.0, green: 123/255.0, blue: 80/255.0, alpha: 1)
+//        static let OUT_LINE_COLOR:UIColor = UIColor(red: 160/255.0, green: 123/255.0, blue: 80/255.0, alpha: 1)
+        static let OUT_LINE_COLOR:UIColor = UIColor.clear
         
         /// 描边粗细
-        static let OUT_LINE_WIDTH:CGFloat = 2
+        static let OUT_LINE_WIDTH:CGFloat = 0
         
         /// 钻石数量的文字颜色
         static let GEM_TEXT_COLOR:UIColor = UIColor(red: 255/255.0, green: 162/255.0, blue: 0.0, alpha: 1)
@@ -205,6 +205,8 @@ class Constants: NSObject {
         static let TITLE_IMAGE_WIDTH = UIScreen.main.bounds.width * 0.45
         
         static let TITLE_IMAGE_HEIGHT = TITLE_IMAGE_WIDTH * 0.25
+        
+        static let HOME_HEADER_HEIGHT = UIDevice.current.isX() ? 20 + 330 : 20 + 330
         
     }
     

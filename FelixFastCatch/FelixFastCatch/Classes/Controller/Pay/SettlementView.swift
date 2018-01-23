@@ -350,6 +350,8 @@ class SettlementView: UIView {
                     LocalDataUtils.clearLoaclData()
                 }else if jsonData["code"].int! == -101 {
                     ToastUtils.showErrorToast(msg: "您不具备首充资格，请刷新")
+                }else{
+                    ToastUtils.showErrorToast(msg: "错误:" + jsonData["msg"].stringValue)
                 }
             }else{
                 
@@ -390,6 +392,8 @@ class SettlementView: UIView {
                     LocalDataUtils.clearLoaclData()
                 }else if jsonData["code"].int! == -101 {
                     ToastUtils.showErrorToast(msg: "您不具备首充资格，请刷新")
+                }else {
+                    ToastUtils.showErrorToast(msg: "错误:" + jsonData["msg"].stringValue)
                 }
             }else{
                 print("error:\(String(describing: response.error))")
