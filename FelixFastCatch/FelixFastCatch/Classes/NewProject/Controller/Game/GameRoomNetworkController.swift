@@ -74,7 +74,7 @@ class GameRoomNetworkController: NSObject {
         
         /// 刷新正在游戏中的玩家信息
         socket.on("gameUserInfo") { [weak self] (data, ack) in
-//            self?.updateGameUser(data: data)
+            self?.updateGameUser(data: data)
         }
         
         /// 监听用户重复登录的情况
@@ -185,10 +185,12 @@ class GameRoomNetworkController: NSObject {
     /// 等待排队
     func waitQueue(data:[Any]) -> () {
         let json = JSON(data[0])
+        print("jsonjsonjson\(json)")
         if json["tryLock"].bool! == true {
             /// 可以开始游戏
             if isEnterQueue {
                 /// 进入过队列，显示排队排到了的界面
+                self.gameRoomVC.showQueuedDialog()
             }else{
                 /// 没进入过队列，直接开始游戏
                 self.gameRoomVC.startGame()
@@ -197,6 +199,36 @@ class GameRoomNetworkController: NSObject {
         }else{
             /// 进入排队状态
             isEnterQueue = true
+            
+            self.gameRoomVC.updateQueueNumber(number: json["waitCtlIndex"].intValue)
+            self.gameRoomVC.switchQueueStatus(isQueue: true)
+        }
+    }
+    
+    /// 退出队列
+    func quitQueue(isShowToast:Bool) -> () {
+        /// 退出队列
+        var params = [String: Any]()
+        params["deviceid"] = self.deviceId
+        socket.emit("quitqueue", params)
+        
+        isEnterQueue = false
+        
+        if isShowToast {
+            ToastUtils.showInfoToast(msg: "成功退出队列，5秒钟后才可再次预约哦")
+        }
+    }
+    
+    func updateGameUser(data:[Any]) -> () {
+        let resultJson = JSON(data[0])
+        if resultJson["id"].intValue != 0 {
+//            self.playViewController?.gameUserInfo = resultJson
+//            self.playViewController?.updateGameUserInfoWidget(userFaceImage: resultJson["avatar"].stringValue, userNickName: resultJson["nick"].stringValue)
+            self.gameRoomVC.updateGameUserInfo(userName: resultJson["nick"].stringValue, userAvater: resultJson["avatar"].stringValue)
+        }else{
+            self.gameRoomVC.hideGameUserView()
+//            self.playViewController?.gameUserInfo = nil
+//            self.playViewController?.removeGameUserInfo()
         }
     }
     

@@ -189,6 +189,7 @@ extension HomeTabItemViewController: UICollectionViewDelegateFlowLayout, UIColle
         gameRoomVC.deviceId = deviceId
         homeViewController.isHide = true
         self.homeViewController.navigationController?.pushViewController(gameRoomVC, animated: true)
+//        self.homeViewController.present(gameRoomVC, animated: true, completion: nil)
     }
     
     /// 点击广告
@@ -200,7 +201,6 @@ extension HomeTabItemViewController: UICollectionViewDelegateFlowLayout, UIColle
                 return
             }
             let webVC = WebViewController()
-//            webVC.mainVC = homeViewController
             webVC.link = link
             webVC.shareTitle = item["shareTitle"].stringValue
             webVC.shareInfo = item["shareSubtitle"].stringValue
@@ -211,7 +211,8 @@ extension HomeTabItemViewController: UICollectionViewDelegateFlowLayout, UIColle
         }else if item["redirectType"].intValue == 2 {
             let link = item["scheme"].intValue
             if link == -1 {
-//                homeViewController.showPayDialog()
+                let payVC = PayViewController()
+                self.homeViewController.navigationController?.pushViewController(payVC, animated: true)
                 return
             }else{
                 itemGameRoomClick(deviceId: String(link))

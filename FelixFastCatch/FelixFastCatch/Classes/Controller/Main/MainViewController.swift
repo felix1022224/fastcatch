@@ -60,9 +60,6 @@ class MainViewController: UIViewController{
     // 是否是下拉刷新
     fileprivate var isRefresh:Bool = false
     
-    /// 快速登录
-    fileprivate var fastLoginDialog:FastLoginDialog!
-    
     /// 购买钻石
     fileprivate var payGemDialog:PayListDialog!
     
@@ -208,8 +205,6 @@ class MainViewController: UIViewController{
     
     /// 在加载显示完首页的viewcontroller之后，需要调用该方法来成功获取系统的window
     func loadDialogToWindow() -> () {
-        fastLoginDialog = FastLoginDialog(frame: UIScreen.main.bounds)
-        
         /// 购买钻石的dialog
         payGemDialog = PayListDialog(frame: UIScreen.main.bounds)
         
@@ -644,11 +639,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
 
         gameSceneViewController.deviceId = mainListData[sender.tag]["deviceId"].stringValue
 
-        gameSceneViewController.needLogin = { [weak self] in
-            self?.fastLoginDialog.createView()
-            self?.fastLoginDialog.show()
-        }
-
         switch mainListData[sender.tag]["showType"].intValue {
         case 3:
             ///杜蕾斯版本
@@ -694,11 +684,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         let gameSceneViewController = GameSceneViewController()
         gameSceneViewController.deviceId = mainListData[index]["deviceId"].stringValue
         
-        gameSceneViewController.needLogin = { [weak self] in
-            self?.fastLoginDialog.createView()
-            self?.fastLoginDialog.show()
-        }
-        
         switch mainListData[index]["showType"].intValue {
         case 3:
             ///杜蕾斯版本
@@ -738,10 +723,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             let playView = PlayViewController()
             playView.deviceId = mainListData[index]["deviceId"].stringValue
             playView.darwCount = mainListData[index]["darwCount"].intValue
-            playView.needLogin = { [weak self] in
-                self?.fastLoginDialog.createView()
-                self?.fastLoginDialog.show()
-            }
             
             playView.mainVC = self
             
@@ -961,8 +942,7 @@ extension MainViewController{
     }
     
     func showFastLogin() -> () {
-        fastLoginDialog.createView()
-//        fastLoginDialog.show2(mainViewController: self)
+
     }
     
     

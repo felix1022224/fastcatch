@@ -114,7 +114,6 @@ extension HomeViewController{
     
     /// 在加载显示完首页的viewcontroller之后，需要调用该方法来成功获取系统的window
     func loadDialogToWindow() -> () {
-        fastLoginDialog = FastLoginDialog(frame: UIScreen.main.bounds)
         
         /// 购买钻石的dialog
         payGemDialog = PayListDialog(frame: UIScreen.main.bounds)
@@ -140,8 +139,7 @@ extension HomeViewController{
     }
     
     func showFastLogin() -> () {
-        fastLoginDialog.createView()
-        fastLoginDialog.show2(mainViewController: self)
+        
     }
     
 }

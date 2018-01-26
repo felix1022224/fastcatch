@@ -20,7 +20,7 @@ class HomeBannerView: UIView {
     var bannerView = UIScrollView()
     
     /// 数据
-    private var bannerDataSource:[JSON]!
+    var bannerDataSource:[JSON]!
     
     /// 左中右的图片view
     private var middleImage,middleImage2,leftImage,rightImage:UIImageView!
@@ -167,6 +167,8 @@ class HomeBannerView: UIView {
         pageControl.frame = CGRect(x: UIScreen.main.bounds.width/2 - pageControl.bounds.width/2, y: title.frame.origin.y + 50 + bannerView.bounds.height - 30, width: pageControl.bounds.width, height: pageControl.bounds.height)
         
         self.addSubview(pageControl)
+        
+        bannerView.isUserInteractionEnabled = true
     }
     
     /// 重设图片集合
@@ -219,7 +221,7 @@ class HomeBannerView: UIView {
         addSubview(tabScrollView)
         
         for i in 0..<jsonData.count {
-            let item = createTabItem(index: i, imageUrl: "")
+            let item = createTabItem(index: i, imageUrl: jsonData[i]["icon"].stringValue)
             item.tabTitle.text = jsonData[i]["title"].stringValue
             tabScrollView.addSubview(item)
             tabviews.append(item)

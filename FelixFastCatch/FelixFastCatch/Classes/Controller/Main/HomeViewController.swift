@@ -29,9 +29,6 @@ class HomeViewController: SPCoverController {
     //首页的tab列表
     var tabsDataSource = [JSON]()
     
-    /// 快速登录
-    var fastLoginDialog:FastLoginDialog!
-    
     /// 购买钻石
     var payGemDialog:PayListDialog!
     

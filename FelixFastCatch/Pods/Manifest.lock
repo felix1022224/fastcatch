@@ -19,6 +19,7 @@ PODS:
   - SnapKit (3.2.0)
   - Socket.IO-Client-Swift (12.0.0):
     - StarscreamSocketIO (~> 8.0.7)
+  - Spring (1.0.5)
   - StarscreamSocketIO (8.0.7)
   - SVProgressHUD (2.2.2)
   - SwiftGifOrigin (1.6.1)
@@ -36,11 +37,21 @@ DEPENDENCIES:
   - SDWebImage (~> 4.0)
   - SnapKit (~> 3.2.0)
   - Socket.IO-Client-Swift (~> 12.0.0)
+  - Spring (from `https://github.com/MengTo/Spring.git`)
   - SVProgressHUD
   - SwiftGifOrigin (~> 1.6.1)
   - SwiftyJSON (~> 3.1.4)
   - UMengAnalytics-NO-IDFA
   - WechatOpenSDK
+
+EXTERNAL SOURCES:
+  Spring:
+    :git: https://github.com/MengTo/Spring.git
+
+CHECKOUT OPTIONS:
+  Spring:
+    :commit: 19b04d730d3edabbb02a39e58121d1d3220690ee
+    :git: https://github.com/MengTo/Spring.git
 
 SPEC CHECKSUMS:
   AgoraRtcEngine_iOS: 67884f8bbe46aae8ed9af4195b0683562f083fde
@@ -55,6 +66,7 @@ SPEC CHECKSUMS:
   SDWebImage: 89a9d32cd520bbb46eb14e541d5109b3564af198
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   Socket.IO-Client-Swift: 5b0154b42b3892bfb4c44fa138cbeb8afec4f6ef
+  Spring: 48aad470f3ead043b2da98b64e0bf0630b7ebc42
   StarscreamSocketIO: 00b54e4208481ca5cef089545353aaf126bae16d
   SVProgressHUD: 59b2d3dabacbd051576d21d32293ca7228dc18b0
   SwiftGifOrigin: d6679d3ebe9df2e049a84bc52582635107b581f6
@@ -62,6 +74,6 @@ SPEC CHECKSUMS:
   UMengAnalytics-NO-IDFA: 16666e32edce5be44ae5b14aaaa7f3582e09d6ab
   WechatOpenSDK: 491d965d79335070328571d3e79f714549e79a5e
 
-PODFILE CHECKSUM: 992a686ed10ba4b30c18516c3cefee6f9dba9a58
+PODFILE CHECKSUM: b98c6047f2ae33bc5957f464ab44c0c20d8d6e0c
 
 COCOAPODS: 1.2.1

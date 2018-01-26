@@ -59,6 +59,8 @@ class PointsMallViewController: UIViewController , UIWebViewDelegate, UIGestureR
         backImageView.addGestureRecognizer(tapGR)
         headView.addSubview(backImageView)
         
+        backImageView.isHidden = true
+        
         /// title
         actionTitleLabel.font = UIFont.systemFont(ofSize: 16)
         actionTitleLabel.text = "积分商城"
@@ -73,7 +75,7 @@ class PointsMallViewController: UIViewController , UIWebViewDelegate, UIGestureR
         lineView.backgroundColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 0.8)
         view.addSubview(lineView)
         
-        webview = UIWebView(frame: CGRect(x: 0, y: headView.bounds.height + lineView.bounds.height, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        webview = UIWebView(frame: CGRect(x: 0, y: headView.bounds.height + lineView.bounds.height, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - headView.bounds.height - 50))
         webview.delegate = self
         view.addSubview(webview)
         

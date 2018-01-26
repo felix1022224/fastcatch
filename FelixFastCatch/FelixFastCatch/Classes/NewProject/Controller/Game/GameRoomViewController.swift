@@ -148,6 +148,38 @@ class GameRoomViewController: UIViewController {
     /// 中奖信息的code
     var wardCode = ""
     
+    /// 游戏失败的弹窗
+    var gameFailDialog:GameFailDialog!
+    
+    /// 游戏胜利的弹窗
+    var gameVictoryDialog:GameVictoryDialog!
+    
+    /// 排队到了的弹窗
+    var queuedUpDialog:GameQueuedUpDialog!
+    
+    /// 游戏中的用户信息集合
+    var gameUserGroupView = UIView()
+    
+    /// 游戏中的用户名称
+    var gameUserNickName = UILabel()
+    
+    /// 游戏中的用户头像
+    var gameUserAvatar = UIImageView()
+    
+    /// 是否排队中
+    var isQueue = false
+    
+    /// 取消排队
+    var queueCancelBtn = UIButton.init(type: UIButtonType.custom)
+    
+    /// 排在第几位
+    var queueIndexLabel = UILabel()
+    
+    /// 是否游戏中
+    var isGameing = false
+    
+    let vipView = UIImageView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -156,12 +188,15 @@ class GameRoomViewController: UIViewController {
             return
         }
         
+        UIApplication.shared.isIdleTimerDisabled = true
+        
         initView()
         
         initGameRoomData()
         
-        gameRoomNetworkController = GameRoomNetworkController.init(grvc: self, deviceId: deviceId)
-        gameRoomNetworkController.connectSocket()
+        self.playBackgroundMusic() //播放背景音乐
+        
+        showGameVictoryDialog()
     }
     
     /// 初始化游戏房间数据
@@ -205,8 +240,6 @@ class GameRoomViewController: UIViewController {
         initGameControllerUI()
         
         createBottomGroupView()
-        
-        playBackgroundMusic()
     }
     
     /// 更新一下页面上面的数据
@@ -219,23 +252,38 @@ class GameRoomViewController: UIViewController {
         startGameNumberLabel.text = gameRoomData["perDiamondsCount"].stringValue + "币/次"
     }
     
-    deinit {
-        print("GameSceneDeinit")
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         if bgMusicPlayer != nil {
             bgMusicPlayer.stop()
-        }
-        if gameRoomNetworkController != nil {
-            gameRoomNetworkController.disconnect()
-            gameRoomNetworkController = nil
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         /// 隐藏自带的navigationBar
         self.navigationController?.isNavigationBarHidden = true
+        
+        gameFailDialog = GameFailDialog(frame: UIScreen.main.bounds)
+        gameVictoryDialog = GameVictoryDialog(frame: UIScreen.main.bounds)
+        queuedUpDialog = GameQueuedUpDialog(frame: UIScreen.main.bounds)
+        
+        if Constants.User.USER_ID != "" {
+            self.updateGoldNumberView()
+            if gameRoomNetworkController != nil {
+                gameRoomNetworkController.disconnect()
+                gameRoomNetworkController = nil
+            }
+            
+            gameRoomNetworkController = GameRoomNetworkController.init(grvc: self, deviceId: deviceId)
+            gameRoomNetworkController.connectSocket()
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        UIApplication.shared.isIdleTimerDisabled = false
     }
 
     /// 游戏倒计时
@@ -275,6 +323,10 @@ class GameRoomViewController: UIViewController {
     
     @objc func updateTime() {
         remainingSeconds -= 1
+    }
+    
+    deinit {
+        print("GameSceneDeinit")
     }
     
 }

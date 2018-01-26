@@ -25,12 +25,7 @@ import JavaScriptCore
     
     ///需要登录
     func needLogin() {
-        closeWB()
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {[weak self] in
-            if self?.mainVC != nil {
-                self?.mainVC.showFastLogin()
-            }
-        }
+        LoginViewController.showLoginVC()
     }
     
     ///打开外部链接
@@ -64,8 +59,9 @@ import JavaScriptCore
         if mainVC == nil {
             return
         }
-        mainVC.getDataByDeviceId(deviceId: deviceId)
-        closeWB()
+        let gameRoomVC = GameRoomViewController()
+        gameRoomVC.deviceId = deviceId
+        self.webVC.navigationController?.pushViewController(gameRoomVC, animated: true)
     }
     
     func closeWB() {
@@ -138,6 +134,7 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         
         webview = UIWebView(frame: CGRect(x: 0, y: headView.bounds.height + lineView.bounds.height, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - (headView.bounds.height) - lineView.bounds.height))
         webview.delegate = self
+        webview.backgroundColor = UIColor.white
         view.addSubview(webview)
         
         self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
@@ -186,6 +183,34 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         }
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        /// 重新load一遍
+        if webview != nil {
+            if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
+                for cookieData in cookieArray {
+                    if let dict = cookieData as? [HTTPCookiePropertyKey : Any] {
+                        if let cookie = HTTPCookie.init(properties : dict) {
+                            if cookie.name == "SESSION" {
+                                var cookieProperties =  [HTTPCookiePropertyKey : Any]()
+                                cookieProperties[HTTPCookiePropertyKey.name] = cookie.name
+                                cookieProperties[HTTPCookiePropertyKey.value] = cookie.value
+                                cookieProperties[HTTPCookiePropertyKey.domain] = "meizhe.meidaojia.com"
+                                cookieProperties[HTTPCookiePropertyKey.originURL] = "meizhe.meidaojia.com"
+                                cookieProperties[HTTPCookiePropertyKey.path] = "/"
+                                cookieProperties[HTTPCookiePropertyKey.version] = "0"
+                                
+                                let cookie = HTTPCookie(properties: cookieProperties)
+                                HTTPCookieStorage.shared.setCookie(cookie!)
+                            }
+                        }
+                    }
+                }
+            }
+            
+            webview.loadRequest(URLRequest(url: URL(string: link)!))
+        }
+    }
+    
     @objc func back() -> () {
         dismiss(animated: true, completion: nil)
         self.navigationController?.popViewController(animated: true)

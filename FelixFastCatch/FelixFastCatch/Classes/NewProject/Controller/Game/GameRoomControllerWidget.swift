@@ -19,6 +19,7 @@ extension GameRoomViewController {
         rootView.addSubview(gameControllerGroupView)
         
         startGameBtn.setBackgroundImage(UIImage.init(named: "开始游戏啦"), for: UIControlState.normal)
+        startGameBtn.setBackgroundImage(UIImage.init(named: "开始游戏啦不可点击"), for: UIControlState.disabled)
         startGameBtn.sizeToFit()
         startGameBtn.frame.origin = CGPoint(x: UIScreen.main.bounds.width/2 - startGameBtn.bounds.width/2, y: gameControllerGroupView.bounds.height/2 - startGameBtn.bounds.height/2)
         gameControllerGroupView.addSubview(startGameBtn)
@@ -29,15 +30,62 @@ extension GameRoomViewController {
         startGameNumberLabel.frame = CGRect.init(x: startGameBtn.frame.origin.x + startGameBtn.bounds.width * 0.15, y: startGameBtn.frame.origin.y + startGameBtn.bounds.height * 0.55, width: startGameBtn.bounds.width * 0.6, height: 20)
         gameControllerGroupView.addSubview(startGameNumberLabel)
         
-        startGameBtn.addTarget(self, action: #selector(startGameClick), for: UIControlEvents.touchUpInside)
+        startGameBtn.addTarget(self, action: #selector(clickStatrBtn), for: UIControlEvents.touchUpInside)
+        
+        queueCancelBtn.setBackgroundImage(UIImage.init(named: "游戏界面取消排队"), for: UIControlState.normal)
+        queueCancelBtn.sizeToFit()
+        gameControllerGroupView.addSubview(queueCancelBtn)
+        
+        queueCancelBtn.frame.origin = CGPoint(x: UIScreen.main.bounds.width/2 - queueCancelBtn.bounds.width/2, y: gameControllerGroupView.bounds.height/2 - queueCancelBtn.bounds.height/2)
+        
+        queueIndexLabel.frame = CGRect.init(x: queueCancelBtn.frame.origin.x + queueCancelBtn.bounds.width * 0.15, y: queueCancelBtn.frame.origin.y + queueCancelBtn.bounds.height * 0.55, width: queueCancelBtn.bounds.width * 0.6, height: 20)
+        queueIndexLabel.textColor = UIColor.init(red: 250/255.0, green: 250/255.0, blue: 250/255.0, alpha: 1.0)
+        queueIndexLabel.font = UIFont.systemFont(ofSize: 12)
+        gameControllerGroupView.addSubview(queueIndexLabel)
+        
+        let attrText = NSMutableAttributedString.init(string: "您是第 \(6) 位哦")
+        attrText.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: 13, weight: UIFont.Weight.bold), range: NSRange(location: 4, length:1))
+        attrText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white, range: NSRange(location: 4, length:1))
+        queueIndexLabel.attributedText = attrText
+        
+        queueCancelBtn.addTarget(self, action: #selector(cancelQueue), for: UIControlEvents.touchUpInside)
+        
+        switchQueueStatus(isQueue: false)
         
         createOperationPanel()
     }
     
-    @objc func startGameClick() {
-        if Constants.User.ID == "" {
+    /// 取消排队
+    @objc func cancelQueue() {
+        switchQueueStatus(isQueue: false)
+        gameRoomNetworkController.quitQueue(isShowToast: true)
+    }
+    
+    func switchQueueStatus(isQueue:Bool) {
+        if isQueue {
+            queueCancelBtn.isHidden = false
+            queueIndexLabel.isHidden = false
+        }else{
+            queueCancelBtn.isHidden = true
+            queueIndexLabel.isHidden = true
+        }
+    }
+    
+    func updateQueueNumber(number:Int) {
+        let attrText = NSMutableAttributedString.init(string: "您是第 \(number) 位哦")
+        attrText.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: 13, weight: UIFont.Weight.bold), range: NSRange(location: 4, length:String(number).count))
+        attrText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white, range: NSRange(location: 4, length:String(number).count))
+        queueIndexLabel.attributedText = attrText
+    }
+    
+    @objc func clickStatrBtn() {
+        startGameClick(isAgain: false)
+    }
+    
+    func startGameClick(isAgain:Bool) {
+        if Constants.User.USER_ID == "" {
             /// 需要登录
-            LoginViewController.showLoginVC(vc: self)
+            LoginViewController.showLoginVC()
             return
         }
         
@@ -52,13 +100,30 @@ extension GameRoomViewController {
         }
         isStartClick = true
         
-        if gameRoomNetworkController != nil {
-            gameRoomNetworkController.enterGameQueue()
+        self.wardCode = ""
+        
+        if isAgain {
+            startGame()
+        }else{
+            if gameRoomNetworkController != nil {
+                gameRoomNetworkController.enterGameQueue()
+            }
+        }
+        
+        startGameBtn.isEnabled = false
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
+            if self.isStartClick != false {
+                self.isStartClick = false
+                self.startGameBtn.isEnabled = true
+            }
         }
     }
     
     /// 开始游戏，进行扣币等操作
     func startGame() {
+        self.startGameBtn.isEnabled = true
+        
         print("开始游戏")
         var params = NetWorkUtils.createBaseParams()
         params["deviceid"] = deviceId
@@ -72,10 +137,15 @@ extension GameRoomViewController {
                     self.wardCode = json["data"]["gTradeNo"].stringValue
                     /// 播放音效
                     self.playStartGame()
+                    
+                    Constants.User.diamondsCount = json["data"]["diamondsCount"].intValue
+                    self.updateGoldNumberView()
+                    
                 }else {
                     self.switchGameStatus(isGame: false)
                 }
             }
+            self.isStartClick = false
         }
     }
     
@@ -164,6 +234,8 @@ extension GameRoomViewController {
     
     func switchGameStatus(isGame:Bool) {
         if isGame {
+            disableControllerBtns(isEnbled: true)
+            
             /// 游戏中
             controllerUp.isHidden = false
             controllerDown.isHidden = false
@@ -179,9 +251,13 @@ extension GameRoomViewController {
             
             gameTimerLabel.isHidden = false
             
+            isGameing = true
+            
             /// 切换到游戏模式
             self.switchGameMode()
         }else{
+            disableControllerBtns(isEnbled: false)
+            
             /// 非游戏中
             controllerUp.isHidden = true
             controllerDown.isHidden = true
@@ -199,8 +275,12 @@ extension GameRoomViewController {
             
             isStartClick = false
             
+            isGameing = false
+            
             /// 切换到非游戏模式
             self.switchNotGameMode()
+            
+            startGameBtn.isEnabled = true
         }
     }
     
@@ -305,14 +385,23 @@ extension GameRoomViewController {
     func getWard() -> () {
         if self.wardCode == "" {
             self.switchGameStatus(isGame: false)
+            ToastUtils.hide()
             return
         }
         
+        if getWardCodeNumber == 3 {
+            ToastUtils.showLoadingToast(msg: "等待游戏结果")
+        }
+        
         /// 调用接口超过8次，默认失败
-        if getWardCodeNumber >= 8 {
+        if getWardCodeNumber >= 6 {
             getWardCodeNumber = 0
             self.switchGameStatus(isGame: false)
+            /// 隐藏loading
+            ToastUtils.hide()
+            
             /// 弹出失败的弹窗
+            showGameFailDialog()
             
             /// 抓取失败的音效
             playGrapFail()
@@ -326,9 +415,12 @@ extension GameRoomViewController {
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(response.result.value!)
                 if json["data"]["drawable"].bool! == true {
+                    /// 隐藏loading
+                    ToastUtils.hide()
+                    
                     self.getWardCodeNumber = 0
-                    self.wardCode = ""
                     /// 显示再来一局的界面
+                    self.showGameVictoryDialog()
                     
                     /// 抓取成功的音效
                     self.playGrapSuccess()
@@ -348,4 +440,100 @@ extension GameRoomViewController {
             }
         }
     }
+    
+    /// 显示失败的弹窗
+    func showGameFailDialog() {
+        /// 修改下爪状态
+        isGrab = false
+        
+        gameFailDialog.createView()
+        gameFailDialog.cancelCallback = {
+            /// 退出队列
+            self.gameRoomNetworkController.quitQueue(isShowToast: false)
+            
+            /// 切换到非游戏模式
+            self.switchGameStatus(isGame: false)
+        }
+        gameVictoryDialog.againCallback = {
+            self.startGameClick(isAgain: true)
+        }
+        gameFailDialog.show()
+    }
+    
+    /// 显示游戏胜利的弹窗
+    func showGameVictoryDialog() {
+        /// 修改下爪状态
+        isGrab = false
+        
+        if gameVictoryDialog == nil {
+            gameVictoryDialog = GameVictoryDialog(frame: UIScreen.main.bounds)
+        }
+        
+        gameVictoryDialog.createView()
+        gameVictoryDialog.cancenCallback = {
+            /// 退出队列
+            self.gameRoomNetworkController.quitQueue(isShowToast: false)
+            
+            /// 切换到非游戏模式
+            self.switchGameStatus(isGame: false)
+        }
+        gameVictoryDialog.againCallback = {
+            self.startGameClick(isAgain: true)
+        }
+        gameVictoryDialog.welfareCallback = {
+            /// 退出队列
+            self.gameRoomNetworkController.quitQueue(isShowToast: false)
+            
+            /// 切换到非游戏模式
+            self.switchGameStatus(isGame: false)
+            
+            self.sendWelfare()
+        }
+        gameVictoryDialog.show()
+    }
+    
+    /// 显示排队到了弹窗
+    func showQueuedDialog() {
+        /// 退出排队状态
+        switchQueueStatus(isQueue: false)
+        
+        startGameBtn.isEnabled = false
+        
+        queuedUpDialog.createView()
+        queuedUpDialog.cancelCallback = {
+            /// 退出队列
+            self.gameRoomNetworkController.quitQueue(isShowToast: true)
+            
+            /// 切换到非游戏模式
+            self.switchGameStatus(isGame: false)
+            
+            self.startGameBtn.isEnabled = true
+        }
+        queuedUpDialog.startGameCallback = {
+            /// 开始游戏
+            self.startGame()
+        }
+        queuedUpDialog.show()
+    }
+    
+    /// 发红包
+    func sendWelfare() {
+        ToastUtils.showLoadingToast(msg: "正在准备红包")
+        var params = NetWorkUtils.createBaseParams()
+//        params["gTradeNo"] = wardCode
+        params["gTradeNo"] = "503381701554561"
+        
+        Alamofire.request(Constants.Network.User.SEND_RED_BAG, method: HTTPMethod.post, parameters: params).responseJSON { (dataResponse) in
+            ToastUtils.hide()
+            if NetWorkUtils.checkReponse(response: dataResponse) {
+                let resultJson = JSON.init(data: dataResponse.data!)
+                print("resultJson:\(resultJson)")
+                
+//                let shareDialog = SharedViewDialog()
+//                shareDialog.createView()
+//                shareDialog.show()
+            }
+        }
+    }
+    
 }

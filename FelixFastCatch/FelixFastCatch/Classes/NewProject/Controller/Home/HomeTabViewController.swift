@@ -61,6 +61,8 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
     //自动刷新计时器
     var refreshUserInfoTimer:Timer?
     
+    var testDialog:BasicDialog!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -96,6 +98,49 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
         getBannerList()
         
         configureAutoRefeshUserInfoTimer()
+        
+        let tapBanner = UITapGestureRecognizer.init(target: self, action: #selector(bannerClick))
+        headerView.bannerView.addGestureRecognizer(tapBanner)
+    }
+    
+    /// 点击banner
+    @objc func bannerClick() {
+        let item = headerView.bannerDataSource[self.headerView.currentIndex]
+        if item["redirectType"].intValue == 1 {
+            let link = item["scheme"].stringValue
+            // 跳转到网页
+            if link == "" {
+                return
+            }
+            let webVC = WebViewController()
+            webVC.link = link
+            webVC.shareTitle = item["shareTitle"].stringValue
+            webVC.shareInfo = item["shareSubtitle"].stringValue
+            webVC.thumbShareImage = item["shareImg"].stringValue
+            webVC.actionTitle = item["name"].stringValue
+            self.navigationController?.pushViewController(webVC, animated: true)
+        }else if item["redirectType"].intValue == 2 {
+            let link = item["scheme"].intValue
+            if link == -1 {
+                let payVC = PayViewController()
+                self.navigationController?.pushViewController(payVC, animated: true)
+                return
+            }else{
+                let gameRoomVC = GameRoomViewController()
+                gameRoomVC.deviceId = String(link)
+                self.navigationController?.pushViewController(gameRoomVC, animated: true)
+            }
+        }else if item["redirectType"].intValue == 3 {
+            //跳转到外部链接
+            if let url = URL(string: item["scheme"].stringValue) {
+                //根据iOS系统版本，分别处理
+                if #available(iOS 10, *) {
+                    UIApplication.shared.open(url, options: [:],completionHandler: {(success) in })
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        }
     }
     
     func configureAutoRefeshUserInfoTimer() {

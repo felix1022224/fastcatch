@@ -35,7 +35,7 @@ class HomeTabItemView: UIView{
     func createView(index:Int, imageUrl:String) {
         let itemWidth = (UIScreen.main.bounds.width)/4
         
-        tabImageView.image = UIImage(named: "0币抓icon")
+//        tabImageView.image = UIImage(named: "0币抓icon")
         tabImageView.frame = CGRect(x: itemWidth/2 - 30, y: 0, width: 55, height: 55)
         tabImageView.tag = index
         addSubview(tabImageView)
@@ -47,6 +47,8 @@ class HomeTabItemView: UIView{
         tabTitle.sizeToFit()
         tabTitle.tag = index
         addSubview(tabTitle)
+        
+        tabImageView.kf.setImage(with: URL.init(string: imageUrl))
         
         tabTitle.frame.origin = CGPoint(x: itemWidth/2 - tabTitle.bounds.width/2, y: 50)
         

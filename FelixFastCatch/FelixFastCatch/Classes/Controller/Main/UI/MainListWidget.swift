@@ -296,10 +296,10 @@ extension MainListWidget:UICollectionViewDelegateFlowLayout, UICollectionViewDat
         
         gameSceneViewController.deviceId = mainListData[sender.tag]["deviceId"].stringValue
         
-        gameSceneViewController.needLogin = { [weak self] in
-            self?.homeViewController.fastLoginDialog.createView()
-            self?.homeViewController.fastLoginDialog.show()
-        }
+//        gameSceneViewController.needLogin = { [weak self] in
+//            self?.homeViewController.fastLoginDialog.createView()
+//            self?.homeViewController.fastLoginDialog.show()
+//        }
         
         switch mainListData[sender.tag]["showType"].intValue {
         case 3:
@@ -349,10 +349,10 @@ extension MainListWidget:UICollectionViewDelegateFlowLayout, UICollectionViewDat
         let gameSceneViewController = GameSceneViewController()
         gameSceneViewController.deviceId = mainListData[index]["deviceId"].stringValue
         
-        gameSceneViewController.needLogin = { [weak self] in
-            self?.homeViewController.fastLoginDialog.createView()
-            self?.homeViewController.fastLoginDialog.show()
-        }
+//        gameSceneViewController.needLogin = { [weak self] in
+//            self?.homeViewController.fastLoginDialog.createView()
+//            self?.homeViewController.fastLoginDialog.show()
+//        }
         
         switch mainListData[index]["showType"].intValue {
         case 3:

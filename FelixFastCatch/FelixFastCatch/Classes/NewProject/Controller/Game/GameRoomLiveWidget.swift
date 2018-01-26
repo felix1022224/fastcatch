@@ -68,9 +68,9 @@ extension GameRoomViewController{
         
         liveView.corner(byRoundingCorners: [UIRectCorner.bottomLeft, UIRectCorner.bottomRight], radii: 25)
         
-        createLiveBtns()
-        
         initLive()
+        
+        createLiveBtns()
     }
     
     func createLiveBtns() {
@@ -94,13 +94,92 @@ extension GameRoomViewController{
         createHelpBtn()
         createAudioButton()
         createGameRoomNumbers()
+        
+        createGameUserGroup()
+    }
+    
+    /// 创建游戏中的用户view
+    func createGameUserGroup() {
+        gameUserAvatar.frame.size = CGSize(width: 24, height: 24)
+        gameUserAvatar.backgroundColor = UIColor.white
+        gameUserAvatar.layer.cornerRadius = 12
+        gameUserAvatar.layer.masksToBounds = true
+        gameUserGroupView.addSubview(gameUserAvatar)
+        
+        gameUserNickName.text = "nickName"
+        gameUserNickName.font = UIFont.systemFont(ofSize: 14)
+        gameUserNickName.textColor = UIColor.white
+        gameUserNickName.sizeToFit()
+        gameUserGroupView.addSubview(gameUserNickName)
+        
+        gameUserGroupView.frame.size = CGSize(width: gameUserAvatar.bounds.width + gameUserNickName.bounds.width + 35, height: gameUserAvatar.bounds.height * 1.3)
+        gameUserGroupView.frame.origin = CGPoint(x: UIScreen.main.bounds.width - 10 - gameUserGroupView.bounds.width, y: goldGroupView.frame.origin.y + goldGroupView.bounds.height + 10)
+        
+        gameUserGroupView.layer.cornerRadius = gameUserGroupView.bounds.height/2
+        gameUserGroupView.backgroundColor = UIColor.init(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.5)
+        
+        gameUserGroupView.isHidden = true
+        
+        vipView.frame.size = CGSize.init(width: gameUserGroupView.bounds.width, height: gameUserGroupView.bounds.height * 1.2)
+        
+        rootView.addSubview(gameUserGroupView)
+        
+        rootView.addSubview(vipView)
+        
+        vipView.isHidden = true
+        
+    }
+    
+    /// 更新游戏中的用户view
+    func updateGameUserInfo(userName:String, userAvater:String) {
+        gameUserNickName.text = userName
+        gameUserNickName.sizeToFit()
+        
+        gameUserAvatar.kf.setImage(with: URL(string: userAvater), placeholder: UIImage(named: "default_user_face"), options: nil, progressBlock: nil, completionHandler: nil)
+        
+        gameUserGroupView.frame.size = CGSize(width: gameUserAvatar.bounds.width + gameUserNickName.bounds.width + 55, height: gameUserAvatar.bounds.height * 1.3)
+        gameUserGroupView.frame.origin = CGPoint(x: UIScreen.main.bounds.width - 10 - gameUserGroupView.bounds.width, y: goldGroupView.frame.origin.y + goldGroupView.bounds.height + 10)
+        
+        gameUserAvatar.frame.origin = CGPoint(x: 5, y: gameUserGroupView.bounds.height/2 - gameUserAvatar.bounds.height/2)
+        gameUserNickName.frame.origin = CGPoint(x: 5 + gameUserAvatar.bounds.width + 5, y: gameUserGroupView.bounds.height/2 - gameUserNickName.bounds.height/2)
+        
+        vipView.frame.size = CGSize.init(width: (gameUserAvatar.bounds.width + gameUserNickName.bounds.width + 55) * 1.05, height: gameUserAvatar.bounds.height * 1.3 * 1.2)
+        vipView.frame.origin = CGPoint.init(x: gameUserGroupView.frame.origin.x + (gameUserGroupView.bounds.width/2 - vipView.bounds.width/2), y: gameUserGroupView.frame.origin.y + (gameUserGroupView.bounds.height/2 - vipView.bounds.height/2))
+        
+//        let vipImage = UIImage(named: "svip特殊边框")
+//        vipView.image = vipImage?.stretchableImage(withLeftCapWidth: Int((vipImage?.size.width)!/CGFloat(2)), topCapHeight: Int((vipImage?.size.height)!/CGFloat(2)))
+        
+        UIView.animate(withDuration: 0.3) {
+            self.gameUserGroupView.isHidden = false
+            self.vipView.isHidden = false
+        }
+    }
+    
+    /// 隐藏游戏中玩家的弹窗
+    func hideGameUserView() {
+        UIView.animate(withDuration: 0.3) {
+            self.gameUserGroupView.isHidden = true
+            self.vipView.isHidden = true
+        }
     }
     
     @objc func closeView(){
+        if isGameing {
+            ToastUtils.showInfoToast(msg: "正在游戏中，暂时无法退出哦~")
+            return
+        }
+        
         self.navigationController?.popViewController(animated: true)
         
         agoraKit.stopPreview()
         agoraKit.leaveChannel { (status) in }
+        
+        if gameRoomNetworkController != nil {
+            gameRoomNetworkController.disconnect()
+            gameRoomNetworkController = nil
+        }
+        
+        wardCode = ""
     }
     
     /// 创建帮助按钮
@@ -289,14 +368,15 @@ extension GameRoomViewController{
         
         goldGroupView.isHidden = true
         
-        if Constants.User.ID != "" {
+        if Constants.User.USER_ID != "" {
             goldGroupView.isHidden = false
         }
     }
     
     /// 显示充值页面
     @objc func showPayVC() {
-    
+        let payVC = PayViewController()
+        self.present(payVC, animated: true, completion: nil)
     }
     
     /// 更新金币view
@@ -312,6 +392,8 @@ extension GameRoomViewController{
         goldIcon.frame.origin = CGPoint(x: 4, y: goldGroupView.bounds.height/2 - goldIcon.bounds.height/2)
         
         goldNumber.frame.origin = CGPoint(x: 4 + goldIcon.bounds.width + 4, y: goldGroupView.bounds.height/2 - goldNumber.bounds.height/2)
+        
+        goldGroupView.isHidden = false
     }
     
     func initLive() -> () {
@@ -319,6 +401,8 @@ extension GameRoomViewController{
         sideLiveCamare = UInt(deviceId)! + 2
         
         agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: "a61c87d429a748cfbdae28178e082289", delegate: self)
+        
+        agoraKit.delegate = self
         
         /// 默认是直播模式
         agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_LiveBroadcasting)

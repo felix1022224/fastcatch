@@ -14,13 +14,7 @@ extension GameRoomViewController{
     
     /// 播放背景声音
     func playBackgroundMusic() -> () {
-        
-        do {
-            try AVAudioSession.sharedInstance().overrideOutputAudioPort(AVAudioSessionPortOverride.speaker)
-        } catch _ {
-            print("switch speaker error~")
-        }
-        
+            
         //获取bg.mp3文件地址
         let bgMusicURL =  Bundle.main.path(forResource: "background_music", ofType: "mp3")!
         //地址转换
@@ -32,9 +26,11 @@ extension GameRoomViewController{
         //准备播放音乐
         bgMusicPlayer.prepareToPlay()
         
-        if !isCloseMusic {
-            //播放音乐
-            bgMusicPlayer.play()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
+            if !self.isCloseMusic {
+                //播放音乐
+                self.bgMusicPlayer.play()
+            }
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(pauseSong(notification:)), name:NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
@@ -57,6 +53,9 @@ extension GameRoomViewController{
     
     /// 播放开始游戏的音效
     func playStartGame() -> () {
+        //振动
+        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+        
         if isCloseMusic {
             return
         }
@@ -74,9 +73,6 @@ extension GameRoomViewController{
         } catch {
             print("开始音效，error")
         }
-        
-        //振动
-        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
     
     /// 播放抓取成功的音效

@@ -175,6 +175,9 @@ class Constants: NSObject {
             
             /// 兑换积分
             static let EXCHANGE_POINTS = BASE_URL + "er/award/integral"
+            
+            /// 发红包
+            static let SEND_RED_BAG = BASE_URL + "user/redpackets/share"
         }
     }
     

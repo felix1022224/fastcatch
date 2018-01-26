@@ -342,11 +342,7 @@ class SettlementView: UIView {
                     })
                 }else if jsonData["code"].int! == -302 {
                     print("用户身份异常，重新登录")
-                    if !Constants.isFastLoginShow {
-                        let loginDialog = FastLoginDialog(frame: UIScreen.main.bounds)
-                        loginDialog.createView()
-                        loginDialog.show()
-                    }
+                    LoginViewController.showLoginVC()
                     LocalDataUtils.clearLoaclData()
                 }else if jsonData["code"].int! == -101 {
                     ToastUtils.showErrorToast(msg: "您不具备首充资格，请刷新")
@@ -384,11 +380,7 @@ class SettlementView: UIView {
                     })
                 }else if jsonData["code"].int! == -302 {
                     print("用户身份异常，重新登录")
-                    if !Constants.isFastLoginShow {
-                        let loginDialog = FastLoginDialog(frame: UIScreen.main.bounds)
-                        loginDialog.createView()
-                        loginDialog.show()
-                    }
+                    LoginViewController.showLoginVC()
                     LocalDataUtils.clearLoaclData()
                 }else if jsonData["code"].int! == -101 {
                     ToastUtils.showErrorToast(msg: "您不具备首充资格，请刷新")
