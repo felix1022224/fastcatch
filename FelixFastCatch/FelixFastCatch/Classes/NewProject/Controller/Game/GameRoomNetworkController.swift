@@ -28,14 +28,16 @@ class GameRoomNetworkController: NSObject {
         self.deviceId = deviceId
         
         if Constants.Network.nService == Constants.Network.MZService.Debug {
-            //测试服务器
-            socket = SocketIOClient(socketURL: URL(string: "http://47.92.72.158:9130?room=" + deviceId)!, config: [.log(false), .compress])
+            //测试服务器 "http://47.92.72.158:9130?room=" + deviceId + "&id=" + Constants.User.ID
+            let url = URL(string: "http://47.92.72.158:9130?room=" + deviceId + "&id=" + Constants.User.ID)!
+            socket = SocketIOClient(socketURL: url, config: [.log(false), .compress])
         }else if Constants.Network.nService == Constants.Network.MZService.Test {
             //本地测试服务器
-            socket = SocketIOClient(socketURL: URL(string: "http://192.168.2.174:9130?room=" + deviceId)!, config: [.log(false), .compress])
+            socket = SocketIOClient(socketURL: URL(string: "http://192.168.2.174:9130?room=" + deviceId + "&id=" + Constants.User.ID)!, config: [.log(false), .compress])
         }else if Constants.Network.nService == Constants.Network.MZService.Release {
+            print("link:\("http://101.201.68.47:9130?room=" + deviceId + "&id=" + Constants.User.ID)")
             ///线上正式
-            socket = SocketIOClient(socketURL: URL(string: "http://101.201.68.47:9130?room=" + deviceId)!, config: [.log(false), .compress])
+            socket = SocketIOClient(socketURL: URL(string: "http://101.201.68.47:9130?room=" + deviceId + "&id=" + Constants.User.ID)!, config: [.log(false), .compress])
         }
     }
     
@@ -138,6 +140,7 @@ class GameRoomNetworkController: NSObject {
     /// 更新人数
     func updateGameNumber(data:[Any], ack:SocketAckEmitter) -> () {
         let resultData = JSON(data[0])
+        print("更新人数")
         self.gameRoomVC.updateGameRoomNumbers(watchNumberStr: String(resultData["waitWatchCount"].intValue) + "人", queueNumberStr: String(resultData["waitCtlCount"].intValue) + "人")
         self.gameRoomVC.updateGameNumber(gameNumberStr: "共\(resultData["awardDrawCount"].intValue)次")
     }
@@ -177,6 +180,8 @@ class GameRoomNetworkController: NSObject {
     func enterGameQueue() -> () {
         var params = [String: Any]()
         params["deviceid"] = deviceId
+        
+        print("加入队列")
         
         /// 加入队列
         socket.emit("waitqueue", params)
@@ -222,13 +227,10 @@ class GameRoomNetworkController: NSObject {
     func updateGameUser(data:[Any]) -> () {
         let resultJson = JSON(data[0])
         if resultJson["id"].intValue != 0 {
-//            self.playViewController?.gameUserInfo = resultJson
-//            self.playViewController?.updateGameUserInfoWidget(userFaceImage: resultJson["avatar"].stringValue, userNickName: resultJson["nick"].stringValue)
+            self.gameRoomVC.playingGameDialog.gameUserDataSource = resultJson
             self.gameRoomVC.updateGameUserInfo(userName: resultJson["nick"].stringValue, userAvater: resultJson["avatar"].stringValue)
         }else{
             self.gameRoomVC.hideGameUserView()
-//            self.playViewController?.gameUserInfo = nil
-//            self.playViewController?.removeGameUserInfo()
         }
     }
     

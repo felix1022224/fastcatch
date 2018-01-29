@@ -124,11 +124,14 @@ extension GameRoomViewController {
     func startGame() {
         self.startGameBtn.isEnabled = true
         
+        ToastUtils.showLoadingToast(msg: "开始游戏")
+        
         print("开始游戏")
         var params = NetWorkUtils.createBaseParams()
         params["deviceid"] = deviceId
         
         Alamofire.request(Constants.Network.Machine.START_PLAY, method: .post, parameters: params).responseJSON { (response) in
+            ToastUtils.hide()
             if NetWorkUtils.checkReponse(response: response) {
                 print("开始游戏回调:\(String(describing: response.result.value))")
                 let json = JSON(response.result.value!)
@@ -447,15 +450,15 @@ extension GameRoomViewController {
         isGrab = false
         
         gameFailDialog.createView()
-        gameFailDialog.cancelCallback = {
+        gameFailDialog.cancelCallback = {[weak self] in
             /// 退出队列
-            self.gameRoomNetworkController.quitQueue(isShowToast: false)
+            self?.gameRoomNetworkController.quitQueue(isShowToast: false)
             
             /// 切换到非游戏模式
-            self.switchGameStatus(isGame: false)
+            self?.switchGameStatus(isGame: false)
         }
-        gameVictoryDialog.againCallback = {
-            self.startGameClick(isAgain: true)
+        gameFailDialog.againCallback = {[weak self] in
+            self?.startGameClick(isAgain: true)
         }
         gameFailDialog.show()
     }
@@ -465,29 +468,41 @@ extension GameRoomViewController {
         /// 修改下爪状态
         isGrab = false
         
+        if gameRoomData["perDiamondsCount"].intValue <= 0 {
+            /// 退出队列
+            self.gameRoomNetworkController.quitQueue(isShowToast: false)
+            
+            /// 切换到非游戏模式
+            self.switchGameStatus(isGame: false)
+            
+            /// 0元抓
+            showZeroCatchSuccessDialog()
+            return
+        }
+        
         if gameVictoryDialog == nil {
             gameVictoryDialog = GameVictoryDialog(frame: UIScreen.main.bounds)
         }
         
         gameVictoryDialog.createView()
-        gameVictoryDialog.cancenCallback = {
+        gameVictoryDialog.cancenCallback = {[weak self] in
             /// 退出队列
-            self.gameRoomNetworkController.quitQueue(isShowToast: false)
+            self?.gameRoomNetworkController.quitQueue(isShowToast: false)
             
             /// 切换到非游戏模式
-            self.switchGameStatus(isGame: false)
+            self?.switchGameStatus(isGame: false)
         }
-        gameVictoryDialog.againCallback = {
-            self.startGameClick(isAgain: true)
+        gameVictoryDialog.againCallback = {[weak self] in
+            self?.startGameClick(isAgain: true)
         }
-        gameVictoryDialog.welfareCallback = {
+        gameVictoryDialog.welfareCallback = {[weak self] in
             /// 退出队列
-            self.gameRoomNetworkController.quitQueue(isShowToast: false)
+            self?.gameRoomNetworkController.quitQueue(isShowToast: false)
             
             /// 切换到非游戏模式
-            self.switchGameStatus(isGame: false)
+            self?.switchGameStatus(isGame: false)
             
-            self.sendWelfare()
+            self?.sendWelfare()
         }
         gameVictoryDialog.show()
     }
@@ -500,18 +515,18 @@ extension GameRoomViewController {
         startGameBtn.isEnabled = false
         
         queuedUpDialog.createView()
-        queuedUpDialog.cancelCallback = {
+        queuedUpDialog.cancelCallback = {[weak self] in
             /// 退出队列
-            self.gameRoomNetworkController.quitQueue(isShowToast: true)
+            self?.gameRoomNetworkController.quitQueue(isShowToast: true)
             
             /// 切换到非游戏模式
-            self.switchGameStatus(isGame: false)
+            self?.switchGameStatus(isGame: false)
             
-            self.startGameBtn.isEnabled = true
+            self?.startGameBtn.isEnabled = true
         }
-        queuedUpDialog.startGameCallback = {
+        queuedUpDialog.startGameCallback = {[weak self] in
             /// 开始游戏
-            self.startGame()
+            self?.startGame()
         }
         queuedUpDialog.show()
     }

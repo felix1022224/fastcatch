@@ -180,6 +180,18 @@ class GameRoomViewController: UIViewController {
     
     let vipView = UIImageView()
     
+    /// 游戏中的用户dialog
+    var playingGameDialog:PlayingGameDialog!
+    
+    /// 正在游戏中的用户信息
+    var playingGameDataSource:JSON!
+    
+    /// 广告
+    var bannerGroupView = UIView()
+    
+    /// 0元抓的弹窗
+    var zeroCatchSuccessDialog:ZeroCatchSuccessDialog!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -196,7 +208,7 @@ class GameRoomViewController: UIViewController {
         
         self.playBackgroundMusic() //播放背景音乐
         
-        showGameVictoryDialog()
+        playingGameDialog = PlayingGameDialog(frame: UIScreen.main.bounds)
     }
     
     /// 初始化游戏房间数据
@@ -238,8 +250,6 @@ class GameRoomViewController: UIViewController {
         
         /// 初始化游戏操作界面
         initGameControllerUI()
-        
-        createBottomGroupView()
     }
     
     /// 更新一下页面上面的数据
@@ -250,6 +260,14 @@ class GameRoomViewController: UIViewController {
         productImage.kf.setImage(with: URL.init(string: gameRoomData["award"]["img"].stringValue))
         
         startGameNumberLabel.text = gameRoomData["perDiamondsCount"].stringValue + "币/次"
+        
+        if gameRoomData["activity"]["advertiseImg"].stringValue != "" {
+            createBannerView()
+        }
+        
+        createBottomGroupView()
+        
+//        showZeroCatchSuccessDialog()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -266,16 +284,14 @@ class GameRoomViewController: UIViewController {
         gameVictoryDialog = GameVictoryDialog(frame: UIScreen.main.bounds)
         queuedUpDialog = GameQueuedUpDialog(frame: UIScreen.main.bounds)
         
-        if Constants.User.USER_ID != "" {
-            self.updateGoldNumberView()
-            if gameRoomNetworkController != nil {
-                gameRoomNetworkController.disconnect()
-                gameRoomNetworkController = nil
-            }
-            
-            gameRoomNetworkController = GameRoomNetworkController.init(grvc: self, deviceId: deviceId)
-            gameRoomNetworkController.connectSocket()
+        self.updateGoldNumberView()
+        if gameRoomNetworkController != nil {
+            gameRoomNetworkController.disconnect()
+            gameRoomNetworkController = nil
         }
+        
+        gameRoomNetworkController = GameRoomNetworkController.init(grvc: self, deviceId: deviceId)
+        gameRoomNetworkController.connectSocket()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -287,7 +303,7 @@ class GameRoomViewController: UIViewController {
     }
 
     /// 游戏倒计时
-    fileprivate var countdownTimer: Timer?
+    var countdownTimer: Timer?
     
     fileprivate var remainingSeconds: Int = 0 {
         willSet {
@@ -327,6 +343,19 @@ class GameRoomViewController: UIViewController {
     
     deinit {
         print("GameSceneDeinit")
+    }
+    
+    /// 显示0元抓抓中了的弹窗
+    func showZeroCatchSuccessDialog() {
+        if gameRoomData == nil {
+            return
+        }
+        if zeroCatchSuccessDialog == nil {
+            zeroCatchSuccessDialog = ZeroCatchSuccessDialog(frame: UIScreen.main.bounds)
+        }
+        zeroCatchSuccessDialog.dataSources = gameRoomData["award"]
+        zeroCatchSuccessDialog.createView()
+        zeroCatchSuccessDialog.show()
     }
     
 }

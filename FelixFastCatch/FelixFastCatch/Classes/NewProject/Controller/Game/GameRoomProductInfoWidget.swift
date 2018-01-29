@@ -12,10 +12,10 @@ import UIKit
 extension GameRoomViewController{
     
     func createBottomGroupView() {
-        productInfoGroupView.frame = CGRect(x: 0, y: liveView.bounds.height + UIScreen.main.bounds.width * 0.7 - liveView.bounds.height * 0.15, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+        productInfoGroupView.frame = CGRect(x: 0, y: liveView.bounds.height + UIScreen.main.bounds.width * 0.7 - liveView.bounds.height * 0.15 + bannerGroupView.bounds.height, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
         rootView.addSubview(productInfoGroupView)
         
-        rootView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: liveView.bounds.height + gameControllerGroupView.bounds.height + productInfoGroupView.bounds.height + 20)
+        rootView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: liveView.bounds.height + gameControllerGroupView.bounds.height + bannerGroupView.bounds.height + productInfoGroupView.bounds.height + 20)
         
         let titleGroupView = UIView()
         titleGroupView.frame = CGRect(x: 40, y: 0, width: UIScreen.main.bounds.width - 80, height: 50)
@@ -48,7 +48,7 @@ extension GameRoomViewController{
         
         productNameLabel.font = UIFont.systemFont(ofSize: 14)
         productNameLabel.textColor = UIColor.black
-        productNameLabel.text = ""
+        productNameLabel.text = gameRoomData["award"]["title"].stringValue
         productNameLabel.sizeToFit()
         productNameLabel.frame = CGRect(x: productName.frame.origin.x + productName.bounds.width + 5, y: productName.frame.origin.y, width: productInfoGroupView.bounds.width - productName.bounds.width - 80, height: productName.bounds.height)
         productInfoGroupView.addSubview(productNameLabel)
@@ -63,7 +63,7 @@ extension GameRoomViewController{
         
         productInfoLabel.font = UIFont.systemFont(ofSize: 14)
         productInfoLabel.textColor = UIColor.black
-        productInfoLabel.text = ""
+        productInfoLabel.text = gameRoomData["award"]["description"].stringValue
         productInfoLabel.sizeToFit()
         productInfoLabel.frame = CGRect(x: productNameLabel.frame.origin.x, y: productInfo.frame.origin.y, width: productInfoGroupView.bounds.width - productInfo.bounds.width - 80, height: productInfo.bounds.height)
         productInfoGroupView.addSubview(productInfoLabel)
@@ -77,6 +77,7 @@ extension GameRoomViewController{
         productImage.frame.origin = CGPoint(x: productImageBackground.frame.origin.x + productImageBackground.bounds.width/2 - productImageBackground.bounds.width * 0.96/2, y: productImageBackground.frame.origin.y + productImageBackground.bounds.height/2 - productImageBackground.bounds.height * 0.96/2)
         productImage.frame.size = CGSize(width: productImageBackground.bounds.width * 0.96, height: productImageBackground.bounds.height * 0.96)
         productImage.layer.cornerRadius = 12
+        productImage.layer.masksToBounds = true
         productInfoGroupView.addSubview(productImage)
         
     }

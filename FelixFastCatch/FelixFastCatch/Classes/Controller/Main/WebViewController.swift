@@ -51,7 +51,7 @@ import JavaScriptCore
         }
         DispatchQueue.main.async {[weak self] in
             let payVC = PayViewController()
-            self?.mainVC.navigationController?.pushViewController(payVC, animated: true)
+            self?.webVC.navigationController?.pushViewController(payVC, animated: true)
         }
     }
     

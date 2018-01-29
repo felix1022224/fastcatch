@@ -13,6 +13,8 @@ class MainTabsViewController: UITabBarController, UITabBarControllerDelegate {
 
     var tabItemControllers = [UIViewController]()
     
+    let homeViewController = HomeTabViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,9 +27,9 @@ class MainTabsViewController: UITabBarController, UITabBarControllerDelegate {
         
         setUpOneChildViewController(viewController: PayViewController(), image: UIImage(named: "充值_tab_icon")!, selectedImage: UIImage(named: "充值选中_tab_icon")!, title: "")
         setUpOneChildViewController(viewController: MailingListViewController(), image: UIImage(named: "奖品_tab_icon")!, selectedImage: UIImage(named: "奖品选中_tab_icon")!, title: "")
-        setUpOneChildViewController(viewController: HomeTabViewController(), image: UIImage(named: "首页_tab_icon")!, selectedImage: UIImage(named: "首页选中_tab_icon")!, title: "")
+        setUpOneChildViewController(viewController: homeViewController, image: UIImage(named: "首页_tab_icon")!, selectedImage: UIImage(named: "首页选中_tab_icon")!, title: "")
         setUpOneChildViewController(viewController: PointsMallViewController(), image: UIImage(named: "商城_tab_icon")!, selectedImage: UIImage(named: "商城选中_tab_icon")!, title: "")
-        setUpOneChildViewController(viewController: UserCenterViewController(), image: UIImage(named: "我的_tab_icon")!, selectedImage: UIImage(named: "我的选中_tab_icon")!, title: "")
+        setUpOneChildViewController(viewController: MineViewController(), image: UIImage(named: "我的_tab_icon")!, selectedImage: UIImage(named: "我的选中_tab_icon")!, title: "")
         
         self.selectedIndex = 2
         
@@ -61,6 +63,7 @@ class MainTabsViewController: UITabBarController, UITabBarControllerDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if viewController == tabItemControllers[2] {
+            homeViewController.isHide = false
             return true
         }else{
             if Constants.User.USER_ID == "" {
@@ -68,6 +71,7 @@ class MainTabsViewController: UITabBarController, UITabBarControllerDelegate {
                 return false
             }
         }
+        homeViewController.isHide = true
         return true
     }
 

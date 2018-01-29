@@ -128,6 +128,9 @@ extension GameRoomViewController{
         
         vipView.isHidden = true
         
+        let gameUserTap = UITapGestureRecognizer(target: self, action: #selector(showPlayingGameDialog))
+        gameUserGroupView.isUserInteractionEnabled = true
+        gameUserGroupView.addGestureRecognizer(gameUserTap)
     }
     
     /// 更新游戏中的用户view
@@ -146,8 +149,17 @@ extension GameRoomViewController{
         vipView.frame.size = CGSize.init(width: (gameUserAvatar.bounds.width + gameUserNickName.bounds.width + 55) * 1.05, height: gameUserAvatar.bounds.height * 1.3 * 1.2)
         vipView.frame.origin = CGPoint.init(x: gameUserGroupView.frame.origin.x + (gameUserGroupView.bounds.width/2 - vipView.bounds.width/2), y: gameUserGroupView.frame.origin.y + (gameUserGroupView.bounds.height/2 - vipView.bounds.height/2))
         
-//        let vipImage = UIImage(named: "svip特殊边框")
-//        vipView.image = vipImage?.stretchableImage(withLeftCapWidth: Int((vipImage?.size.width)!/CGFloat(2)), topCapHeight: Int((vipImage?.size.height)!/CGFloat(2)))
+        if self.playingGameDialog.gameUserDataSource["vip"].intValue == 100000 {
+            let vipImage = UIImage(named: "vip特殊边框")
+            vipView.image = vipImage?.stretchableImage(withLeftCapWidth: Int((vipImage?.size.width)!/CGFloat(2)), topCapHeight: Int((vipImage?.size.height)!/CGFloat(2)))
+            vipView.isHidden = false
+        }else if self.playingGameDialog.gameUserDataSource["vip"].intValue == 110000 {
+            let vipImage = UIImage(named: "svip特殊边框")
+            vipView.image = vipImage?.stretchableImage(withLeftCapWidth: Int((vipImage?.size.width)!/CGFloat(2)), topCapHeight: Int((vipImage?.size.height)!/CGFloat(2)))
+            vipView.isHidden = false
+        }else{
+            vipView.isHidden = true
+        }
         
         UIView.animate(withDuration: 0.3) {
             self.gameUserGroupView.isHidden = false
@@ -161,6 +173,15 @@ extension GameRoomViewController{
             self.gameUserGroupView.isHidden = true
             self.vipView.isHidden = true
         }
+    }
+    
+    /// 展示游戏中的游戏信息的dialog
+    @objc func showPlayingGameDialog(){
+        if playingGameDialog == nil {
+            playingGameDialog = PlayingGameDialog(frame: UIScreen.main.bounds)
+        }
+        playingGameDialog.createView()
+        playingGameDialog.show()
     }
     
     @objc func closeView(){
@@ -178,6 +199,13 @@ extension GameRoomViewController{
             gameRoomNetworkController.disconnect()
             gameRoomNetworkController = nil
         }
+        
+        isCounting = false
+        
+        countdownTimer?.invalidate()
+        countdownTimer = nil
+        
+        ToastUtils.hide()
         
         wardCode = ""
     }

@@ -70,12 +70,18 @@
 		4D64B8A01F29D9DA002A9BFD /* BaseDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B89F1F29D9DA002A9BFD /* BaseDialog.swift */; };
 		4D64B8A21F2ADC50002A9BFD /* MainCustomerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8A11F2ADC50002A9BFD /* MainCustomerTextField.swift */; };
 		4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D64B8A31F2B079E002A9BFD /* LocalDataUtils.swift */; };
+		4D68746F201B3CE8006C8B48 /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68746E201B3CE8006C8B48 /* TitleCollectionViewCell.swift */; };
+		4D687471201B4779006C8B48 /* GameRoomBannerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D687470201B4779006C8B48 /* GameRoomBannerWidget.swift */; };
+		4D687474201ECAE9006C8B48 /* HorizontalPageableLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D687473201ECAE9006C8B48 /* HorizontalPageableLayout.m */; };
+		4D687476201ECE26006C8B48 /* ZeroCatchSuccessDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D687475201ECE26006C8B48 /* ZeroCatchSuccessDialog.swift */; };
+		4D687478201EFA36006C8B48 /* ZeroCatchPayDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D687477201EFA36006C8B48 /* ZeroCatchPayDialog.swift */; };
+		4D68747B201F1113006C8B48 /* MineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68747A201F1113006C8B48 /* MineViewController.swift */; };
 		4D7048A71F908A8600D337F4 /* MailedCashShortDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7048A61F908A8600D337F4 /* MailedCashShortDialog.swift */; };
 		4D7048A91F909EBC00D337F4 /* UserTitlesGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7048A81F909EBC00D337F4 /* UserTitlesGroup.swift */; };
 		4D7048AC1F90AB8500D337F4 /* TitlesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7048AB1F90AB8500D337F4 /* TitlesCell.swift */; };
 		4D7123F02018639300CB6607 /* GameQueuedUpDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7123EF2018639300CB6607 /* GameQueuedUpDialog.swift */; };
 		4D7123F22019A69F00CB6607 /* UserAgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7123F12019A69F00CB6607 /* UserAgreementViewController.swift */; };
-		4D7123F42019FA8700CB6607 /* PayingGameDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7123F32019FA8700CB6607 /* PayingGameDialog.swift */; };
+		4D7123F42019FA8700CB6607 /* PlayingGameDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7123F32019FA8700CB6607 /* PlayingGameDialog.swift */; };
 		4D7144831F8B584700B37D8A /* MailingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7144821F8B584700B37D8A /* MailingListViewController.swift */; };
 		4D7468291FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7468281FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift */; };
 		4D74682B1FCFE4C500E8E662 /* HorzontalGameSceneWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D74682A1FCFE4C500E8E662 /* HorzontalGameSceneWidget.swift */; };
@@ -264,12 +270,19 @@
 		4D64B89F1F29D9DA002A9BFD /* BaseDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDialog.swift; sourceTree = "<group>"; };
 		4D64B8A11F2ADC50002A9BFD /* MainCustomerTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCustomerTextField.swift; sourceTree = "<group>"; };
 		4D64B8A31F2B079E002A9BFD /* LocalDataUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDataUtils.swift; sourceTree = "<group>"; };
+		4D68746E201B3CE8006C8B48 /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
+		4D687470201B4779006C8B48 /* GameRoomBannerWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRoomBannerWidget.swift; sourceTree = "<group>"; };
+		4D687472201ECAE9006C8B48 /* HorizontalPageableLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HorizontalPageableLayout.h; sourceTree = "<group>"; };
+		4D687473201ECAE9006C8B48 /* HorizontalPageableLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HorizontalPageableLayout.m; sourceTree = "<group>"; };
+		4D687475201ECE26006C8B48 /* ZeroCatchSuccessDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroCatchSuccessDialog.swift; sourceTree = "<group>"; };
+		4D687477201EFA36006C8B48 /* ZeroCatchPayDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroCatchPayDialog.swift; sourceTree = "<group>"; };
+		4D68747A201F1113006C8B48 /* MineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineViewController.swift; sourceTree = "<group>"; };
 		4D7048A61F908A8600D337F4 /* MailedCashShortDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailedCashShortDialog.swift; sourceTree = "<group>"; };
 		4D7048A81F909EBC00D337F4 /* UserTitlesGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTitlesGroup.swift; sourceTree = "<group>"; };
 		4D7048AB1F90AB8500D337F4 /* TitlesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlesCell.swift; sourceTree = "<group>"; };
 		4D7123EF2018639300CB6607 /* GameQueuedUpDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameQueuedUpDialog.swift; sourceTree = "<group>"; };
 		4D7123F12019A69F00CB6607 /* UserAgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgreementViewController.swift; sourceTree = "<group>"; };
-		4D7123F32019FA8700CB6607 /* PayingGameDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayingGameDialog.swift; sourceTree = "<group>"; };
+		4D7123F32019FA8700CB6607 /* PlayingGameDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingGameDialog.swift; sourceTree = "<group>"; };
 		4D7144821F8B584700B37D8A /* MailingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailingListViewController.swift; sourceTree = "<group>"; };
 		4D7468281FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalGameSceneViewController.swift; sourceTree = "<group>"; };
 		4D74682A1FCFE4C500E8E662 /* HorzontalGameSceneWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorzontalGameSceneWidget.swift; sourceTree = "<group>"; };
@@ -580,6 +593,14 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		4D687479201F10F4006C8B48 /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+				4D68747A201F1113006C8B48 /* MineViewController.swift */,
+			);
+			path = Mine;
+			sourceTree = "<group>";
+		};
 		4D7048AA1F90AB5D00D337F4 /* Titles */ = {
 			isa = PBXGroup;
 			children = (
@@ -670,6 +691,7 @@
 				4D8924852015E9DB00BDA812 /* GameRoomProductInfoWidget.swift */,
 				4D8924872017157600BDA812 /* GameRoomAudioController.swift */,
 				4D8924892017366200BDA812 /* GameRoomNetworkController.swift */,
+				4D687470201B4779006C8B48 /* GameRoomBannerWidget.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -689,7 +711,10 @@
 				4D89248F2018326C00BDA812 /* GameFailDialog.swift */,
 				4D8924912018329C00BDA812 /* GameVictoryDialog.swift */,
 				4D7123EF2018639300CB6607 /* GameQueuedUpDialog.swift */,
-				4D7123F32019FA8700CB6607 /* PayingGameDialog.swift */,
+				4D7123F32019FA8700CB6607 /* PlayingGameDialog.swift */,
+				4D68746E201B3CE8006C8B48 /* TitleCollectionViewCell.swift */,
+				4D687475201ECE26006C8B48 /* ZeroCatchSuccessDialog.swift */,
+				4D687477201EFA36006C8B48 /* ZeroCatchPayDialog.swift */,
 			);
 			path = dialog;
 			sourceTree = "<group>";
@@ -1086,6 +1111,8 @@
 		4DFBC7B5200DE45C0065F08E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4D687472201ECAE9006C8B48 /* HorizontalPageableLayout.h */,
+				4D687473201ECAE9006C8B48 /* HorizontalPageableLayout.m */,
 				4D892493201832E700BDA812 /* BasicDialog.swift */,
 			);
 			path = View;
@@ -1094,6 +1121,7 @@
 		4DFBC7B6200DE45C0065F08E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4D687479201F10F4006C8B48 /* Mine */,
 				4D89248B20173B5D00BDA812 /* Login */,
 				4D89247E2015DFA500BDA812 /* Game */,
 				4DFBC7B9200DE4A20065F08E /* Home */,
@@ -1302,15 +1330,18 @@
 				4D7AB3BD1FF24A2200270A62 /* SPPageContentView.m in Sources */,
 				4DDD2B7F1F2848FC00102A0F /* MainCustomerLabel.swift in Sources */,
 				4DA23CDE1F8F4C5100B2337E /* MainADVCell.swift in Sources */,
+				4D68747B201F1113006C8B48 /* MineViewController.swift in Sources */,
 				4DE204131F39B8100046B130 /* HasBeenMailedView.swift in Sources */,
 				4D0161DC1F9075C2004A90DF /* CustomerServiceInfoDialog.swift in Sources */,
 				4D7123F22019A69F00CB6607 /* UserAgreementViewController.swift in Sources */,
 				4DA23CEB1F8F920E00B2337E /* PlayUserInfoView.swift in Sources */,
 				4D2B80101F40027D0075D390 /* InviteListDialog.swift in Sources */,
 				4D7048A91F909EBC00D337F4 /* UserTitlesGroup.swift in Sources */,
+				4D687471201B4779006C8B48 /* GameRoomBannerWidget.swift in Sources */,
 				4D64B89E1F29D9C7002A9BFD /* PhoneNumberDialog.swift in Sources */,
 				4D9EBB811F26F163002674DE /* WeChatShared.swift in Sources */,
 				4D1DA0F41F2F4C4300B1138D /* FCHasBennMailedProductCell.swift in Sources */,
+				4D687478201EFA36006C8B48 /* ZeroCatchPayDialog.swift in Sources */,
 				4DCD39EA1F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedTabViewDelegate.swift in Sources */,
 				4D64B8A01F29D9DA002A9BFD /* BaseDialog.swift in Sources */,
 				4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */,
@@ -1329,6 +1360,7 @@
 				4D7AB3C41FF4A9AF00270A62 /* CustomerHomeTabView.swift in Sources */,
 				4D74682D1FD127A500E8E662 /* StartGameCountdownDialog.swift in Sources */,
 				4DFBC7BD200DE4E50065F08E /* MainTabsViewController.swift in Sources */,
+				4D687476201ECE26006C8B48 /* ZeroCatchSuccessDialog.swift in Sources */,
 				4D1D86151F31BA9C005210CA /* EditAddressDialog.swift in Sources */,
 				4D64B8981F29B549002A9BFD /* MainBanner.swift in Sources */,
 				4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */,
@@ -1360,7 +1392,7 @@
 				4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */,
 				4D4B67EB2004A3BE00455C04 /* SettlementView.swift in Sources */,
 				4DA23CE21F8F6CF200B2337E /* MainFooterCell.swift in Sources */,
-				4D7123F42019FA8700CB6607 /* PayingGameDialog.swift in Sources */,
+				4D7123F42019FA8700CB6607 /* PlayingGameDialog.swift in Sources */,
 				4D2B80141F40097E0075D390 /* OutGameDialog.swift in Sources */,
 				4DCC49CE1F52E8B10017D4A4 /* EditInviteCode.swift in Sources */,
 				4D8924842015E99C00BDA812 /* GameRoomControllerWidget.swift in Sources */,
@@ -1395,6 +1427,7 @@
 				4D7AB3CA1FF4DBDD00270A62 /* TabContentView.m in Sources */,
 				4D1D861F1F334461005210CA /* ConstellationUtils.swift in Sources */,
 				4D4B67F42005EA2E00455C04 /* ExchangePointsDialog.swift in Sources */,
+				4D68746F201B3CE8006C8B48 /* TitleCollectionViewCell.swift in Sources */,
 				4D05F2FB1F938F5800A8027D /* WelcomeViewController.swift in Sources */,
 				4D8924882017157600BDA812 /* GameRoomAudioController.swift in Sources */,
 				4D5BF1BD1F3851570091180B /* CheckInDialog.swift in Sources */,
@@ -1418,6 +1451,7 @@
 				4D8924902018326C00BDA812 /* GameFailDialog.swift in Sources */,
 				4DB1A6191FF2227E00BDBE3A /* MainVCUIWidget.swift in Sources */,
 				4D9EBB8B1F271C80002674DE /* MainViewController.swift in Sources */,
+				4D687474201ECAE9006C8B48 /* HorizontalPageableLayout.m in Sources */,
 				4DB08BA21FB1822200BFB200 /* GameFailedDialog.swift in Sources */,
 				4D4B67E7200362B900455C04 /* CouponTableViewCell.swift in Sources */,
 				4DFBC834200F65170065F08E /* HomeTabCell.swift in Sources */,

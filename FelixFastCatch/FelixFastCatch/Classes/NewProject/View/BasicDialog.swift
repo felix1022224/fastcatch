@@ -31,25 +31,25 @@ class BasicDialog: SpringView {
     
     func setOptions() {
         self.force = 0.7      //弹力大小
-        self.duration = 1.0  //动画持续时间
+        self.duration = 0.6  //动画持续时间
         self.delay = 0.2      //动画延时多久执行
         
         self.damping = 0.7  //暂时不知什么用
-        self.velocity = 1.0  //暂时不知
+        self.velocity = 0.7  //暂时不知
         self.scaleX = 0     //必须参数之一：范围0~1
         self.scaleY = 0     //必须参数之一：范围0~1
         self.x = 0              //必须参数之一：范围任意
         self.y = 0              //必须参数之一：范围任意
         self.rotate = 0      //暂时不知什么用
         
-        self.curve = "zoomOut"     // 动画进入或是消失的样式
+        self.curve = "easeIn"     // 动画进入或是消失的样式
     }
     
     // 创建view
     func createView() -> () {
     }
     
-    func createCloseBtn() {
+    open func createCloseBtn() {
         let closeBtn = UIButton.init(type: UIButtonType.custom)
         closeBtn.setBackgroundImage(UIImage.init(named: "关闭"), for: UIControlState.normal)
         closeBtn.sizeToFit()
@@ -86,7 +86,8 @@ class BasicDialog: SpringView {
     
     // 显示
     func show() -> () {
-        self.animation = "pop"  // 动画具体样式
+        setOptions()
+        self.animation = "zoomIn"  // 动画具体样式
         self.isHidden = false
         self.animate()
         UIView.animate(withDuration: 0.5) {
@@ -102,7 +103,7 @@ class BasicDialog: SpringView {
             self.isHidden = true
             self.removeFromSuperview()
         }
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.3) {
             self.shadow.alpha = 0.0
         }
     }
