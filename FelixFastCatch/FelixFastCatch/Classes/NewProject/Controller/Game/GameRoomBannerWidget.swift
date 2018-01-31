@@ -88,7 +88,7 @@ extension GameRoomViewController{
                     LoginViewController.showLoginVC()
                     return
                 }
-                self.navigationController?.pushViewController(PayViewController(), animated: true)
+                self.navigationController?.pushViewController(PayWebViewController(), animated: true)
                 return
             }
         }

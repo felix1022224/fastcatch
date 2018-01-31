@@ -336,7 +336,6 @@ extension HomeViewController: BannerDelegate{
                 return
             }
             let webVC = WebViewController()
-            webVC.mainVC = self
             webVC.link = link
             webVC.shareTitle = self.mainBannersData[index]["shareTitle"].stringValue
             webVC.shareInfo = self.mainBannersData[index]["shareSubtitle"].stringValue

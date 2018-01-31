@@ -244,7 +244,6 @@ extension MainListWidget:UICollectionViewDelegateFlowLayout, UICollectionViewDat
                 return
             }
             let webVC = WebViewController()
-            webVC.mainVC = homeViewController
             webVC.link = link
             webVC.shareTitle = item["shareTitle"].stringValue
             webVC.shareInfo = item["shareSubtitle"].stringValue

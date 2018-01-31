@@ -76,6 +76,27 @@
 		4D687476201ECE26006C8B48 /* ZeroCatchSuccessDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D687475201ECE26006C8B48 /* ZeroCatchSuccessDialog.swift */; };
 		4D687478201EFA36006C8B48 /* ZeroCatchPayDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D687477201EFA36006C8B48 /* ZeroCatchPayDialog.swift */; };
 		4D68747B201F1113006C8B48 /* MineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68747A201F1113006C8B48 /* MineViewController.swift */; };
+		4D68747E20202193006C8B48 /* AwardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68747D20202193006C8B48 /* AwardViewController.swift */; };
+		4D68748220202236006C8B48 /* NotTakeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68748120202236006C8B48 /* NotTakeList.swift */; };
+		4D68748420202252006C8B48 /* TakeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68748320202252006C8B48 /* TakeList.swift */; };
+		4D68748620202269006C8B48 /* ChangeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68748520202269006C8B48 /* ChangeList.swift */; };
+		4D6874892020571F006C8B48 /* NotTakeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6874882020571F006C8B48 /* NotTakeTableViewCell.swift */; };
+		4D68748D20207C1D006C8B48 /* TakeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68748C20207C1D006C8B48 /* TakeTableViewCell.swift */; };
+		4D68748F20207C8E006C8B48 /* TakeListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68748E20207C8E006C8B48 /* TakeListDelegate.swift */; };
+		4D68749120208249006C8B48 /* TakeProductImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68749020208249006C8B48 /* TakeProductImageCell.swift */; };
+		4D68749320208C17006C8B48 /* ChangeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68749220208C17006C8B48 /* ChangeTableViewCell.swift */; };
+		4D68749520208C8A006C8B48 /* ChangeListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68749420208C8A006C8B48 /* ChangeListDelegate.swift */; };
+		4D68749720209103006C8B48 /* TakeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68749620209103006C8B48 /* TakeViewController.swift */; };
+		4D68749920209113006C8B48 /* EditAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68749820209113006C8B48 /* EditAddressViewController.swift */; };
+		4D68749B202199D7006C8B48 /* ConfirmExchangeDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68749A202199D7006C8B48 /* ConfirmExchangeDialog.swift */; };
+		4D68749E2021B8C5006C8B48 /* PayWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68749D2021B8C5006C8B48 /* PayWebViewController.swift */; };
+		4D6874A02021BF7C006C8B48 /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68749F2021BF7C006C8B48 /* InviteViewController.swift */; };
+		4D6874A22021C2AC006C8B48 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6874A12021C2AC006C8B48 /* SettingsViewController.swift */; };
+		4D6874A42021C2D5006C8B48 /* BaseActionBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6874A32021C2D5006C8B48 /* BaseActionBarViewController.swift */; };
+		4D6874A62021C6D3006C8B48 /* QAWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6874A52021C6D3006C8B48 /* QAWebViewController.swift */; };
+		4D6874A82021CC06006C8B48 /* EditUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6874A72021CC06006C8B48 /* EditUserInfo.swift */; };
+		4D6874AA2021CD35006C8B48 /* MessageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6874A92021CD35006C8B48 /* MessageListViewController.swift */; };
+		4D6874AC2021D34F006C8B48 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6874AB2021D34F006C8B48 /* MessageTableViewCell.swift */; };
 		4D7048A71F908A8600D337F4 /* MailedCashShortDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7048A61F908A8600D337F4 /* MailedCashShortDialog.swift */; };
 		4D7048A91F909EBC00D337F4 /* UserTitlesGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7048A81F909EBC00D337F4 /* UserTitlesGroup.swift */; };
 		4D7048AC1F90AB8500D337F4 /* TitlesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7048AB1F90AB8500D337F4 /* TitlesCell.swift */; };
@@ -149,6 +170,9 @@
 		4DB1A6161FF10B8100BDBE3A /* PayVCRootWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB1A6151FF10B8100BDBE3A /* PayVCRootWidget.swift */; };
 		4DB1A6191FF2227E00BDBE3A /* MainVCUIWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB1A6181FF2227E00BDBE3A /* MainVCUIWidget.swift */; };
 		4DBDE8B61F6AB1F60058E4FE /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DD6C1571F6A81D900007EE6 /* UserNotifications.framework */; };
+		4DC986BE2021F29700F331A1 /* GameHistoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC986BD2021F29700F331A1 /* GameHistoryListViewController.swift */; };
+		4DC986C02021F3CF00F331A1 /* GameHistoryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC986BF2021F3CF00F331A1 /* GameHistoryListTableViewCell.swift */; };
+		4DC986C22021F75700F331A1 /* MyCheckInDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC986C12021F75700F331A1 /* MyCheckInDialog.swift */; };
 		4DCC49CA1F52A65F0017D4A4 /* PlayInfoBannerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCC49C91F52A65F0017D4A4 /* PlayInfoBannerDialog.swift */; };
 		4DCC49CC1F52E0110017D4A4 /* PlayInfoAwardDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCC49CB1F52E0110017D4A4 /* PlayInfoAwardDialog.swift */; };
 		4DCC49CE1F52E8B10017D4A4 /* EditInviteCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCC49CD1F52E8B10017D4A4 /* EditInviteCode.swift */; };
@@ -277,6 +301,27 @@
 		4D687475201ECE26006C8B48 /* ZeroCatchSuccessDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroCatchSuccessDialog.swift; sourceTree = "<group>"; };
 		4D687477201EFA36006C8B48 /* ZeroCatchPayDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroCatchPayDialog.swift; sourceTree = "<group>"; };
 		4D68747A201F1113006C8B48 /* MineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineViewController.swift; sourceTree = "<group>"; };
+		4D68747D20202193006C8B48 /* AwardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardViewController.swift; sourceTree = "<group>"; };
+		4D68748120202236006C8B48 /* NotTakeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTakeList.swift; sourceTree = "<group>"; };
+		4D68748320202252006C8B48 /* TakeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeList.swift; sourceTree = "<group>"; };
+		4D68748520202269006C8B48 /* ChangeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeList.swift; sourceTree = "<group>"; };
+		4D6874882020571F006C8B48 /* NotTakeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTakeTableViewCell.swift; sourceTree = "<group>"; };
+		4D68748C20207C1D006C8B48 /* TakeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeTableViewCell.swift; sourceTree = "<group>"; };
+		4D68748E20207C8E006C8B48 /* TakeListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeListDelegate.swift; sourceTree = "<group>"; };
+		4D68749020208249006C8B48 /* TakeProductImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeProductImageCell.swift; sourceTree = "<group>"; };
+		4D68749220208C17006C8B48 /* ChangeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeTableViewCell.swift; sourceTree = "<group>"; };
+		4D68749420208C8A006C8B48 /* ChangeListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeListDelegate.swift; sourceTree = "<group>"; };
+		4D68749620209103006C8B48 /* TakeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeViewController.swift; sourceTree = "<group>"; };
+		4D68749820209113006C8B48 /* EditAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddressViewController.swift; sourceTree = "<group>"; };
+		4D68749A202199D7006C8B48 /* ConfirmExchangeDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmExchangeDialog.swift; sourceTree = "<group>"; };
+		4D68749D2021B8C5006C8B48 /* PayWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayWebViewController.swift; sourceTree = "<group>"; };
+		4D68749F2021BF7C006C8B48 /* InviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
+		4D6874A12021C2AC006C8B48 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		4D6874A32021C2D5006C8B48 /* BaseActionBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseActionBarViewController.swift; sourceTree = "<group>"; };
+		4D6874A52021C6D3006C8B48 /* QAWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QAWebViewController.swift; sourceTree = "<group>"; };
+		4D6874A72021CC06006C8B48 /* EditUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserInfo.swift; sourceTree = "<group>"; };
+		4D6874A92021CD35006C8B48 /* MessageListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListViewController.swift; sourceTree = "<group>"; };
+		4D6874AB2021D34F006C8B48 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		4D7048A61F908A8600D337F4 /* MailedCashShortDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailedCashShortDialog.swift; sourceTree = "<group>"; };
 		4D7048A81F909EBC00D337F4 /* UserTitlesGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTitlesGroup.swift; sourceTree = "<group>"; };
 		4D7048AB1F90AB8500D337F4 /* TitlesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlesCell.swift; sourceTree = "<group>"; };
@@ -361,6 +406,9 @@
 		4DB1A6131FF0D0D000BDBE3A /* CustomerBannerWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerBannerWidget.swift; sourceTree = "<group>"; };
 		4DB1A6151FF10B8100BDBE3A /* PayVCRootWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayVCRootWidget.swift; sourceTree = "<group>"; };
 		4DB1A6181FF2227E00BDBE3A /* MainVCUIWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVCUIWidget.swift; sourceTree = "<group>"; };
+		4DC986BD2021F29700F331A1 /* GameHistoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHistoryListViewController.swift; sourceTree = "<group>"; };
+		4DC986BF2021F3CF00F331A1 /* GameHistoryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHistoryListTableViewCell.swift; sourceTree = "<group>"; };
+		4DC986C12021F75700F331A1 /* MyCheckInDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckInDialog.swift; sourceTree = "<group>"; };
 		4DCC49C91F52A65F0017D4A4 /* PlayInfoBannerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayInfoBannerDialog.swift; sourceTree = "<group>"; };
 		4DCC49CB1F52E0110017D4A4 /* PlayInfoAwardDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayInfoAwardDialog.swift; sourceTree = "<group>"; };
 		4DCC49CD1F52E8B10017D4A4 /* EditInviteCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditInviteCode.swift; sourceTree = "<group>"; };
@@ -597,8 +645,67 @@
 			isa = PBXGroup;
 			children = (
 				4D68747A201F1113006C8B48 /* MineViewController.swift */,
+				4D68749F2021BF7C006C8B48 /* InviteViewController.swift */,
+				4D6874A12021C2AC006C8B48 /* SettingsViewController.swift */,
+				4D6874A32021C2D5006C8B48 /* BaseActionBarViewController.swift */,
+				4D6874A52021C6D3006C8B48 /* QAWebViewController.swift */,
+				4D6874A72021CC06006C8B48 /* EditUserInfo.swift */,
+				4D6874A92021CD35006C8B48 /* MessageListViewController.swift */,
+				4DC986BD2021F29700F331A1 /* GameHistoryListViewController.swift */,
 			);
 			path = Mine;
+			sourceTree = "<group>";
+		};
+		4D68747C20202182006C8B48 /* Award */ = {
+			isa = PBXGroup;
+			children = (
+				4D687487202056C9006C8B48 /* Cell */,
+				4D687480202021FB006C8B48 /* Mailed */,
+				4D68747F202021E2006C8B48 /* List */,
+				4D68747D20202193006C8B48 /* AwardViewController.swift */,
+				4D68749A202199D7006C8B48 /* ConfirmExchangeDialog.swift */,
+			);
+			path = Award;
+			sourceTree = "<group>";
+		};
+		4D68747F202021E2006C8B48 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				4D68748120202236006C8B48 /* NotTakeList.swift */,
+				4D68748320202252006C8B48 /* TakeList.swift */,
+				4D68748520202269006C8B48 /* ChangeList.swift */,
+			);
+			path = List;
+			sourceTree = "<group>";
+		};
+		4D687480202021FB006C8B48 /* Mailed */ = {
+			isa = PBXGroup;
+			children = (
+				4D68749620209103006C8B48 /* TakeViewController.swift */,
+				4D68749820209113006C8B48 /* EditAddressViewController.swift */,
+			);
+			path = Mailed;
+			sourceTree = "<group>";
+		};
+		4D687487202056C9006C8B48 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				4D6874882020571F006C8B48 /* NotTakeTableViewCell.swift */,
+				4D68748C20207C1D006C8B48 /* TakeTableViewCell.swift */,
+				4D68748E20207C8E006C8B48 /* TakeListDelegate.swift */,
+				4D68749020208249006C8B48 /* TakeProductImageCell.swift */,
+				4D68749220208C17006C8B48 /* ChangeTableViewCell.swift */,
+				4D68749420208C8A006C8B48 /* ChangeListDelegate.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		4D68749C2021B8AE006C8B48 /* Pay */ = {
+			isa = PBXGroup;
+			children = (
+				4D68749D2021B8C5006C8B48 /* PayWebViewController.swift */,
+			);
+			path = Pay;
 			sourceTree = "<group>";
 		};
 		4D7048AA1F90AB5D00D337F4 /* Titles */ = {
@@ -1121,6 +1228,8 @@
 		4DFBC7B6200DE45C0065F08E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4D68749C2021B8AE006C8B48 /* Pay */,
+				4D68747C20202182006C8B48 /* Award */,
 				4D687479201F10F4006C8B48 /* Mine */,
 				4D89248B20173B5D00BDA812 /* Login */,
 				4D89247E2015DFA500BDA812 /* Game */,
@@ -1144,6 +1253,7 @@
 				4DFBC830200F63410065F08E /* HomeTabItemViewController.swift */,
 				4D94590C2010500900145C2B /* HomeBannerView.swift */,
 				4D94590E2010D26300145C2B /* HomeTabItemView.swift */,
+				4DC986C12021F75700F331A1 /* MyCheckInDialog.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1152,6 +1262,8 @@
 			isa = PBXGroup;
 			children = (
 				4DFBC833200F65170065F08E /* HomeTabCell.swift */,
+				4D6874AB2021D34F006C8B48 /* MessageTableViewCell.swift */,
+				4DC986BF2021F3CF00F331A1 /* GameHistoryListTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1307,6 +1419,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D7048AC1F90AB8500D337F4 /* TitlesCell.swift in Sources */,
+				4D68748F20207C8E006C8B48 /* TakeListDelegate.swift in Sources */,
+				4D6874A82021CC06006C8B48 /* EditUserInfo.swift in Sources */,
 				4DA23CE01F8F536B00B2337E /* CustomeFlowLayout.swift in Sources */,
 				4D28005B1F948196004E9D8B /* SplashView.swift in Sources */,
 				4DFBC831200F63410065F08E /* HomeTabItemViewController.swift in Sources */,
@@ -1316,6 +1430,7 @@
 				4D7AB3B81FF24A2200270A62 /* SPPageController.m in Sources */,
 				4DD613F11FE11E9E002FCCCE /* NotificationViewController.swift in Sources */,
 				4DFAA6C11FAC38F1005AF710 /* GameSceneLiveController.swift in Sources */,
+				4D68748D20207C1D006C8B48 /* TakeTableViewCell.swift in Sources */,
 				4DCC49CC1F52E0110017D4A4 /* PlayInfoAwardDialog.swift in Sources */,
 				4D96D3BF1F5BE14200E614CD /* ProtocolInfoDialog.swift in Sources */,
 				4DB1A6161FF10B8100BDBE3A /* PayVCRootWidget.swift in Sources */,
@@ -1328,6 +1443,7 @@
 				4DF058811F90C7EC00E17B75 /* TitlesInfoCell.swift in Sources */,
 				4D64B8A21F2ADC50002A9BFD /* MainCustomerTextField.swift in Sources */,
 				4D7AB3BD1FF24A2200270A62 /* SPPageContentView.m in Sources */,
+				4D68747E20202193006C8B48 /* AwardViewController.swift in Sources */,
 				4DDD2B7F1F2848FC00102A0F /* MainCustomerLabel.swift in Sources */,
 				4DA23CDE1F8F4C5100B2337E /* MainADVCell.swift in Sources */,
 				4D68747B201F1113006C8B48 /* MineViewController.swift in Sources */,
@@ -1335,8 +1451,11 @@
 				4D0161DC1F9075C2004A90DF /* CustomerServiceInfoDialog.swift in Sources */,
 				4D7123F22019A69F00CB6607 /* UserAgreementViewController.swift in Sources */,
 				4DA23CEB1F8F920E00B2337E /* PlayUserInfoView.swift in Sources */,
+				4D68748420202252006C8B48 /* TakeList.swift in Sources */,
 				4D2B80101F40027D0075D390 /* InviteListDialog.swift in Sources */,
 				4D7048A91F909EBC00D337F4 /* UserTitlesGroup.swift in Sources */,
+				4D6874A62021C6D3006C8B48 /* QAWebViewController.swift in Sources */,
+				4D68749120208249006C8B48 /* TakeProductImageCell.swift in Sources */,
 				4D687471201B4779006C8B48 /* GameRoomBannerWidget.swift in Sources */,
 				4D64B89E1F29D9C7002A9BFD /* PhoneNumberDialog.swift in Sources */,
 				4D9EBB811F26F163002674DE /* WeChatShared.swift in Sources */,
@@ -1344,13 +1463,18 @@
 				4D687478201EFA36006C8B48 /* ZeroCatchPayDialog.swift in Sources */,
 				4DCD39EA1F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedTabViewDelegate.swift in Sources */,
 				4D64B8A01F29D9DA002A9BFD /* BaseDialog.swift in Sources */,
+				4D6874A42021C2D5006C8B48 /* BaseActionBarViewController.swift in Sources */,
 				4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */,
 				4D1F59DC1F8CC8EA00806C00 /* TokenHistoryViewController.swift in Sources */,
 				4DE6418D1FE253AB00589537 /* NotificationUIWidget.swift in Sources */,
 				4D94590D2010500900145C2B /* HomeBannerView.swift in Sources */,
 				4DAFB22D1FAACBD700F90A08 /* GameSceneWidget.swift in Sources */,
 				4D89248A2017366200BDA812 /* GameRoomNetworkController.swift in Sources */,
+				4D68749320208C17006C8B48 /* ChangeTableViewCell.swift in Sources */,
+				4D6874892020571F006C8B48 /* NotTakeTableViewCell.swift in Sources */,
 				4D18ACD41F261378005363A4 /* TencentShared.swift in Sources */,
+				4D68749520208C8A006C8B48 /* ChangeListDelegate.swift in Sources */,
+				4D6874AA2021CD35006C8B48 /* MessageListViewController.swift in Sources */,
 				4D8924802015DFCF00BDA812 /* GameRoomViewController.swift in Sources */,
 				4DCD39DB1F2F31C6002B7F35 /* PayItemTableViewCell.swift in Sources */,
 				4DAD03321F51629B00D7E72F /* CustomerBannerView.swift in Sources */,
@@ -1359,14 +1483,18 @@
 				4D879B671F7CABF6009F2ECC /* MainBeginnerGuidGiftView.swift in Sources */,
 				4D7AB3C41FF4A9AF00270A62 /* CustomerHomeTabView.swift in Sources */,
 				4D74682D1FD127A500E8E662 /* StartGameCountdownDialog.swift in Sources */,
+				4DC986BE2021F29700F331A1 /* GameHistoryListViewController.swift in Sources */,
 				4DFBC7BD200DE4E50065F08E /* MainTabsViewController.swift in Sources */,
+				4D6874A22021C2AC006C8B48 /* SettingsViewController.swift in Sources */,
 				4D687476201ECE26006C8B48 /* ZeroCatchSuccessDialog.swift in Sources */,
 				4D1D86151F31BA9C005210CA /* EditAddressDialog.swift in Sources */,
 				4D64B8981F29B549002A9BFD /* MainBanner.swift in Sources */,
 				4DDD2B821F2849DC00102A0F /* NetWorkUtils.swift in Sources */,
 				4DA23CE71F8F87CD00B2337E /* UserCenterWidget.swift in Sources */,
 				4D1F59DF1F8CCD8D00806C00 /* GameHistoryCell.swift in Sources */,
+				4DC986C02021F3CF00F331A1 /* GameHistoryListTableViewCell.swift in Sources */,
 				4D1F59E11F8CD9D600806C00 /* TokenHistoryCell.swift in Sources */,
+				4D6874A02021BF7C006C8B48 /* InviteViewController.swift in Sources */,
 				4DCD39D81F2F12E9002B7F35 /* PayListDialog.swift in Sources */,
 				4D96D3BD1F5BDE2000E614CD /* HelpDialog.swift in Sources */,
 				4D4B67F62005F2EE00455C04 /* HasBeenConvertedTableViewCell.swift in Sources */,
@@ -1377,23 +1505,27 @@
 				4D8924862015E9DB00BDA812 /* GameRoomProductInfoWidget.swift in Sources */,
 				4D4ACE751F51CA0D0011E7F7 /* ProductinfoDialog.swift in Sources */,
 				4D9EBB941F274583002674DE /* MainCollectionViewCell.swift in Sources */,
+				4D68749720209103006C8B48 /* TakeViewController.swift in Sources */,
 				4D1D86131F306307005210CA /* TobeGiftModel.swift in Sources */,
 				4D879B691F7CAEE8009F2ECC /* MainBeginnerGuidPlaySwitchView.swift in Sources */,
 				4DCD39E11F2F4A2B002B7F35 /* MyGiftDialog.swift in Sources */,
 				4DE6418B1FE2539100589537 /* NotificationListWidget.swift in Sources */,
 				4D82A4521F36C7AD007ADE5C /* UserTools.swift in Sources */,
+				4D68748620202269006C8B48 /* ChangeList.swift in Sources */,
 				4D1D86171F31D1FE005210CA /* EditUserInfoDialog.swift in Sources */,
 				4D1DA0F61F2F4C7000B1138D /* FCMailedConfirmDialog.swift in Sources */,
 				4D96D39D1F5BD7CE00E614CD /* InviteFirendsCell.swift in Sources */,
 				4D2B801B1F4C07050075D390 /* SubmitSuccessDialog.swift in Sources */,
 				4DAFB22B1FAAC55000F90A08 /* GameSceneViewController.swift in Sources */,
 				4D89248D20173B6C00BDA812 /* LoginViewController.swift in Sources */,
+				4DC986C22021F75700F331A1 /* MyCheckInDialog.swift in Sources */,
 				4DCC49CA1F52A65F0017D4A4 /* PlayInfoBannerDialog.swift in Sources */,
 				4D5625161F2605A700515C98 /* AppDelegate.swift in Sources */,
 				4D4B67EB2004A3BE00455C04 /* SettlementView.swift in Sources */,
 				4DA23CE21F8F6CF200B2337E /* MainFooterCell.swift in Sources */,
 				4D7123F42019FA8700CB6607 /* PlayingGameDialog.swift in Sources */,
 				4D2B80141F40097E0075D390 /* OutGameDialog.swift in Sources */,
+				4D68748220202236006C8B48 /* NotTakeList.swift in Sources */,
 				4DCC49CE1F52E8B10017D4A4 /* EditInviteCode.swift in Sources */,
 				4D8924842015E99C00BDA812 /* GameRoomControllerWidget.swift in Sources */,
 				4D4ACE771F51CE410011E7F7 /* GemLackDialog.swift in Sources */,
@@ -1407,12 +1539,14 @@
 				4DEA1344200627220090AA00 /* SVIPDialog.swift in Sources */,
 				4DB08BA01FB08A2000BFB200 /* QueueArriveDialog.swift in Sources */,
 				4D87008F1FF626E6005F5645 /* DHImageView.m in Sources */,
+				4D68749E2021B8C5006C8B48 /* PayWebViewController.swift in Sources */,
 				4D589C761F39AC3D00C8DBC7 /* FirstLoginRewardDialog.swift in Sources */,
 				4DCD39DD1F2F3CD5002B7F35 /* UserInfoDialog.swift in Sources */,
 				4D8924922018329C00BDA812 /* GameVictoryDialog.swift in Sources */,
 				4D64B89C1F29D984002A9BFD /* FastLoginDialog.swift in Sources */,
 				4DB1A60F1FF0CBAD00BDBE3A /* UIViewController+Extension.swift in Sources */,
 				4DCD39EC1F2F4B2C002B7F35 /* FCMyGiftToBeMailedTabViewDelegate.swift in Sources */,
+				4D6874AC2021D34F006C8B48 /* MessageTableViewCell.swift in Sources */,
 				4DE641901FE8C5F100589537 /* NotificationTableViewCell.swift in Sources */,
 				4DF058831F90D20500E17B75 /* GameUserInfoDialog.swift in Sources */,
 				4D7468291FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift in Sources */,
@@ -1422,6 +1556,7 @@
 				4D7AB3C71FF4CB1C00270A62 /* DHOutLineLabel.m in Sources */,
 				4D4B67F820060A2800455C04 /* ZeroCatchView.swift in Sources */,
 				4DCC49D21F5307220017D4A4 /* ExchangeCodeDialog.swift in Sources */,
+				4D68749B202199D7006C8B48 /* ConfirmExchangeDialog.swift in Sources */,
 				4DFBC7BB200DE4BD0065F08E /* HomeTabViewController.swift in Sources */,
 				4D7AB3BF1FF24C8700270A62 /* MainListWidget.swift in Sources */,
 				4D7AB3CA1FF4DBDD00270A62 /* TabContentView.m in Sources */,
@@ -1446,6 +1581,7 @@
 				4D2354381FFE17EA00E09EA2 /* PayListTableViewCell.swift in Sources */,
 				4D94590F2010D26300145C2B /* HomeTabItemView.swift in Sources */,
 				4DFAA6C31FAC3962005AF710 /* GameSceneAudioController.swift in Sources */,
+				4D68749920209113006C8B48 /* EditAddressViewController.swift in Sources */,
 				4D23543A1FFE3EFF00E09EA2 /* CouponListViewController.swift in Sources */,
 				4D23543C1FFE403300E09EA2 /* CouponHistoryViewController.swift in Sources */,
 				4D8924902018326C00BDA812 /* GameFailDialog.swift in Sources */,

@@ -403,8 +403,7 @@ extension GameRoomViewController{
     
     /// 显示充值页面
     @objc func showPayVC() {
-        let payVC = PayViewController()
-        self.present(payVC, animated: true, completion: nil)
+        PayWebViewController.showPayWebVC(isShowBack: true)
     }
     
     /// 更新金币view

@@ -63,6 +63,9 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
     
     var testDialog:BasicDialog!
     
+    /// 签到弹窗
+    var myCheckInDialog :MyCheckInDialog!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -101,6 +104,8 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
         
         let tapBanner = UITapGestureRecognizer.init(target: self, action: #selector(bannerClick))
         headerView.bannerView.addGestureRecognizer(tapBanner)
+        
+        self.headerView.checkInButton.addTarget(self, action: #selector(showMyCheckInDialog), for: UIControlEvents.touchUpInside)
     }
     
     /// 点击banner
@@ -122,7 +127,7 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
         }else if item["redirectType"].intValue == 2 {
             let link = item["scheme"].intValue
             if link == -1 {
-                let payVC = PayViewController()
+                let payVC = PayWebViewController()
                 self.navigationController?.pushViewController(payVC, animated: true)
                 return
             }else{
@@ -206,6 +211,10 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if isHide {
+            return
+        }
+        
+        if collectionViews.count <= 0 {
             return
         }
         
@@ -346,6 +355,14 @@ extension HomeTabViewController {
         UIView.animate(withDuration: 0.2) {
             self.rootScrollView.scrollRectToVisible(CGRect.init(x: CGFloat((index.view?.tag)!) * UIScreen.main.bounds.width, y: 0, width: self.rootScrollView.bounds.width, height: self.rootScrollView.bounds.height), animated: true)
         }
+    }
+    
+    @objc func showMyCheckInDialog() {
+        if myCheckInDialog == nil {
+            myCheckInDialog = MyCheckInDialog(frame: UIScreen.main.bounds)
+        }
+        myCheckInDialog.createView()
+        myCheckInDialog.show()
     }
     
 }

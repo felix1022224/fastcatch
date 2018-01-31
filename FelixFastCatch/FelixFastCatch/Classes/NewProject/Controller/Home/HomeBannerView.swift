@@ -44,6 +44,9 @@ class HomeBannerView: UIView {
     //自动滚动计时器
     var autoScrollTimer:Timer?
     
+    /// 签到按钮
+    var checkInButton = UIButton.init(type: UIButtonType.custom)
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -59,10 +62,19 @@ class HomeBannerView: UIView {
         title.sizeToFit()
         addSubview(title)
         
+        checkInButton.setBackgroundImage(UIImage.init(named: "签到icon"), for: UIControlState.normal)
+        checkInButton.sizeToFit()
+        addSubview(checkInButton)
+        
         if UIDevice.current.isX() {
             title.frame = CGRect(x: 0, y: 44, width: UIScreen.main.bounds.width, height: 40)
         }else{
             title.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.width, height: 40)
+        }
+        
+        checkInButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(title)
+            make.right.equalTo(backgroundView).offset(-15)
         }
     }
     

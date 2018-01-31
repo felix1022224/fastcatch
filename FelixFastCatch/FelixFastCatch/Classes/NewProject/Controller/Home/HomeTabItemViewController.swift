@@ -130,7 +130,7 @@ extension HomeTabItemViewController: UICollectionViewDelegateFlowLayout, UIColle
             notMoreValue.textColor = UIColor.gray
             notMoreValue.text = "没有更多了~"
             notMoreValue.sizeToFit()
-            notMoreValue.frame.origin = CGPoint(x: UIScreen.main.bounds.width/2 - notMoreValue.bounds.width/2, y: 8)
+            notMoreValue.frame.origin = CGPoint(x: UIScreen.main.bounds.width/2 - notMoreValue.bounds.width/2, y: 4)
             cell.addSubview(notMoreValue)
         }
         

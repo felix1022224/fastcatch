@@ -18,8 +18,6 @@ import JavaScriptCore
 }
 
 @objc class webJsModel: NSObject, webJsDelegate {
-    
-    var mainVC:HomeViewController!
 
     var webVC:WebViewController!
     
@@ -56,9 +54,6 @@ import JavaScriptCore
     }
     
     func enterRoom(deviceId: String) {
-        if mainVC == nil {
-            return
-        }
         let gameRoomVC = GameRoomViewController()
         gameRoomVC.deviceId = deviceId
         self.webVC.navigationController?.pushViewController(gameRoomVC, animated: true)
@@ -74,8 +69,6 @@ import JavaScriptCore
 }
 
 class WebViewController: UIViewController, UIWebViewDelegate {
-
-    var mainVC:HomeViewController!
     
     /// 要跳转的url地址
     var link:String!
@@ -100,19 +93,15 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         
         self.view.backgroundColor = UIColor.white
         
-        let backImageView = UIImageView(image: UIImage(named: "web_back"))
-        backImageView.sizeToFit()
-        backImageView.frame = CGRect(x: 8, y: UIApplication.shared.statusBarFrame.height + 8, width: backImageView.bounds.width*1.2, height: backImageView.bounds.height*1.2)
+        let backImageView = UIButton.init(type: UIButtonType.custom)
+        backImageView.frame = CGRect(x: 0, y: UIApplication.shared.statusBarFrame.height + 45/2 - 45/2, width: 45, height: 45)
+        backImageView.setImage(UIImage.init(named: "back"), for: UIControlState.normal)
+        backImageView.addTarget(self, action: #selector(back), for: UIControlEvents.touchUpInside)
         
-        let headView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIApplication.shared.statusBarFrame.height + backImageView.bounds.height + 15))
+        let headView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIApplication.shared.statusBarFrame.height + 45))
         headView.backgroundColor = UIColor.white
         view.addSubview(headView)
-
-        /////设置允许交互属性
-        backImageView.isUserInteractionEnabled = true
-        /////添加tapGuestureRecognizer手势
-        let tapGR = UITapGestureRecognizer(target: self, action:#selector(back))
-        backImageView.addGestureRecognizer(tapGR)
+        
         headView.addSubview(backImageView)
         
         let shardBtn = UIImageView(image: UIImage(named: "banner_more"))
@@ -140,9 +129,6 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
         let model = webJsModel()
         model.webVC = self
-        if mainVC != nil {
-            model.mainVC = mainVC
-        }
         
         self.jsContext.setObject(model, forKeyedSubscript: "miaozhuaApp" as NSCopying & NSObjectProtocol)
         self.jsContext.exceptionHandler = { (context, exception) in

@@ -23,11 +23,30 @@ class MineViewController: UIViewController {
     /// 用户昵称
     let userNameLabel = UILabel()
     
+    let editUserButton = UIButton.init(type: .custom)
+    
     /// 用户性别
     let userSex = UIImageView()
     
     /// 用户星座
     let userXingZuo = UILabel()
+    
+    /// 用户vip标签
+    let userVipLabel = UILabel()
+    
+    let goldNumber = UILabel()
+    
+    let redNumber = UILabel()
+    
+    let couponNumber = UILabel()
+    
+    let vipAvater = UIImageView()
+    
+    /// 不是vip的提示
+    let notVipLabel = UILabel()
+    
+    /// 续费按钮
+    let renewFeeBtn = UIButton.init(type: .custom)
     
     private let statusHeight:CGFloat = UIDevice.current.isX() ? 44 : 20
     
@@ -58,6 +77,28 @@ class MineViewController: UIViewController {
         
         userAvater.kf.setImage(with: URL.init(string: Constants.User.USER_FACE_IMAGE))
         
+        print("vip:\(Constants.User.vip)")
+        if Constants.User.vip == 100000 {
+            vipAvater.image = UIImage.init(named: "vip头像标志")
+        }else if Constants.User.vip == 110000 {
+            vipAvater.image = UIImage.init(named: "svip头像标志")
+        }
+
+        rootView.addSubview(vipAvater)
+        
+        vipAvater.snp.makeConstraints { (make) in
+            make.bottom.equalTo(userAvater).offset(4)
+            make.left.equalTo(userAvater).offset(-4)
+            make.width.equalTo(userAvater.bounds.width * 1.3)
+            make.height.equalTo(userAvater.bounds.height * 1.4)
+        }
+        
+        if Constants.User.vipDay <= 0 {
+            vipAvater.isHidden = true
+        }else{
+            vipAvater.isHidden = false
+        }
+        
         userIdLabel.font = UIFont.systemFont(ofSize: 12)
         userIdLabel.text = "ID:\(Constants.User.USER_ID)"
         userIdLabel.sizeToFit()
@@ -79,6 +120,19 @@ class MineViewController: UIViewController {
             make.centerY.equalTo(userAvater)
             make.width.equalTo(UIScreen.main.bounds.width * 0.4)
         }
+        
+        editUserButton.layer.cornerRadius = 8
+        editUserButton.layer.masksToBounds = true
+        editUserButton.layer.borderColor = UIColor.gray.cgColor
+        editUserButton.layer.borderWidth = 0.2
+        editUserButton.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        editUserButton.backgroundColor = UIColor.white
+        editUserButton.titleLabel?.textColor = UIColor.blue
+        editUserButton.setTitle("编辑", for: UIControlState.normal)
+        editUserButton.setTitleColor(UIColor.black, for: UIControlState.normal)
+        rootView.addSubview(editUserButton)
+        
+        editUserButton.addTarget(self, action: #selector(showEditUserVC), for: UIControlEvents.touchUpInside)
         
         if Constants.User.USER_SEX == "0" {
             userSex.image = UIImage.init(named: "性别男")?.tint(color: UIColor.white, blendMode: CGBlendMode.destinationIn)
@@ -110,6 +164,26 @@ class MineViewController: UIViewController {
             make.left.equalTo(userSex).offset(userSex.bounds.width + 5)
         }
         
+        userVipLabel.font = UIFont.systemFont(ofSize: 12)
+        userVipLabel.textColor = UIColor.white
+        userVipLabel.sizeToFit()
+        rootView.addSubview(userVipLabel)
+        
+        if Constants.User.vip == 100000 {
+            userVipLabel.text = "VIP会员"
+            userVipLabel.isHidden = false
+        }else if Constants.User.vip == 110000 {
+            userVipLabel.text = "SVIP会员"
+            userVipLabel.isHidden = false
+        }else{
+            userVipLabel.isHidden = true
+        }
+        
+        userVipLabel.snp.makeConstraints { (make) in
+            make.centerY.equalTo(userXingZuo)
+            make.left.equalTo(userXingZuo).offset(userXingZuo.bounds.width + 15)
+        }
+        
         /// 数量集合
         let numberGroupView = UIView()
         numberGroupView.layer.cornerRadius = 15
@@ -128,7 +202,6 @@ class MineViewController: UIViewController {
             make.height.equalTo(60)
         }
         
-        let goldNumber = UILabel()
         goldNumber.text = "代币\n\(Constants.User.diamondsCount)"
         goldNumber.font = UIFont.systemFont(ofSize: 14)
         goldNumber.numberOfLines = 2
@@ -141,7 +214,6 @@ class MineViewController: UIViewController {
             make.centerY.equalTo(numberGroupView)
         }
         
-        let redNumber = UILabel()
         redNumber.text = "红包\n\(Constants.User.diamondsCount)"
         redNumber.font = UIFont.systemFont(ofSize: 14)
         redNumber.textAlignment = .center
@@ -154,7 +226,6 @@ class MineViewController: UIViewController {
             make.centerY.equalTo(numberGroupView)
         }
         
-        let couponNumber = UILabel()
         couponNumber.text = "优惠券\n\(Constants.User.userCouponNumber)"
         couponNumber.font = UIFont.systemFont(ofSize: 14)
         couponNumber.textAlignment = .center
@@ -185,7 +256,7 @@ class MineViewController: UIViewController {
         
         vipIcon.snp.makeConstraints { (make) in
             make.centerY.equalTo(vipGroup)
-            make.left.equalTo(vipGroup).offset(40)
+            make.left.equalTo(vipGroup).offset(30)
         }
         
         let vipName = UILabel()
@@ -195,12 +266,10 @@ class MineViewController: UIViewController {
         vipGroup.addSubview(vipName)
         
         vipName.snp.makeConstraints { (make) in
-            make.left.equalTo(vipGroup).offset(90)
+            make.left.equalTo(vipGroup).offset(80)
             make.centerY.equalTo(vipIcon)
         }
         
-        /// 不是vip的提示
-        let notVipLabel = UILabel()
         notVipLabel.font = UIFont.systemFont(ofSize: 11)
         let attrText = NSMutableAttributedString.init(string: "开通会员，送480代币+充值9折特权")
         attrText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.red, range: NSRange(location: 6, length:10))
@@ -213,8 +282,6 @@ class MineViewController: UIViewController {
             make.left.equalTo(vipName).offset(vipName.bounds.width + 10)
         }
         
-        /// 续费按钮
-        let renewFeeBtn = UIButton.init(type: .custom)
         renewFeeBtn.layer.cornerRadius = 10
         renewFeeBtn.layer.masksToBounds = true
         renewFeeBtn.layer.borderColor = UIColor.gray.cgColor
@@ -224,7 +291,7 @@ class MineViewController: UIViewController {
         renewFeeBtn.titleLabel?.textColor = UIColor.black
         renewFeeBtn.setTitle("续费", for: UIControlState.normal)
         renewFeeBtn.setTitleColor(UIColor.black, for: UIControlState.normal)
-        renewFeeBtn.frame = CGRect.init(x: UIScreen.main.bounds.width - 120, y: vipGroup.bounds.height/2 - 10, width: 40, height: 20)
+        renewFeeBtn.frame = CGRect.init(x: UIScreen.main.bounds.width - 120, y: vipGroup.bounds.height/2 - 10, width: 60, height: 20)
         vipGroup.addSubview(renewFeeBtn)
         
         let arrowIcon = UIImageView()
@@ -232,9 +299,17 @@ class MineViewController: UIViewController {
         arrowIcon.sizeToFit()
         vipGroup.addSubview(arrowIcon)
         
-        arrowIcon.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - 40 - arrowIcon.bounds.width, y: vipGroup.bounds.height/2 - arrowIcon.bounds.height/2)
+        arrowIcon.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - 30 - arrowIcon.bounds.width, y: vipGroup.bounds.height/2 - arrowIcon.bounds.height/2)
         
         vipGroup.frame.origin = CGPoint.init(x: 0, y: UIScreen.main.bounds.height * 0.3)
+        
+        if Constants.User.vipDay <= 0 {
+            renewFeeBtn.isHidden = true
+            notVipLabel.isHidden = false
+        }else{
+            renewFeeBtn.isHidden = false
+            notVipLabel.isHidden = true
+        }
         
         /// 邀请
         let inviteGroupView = UIView()
@@ -248,7 +323,7 @@ class MineViewController: UIViewController {
         
         inviteIcon.snp.makeConstraints { (make) in
             make.centerY.equalTo(inviteGroupView)
-            make.left.equalTo(inviteGroupView).offset(40)
+            make.left.equalTo(inviteGroupView).offset(30)
         }
         
         let inviteName = UILabel()
@@ -258,7 +333,7 @@ class MineViewController: UIViewController {
         inviteGroupView.addSubview(inviteName)
         
         inviteName.snp.makeConstraints { (make) in
-            make.left.equalTo(inviteGroupView).offset(90)
+            make.left.equalTo(inviteGroupView).offset(80)
             make.centerY.equalTo(inviteIcon)
         }
         
@@ -267,7 +342,7 @@ class MineViewController: UIViewController {
         inviteArrowIcon.sizeToFit()
         inviteGroupView.addSubview(inviteArrowIcon)
         
-        inviteArrowIcon.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - 40 - arrowIcon.bounds.width, y: inviteGroupView.bounds.height/2 - arrowIcon.bounds.height/2)
+        inviteArrowIcon.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - 30 - arrowIcon.bounds.width, y: inviteGroupView.bounds.height/2 - arrowIcon.bounds.height/2)
         
         inviteGroupView.frame.origin = CGPoint.init(x: 0, y: vipGroup.frame.origin.y + 10 + 50 * 1)
         
@@ -283,7 +358,7 @@ class MineViewController: UIViewController {
         
         achievementIcon.snp.makeConstraints { (make) in
             make.centerY.equalTo(achievementGroupView)
-            make.left.equalTo(achievementGroupView).offset(40)
+            make.left.equalTo(achievementGroupView).offset(30)
         }
         
         let achievementName = UILabel()
@@ -293,7 +368,7 @@ class MineViewController: UIViewController {
         achievementGroupView.addSubview(achievementName)
         
         achievementName.snp.makeConstraints { (make) in
-            make.left.equalTo(achievementGroupView).offset(90)
+            make.left.equalTo(achievementGroupView).offset(80)
             make.centerY.equalTo(achievementIcon)
         }
         
@@ -302,7 +377,7 @@ class MineViewController: UIViewController {
         achievementArrowIcon.sizeToFit()
         achievementGroupView.addSubview(achievementArrowIcon)
         
-        achievementArrowIcon.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - 40 - arrowIcon.bounds.width, y: achievementGroupView.bounds.height/2 - arrowIcon.bounds.height/2)
+        achievementArrowIcon.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - 30 - arrowIcon.bounds.width, y: achievementGroupView.bounds.height/2 - arrowIcon.bounds.height/2)
         
         achievementGroupView.frame.origin = CGPoint.init(x: 0, y: vipGroup.frame.origin.y + 10*2 + 50 * 2)
         
@@ -318,7 +393,7 @@ class MineViewController: UIViewController {
         
         messageIcon.snp.makeConstraints { (make) in
             make.centerY.equalTo(messageGroupView)
-            make.left.equalTo(messageGroupView).offset(40)
+            make.left.equalTo(messageGroupView).offset(30)
         }
         
         let messageName = UILabel()
@@ -328,7 +403,7 @@ class MineViewController: UIViewController {
         messageGroupView.addSubview(messageName)
         
         messageName.snp.makeConstraints { (make) in
-            make.left.equalTo(messageGroupView).offset(90)
+            make.left.equalTo(messageGroupView).offset(80)
             make.centerY.equalTo(messageIcon)
         }
         
@@ -337,7 +412,7 @@ class MineViewController: UIViewController {
         messageArrowIcon.sizeToFit()
         messageGroupView.addSubview(messageArrowIcon)
         
-        messageArrowIcon.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - 40 - arrowIcon.bounds.width, y: messageGroupView.bounds.height/2 - arrowIcon.bounds.height/2)
+        messageArrowIcon.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - 30 - arrowIcon.bounds.width, y: messageGroupView.bounds.height/2 - arrowIcon.bounds.height/2)
         
         messageGroupView.frame.origin = CGPoint.init(x: 0, y: vipGroup.frame.origin.y + 10*3 + 50 * 3)
         
@@ -353,7 +428,7 @@ class MineViewController: UIViewController {
         
         gameHistoryIcon.snp.makeConstraints { (make) in
             make.centerY.equalTo(gameHistoryGroupView)
-            make.left.equalTo(gameHistoryGroupView).offset(40)
+            make.left.equalTo(gameHistoryGroupView).offset(30)
         }
         
         let gameHistoryName = UILabel()
@@ -363,7 +438,7 @@ class MineViewController: UIViewController {
         gameHistoryGroupView.addSubview(gameHistoryName)
         
         gameHistoryName.snp.makeConstraints { (make) in
-            make.left.equalTo(gameHistoryGroupView).offset(90)
+            make.left.equalTo(gameHistoryGroupView).offset(80)
             make.centerY.equalTo(gameHistoryIcon)
         }
         
@@ -372,7 +447,7 @@ class MineViewController: UIViewController {
         gameHistoryArrowIcon.sizeToFit()
         gameHistoryGroupView.addSubview(gameHistoryArrowIcon)
         
-        gameHistoryArrowIcon.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - 40 - arrowIcon.bounds.width, y: gameHistoryGroupView.bounds.height/2 - arrowIcon.bounds.height/2)
+        gameHistoryArrowIcon.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - 30 - arrowIcon.bounds.width, y: gameHistoryGroupView.bounds.height/2 - arrowIcon.bounds.height/2)
         
         gameHistoryGroupView.frame.origin = CGPoint.init(x: 0, y: vipGroup.frame.origin.y + 10*4 + 50 * 4)
         
@@ -389,7 +464,7 @@ class MineViewController: UIViewController {
         
         settingsIcon.snp.makeConstraints { (make) in
             make.centerY.equalTo(settingsGroupView)
-            make.left.equalTo(settingsGroupView).offset(40)
+            make.left.equalTo(settingsGroupView).offset(30)
         }
         
         let settingsName = UILabel()
@@ -399,7 +474,7 @@ class MineViewController: UIViewController {
         settingsGroupView.addSubview(settingsName)
         
         settingsName.snp.makeConstraints { (make) in
-            make.left.equalTo(settingsGroupView).offset(90)
+            make.left.equalTo(settingsGroupView).offset(80)
             make.centerY.equalTo(settingsIcon)
         }
         
@@ -408,11 +483,136 @@ class MineViewController: UIViewController {
         settingsArrowIcon.sizeToFit()
         settingsGroupView.addSubview(settingsArrowIcon)
         
-        settingsArrowIcon.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - 40 - arrowIcon.bounds.width, y: settingsGroupView.bounds.height/2 - arrowIcon.bounds.height/2)
+        settingsArrowIcon.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - 30 - arrowIcon.bounds.width, y: settingsGroupView.bounds.height/2 - arrowIcon.bounds.height/2)
         
         settingsGroupView.frame.origin = CGPoint.init(x: 0, y: vipGroup.frame.origin.y + 10*5 + 50 * 5)
         
+        rootView.contentSize = CGSize.init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.3 + 50 * 6 + 60)
         
+        /// 点击vip
+        vipGroup.isUserInteractionEnabled = true
+        let vipGroupTap = UITapGestureRecognizer.init(target: self, action: #selector(showPayVC))
+        vipGroup.addGestureRecognizer(vipGroupTap)
+        
+        /// 点击邀请
+        inviteGroupView.isUserInteractionEnabled = true
+        let inviteTap = UITapGestureRecognizer.init(target: self, action: #selector(showInviteVC))
+        inviteGroupView.addGestureRecognizer(inviteTap)
+        
+        /// 点击代币记录
+        gameHistoryGroupView.isUserInteractionEnabled = true
+        let gameHistroyTap = UITapGestureRecognizer.init(target: self, action: #selector(showGameHistory))
+        gameHistoryGroupView.addGestureRecognizer(gameHistroyTap)
+        
+        /// 点击消息
+        messageGroupView.isUserInteractionEnabled = true
+        let messageTap = UITapGestureRecognizer.init(target: self, action: #selector(showMessageVC))
+        messageGroupView.addGestureRecognizer(messageTap)
+        
+        /// 点击设置
+        settingsGroupView.isUserInteractionEnabled = true
+        let settingsTap = UITapGestureRecognizer.init(target: self, action: #selector(showSettingsVC))
+        settingsGroupView.addGestureRecognizer(settingsTap)
+    }
+    
+    /// 显示编辑用户资料的页面
+    @objc func showEditUserVC(){
+        let editUserVC = EditUserInfo()
+        self.navigationController?.pushViewController(editUserVC, animated: true)
+    }
+    
+    /// 显示支付页面
+    @objc func showPayVC(){
+        PayWebViewController.showPayWebVC(isShowBack: true)
+    }
+    
+    @objc func showGameHistory(){
+        self.navigationController?.pushViewController(GameHistoryListViewController(), animated: true)
+    }
+    
+    /// 显示消息页面
+    @objc func showMessageVC(){
+        self.navigationController?.pushViewController(MessageListViewController(), animated: true)
+    }
+    
+    /// 显示邀请页面
+    @objc func showInviteVC() {
+        let inviteVC = InviteViewController()
+        self.navigationController?.pushViewController(inviteVC, animated: true)
+    }
+    
+    /// 显示设置页面
+    @objc func showSettingsVC(){
+        let settingVC = SettingsViewController()
+        settingVC.logoutCallback = {
+            self.tabBarController?.selectedIndex = 2
+        }
+        self.navigationController?.pushViewController(settingVC, animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        UserTools.getUserInfo {[weak self] in
+            self?.updateUserInfo()
+        }
+    }
+    
+    /// 更新用户信息
+    func updateUserInfo() {
+        if Constants.User.vip == 100000 {
+            vipAvater.image = UIImage.init(named: "vip头像标志")
+        }else if Constants.User.vip == 110000 {
+            vipAvater.image = UIImage.init(named: "svip头像标志")
+        }
+        if Constants.User.vipDay <= 0 {
+            vipAvater.isHidden = true
+        }else{
+            vipAvater.isHidden = false
+        }
+        
+        userNameLabel.text = Constants.User.USER_NICK_NAME
+        userNameLabel.sizeToFit()
+        
+        editUserButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(userNameLabel)
+            make.left.equalTo(userNameLabel).offset(userNameLabel.bounds.width + 15)
+            make.width.equalTo(40)
+            make.height.equalTo(15)
+        }
+        
+        if Constants.User.USER_SEX == "0" {
+            userSex.image = UIImage.init(named: "性别男")?.tint(color: UIColor.white, blendMode: CGBlendMode.destinationIn)
+        }else if Constants.User.USER_SEX == "-1"{
+            userSex.image = UIImage.init(named: "性别男")?.tint(color: UIColor.white, blendMode: CGBlendMode.destinationIn)
+        }else{
+            userSex.image = UIImage.init(named: "性别女")?.tint(color: UIColor.white, blendMode: CGBlendMode.destinationIn)
+        }
+        
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd"
+        let con = ConstellationUtils.calculateWithDate(date: df.date(from: Constants.User.USER_BRITHDAY)!)
+        userXingZuo.text = con
+        
+        if Constants.User.vip == 100000 {
+            userVipLabel.text = "VIP会员"
+            userVipLabel.isHidden = false
+        }else if Constants.User.vip == 110000 {
+            userVipLabel.text = "SVIP会员"
+            userVipLabel.isHidden = false
+        }else{
+            userVipLabel.isHidden = true
+        }
+        
+        goldNumber.text = "代币\n\(Constants.User.diamondsCount)"
+        redNumber.text = "红包\n\(Constants.User.diamondsCount)"
+        couponNumber.text = "优惠券\n\(Constants.User.userCouponNumber)"
+        
+        if Constants.User.vipDay <= 0 {
+            renewFeeBtn.isHidden = true
+            notVipLabel.isHidden = false
+        }else{
+            renewFeeBtn.isHidden = false
+            notVipLabel.isHidden = true
+        }
     }
 
 }

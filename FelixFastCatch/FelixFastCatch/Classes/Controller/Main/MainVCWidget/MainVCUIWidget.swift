@@ -41,7 +41,6 @@ extension HomeViewController{
                         return
                     }
                     let webVC = WebViewController()
-                    webVC.mainVC = self
                     webVC.link = link
                     webVC.shareTitle = UserDefaults.standard.string(forKey: SplashView.OPEN_ADV_SHARE_TITLE)
                     webVC.shareInfo = UserDefaults.standard.string(forKey: SplashView.OPEN_ADV_SHARE_INFO)
