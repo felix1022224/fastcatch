@@ -135,10 +135,8 @@ class EditUserInfo: BaseActionBarViewController {
     
     @objc func selectBrithDayDate() {
         view.endEditing(true)
-        if selectDateTime == nil {
-            selectDateTime = SelectDateView(frame: UIScreen.main.bounds)
-        }
-        
+        selectDateTime = nil
+        selectDateTime = SelectDateView(frame: UIScreen.main.bounds)
         selectDateTime.createView()
         selectDateTime.show2 { [weak self] in
             // 选择了时间

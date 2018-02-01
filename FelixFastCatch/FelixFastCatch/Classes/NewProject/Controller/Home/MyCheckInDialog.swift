@@ -104,13 +104,14 @@ class MyCheckInDialog: BasicDialog {
         
         updateDayNumber()
         addDialogToWindow()
+        updateCheckInButtonStatus()
     }
     
     func updateCheckInButtonStatus() {
         if Constants.User.todayChecked {
-            checkInButton.isEnabled = true
-        }else{
             checkInButton.isEnabled = false
+        }else{
+            checkInButton.isEnabled = true
         }
     }
     

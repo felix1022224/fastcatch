@@ -96,6 +96,7 @@ class ZeroCatchSuccessDialog: BasicDialog {
     /// 点击收入囊中
     @objc func pay() {
         hide()
+        zeroCatchPayDialog = nil
         zeroCatchPayDialog = ZeroCatchPayDialog.init(frame: UIScreen.main.bounds)
         zeroCatchPayDialog.dataSource = dataSources
         zeroCatchPayDialog.createView()

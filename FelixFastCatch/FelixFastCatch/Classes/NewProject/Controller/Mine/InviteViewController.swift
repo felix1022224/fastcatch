@@ -7,6 +7,25 @@
 //
 
 import UIKit
+import JavaScriptCore
+
+@objc protocol InviteWebDelegate:JSExport {
+    func share(_ type:Int, _ title:String, _ shareImg:String, _ shareDesc:String, _ link:String)
+}
+
+@objc class InviteJsModel: NSObject, InviteWebDelegate {
+    
+    func share(_ type: Int, _ title: String, _ shareImg: String, _ shareDesc: String, _ link: String) {
+        if inviteVC != nil {
+            DispatchQueue.main.async {
+                self.inviteVC.share(type: type, title: title, img: shareImg, desc: shareDesc, link: link)
+            }
+        }
+    }
+    
+    var inviteVC:InviteViewController!
+    
+}
 
 /// 邀请
 class InviteViewController: UIViewController, UIWebViewDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
@@ -15,6 +34,11 @@ class InviteViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
     
     /// 加载url
     var webview:UIWebView!
+    
+    /// 兑换码
+    let exchangeButton = UIButton.init(type: UIButtonType.custom)
+    
+    var jsContext:JSContext!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,7 +98,26 @@ class InviteViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
             }
         }
         
+        self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
+        let model = InviteJsModel()
+        model.inviteVC = self
+        
+        self.jsContext.setObject(model, forKeyedSubscript: "miaozhuaApp" as NSCopying & NSObjectProtocol)
+        self.jsContext.exceptionHandler = { (context, exception) in
+            print("exception \(String(describing: exception))")
+        }
+        
         webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/html/market/invite_awards.html")!))
+        
+        exchangeButton.setTitle("输入邀请码", for: UIControlState.normal)
+        exchangeButton.setTitleColor(UIColor.black, for: UIControlState.normal)
+        exchangeButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        exchangeButton.sizeToFit()
+        headView.addSubview(exchangeButton)
+        
+        exchangeButton.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - exchangeButton.bounds.width - 15, y: backImageView.frame.origin.y + backImageView.bounds.height/2 - exchangeButton.bounds.height/2)
+        
+        exchangeButton.addTarget(self, action: #selector(showExchangeDialog), for: UIControlEvents.touchUpInside)
     }
     
     @objc func back(){
@@ -90,14 +133,6 @@ class InviteViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
-        //        self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
-        //        let model = pointsJsModel()
-        //        model.vc = self
-        //
-        //        self.jsContext.setObject(model, forKeyedSubscript: "miaozhuaApp" as NSCopying & NSObjectProtocol)
-        //        self.jsContext.exceptionHandler = { (context, exception) in
-        //        }
-        
         if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
             for cookieData in cookieArray {
                 if let dict = cookieData as? [HTTPCookiePropertyKey : Any] {
@@ -118,6 +153,47 @@ class InviteViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
                 }
             }
         }
+    }
+    
+    @objc func showExchangeDialog() {
+        self.jsContext.evaluateScript("invite.showInviteCodeDialog();")
+    }
+    
+    func share(type:Int, title:String, img:String, desc:String, link: String) {
+        print("share:\(type)\(title)\(img)\(desc)\(link)")
+        ///0是微信好友，1是朋友圈
+        if type == 0 {
+            getDataFromUrl(url: URL(string: img)!, completion: { (data, response, error) in
+                if response != nil {
+                    WeChatShared.shareURL(link, title: title, description: desc, thumbImg: UIImage(data: data!), to: LDWechatScene.Session) { (isSuccess, info) in
+                        if isSuccess {
+                            ToastUtils.showSuccessToast(msg: "分享成功")
+                        }else{
+                            ToastUtils.showErrorToast(msg: "分享失败")
+                        }
+                    }
+                }
+            })
+        }else{
+            getDataFromUrl(url: URL(string: img)!, completion: { (data, response, error) in
+                if response != nil {
+                    WeChatShared.shareURL(link, title: title, description: desc, thumbImg: UIImage(data: data!), to: LDWechatScene.Timeline) { (isSuccess, info) in
+                        if isSuccess {
+                            ToastUtils.showSuccessToast(msg: "分享成功")
+                        }else{
+                            ToastUtils.showErrorToast(msg: "分享失败")
+                        }
+                    }
+                }
+            })
+        }
+    }
+    
+    func getDataFromUrl(url: URL, completion: @escaping (_ data: Data?, _  response: URLResponse?, _ error: Error?) -> Void) {
+        URLSession.shared.dataTask(with: url) {
+            (data, response, error) in
+            completion(data, response, error)
+            }.resume()
     }
 
 }

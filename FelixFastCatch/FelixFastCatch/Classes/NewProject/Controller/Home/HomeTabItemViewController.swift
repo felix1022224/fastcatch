@@ -58,7 +58,7 @@ class HomeTabItemViewController: UIViewController {
         if UIDevice.current.isX() {
             collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(CGFloat(Constants.UI.HOME_HEADER_HEIGHT - 44), 0, 0, 0)
         }else{
-            collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(CGFloat(Constants.UI.HOME_HEADER_HEIGHT - 20), 0, 0, 0)
+            collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(CGFloat(Constants.UI.HOME_HEADER_HEIGHT - 0), 0, 0, 0)
         }
         
         view.addSubview(collectionView)

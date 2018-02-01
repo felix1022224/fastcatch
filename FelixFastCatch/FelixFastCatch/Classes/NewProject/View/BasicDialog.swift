@@ -102,6 +102,7 @@ class BasicDialog: SpringView {
         self.animate()
         self.animateNext {
             self.isHidden = true
+            self.shadow.removeFromSuperview()
             self.removeFromSuperview()
         }
     }

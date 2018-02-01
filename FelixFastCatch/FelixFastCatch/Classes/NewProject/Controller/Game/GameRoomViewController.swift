@@ -195,7 +195,7 @@ class GameRoomViewController: UIViewController {
     /// 红包
     var redBagNumber = UILabel()
     
-    var redBagDialog = RedBagDialog.init(frame: UIScreen.main.bounds)
+    var redBagDialog:RedBagDialog!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -212,8 +212,6 @@ class GameRoomViewController: UIViewController {
         initGameRoomData()
         
         self.playBackgroundMusic() //播放背景音乐
-        
-        playingGameDialog = PlayingGameDialog(frame: UIScreen.main.bounds)
     }
     
     /// 初始化游戏房间数据
@@ -355,9 +353,7 @@ class GameRoomViewController: UIViewController {
         if gameRoomData == nil {
             return
         }
-        if zeroCatchSuccessDialog == nil {
-            zeroCatchSuccessDialog = ZeroCatchSuccessDialog(frame: UIScreen.main.bounds)
-        }
+        zeroCatchSuccessDialog = ZeroCatchSuccessDialog(frame: UIScreen.main.bounds)
         zeroCatchSuccessDialog.dataSources = gameRoomData["award"]
         zeroCatchSuccessDialog.createView()
         zeroCatchSuccessDialog.show()

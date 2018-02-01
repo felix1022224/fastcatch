@@ -79,6 +79,8 @@ extension GameRoomViewController {
     
     /// 显示红包的弹窗
     @objc func showRedBag() {
+        redBagDialog = nil
+        redBagDialog = RedBagDialog(frame: UIScreen.main.bounds)
         redBagDialog.createView()
         redBagDialog.show()
     }
@@ -477,6 +479,8 @@ extension GameRoomViewController {
         /// 修改下爪状态
         isGrab = false
         
+        gameFailDialog = nil
+        gameFailDialog = GameFailDialog(frame: UIScreen.main.bounds)
         gameFailDialog.createView()
         gameFailDialog.cancelCallback = {[weak self] in
             /// 退出队列
@@ -508,10 +512,8 @@ extension GameRoomViewController {
             return
         }
         
-        if gameVictoryDialog == nil {
-            gameVictoryDialog = GameVictoryDialog(frame: UIScreen.main.bounds)
-        }
-        
+        gameVictoryDialog = nil
+        gameVictoryDialog = GameVictoryDialog(frame: UIScreen.main.bounds)
         gameVictoryDialog.createView()
         gameVictoryDialog.cancenCallback = {[weak self] in
             /// 退出队列
@@ -542,6 +544,8 @@ extension GameRoomViewController {
         
         startGameBtn.isEnabled = false
         
+        queuedUpDialog = nil
+        queuedUpDialog = GameQueuedUpDialog(frame: UIScreen.main.bounds)
         queuedUpDialog.createView()
         queuedUpDialog.cancelCallback = {[weak self] in
             /// 退出队列

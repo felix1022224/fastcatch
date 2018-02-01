@@ -314,9 +314,7 @@ class AwardViewController: UIViewController {
             return
         }
         
-        if exchangeDialog == nil {
-            exchangeDialog = ConfirmExchangeDialog(frame: UIScreen.main.bounds)
-        }
+        exchangeDialog = ConfirmExchangeDialog(frame: UIScreen.main.bounds)
         
         exchangeDialog.exchangeData = sendData
         exchangeDialog.exchangeSuccessCallback = {[weak self] in

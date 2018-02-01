@@ -7,6 +7,34 @@
 //
 
 import UIKit
+import JavaScriptCore
+import SwiftyJSON
+import Alamofire
+
+@objc protocol payWebDelegate:JSExport {
+    func showBack()
+    func pay(payType:Int, payRp:String, couponId:String)
+}
+
+@objc class PayJsModel: NSObject, payWebDelegate {
+    
+    var payVC:PayWebViewController!
+    
+    func showBack() {
+        if payVC != nil {
+            DispatchQueue.main.async {
+                self.payVC.backImageView.isHidden = false
+            }
+        }
+    }
+    
+    func pay(payType: Int, payRp: String, couponId: String) {
+        if payVC != nil {
+            self.payVC.pay(payType: payType, rp: payRp, couponId: couponId)
+        }
+    }
+    
+}
 
 class PayWebViewController: UIViewController, UIWebViewDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
 
@@ -16,31 +44,33 @@ class PayWebViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
         UIApplication.shared.keyWindow?.rootViewController?.present(payWebViewVC, animated: true, completion: nil)
     }
     
+    var jsContext:JSContext!
+    
     var isShowBack = false
     
     lazy var actionTitleLabel = UILabel()
     
+    let backImageView = UIButton.init(type: UIButtonType.custom)
+    
     /// 加载url
     var webview:UIWebView!
+    
+    /// 兑换码
+    let exchangeButton = UIButton.init(type: UIButtonType.custom)
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.view.backgroundColor = UIColor.white
         
-        let backImageView = UIImageView(image: UIImage(named: "back"))
-        backImageView.sizeToFit()
-        backImageView.frame = CGRect(x: 15, y: UIApplication.shared.statusBarFrame.height + 45/2 - backImageView.bounds.height*1.1/2, width: backImageView.bounds.width*1.1, height: backImageView.bounds.height*1.1)
+        backImageView.frame = CGRect(x: 0, y: UIApplication.shared.statusBarFrame.height + 45/2 - 45/2, width: 45, height: 45)
+        backImageView.setBackgroundImage(UIImage.init(named: "back"), for: UIControlState.normal)
         
         let headView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIApplication.shared.statusBarFrame.height + 45))
         headView.backgroundColor = UIColor.white
         view.addSubview(headView)
-        
-        /////设置允许交互属性
-        backImageView.isUserInteractionEnabled = true
-        /////添加tapGuestureRecognizer手势
-        let tapGR = UITapGestureRecognizer(target: self, action:#selector(back))
-        backImageView.addGestureRecognizer(tapGR)
+
+        backImageView.addTarget(self, action: #selector(back), for: UIControlEvents.touchUpInside)
         headView.addSubview(backImageView)
         
         if isShowBack {
@@ -74,6 +104,15 @@ class PayWebViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
         webview.delegate = self
         view.addSubview(webview)
         
+        self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
+        let model = PayJsModel()
+        model.payVC = self
+        
+        self.jsContext.setObject(model, forKeyedSubscript: "miaozhuaApp" as NSCopying & NSObjectProtocol)
+        self.jsContext.exceptionHandler = { (context, exception) in
+            print("exception \(String(describing: exception))")
+        }
+        
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         
         if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
@@ -99,6 +138,17 @@ class PayWebViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
         
         webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/html/market/pay.html")!))
         
+        exchangeButton.setTitle("兑换码", for: UIControlState.normal)
+        exchangeButton.setTitleColor(UIColor.black, for: UIControlState.normal)
+        exchangeButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        exchangeButton.sizeToFit()
+        headView.addSubview(exchangeButton)
+        
+        exchangeButton.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - exchangeButton.bounds.width - 15, y: backImageView.frame.origin.y + backImageView.bounds.height/2 - exchangeButton.bounds.height/2)
+        
+        exchangeButton.addTarget(self, action: #selector(showExchangeDialog), for: UIControlEvents.touchUpInside)
+    
+//        hideShowExchangeBtn()
     }
     
     @objc func back(){
@@ -109,7 +159,12 @@ class PayWebViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
             }
             self.dismiss(animated: true, completion: nil)
         }else{
-            
+            if webview.canGoBack {
+                webview.goBack()
+                backImageView.isHidden = true
+            }else{
+                backImageView.isHidden = false
+            }
         }
     }
     
@@ -118,13 +173,14 @@ class PayWebViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
-//        self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
-//        let model = pointsJsModel()
-//        model.vc = self
-//
-//        self.jsContext.setObject(model, forKeyedSubscript: "miaozhuaApp" as NSCopying & NSObjectProtocol)
-//        self.jsContext.exceptionHandler = { (context, exception) in
-//        }
+        self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
+        let model = PayJsModel()
+        model.payVC = self
+        
+        self.jsContext.setObject(model, forKeyedSubscript: "miaozhuaApp" as NSCopying & NSObjectProtocol)
+        self.jsContext.exceptionHandler = { (context, exception) in
+            print("exception \(String(describing: exception))")
+        }
         
         if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
             for cookieData in cookieArray {
@@ -144,6 +200,154 @@ class PayWebViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
                         }
                     }
                 }
+            }
+        }
+    }
+    
+    @objc func pay(payType:Int, rp:String, couponId:String){
+        if payType == 0 {
+            // 微信
+            wechatPay(rp: rp, couponId: couponId)
+        }else if payType == 1 {
+            // 支付宝
+            aliPay(rp: rp, couponId: couponId)
+        }
+    }
+    
+    /// 微信支付
+    func wechatPay(rp:String,couponId:String) -> () {
+        if WeChatShared.isInstall() == false {
+            ToastUtils.showErrorToast(msg: "暂时无法支付")
+            return
+        }
+        
+        ToastUtils.showLoadingToast(msg: "正在下单")
+        var params = NetWorkUtils.createBaseParams()
+        params["rp"] = rp
+        if couponId != "" {
+            params["cid"] = couponId
+        }
+        
+        Alamofire.request(Constants.Network.WECHAT_PAY_URL, method: .post, parameters: params).responseJSON { (response) in
+            ToastUtils.hide()
+            if response.error == nil && response.data != nil {
+                let jsonData = JSON(data: response.data!)
+                if jsonData["code"].int! == 0 {
+                    WeChatShared.pay(to: "main", jsonData["data"], resultHandle: { (result, identifier) in
+                        switch(result){
+                        case .Success:
+                            self.paySuccessCallbackH5()
+                            ToastUtils.showSuccessToast(msg: "支付成功")
+                            break;
+                        case .Failed:
+                            ToastUtils.showErrorToast(msg: "支付失败")
+                            break;
+                        case .Cancel:
+                            ToastUtils.showInfoToast(msg: "取消支付")
+                            break;
+                        }
+                    })
+                }else if jsonData["code"].int! == -302 {
+                    print("用户身份异常，重新登录")
+                    LoginViewController.showLoginVC()
+                    LocalDataUtils.clearLoaclData()
+                }else if jsonData["code"].int! == -101 {
+                    ToastUtils.showErrorToast(msg: "您不具备首充资格，请刷新")
+                }else{
+                    ToastUtils.showErrorToast(msg: "错误:" + jsonData["msg"].stringValue)
+                }
+            }else{
+                
+            }
+        }
+    }
+    
+    func aliPay(rp:String,couponId:String) -> () {
+        ToastUtils.showLoadingToast(msg: "正在下单……")
+        var params = NetWorkUtils.createBaseParams()
+        params["rp"] = String(rp)
+        
+        if couponId != "" {
+            params["cid"] = couponId
+        }
+        
+        Alamofire.request(Constants.Network.ALIPAY_URL, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            ToastUtils.hide()
+            if response.error == nil && response.data != nil {
+                let jsonData = JSON(data: response.data!)
+                if jsonData["code"].int! == 0 {
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: { [weak self] in
+                        self?.aliPayOrder(orderBody: jsonData["data"]["orderBody"].string!)
+                    })
+                }else if jsonData["code"].int! == -302 {
+                    print("用户身份异常，重新登录")
+                    LoginViewController.showLoginVC()
+                    LocalDataUtils.clearLoaclData()
+                }else if jsonData["code"].int! == -101 {
+                    ToastUtils.showErrorToast(msg: "您不具备首充资格，请刷新")
+                }else {
+                    ToastUtils.showErrorToast(msg: "错误:" + jsonData["msg"].stringValue)
+                }
+            }else{
+                print("error:\(String(describing: response.error))")
+            }
+        }
+    }
+    
+    func aliPayOrder(orderBody:String) -> () {
+        AlipaySDK.defaultService().payOrder(orderBody, fromScheme: "alipay2017071707787463", callback: { (result) in
+            /// 使用web支付会走到这里
+            if let Alipayjson = result as NSDictionary?{
+                let resultStatus = Alipayjson.value(forKey: "resultStatus") as! String
+                if resultStatus == "9000"{
+                    ToastUtils.showSuccessToast(msg: "支付成功")
+                    self.paySuccessCallbackH5()
+                }else if resultStatus == "8000" {
+                    print("正在处理中")
+                }else if resultStatus == "4000" {
+                    print("订单支付失败");
+                    ToastUtils.showErrorToast(msg: "支付失败")
+                }else if resultStatus == "6001" {
+                    print("用户中途取消")
+                    ToastUtils.showErrorToast(msg: "支付取消")
+                }else if resultStatus == "6002" {
+                    print("网络连接出错")
+                    ToastUtils.showErrorToast(msg: "网络出错")
+                }
+            }
+        })
+    }
+    
+    func paySuccessCallbackH5(){
+//        self.jsContext.evaluateScript("pay.paySuccess();")
+        webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/html/market/pay.html")!))
+    }
+    
+    @objc func showExchangeDialog() {
+        self.jsContext.evaluateScript("pay.exchangeFunc();")
+    }
+    
+    /// 显示或隐藏兑换码的按钮
+    func hideShowExchangeBtn(){
+        /// 获取版本号，来判断显不显示微信支付
+        Alamofire.request(Constants.Network.GET_SYS_INFO_VERSION, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { (response) in
+            if NetWorkUtils.checkReponse(response: response) {
+                let json = JSON(data: response.data!)
+                let infoDictionary = Bundle.main.infoDictionary!
+                if let buildVersion = (infoDictionary["CFBundleVersion"] as? NSString)?.doubleValue {
+                    if json["data"].doubleValue >= buildVersion {
+                        print("正式")
+                        self.exchangeButton.isHidden = false
+                    }else{
+                        print("提审")
+                        self.exchangeButton.isHidden = true
+                    }
+                }else {
+                    self.exchangeButton.isHidden = true
+                }
+            }else{
+                /// 发生异常
+                self.exchangeButton.isHidden = true
             }
         }
     }

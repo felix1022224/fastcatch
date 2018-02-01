@@ -178,6 +178,7 @@
 		4DC986C82022F56F00F331A1 /* AchievementHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC986C72022F56F00F331A1 /* AchievementHeaderCollectionReusableView.swift */; };
 		4DC986CA2023073F00F331A1 /* AchievementDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC986C92023073F00F331A1 /* AchievementDialog.swift */; };
 		4DC986CC2023080700F331A1 /* AchievementCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC986CB2023080700F331A1 /* AchievementCollectionViewCell.swift */; };
+		4DC986CE20232D7400F331A1 /* PointListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC986CD20232D7400F331A1 /* PointListViewController.swift */; };
 		4DCC49CA1F52A65F0017D4A4 /* PlayInfoBannerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCC49C91F52A65F0017D4A4 /* PlayInfoBannerDialog.swift */; };
 		4DCC49CC1F52E0110017D4A4 /* PlayInfoAwardDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCC49CB1F52E0110017D4A4 /* PlayInfoAwardDialog.swift */; };
 		4DCC49CE1F52E8B10017D4A4 /* EditInviteCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCC49CD1F52E8B10017D4A4 /* EditInviteCode.swift */; };
@@ -419,6 +420,7 @@
 		4DC986C72022F56F00F331A1 /* AchievementHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		4DC986C92023073F00F331A1 /* AchievementDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementDialog.swift; sourceTree = "<group>"; };
 		4DC986CB2023080700F331A1 /* AchievementCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementCollectionViewCell.swift; sourceTree = "<group>"; };
+		4DC986CD20232D7400F331A1 /* PointListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointListViewController.swift; sourceTree = "<group>"; };
 		4DCC49C91F52A65F0017D4A4 /* PlayInfoBannerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayInfoBannerDialog.swift; sourceTree = "<group>"; };
 		4DCC49CB1F52E0110017D4A4 /* PlayInfoAwardDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayInfoAwardDialog.swift; sourceTree = "<group>"; };
 		4DCC49CD1F52E8B10017D4A4 /* EditInviteCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditInviteCode.swift; sourceTree = "<group>"; };
@@ -1267,6 +1269,7 @@
 				4D94590C2010500900145C2B /* HomeBannerView.swift */,
 				4D94590E2010D26300145C2B /* HomeTabItemView.swift */,
 				4DC986C12021F75700F331A1 /* MyCheckInDialog.swift */,
+				4DC986CD20232D7400F331A1 /* PointListViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1480,6 +1483,7 @@
 				4DCD39EA1F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedTabViewDelegate.swift in Sources */,
 				4D64B8A01F29D9DA002A9BFD /* BaseDialog.swift in Sources */,
 				4D6874A42021C2D5006C8B48 /* BaseActionBarViewController.swift in Sources */,
+				4DC986CE20232D7400F331A1 /* PointListViewController.swift in Sources */,
 				4D64B8931F287FB9002A9BFD /* PlayViewController.swift in Sources */,
 				4D1F59DC1F8CC8EA00806C00 /* TokenHistoryViewController.swift in Sources */,
 				4DE6418D1FE253AB00589537 /* NotificationUIWidget.swift in Sources */,

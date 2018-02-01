@@ -177,9 +177,7 @@ extension GameRoomViewController{
     
     /// 展示游戏中的游戏信息的dialog
     @objc func showPlayingGameDialog(){
-        if playingGameDialog == nil {
-            playingGameDialog = PlayingGameDialog(frame: UIScreen.main.bounds)
-        }
+        playingGameDialog = PlayingGameDialog(frame: UIScreen.main.bounds)
         playingGameDialog.createView()
         playingGameDialog.show()
     }

@@ -14,10 +14,11 @@ class BaseActionBarViewController: UIViewController {
     
     var headView = UIView()
     
+    let backImageView = UIButton.init(type: UIButtonType.custom)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let backImageView = UIButton.init(type: UIButtonType.custom)
         backImageView.frame = CGRect(x: 0, y: UIApplication.shared.statusBarFrame.height + 45/2 - 45/2, width: 45, height: 45)
         backImageView.setImage(UIImage.init(named: "back"), for: UIControlState.normal)
         backImageView.addTarget(self, action: #selector(back), for: UIControlEvents.touchUpInside)

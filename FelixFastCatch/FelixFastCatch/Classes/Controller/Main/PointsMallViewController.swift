@@ -11,16 +11,24 @@ import JavaScriptCore
 
 @objc protocol pointsJsDelegate:JSExport {
     func finish()
+    func showBack()
 }
 
 @objc class pointsJsModel: NSObject, pointsJsDelegate {
     
     var vc:PointsMallViewController!
     
+    func showBack() {
+        if vc != nil {
+            DispatchQueue.main.async {
+                self.vc.backImageView.isHidden = false
+            }
+        }
+    }
+    
     func finish() -> () {
         if vc != nil {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now(), execute: {[weak self] in
-//                self?.vc.dismiss(animated: true, completion: nil)
                 self?.vc.navigationController?.popViewController(animated: true)
                 self?.vc.webview = nil
             })
@@ -37,11 +45,16 @@ class PointsMallViewController: BaseActionBarViewController , UIWebViewDelegate,
     
     var jsContext:JSContext!
     
+    /// 积分记录
+    let pointListButton = UIButton.init(type: UIButtonType.custom)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.white
         actionTitleLabel.text = "积分商城"
+        
+        backImageView.isHidden = true
         
         webview = UIWebView(frame: CGRect(x: 0, y: headView.bounds.height + 1, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - headView.bounds.height - MainTabsViewController.tabHeight))
         webview.delegate = self
@@ -55,7 +68,6 @@ class PointsMallViewController: BaseActionBarViewController , UIWebViewDelegate,
         
         self.jsContext.setObject(model, forKeyedSubscript: "miaozhuaApp" as NSCopying & NSObjectProtocol)
         self.jsContext.exceptionHandler = { (context, exception) in
-            
         }
         
         if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
@@ -80,8 +92,22 @@ class PointsMallViewController: BaseActionBarViewController , UIWebViewDelegate,
         }
         
         webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/market/score.html")!))
+        
+        pointListButton.setTitle("积分记录", for: UIControlState.normal)
+        pointListButton.setTitleColor(UIColor.black, for: UIControlState.normal)
+        pointListButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        pointListButton.sizeToFit()
+        headView.addSubview(pointListButton)
+        
+        pointListButton.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - pointListButton.bounds.width - 15, y: backImageView.frame.origin.y + backImageView.bounds.height/2 - pointListButton.bounds.height/2)
+        
+        pointListButton.addTarget(self, action: #selector(showPointList), for: UIControlEvents.touchUpInside)
     }
 
+    @objc func showPointList() {
+        self.navigationController?.pushViewController(PointListViewController(), animated: true)
+    }
+    
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
@@ -124,10 +150,10 @@ class PointsMallViewController: BaseActionBarViewController , UIWebViewDelegate,
     @objc override func back() -> () {
         if webview.canGoBack {
             webview.goBack()
-            return
+            backImageView.isHidden = true
+        }else{
+            backImageView.isHidden = false
         }
-        dismiss(animated: true, completion: nil)
-        self.navigationController?.popViewController(animated: true)
     }
     
 }

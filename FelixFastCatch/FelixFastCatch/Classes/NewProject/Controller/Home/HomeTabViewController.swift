@@ -79,6 +79,7 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
         rootScrollView.frame = UIScreen.main.bounds
         rootScrollView.isPagingEnabled = true
         rootScrollView.delegate = self
+        rootScrollView.bounces = false
         
         if #available(iOS 11.0, *) {
             rootScrollView.contentInsetAdjustmentBehavior = .scrollableAxes
@@ -198,7 +199,7 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
             self.statusBarView.backgroundColor = UIColor.init(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: CGFloat(self.lastTableViewOffsetY/100))
         }
         
-        let statusHeight:Float = UIDevice.current.isX() ? 44 : 20
+        let statusHeight:Float = UIDevice.current.isX() ? 44 : 0
         
         let moreHeight:Float = 14 + 45
         
@@ -372,9 +373,7 @@ extension HomeTabViewController {
             LoginViewController.showLoginVC()
             return
         }
-        if myCheckInDialog == nil {
-            myCheckInDialog = MyCheckInDialog(frame: UIScreen.main.bounds)
-        }
+        myCheckInDialog = MyCheckInDialog(frame: UIScreen.main.bounds)
         myCheckInDialog.createView()
         myCheckInDialog.show()
     }
