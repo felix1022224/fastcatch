@@ -173,6 +173,11 @@
 		4DC986BE2021F29700F331A1 /* GameHistoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC986BD2021F29700F331A1 /* GameHistoryListViewController.swift */; };
 		4DC986C02021F3CF00F331A1 /* GameHistoryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC986BF2021F3CF00F331A1 /* GameHistoryListTableViewCell.swift */; };
 		4DC986C22021F75700F331A1 /* MyCheckInDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC986C12021F75700F331A1 /* MyCheckInDialog.swift */; };
+		4DC986C42022C86C00F331A1 /* AchievementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC986C32022C86C00F331A1 /* AchievementViewController.swift */; };
+		4DC986C62022E3FB00F331A1 /* RedBagDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC986C52022E3FB00F331A1 /* RedBagDialog.swift */; };
+		4DC986C82022F56F00F331A1 /* AchievementHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC986C72022F56F00F331A1 /* AchievementHeaderCollectionReusableView.swift */; };
+		4DC986CA2023073F00F331A1 /* AchievementDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC986C92023073F00F331A1 /* AchievementDialog.swift */; };
+		4DC986CC2023080700F331A1 /* AchievementCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC986CB2023080700F331A1 /* AchievementCollectionViewCell.swift */; };
 		4DCC49CA1F52A65F0017D4A4 /* PlayInfoBannerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCC49C91F52A65F0017D4A4 /* PlayInfoBannerDialog.swift */; };
 		4DCC49CC1F52E0110017D4A4 /* PlayInfoAwardDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCC49CB1F52E0110017D4A4 /* PlayInfoAwardDialog.swift */; };
 		4DCC49CE1F52E8B10017D4A4 /* EditInviteCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCC49CD1F52E8B10017D4A4 /* EditInviteCode.swift */; };
@@ -409,6 +414,11 @@
 		4DC986BD2021F29700F331A1 /* GameHistoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHistoryListViewController.swift; sourceTree = "<group>"; };
 		4DC986BF2021F3CF00F331A1 /* GameHistoryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHistoryListTableViewCell.swift; sourceTree = "<group>"; };
 		4DC986C12021F75700F331A1 /* MyCheckInDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckInDialog.swift; sourceTree = "<group>"; };
+		4DC986C32022C86C00F331A1 /* AchievementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementViewController.swift; sourceTree = "<group>"; };
+		4DC986C52022E3FB00F331A1 /* RedBagDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedBagDialog.swift; sourceTree = "<group>"; };
+		4DC986C72022F56F00F331A1 /* AchievementHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		4DC986C92023073F00F331A1 /* AchievementDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementDialog.swift; sourceTree = "<group>"; };
+		4DC986CB2023080700F331A1 /* AchievementCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementCollectionViewCell.swift; sourceTree = "<group>"; };
 		4DCC49C91F52A65F0017D4A4 /* PlayInfoBannerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayInfoBannerDialog.swift; sourceTree = "<group>"; };
 		4DCC49CB1F52E0110017D4A4 /* PlayInfoAwardDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayInfoAwardDialog.swift; sourceTree = "<group>"; };
 		4DCC49CD1F52E8B10017D4A4 /* EditInviteCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditInviteCode.swift; sourceTree = "<group>"; };
@@ -652,6 +662,8 @@
 				4D6874A72021CC06006C8B48 /* EditUserInfo.swift */,
 				4D6874A92021CD35006C8B48 /* MessageListViewController.swift */,
 				4DC986BD2021F29700F331A1 /* GameHistoryListViewController.swift */,
+				4DC986C32022C86C00F331A1 /* AchievementViewController.swift */,
+				4DC986C92023073F00F331A1 /* AchievementDialog.swift */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -822,6 +834,7 @@
 				4D68746E201B3CE8006C8B48 /* TitleCollectionViewCell.swift */,
 				4D687475201ECE26006C8B48 /* ZeroCatchSuccessDialog.swift */,
 				4D687477201EFA36006C8B48 /* ZeroCatchPayDialog.swift */,
+				4DC986C52022E3FB00F331A1 /* RedBagDialog.swift */,
 			);
 			path = dialog;
 			sourceTree = "<group>";
@@ -1264,6 +1277,8 @@
 				4DFBC833200F65170065F08E /* HomeTabCell.swift */,
 				4D6874AB2021D34F006C8B48 /* MessageTableViewCell.swift */,
 				4DC986BF2021F3CF00F331A1 /* GameHistoryListTableViewCell.swift */,
+				4DC986C72022F56F00F331A1 /* AchievementHeaderCollectionReusableView.swift */,
+				4DC986CB2023080700F331A1 /* AchievementCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1458,6 +1473,7 @@
 				4D68749120208249006C8B48 /* TakeProductImageCell.swift in Sources */,
 				4D687471201B4779006C8B48 /* GameRoomBannerWidget.swift in Sources */,
 				4D64B89E1F29D9C7002A9BFD /* PhoneNumberDialog.swift in Sources */,
+				4DC986CA2023073F00F331A1 /* AchievementDialog.swift in Sources */,
 				4D9EBB811F26F163002674DE /* WeChatShared.swift in Sources */,
 				4D1DA0F41F2F4C4300B1138D /* FCHasBennMailedProductCell.swift in Sources */,
 				4D687478201EFA36006C8B48 /* ZeroCatchPayDialog.swift in Sources */,
@@ -1524,6 +1540,7 @@
 				4D4B67EB2004A3BE00455C04 /* SettlementView.swift in Sources */,
 				4DA23CE21F8F6CF200B2337E /* MainFooterCell.swift in Sources */,
 				4D7123F42019FA8700CB6607 /* PlayingGameDialog.swift in Sources */,
+				4DC986C82022F56F00F331A1 /* AchievementHeaderCollectionReusableView.swift in Sources */,
 				4D2B80141F40097E0075D390 /* OutGameDialog.swift in Sources */,
 				4D68748220202236006C8B48 /* NotTakeList.swift in Sources */,
 				4DCC49CE1F52E8B10017D4A4 /* EditInviteCode.swift in Sources */,
@@ -1531,6 +1548,7 @@
 				4D4ACE771F51CE410011E7F7 /* GemLackDialog.swift in Sources */,
 				4D7D3F2A1FD930380019B58C /* HorzontalGameSceneAudioController.swift in Sources */,
 				4DA23CE41F8F878D00B2337E /* UserCenterViewController.swift in Sources */,
+				4DC986C62022E3FB00F331A1 /* RedBagDialog.swift in Sources */,
 				4DCC49D01F52F7D30017D4A4 /* InviteSuccessDialog.swift in Sources */,
 				4D7AB3C21FF2639400270A62 /* HomeViewController.swift in Sources */,
 				4D7AB3BA1FF24A2200270A62 /* SPCoverController.m in Sources */,
@@ -1552,6 +1570,7 @@
 				4D7468291FCFB60C00E8E662 /* HorizontalGameSceneViewController.swift in Sources */,
 				4DCD39B71F2DA5FC002B7F35 /* CustomerControllerButton.swift in Sources */,
 				4D8924822015E57100BDA812 /* GameRoomLiveWidget.swift in Sources */,
+				4DC986C42022C86C00F331A1 /* AchievementViewController.swift in Sources */,
 				4D7144831F8B584700B37D8A /* MailingListViewController.swift in Sources */,
 				4D7AB3C71FF4CB1C00270A62 /* DHOutLineLabel.m in Sources */,
 				4D4B67F820060A2800455C04 /* ZeroCatchView.swift in Sources */,
@@ -1572,6 +1591,7 @@
 				4DCD39E91F2F4B2C002B7F35 /* FCMyGiftHasBeenMailedCell.swift in Sources */,
 				4D2B80161F40263F0075D390 /* ShowOffRecordDialog.swift in Sources */,
 				4D64B8A41F2B079E002A9BFD /* LocalDataUtils.swift in Sources */,
+				4DC986CC2023080700F331A1 /* AchievementCollectionViewCell.swift in Sources */,
 				4DD3A5001F7A07D8000B5F25 /* GameSceneController.swift in Sources */,
 				4D4B25D81F5FA64900338CBD /* SharedViewDialog.swift in Sources */,
 				4DB1A60D1FEBA05E00BDBE3A /* PayViewController.swift in Sources */,
@@ -1714,6 +1734,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DFC6B4F6BC202EA7BB7FDC1F /* Pods-FelixFastCatch.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = FelixFastCatch/FelixFastCatch.entitlements;
@@ -1758,6 +1779,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9DA239CE4A7A8989C9E6EAED /* Pods-FelixFastCatch.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = FelixFastCatch/FelixFastCatch.entitlements;

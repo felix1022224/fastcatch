@@ -17,14 +17,13 @@ pod 'Kingfisher', '~> 4.0'
 pod 'Alamofire', '~> 4.4'
 pod 'SVProgressHUD'
 pod 'SwiftyJSON', '~> 3.1.4'
-pod 'MJRefresh'
 pod 'AgoraRtcEngine_iOS'
 pod 'AlicloudFeedback', '~> 3.2.0'
 pod 'Socket.IO-Client-Swift', '~> 12.0.0' # Or latest version
 pod 'UMengAnalytics-NO-IDFA' #无IDFA版SDK
 pod 'Bugly'
-pod 'SwiftGifOrigin', '~> 1.6.1'
-pod 'SDWebImage', '~> 4.0'
+#pod 'SwiftGifOrigin', '~> 1.6.1'
+#pod 'SDWebImage', '~> 4.0'
 pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
 
 end

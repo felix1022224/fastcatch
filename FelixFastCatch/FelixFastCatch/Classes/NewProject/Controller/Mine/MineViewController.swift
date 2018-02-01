@@ -494,6 +494,8 @@ class MineViewController: UIViewController {
         let vipGroupTap = UITapGestureRecognizer.init(target: self, action: #selector(showPayVC))
         vipGroup.addGestureRecognizer(vipGroupTap)
         
+        renewFeeBtn.addTarget(self, action: #selector(showPayVC), for: UIControlEvents.touchUpInside)
+        
         /// 点击邀请
         inviteGroupView.isUserInteractionEnabled = true
         let inviteTap = UITapGestureRecognizer.init(target: self, action: #selector(showInviteVC))
@@ -513,6 +515,18 @@ class MineViewController: UIViewController {
         settingsGroupView.isUserInteractionEnabled = true
         let settingsTap = UITapGestureRecognizer.init(target: self, action: #selector(showSettingsVC))
         settingsGroupView.addGestureRecognizer(settingsTap)
+        
+        /// 点击我的成就
+        achievementGroupView.isUserInteractionEnabled = true
+        let achievementTap = UITapGestureRecognizer.init(target: self, action: #selector(showAchievementVC))
+        achievementGroupView.addGestureRecognizer(achievementTap)
+        
+    }
+    
+    /// 显示我的成就
+    @objc func showAchievementVC(){
+        let achievementVC = AchievementViewController()
+        self.navigationController?.pushViewController(achievementVC, animated: true)
     }
     
     /// 显示编辑用户资料的页面

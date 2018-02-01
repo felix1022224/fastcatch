@@ -66,6 +66,9 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
     /// 签到弹窗
     var myCheckInDialog :MyCheckInDialog!
     
+    /// 是否自动显示过签到了
+    var isAutoShowCheckInDialog = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -106,6 +109,13 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
         headerView.bannerView.addGestureRecognizer(tapBanner)
         
         self.headerView.checkInButton.addTarget(self, action: #selector(showMyCheckInDialog), for: UIControlEvents.touchUpInside)
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 6) {[weak self] in
+            if self?.isAutoShowCheckInDialog == false && Constants.User.todayChecked == false {
+                self?.isAutoShowCheckInDialog = true
+                self?.showMyCheckInDialog()
+            }
+        }
     }
     
     /// 点击banner
@@ -358,6 +368,10 @@ extension HomeTabViewController {
     }
     
     @objc func showMyCheckInDialog() {
+        if Constants.User.ID == "" {
+            LoginViewController.showLoginVC()
+            return
+        }
         if myCheckInDialog == nil {
             myCheckInDialog = MyCheckInDialog(frame: UIScreen.main.bounds)
         }

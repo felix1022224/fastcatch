@@ -53,6 +53,34 @@ extension GameRoomViewController {
         switchQueueStatus(isQueue: false)
         
         createOperationPanel()
+        
+        createRedBagNumber()
+    }
+    
+    func createRedBagNumber() {
+        redBagNumber.font = UIFont.systemFont(ofSize: 12)
+        redBagNumber.textColor = UIColor.red
+        let attrText = NSMutableAttributedString.init(string: "红包次数：\(1)次 (有疑问？)")
+        attrText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.gray, range: NSRange(location: 8, length:6))
+        attrText.addAttribute(NSAttributedStringKey.underlineStyle, value: NSNumber.init(value: 1), range: NSRange(location: 8, length: 6))
+        redBagNumber.attributedText = attrText
+        redBagNumber.sizeToFit()
+        gameControllerGroupView.addSubview(redBagNumber)
+        
+        redBagNumber.snp.makeConstraints { (make) in
+            make.centerX.equalTo(view)
+            make.top.equalTo(startGameBtn).offset(startGameBtn.bounds.height + 5)
+        }
+        
+        redBagNumber.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer.init(target: self, action: #selector(showRedBag))
+        redBagNumber.addGestureRecognizer(tap)
+    }
+    
+    /// 显示红包的弹窗
+    @objc func showRedBag() {
+        redBagDialog.createView()
+        redBagDialog.show()
     }
     
     /// 取消排队

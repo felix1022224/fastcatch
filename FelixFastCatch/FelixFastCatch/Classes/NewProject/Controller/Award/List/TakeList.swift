@@ -39,6 +39,7 @@ extension AwardViewController{
         Alamofire.request(Constants.Network.Gift.GET_MAILED_GIFT_LIST, method: .post, parameters: params).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(response.result.value!)
+                self.takeListDelegate.dataSources.removeAll()
                 self.takeListDelegate.dataSources += json["data"]["content"].arrayValue
                 self.takeList.reloadData()
             }

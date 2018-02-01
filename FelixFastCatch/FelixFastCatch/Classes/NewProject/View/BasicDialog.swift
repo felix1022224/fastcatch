@@ -98,13 +98,11 @@ class BasicDialog: SpringView {
     // 隐藏
     @objc func hide() -> () {
         self.animation = "zoomOut"
+        self.shadow.alpha = 0.0
         self.animate()
         self.animateNext {
             self.isHidden = true
             self.removeFromSuperview()
-        }
-        UIView.animate(withDuration: 0.3) {
-            self.shadow.alpha = 0.0
         }
     }
     

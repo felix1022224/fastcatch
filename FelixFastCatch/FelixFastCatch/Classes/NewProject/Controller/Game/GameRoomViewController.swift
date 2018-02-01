@@ -192,6 +192,11 @@ class GameRoomViewController: UIViewController {
     /// 0元抓的弹窗
     var zeroCatchSuccessDialog:ZeroCatchSuccessDialog!
     
+    /// 红包
+    var redBagNumber = UILabel()
+    
+    var redBagDialog = RedBagDialog.init(frame: UIScreen.main.bounds)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

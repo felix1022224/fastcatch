@@ -226,6 +226,12 @@ class PlayingGameDialog: BasicDialog {
             pageControl.isHidden = true
         }
     }
+    
+    override func hide() {
+        super.hide()
+        collectionView.removeFromSuperview()
+        collectionView = nil
+    }
 
 }
 
