@@ -30,6 +30,10 @@ class NetWorkUtils: NSObject , CLLocationManagerDelegate{
         //维度
         baseParams["lat"] = Constants.Tools.LAT
         
+        if UserDefaults.standard.string(forKey: Constants.User.USER_SESSION_ID_KEY) != nil {
+            baseParams["sess"] = UserDefaults.standard.string(forKey: Constants.User.USER_SESSION_ID_KEY)
+        }
+        
         return baseParams
     }
     

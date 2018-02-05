@@ -22,7 +22,28 @@ class QAWebViewController: BaseActionBarViewController {
         webview.backgroundColor = UIColor.white
         view.addSubview(webview)
         
-        webview.loadRequest(URLRequest(url: URL(string: "https://meizhe.meidaojia.com/makeup/activity/activity_banner/view_815")!))
+        if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
+            for cookieData in cookieArray {
+                if let dict = cookieData as? [HTTPCookiePropertyKey : Any] {
+                    if let cookie = HTTPCookie.init(properties : dict) {
+                        if cookie.name == "SESSION" {
+                            var cookieProperties =  [HTTPCookiePropertyKey : Any]()
+                            cookieProperties[HTTPCookiePropertyKey.name] = cookie.name
+                            cookieProperties[HTTPCookiePropertyKey.value] = cookie.value
+                            cookieProperties[HTTPCookiePropertyKey.domain] = "api.mz.meidaojia.com"
+                            cookieProperties[HTTPCookiePropertyKey.originURL] = "http://api.mz.meidaojia.com"
+                            cookieProperties[HTTPCookiePropertyKey.path] = "/"
+                            cookieProperties[HTTPCookiePropertyKey.version] = "0"
+                            
+                            let cookie = HTTPCookie(properties: cookieProperties)
+                            HTTPCookieStorage.shared.setCookie(cookie!)
+                        }
+                    }
+                }
+            }
+        }
+        
+        webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/html/market/view_815.html?date=\(Constants.getTime())")!))
     }
 
 }

@@ -14,7 +14,15 @@ extension GameRoomViewController{
     
     /// 播放背景声音
     func playBackgroundMusic() -> () {
-            
+        
+        let session = AVAudioSession()
+        
+        do{
+            try session.setCategory(AVAudioSessionCategoryPlayback, with: [])
+            try session.setActive(true)
+        }catch{
+        }
+        
         //获取bg.mp3文件地址
         let bgMusicURL =  Bundle.main.path(forResource: "background_music", ofType: "mp3")!
         //地址转换
@@ -26,11 +34,9 @@ extension GameRoomViewController{
         //准备播放音乐
         bgMusicPlayer.prepareToPlay()
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
-            if !self.isCloseMusic {
-                //播放音乐
-                self.bgMusicPlayer.play()
-            }
+        if !self.isCloseMusic {
+            //播放音乐
+            self.bgMusicPlayer.play()
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(pauseSong(notification:)), name:NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
@@ -38,8 +44,10 @@ extension GameRoomViewController{
     }
     
     @objc func pauseSong(notification : NSNotification) {
-        if bgMusicPlayer != nil {
-            bgMusicPlayer.pause()
+        if !isCloseMusic {
+            if bgMusicPlayer != nil {
+                bgMusicPlayer.pause()
+            }
         }
     }
     

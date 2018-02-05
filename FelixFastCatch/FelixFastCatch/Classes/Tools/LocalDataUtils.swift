@@ -30,6 +30,8 @@ class LocalDataUtils: NSObject {
         UserDefaults.standard.set(resultData["data"]["vipDay"].intValue, forKey: Constants.User.USER_VIP_DAY_KEY)
         UserDefaults.standard.set(resultData["data"]["couponNumber"].intValue, forKey: Constants.User.USER_COUPON_NUMBER_KEY)
         
+        UserDefaults.standard.set(resultData["data"]["redPacketsNumber"].intValue, forKey: Constants.User.USER_RED_BAG_NUMBER_KEY)
+        
         if !Constants.IS_BIND_UMENG_ID {
             Constants.IS_BIND_UMENG_ID = true
             UMessage.addAlias(String(resultData["data"]["id"].intValue), type: "mzid", response: nil)
@@ -51,6 +53,7 @@ class LocalDataUtils: NSObject {
                     HTTPCookieStorage.shared.setCookie(cookie)
                 }
             }
+            
         }
         
         Constants.User.vip = resultData["data"]["vip"].intValue
@@ -69,11 +72,13 @@ class LocalDataUtils: NSObject {
         Constants.User.addressId = String(resultData["data"]["pav"]["id"].intValue)
         
         Constants.User.userCouponNumber = resultData["data"]["couponNumber"].intValue
+        Constants.User.user_red_bag_number = resultData["data"]["redPacketsNumber"].intValue
         
         initUserInfo()
     }
     
     class func initUserInfo() -> () {
+        
         // sessionId
         if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
             for cookieData in cookieArray {
@@ -161,6 +166,23 @@ class LocalDataUtils: NSObject {
         let couponNumber = UserDefaults.standard.integer(forKey: Constants.User.USER_COUPON_NUMBER_KEY)
         Constants.User.userCouponNumber = couponNumber
         
+        // 用户剩余可用的红包
+        let redBagNumber = UserDefaults.standard.integer(forKey: Constants.User.USER_RED_BAG_NUMBER_KEY)
+        Constants.User.user_red_bag_number = redBagNumber
+        
+        if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
+            for cookieData in cookieArray {
+                if let dict = cookieData as? [HTTPCookiePropertyKey : Any] {
+                    if let cookie = HTTPCookie.init(properties : dict) {
+                        if cookie.name == "SESSION" {
+                            Constants.User.sessionId = cookie.value
+                            UserDefaults.standard.set(cookie.value, forKey: Constants.User.USER_SESSION_ID_KEY)
+                        }
+                    }
+                }
+            }
+        }
+        
     }
     
     /// 清除数据
@@ -171,6 +193,7 @@ class LocalDataUtils: NSObject {
         }
         Constants.IS_BIND_UMENG_ID = false
         
+        UserDefaults.standard.removeObject(forKey: Constants.User.ID_KEY)
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_ID_KEY)
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_SESSION_KEY)
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_FACE_IMAGE_KEY)
@@ -183,13 +206,18 @@ class LocalDataUtils: NSObject {
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_COUPON_NUMBER_KEY)
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_CHECK_DAY_KEY)
         UserDefaults.standard.removeObject(forKey: Constants.User.USER_TODAY_CHECKED_KEY)
+        UserDefaults.standard.removeObject(forKey: Constants.User.USER_RED_BAG_NUMBER_KEY)
+        UserDefaults.standard.removeObject(forKey: Constants.User.USER_SESSION_ID_KEY)
         
+        Constants.User.ID = ""
+        Constants.User.sessionId = ""
         Constants.User.USER_NICK_NAME = ""
         Constants.User.USER_ID = ""
         Constants.User.USER_FACE_IMAGE = ""
         Constants.User.USER_SEX = ""
         Constants.User.USER_BRITHDAY = ""
         Constants.User.USER_TAG = ""
+        Constants.User.user_red_bag_number = 0
         Constants.User.vip = 0
         Constants.User.vipDay = 0
         Constants.User.userCouponNumber = 0
@@ -200,6 +228,7 @@ class LocalDataUtils: NSObject {
         ///清除存储的所有的cookie
         let cookieArray = HTTPCookieStorage.shared.cookies
         for httpCookie in cookieArray! {
+            print("delete:\(httpCookie.name)")
             HTTPCookieStorage.shared.deleteCookie(httpCookie)
         }
     }

@@ -57,12 +57,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         UMessage.registerForRemoteNotifications()
         UMessage.setLogEnabled(true)
         
+        LocalDataUtils.initUserInfo()
+        
         window = UIWindow()
         let nav = UINavigationController(rootViewController: vc)
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
-        
-        LocalDataUtils.initUserInfo()
         
 //        vc.loadDialogToWindow()
         

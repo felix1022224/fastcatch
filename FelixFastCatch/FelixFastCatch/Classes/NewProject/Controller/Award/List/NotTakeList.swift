@@ -57,6 +57,7 @@ extension AwardViewController: UITableViewDelegate, UITableViewDataSource{
     func createNotTakeList() {
         notTakeList.rowHeight = centerGroupView.bounds.width * 0.35
         notTakeList.separatorInset = UIEdgeInsets.init(top: 0, left: centerGroupView.bounds.width * 0.05, bottom: 0, right: centerGroupView.bounds.width * 0.05)
+        notTakeList.separatorColor = UIColor.init(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         notTakeList.delegate = self
         notTakeList.dataSource = self
         notTakeList.register(NotTakeTableViewCell.self, forCellReuseIdentifier: "cellId")
@@ -91,8 +92,10 @@ extension AwardViewController: UITableViewDelegate, UITableViewDataSource{
                 self.freePostageNumber = json["data"]["freePostNum"].intValue
                 self.postageCashNumber = json["data"]["postDiamonds"].intValue
                 
-                self.userAwardNumberLabel.text = Constants.User.USER_NICK_NAME + "，未提取奖品\(self.notTakeSelectedStatus.count)个"
+                self.userAwardNumberLabel.text = Constants.User.USER_NICK_NAME + ",未提取奖品\(self.notTakeSelectedStatus.count)个"
                 self.userAwardNumberLabel.sizeToFit()
+                
+                self.showNotTakeNoValue()
             }
         }
     }

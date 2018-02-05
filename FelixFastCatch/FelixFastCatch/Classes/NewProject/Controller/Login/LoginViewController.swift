@@ -55,13 +55,13 @@ class LoginViewController: UIViewController {
         phoneNumberEditBg.backgroundColor = UIColor.white
         phoneNumberEditBg.frame.size = CGSize.init(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8 * 0.18)
         phoneNumberEditBg.layer.cornerRadius = phoneNumberEditBg.bounds.height/2
-        phoneNumberEditBg.layer.borderColor = UIColor.lightGray.cgColor
-        phoneNumberEditBg.layer.borderWidth = 0.4
+        phoneNumberEditBg.layer.borderColor = UIColor.init(red: 169/255.0, green: 169/255.0, blue: 169/255.0, alpha: 1.0).cgColor
+        phoneNumberEditBg.layer.borderWidth = 0.5
         
         // 阴影
-        phoneNumberEditBg.layer.shadowColor = UIColor.init(red: 250/255.0, green: 250/255.0, blue: 250/255.0, alpha: 1.0).cgColor
-        phoneNumberEditBg.layer.shadowOpacity = 0.4
-        phoneNumberEditBg.layer.shadowRadius = 5
+        phoneNumberEditBg.layer.shadowColor = UIColor.init(red: 160/255.0, green: 195/255.0, blue: 253/255.0, alpha: 1.0).cgColor
+        phoneNumberEditBg.layer.shadowOpacity = 0.2
+        phoneNumberEditBg.layer.shadowRadius = 20
         phoneNumberEditBg.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
         
         phoneNumberEditBg.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width * 0.1, y: topBackgroundView.bounds.height + 10)
@@ -71,7 +71,7 @@ class LoginViewController: UIViewController {
         phoneNumberEdit.frame = CGRect.init(x: phoneNumberEditBg.frame.origin.x + phoneNumberEditBg.bounds.width * 0.1, y: topBackgroundView.bounds.height + 10, width: phoneNumberEditBg.bounds.width * 0.6, height: phoneNumberEditBg.bounds.height)
         phoneNumberEdit.placeholder = "请输入您的手机号"
         phoneNumberEdit.keyboardType = .phonePad
-        phoneNumberEdit.font = UIFont.systemFont(ofSize: 18)
+        phoneNumberEdit.font = UIFont.systemFont(ofSize: 14)
         phoneNumberEdit.delegate = self
         view.addSubview(phoneNumberEdit)
         
@@ -93,13 +93,13 @@ class LoginViewController: UIViewController {
         varifyCodeBg.backgroundColor = UIColor.white
         varifyCodeBg.frame.size = CGSize.init(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8 * 0.18)
         varifyCodeBg.layer.cornerRadius = phoneNumberEditBg.bounds.height/2
-        varifyCodeBg.layer.borderColor = UIColor.lightGray.cgColor
-        varifyCodeBg.layer.borderWidth = 0.4
+        varifyCodeBg.layer.borderColor = UIColor.init(red: 169/255.0, green: 169/255.0, blue: 169/255.0, alpha: 1.0).cgColor
+        varifyCodeBg.layer.borderWidth = 0.5
         
         // 阴影
-        varifyCodeBg.layer.shadowColor = UIColor.init(red: 250/255.0, green: 250/255.0, blue: 250/255.0, alpha: 1.0).cgColor
-        varifyCodeBg.layer.shadowOpacity = 0.4
-        varifyCodeBg.layer.shadowRadius = 5
+        varifyCodeBg.layer.shadowColor = UIColor.init(red: 160/255.0, green: 195/255.0, blue: 253/255.0, alpha: 1.0).cgColor
+        varifyCodeBg.layer.shadowOpacity = 0.2
+        varifyCodeBg.layer.shadowRadius = 20
         varifyCodeBg.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
         
         varifyCodeBg.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width * 0.1, y: topBackgroundView.bounds.height + 10 + phoneNumberEditBg.bounds.height + 15)
@@ -110,7 +110,7 @@ class LoginViewController: UIViewController {
         verifyCodeEdit.placeholder = "请输入您的验证码"
         verifyCodeEdit.delegate = self
         verifyCodeEdit.keyboardType = .numberPad
-        verifyCodeEdit.font = UIFont.systemFont(ofSize: 18)
+        verifyCodeEdit.font = UIFont.systemFont(ofSize: 14)
         view.addSubview(verifyCodeEdit)
         
         /// 发送验证码的按钮
@@ -129,38 +129,42 @@ class LoginViewController: UIViewController {
         sendVerifyCodeBtn.addTarget(self, action: #selector(sendVerifyCode), for: UIControlEvents.touchUpInside)
         
         /// 登录按钮
-        let loginBtn = UIView()
-        loginBtn.frame = CGRect(x: UIScreen.main.bounds.width * 0.1, y: topBackgroundView.bounds.height + 10 + phoneNumberEditBg.bounds.height + 15 + varifyCodeBg.bounds.height + 30, width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8 * 0.18)
-        loginBtn.backgroundColor = UIColor.init(red: 0/255.0, green: 217/255.0, blue: 252/255.0, alpha: 1.0)
-        loginBtn.layer.cornerRadius = loginBtn.bounds.height/2
-        
-        let loginLabel = UILabel()
-        loginLabel.textColor = UIColor.white
-        loginLabel.text = "登 录"
-        loginLabel.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.bold)
-        loginLabel.sizeToFit()
-        loginBtn.addSubview(loginLabel)
-        
-        loginLabel.frame.origin = CGPoint.init(x: loginBtn.bounds.width/2 - loginLabel.bounds.width/2, y: loginBtn.bounds.height/2 - loginLabel.bounds.height/2)
+        let loginBtn = UIButton.init(frame: UIScreen.main.bounds)
+        loginBtn.setBackgroundImage(UIImage.init(named: "登录btn"), for: UIControlState.normal)
+        loginBtn.sizeToFit()
+        loginBtn.frame = CGRect(x: UIScreen.main.bounds.width/2 - loginBtn.bounds.width/2, y: topBackgroundView.bounds.height + 10 + phoneNumberEditBg.bounds.height + 15 + varifyCodeBg.bounds.height + 25, width: loginBtn.bounds.width, height: loginBtn.bounds.height)
         view.addSubview(loginBtn)
         
-        loginBtn.isUserInteractionEnabled = true
-        let loginTap = UITapGestureRecognizer.init(target: self, action: #selector(phoneLogin))
-        loginBtn.addGestureRecognizer(loginTap)
+        loginBtn.addTarget(self, action: #selector(phoneLogin), for: UIControlEvents.touchUpInside)
+        
+        
+//        let loginLabel = UILabel()
+//        loginLabel.textColor = UIColor.white
+//        loginLabel.text = "登 录"
+//        loginLabel.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.bold)
+//        loginLabel.sizeToFit()
+//        loginBtn.addSubview(loginLabel)
+//
+//        loginLabel.frame.origin = CGPoint.init(x: loginBtn.bounds.width/2 - loginLabel.bounds.width/2, y: loginBtn.bounds.height/2 - loginLabel.bounds.height/2)
+//        view.addSubview(loginBtn)
+//
+//        loginBtn.isUserInteractionEnabled = true
+//        let loginTap = UITapGestureRecognizer.init(target: self, action: #selector(phoneLogin))
+//        loginBtn.addGestureRecognizer(loginTap)
         
         let protocolLabel = UILabel()
         protocolLabel.textColor = UIColor.lightGray
         protocolLabel.font = UIFont.systemFont(ofSize: 12)
-        protocolLabel.sizeToFit()
         
         let attrText = NSMutableAttributedString.init(string: "点击登录，即表示您已经同意《秒抓APP用户协议》")
         attrText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.init(red: 0/255.0, green: 217/255.0, blue: 252/255.0, alpha: 1.0), range: NSRange(location: 13, length:11))
+        protocolLabel.sizeToFit()
         protocolLabel.attributedText = attrText
         
         view.addSubview(protocolLabel)
         
         protocolLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(loginBtn).offset(loginBtn.bounds.height + 10)
+            make.top.equalTo(loginBtn).offset(loginBtn.bounds.height + 15)
             make.centerX.equalTo(loginBtn)
         }
         
@@ -168,30 +172,10 @@ class LoginViewController: UIViewController {
         protocolLabel.isUserInteractionEnabled = true
         protocolLabel.addGestureRecognizer(protocoLabelTap)
         
-        /// qq登录
-        let qqLoginBtn = UIButton.init(type: UIButtonType.custom)
-        qqLoginBtn.frame.size = CGSize.init(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8 * 0.14)
-        qqLoginBtn.setBackgroundImage(UIImage.init(named: "qq登录"), for: UIControlState.normal)
-        view.addSubview(qqLoginBtn)
-        
-        qqLoginBtn.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width/2 - qqLoginBtn.bounds.width/2, y: UIScreen.main.bounds.height - qqLoginBtn.bounds.height - 40)
-        
-        qqLoginBtn.addTarget(self, action: #selector(qqLoginClick), for: UIControlEvents.touchUpInside)
-        
-        /// 微信登录
-        let wechatLogin = UIButton.init(type: UIButtonType.custom)
-        wechatLogin.frame.size = CGSize.init(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8 * 0.14)
-        wechatLogin.setBackgroundImage(UIImage.init(named: "微信登录"), for: UIControlState.normal)
-        view.addSubview(wechatLogin)
-        
-        wechatLogin.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width/2 - qqLoginBtn.bounds.width/2, y: UIScreen.main.bounds.height - qqLoginBtn.bounds.height - 40 - wechatLogin.bounds.height - 10)
-        
-        wechatLogin.addTarget(self, action: #selector(wechatLoginClick), for: UIControlEvents.touchUpInside)
-        
         /// lineGroup
         let lineGroupView = UIView()
         lineGroupView.frame.size = CGSize.init(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8 * 0.2)
-        lineGroupView.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width * 0.1, y: UIScreen.main.bounds.height - qqLoginBtn.bounds.height - 50 - wechatLogin.bounds.height - UIScreen.main.bounds.width * 0.8 * 0.2)
+        lineGroupView.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width * 0.1, y: loginBtn.frame.origin.y + loginBtn.bounds.height + 40)
         view.addSubview(lineGroupView)
         
         let leftLineView = UIView()
@@ -203,7 +187,7 @@ class LoginViewController: UIViewController {
         let middLabel = UILabel()
         middLabel.text = "OR"
         middLabel.textColor = UIColor.gray
-        middLabel.font = UIFont.systemFont(ofSize: 18)
+        middLabel.font = UIFont.systemFont(ofSize: 16)
         middLabel.sizeToFit()
         lineGroupView.addSubview(middLabel)
         
@@ -216,6 +200,26 @@ class LoginViewController: UIViewController {
         
         leftLineView.frame.origin = CGPoint.init(x: 0, y: lineGroupView.bounds.height/2 - 0.5)
         rightLine.frame.origin = CGPoint.init(x: lineGroupView.bounds.width - rightLine.bounds.width, y: lineGroupView.bounds.height/2 - 0.5)
+        
+        /// 微信登录
+        let wechatLogin = UIButton.init(type: UIButtonType.custom)
+        wechatLogin.frame.size = CGSize.init(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8 * 0.14)
+        wechatLogin.setBackgroundImage(UIImage.init(named: "微信登录"), for: UIControlState.normal)
+        view.addSubview(wechatLogin)
+        
+        wechatLogin.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width/2 - wechatLogin.bounds.width/2, y: lineGroupView.frame.origin.y + lineGroupView.bounds.height + 10)
+        
+        wechatLogin.addTarget(self, action: #selector(wechatLoginClick), for: UIControlEvents.touchUpInside)
+        
+        /// qq登录
+        let qqLoginBtn = UIButton.init(type: UIButtonType.custom)
+        qqLoginBtn.frame.size = CGSize.init(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8 * 0.14)
+        qqLoginBtn.setBackgroundImage(UIImage.init(named: "qq登录"), for: UIControlState.normal)
+        view.addSubview(qqLoginBtn)
+        
+        qqLoginBtn.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width/2 - qqLoginBtn.bounds.width/2, y: wechatLogin.bounds.height + wechatLogin.frame.origin.y + 15)
+        
+        qqLoginBtn.addTarget(self, action: #selector(qqLoginClick), for: UIControlEvents.touchUpInside)
         
         if WeChatShared.isInstall() == false {
             /// 没有安装微信

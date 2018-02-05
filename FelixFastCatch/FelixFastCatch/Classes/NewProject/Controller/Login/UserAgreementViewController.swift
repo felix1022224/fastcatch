@@ -23,6 +23,6 @@ class UserAgreementViewController: BaseActionBarViewController {
         webview.backgroundColor = UIColor.white
         view.addSubview(webview)
         
-        webview.loadRequest(URLRequest(url: URL(string: "https://meizhe.meidaojia.com/makeup/activity/activity_banner/view_816")!))
+        webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/html/market/view_816.html")!))
     }
 }

@@ -104,7 +104,7 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         
         headView.addSubview(backImageView)
         
-        let shardBtn = UIImageView(image: UIImage(named: "banner_more"))
+        let shardBtn = UIImageView(image: UIImage(named: "share_icon"))
         shardBtn.sizeToFit()
         headView.addSubview(shardBtn)
         
@@ -126,37 +126,37 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         webview.backgroundColor = UIColor.white
         view.addSubview(webview)
         
-        self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
-        let model = webJsModel()
-        model.webVC = self
-        
-        self.jsContext.setObject(model, forKeyedSubscript: "miaozhuaApp" as NSCopying & NSObjectProtocol)
-        self.jsContext.exceptionHandler = { (context, exception) in
-            print("exception \(String(describing: exception))")
-        }
-        
-        if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
-            for cookieData in cookieArray {
-                if let dict = cookieData as? [HTTPCookiePropertyKey : Any] {
-                    if let cookie = HTTPCookie.init(properties : dict) {
-                        if cookie.name == "SESSION" {
-                            var cookieProperties =  [HTTPCookiePropertyKey : Any]()
-                            cookieProperties[HTTPCookiePropertyKey.name] = cookie.name
-                            cookieProperties[HTTPCookiePropertyKey.value] = cookie.value
-                            cookieProperties[HTTPCookiePropertyKey.domain] = "meizhe.meidaojia.com"
-                            cookieProperties[HTTPCookiePropertyKey.originURL] = "meizhe.meidaojia.com"
-                            cookieProperties[HTTPCookiePropertyKey.path] = "/"
-                            cookieProperties[HTTPCookiePropertyKey.version] = "0"
-                            
-                            let cookie = HTTPCookie(properties: cookieProperties)
-                            HTTPCookieStorage.shared.setCookie(cookie!)
-                        }
-                    }
-                }
-            }
-        }
-        
-        webview.loadRequest(URLRequest(url: URL(string: link)!))
+//        self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
+//        let model = webJsModel()
+//        model.webVC = self
+//
+//        self.jsContext.setObject(model, forKeyedSubscript: "miaozhuaApp" as NSCopying & NSObjectProtocol)
+//        self.jsContext.exceptionHandler = { (context, exception) in
+//            print("exception \(String(describing: exception))")
+//        }
+//
+//        if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
+//            for cookieData in cookieArray {
+//                if let dict = cookieData as? [HTTPCookiePropertyKey : Any] {
+//                    if let cookie = HTTPCookie.init(properties : dict) {
+//                        if cookie.name == "SESSION" {
+//                            var cookieProperties =  [HTTPCookiePropertyKey : Any]()
+//                            cookieProperties[HTTPCookiePropertyKey.name] = cookie.name
+//                            cookieProperties[HTTPCookiePropertyKey.value] = cookie.value
+//                            cookieProperties[HTTPCookiePropertyKey.domain] = "meizhe.meidaojia.com"
+//                            cookieProperties[HTTPCookiePropertyKey.originURL] = "meizhe.meidaojia.com"
+//                            cookieProperties[HTTPCookiePropertyKey.path] = "/"
+//                            cookieProperties[HTTPCookiePropertyKey.version] = "0"
+//
+//                            let cookie = HTTPCookie(properties: cookieProperties)
+//                            HTTPCookieStorage.shared.setCookie(cookie!)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        webview.loadRequest(URLRequest(url: URL(string: link + "?date=\(Constants.getTime())")!))
         
         /// title
         actionTitleLabel.font = UIFont.systemFont(ofSize: 16)
@@ -170,6 +170,15 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
+        let model = webJsModel()
+        model.webVC = self
+        
+        self.jsContext.setObject(model, forKeyedSubscript: "miaozhuaApp" as NSCopying & NSObjectProtocol)
+        self.jsContext.exceptionHandler = { (context, exception) in
+            print("exception \(String(describing: exception))")
+        }
+        
         /// 重新load一遍
         if webview != nil {
             if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
@@ -193,7 +202,7 @@ class WebViewController: UIViewController, UIWebViewDelegate {
                 }
             }
             
-            webview.loadRequest(URLRequest(url: URL(string: link)!))
+            webview.loadRequest(URLRequest(url: URL(string: link + "?date=\(Constants.getTime())")!))
         }
     }
     

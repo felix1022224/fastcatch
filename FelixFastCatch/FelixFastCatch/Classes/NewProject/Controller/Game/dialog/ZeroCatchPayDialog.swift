@@ -209,7 +209,7 @@ class ZeroCatchPayDialog: UIView {
                     LoginViewController.showLoginVC()
                     LocalDataUtils.clearLoaclData()
                 }else if jsonData["code"].int! == -101 {
-                    ToastUtils.showErrorToast(msg: "您不具备首充资格，请刷新")
+                    
                 }else {
                     ToastUtils.showErrorToast(msg: "错误:" + jsonData["msg"].stringValue)
                 }

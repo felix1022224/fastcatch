@@ -26,7 +26,7 @@ class HomeBannerView: UIView {
     private var middleImage,middleImage2,leftImage,rightImage:UIImageView!
     
     // banner 指示器
-    fileprivate lazy var pageControl:UIPageControl = UIPageControl()
+    fileprivate lazy var pageControl:LWDPageControl = LWDPageControl()
     
     var scrollItemWidth:CGFloat = 0
     
@@ -47,11 +47,15 @@ class HomeBannerView: UIView {
     /// 签到按钮
     var checkInButton = UIButton.init(type: UIButtonType.custom)
     
+    let tabItemHeight:CGFloat = 90
+    
+    var bannerHeight:CGFloat = UIScreen.main.bounds.width <= 320 ? 140 : UIScreen.main.bounds.width * 0.41
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         let backgroundView = UIImageView()
-        backgroundView.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: (self.bounds.height - 90) * 0.6)
+        backgroundView.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: (self.bounds.height - tabItemHeight) * 0.6)
         backgroundView.image = UIImage(named: "首页顶部矩形")?.stretchableImage(withLeftCapWidth: 0, topCapHeight: 0)
         addSubview(backgroundView)
         
@@ -81,12 +85,12 @@ class HomeBannerView: UIView {
     /// 创建banner view
     func createBannerView(jsonData:[JSON]) {
         let scrollBg = UIView()
-        scrollBg.frame = CGRect(x: 0, y: title.frame.origin.y + 50, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 0.4)
+        scrollBg.frame = CGRect(x: 0, y: title.frame.origin.y + 50, width: UIScreen.main.bounds.width, height: bannerHeight)
         scrollBg.clipsToBounds = true
         addSubview(scrollBg)
         
         bannerView.backgroundColor = UIColor.clear
-        bannerView.frame = CGRect(x: 14, y: 0, width: scrollBg.bounds.width - 28, height: UIScreen.main.bounds.width * 0.4)
+        bannerView.frame = CGRect(x: 14, y: 0, width: scrollBg.bounds.width - 28, height: bannerHeight)
         bannerView.showsHorizontalScrollIndicator = false
         bannerView.showsVerticalScrollIndicator = false
         bannerView.isPagingEnabled = true
@@ -132,7 +136,7 @@ class HomeBannerView: UIView {
     
     /// 初始化图片的集合
     func initImageViews() -> () {
-        let scrollItemHeight = UIScreen.main.bounds.width * 0.4
+        let scrollItemHeight:CGFloat = bannerHeight
         
         self.leftImage = UIImageView(frame: CGRect(x: 0, y: 0, width: scrollItemWidth, height: scrollItemHeight))
         self.middleImage = UIImageView(frame: CGRect(x: scrollItemWidth, y: 0, width: scrollItemWidth, height: scrollItemHeight))
@@ -160,25 +164,16 @@ class HomeBannerView: UIView {
         
         // 设置指示器的属性
         pageControl.numberOfPages = bannerDataSource.count
-        pageControl.backgroundColor = UIColor.clear
+        pageControl.backgroundColor = UIColor.red
         pageControl.currentPage = 0
         pageControl.sizeToFit()
         
-        pageControl.currentPageIndicatorTintColor = UIColor.yellow
-        pageControl.pageIndicatorTintColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 0.8)
-        
-//        pageControl.setValue(UIImage.init(named: "其他页面圆点"), forKey: "_pageImage")
-//        pageControl.setValue(UIImage.init(named: "当前页面圆点"), forKey: "_currentPageImage")
-        
-//        pageControl.currentPageIndicatorTintColor = UIColor.init(patternImage: UIImage.init(named: "当前页面圆点")!)
-//        pageControl.pageIndicatorTintColor = UIColor.init(patternImage: UIImage.init(named: "其他页面圆点")!)
-//        pageControl.pageIndicatorTintColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 0.8)
-        
-//        pageControl.frame = CGRect(x: self.bounds.width/2 - pageControl.bounds.width/2, y: self.bounds.height - 20, width: pageControl.bounds.width, height: pageControl.bounds.height)
-
-        pageControl.frame = CGRect(x: UIScreen.main.bounds.width/2 - pageControl.bounds.width/2, y: title.frame.origin.y + 50 + bannerView.bounds.height - 30, width: pageControl.bounds.width, height: pageControl.bounds.height)
-        
         self.addSubview(pageControl)
+        
+        pageControl.snp.makeConstraints { (make) in
+            make.top.equalTo(title).offset(title.bounds.height + 20)
+            make.centerX.equalTo(bannerView).offset(100)
+        }
         
         bannerView.isUserInteractionEnabled = true
     }
@@ -226,7 +221,7 @@ class HomeBannerView: UIView {
     /// 创建tabs
     func createTabViews(jsonData:[JSON]) {
         tabScrollView.backgroundColor = UIColor.white
-        tabScrollView.frame = CGRect(x: CGFloat(14), y: self.bounds.height - 90, width: UIScreen.main.bounds.width - 28, height: 90)
+        tabScrollView.frame = CGRect(x: CGFloat(14), y: self.bounds.height - tabItemHeight, width: UIScreen.main.bounds.width - 28, height: tabItemHeight)
         tabScrollView.showsVerticalScrollIndicator = false
         tabScrollView.showsHorizontalScrollIndicator = false
         tabScrollView.bounces = false
@@ -244,7 +239,8 @@ class HomeBannerView: UIView {
                 }
             }
             if i == 0 {
-                item.tabTitle.textColor = UIColor.red
+                item.tabTitle.textColor = UIColor.init(red: 65/255.0, green: 33/255.0, blue: 15/255.0, alpha: 1.0)
+                item.tabTitle.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.bold)
             }
         }
         
@@ -255,7 +251,7 @@ class HomeBannerView: UIView {
     
     func createLineView() {
         lineView.frame = CGRect(x: 0, y: 0, width: (UIScreen.main.bounds.width - 28)/10, height: 3)
-        lineView.backgroundColor = UIColor.red
+        lineView.backgroundColor = UIColor.init(red: 255/255.0, green: 194/255.0, blue: 53/255.0, alpha: 1.0)
         lineView.layer.cornerRadius = 2
         lineView.layer.masksToBounds = true
         tabScrollView.addSubview(lineView)
@@ -276,9 +272,8 @@ class HomeBannerView: UIView {
     /// - Returns: 单独tabview
     func createTabItem(index:Int, imageUrl:String) -> HomeTabItemView {
         let itemWidth = (UIScreen.main.bounds.width - 28)/4
-        let itemHeight = 90
         
-        let homeTab = HomeTabItemView(frame: CGRect(x: CGFloat(Float(index) * Float(itemWidth)), y: CGFloat(0), width: itemWidth, height: CGFloat(itemHeight)))
+        let homeTab = HomeTabItemView(frame: CGRect(x: CGFloat(Float(index) * Float(itemWidth)), y: CGFloat(0), width: itemWidth, height: CGFloat(tabItemHeight)))
         
         homeTab.createView(index: index, imageUrl: imageUrl)
         

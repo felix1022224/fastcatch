@@ -19,6 +19,7 @@ extension AwardViewController{
         takeList.rowHeight = UIScreen.main.bounds.width * 0.9 * 0.5
         takeList.frame = notTakeList.bounds
         takeList.separatorInset = UIEdgeInsets.init(top: 0, left: centerGroupView.bounds.width * 0.05, bottom: 0, right: centerGroupView.bounds.width * 0.05)
+        takeList.separatorColor = UIColor.init(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         takeList.delegate = takeListDelegate
         takeList.dataSource = takeListDelegate
         takeList.register(TakeTableViewCell.self, forCellReuseIdentifier: "cellId")

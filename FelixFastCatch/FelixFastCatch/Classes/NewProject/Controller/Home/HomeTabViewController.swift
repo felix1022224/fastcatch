@@ -24,9 +24,9 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
     /// 分页y轴偏移量缓存
     private var offsetYs = [CGFloat]()
     
-    private var headerHeight:Float!
+    private var headerHeight:CGFloat!
     
-    var lastTableViewOffsetY:Float = 0.0
+    var lastTableViewOffsetY:CGFloat = 0.0
     
     var headerView:HomeBannerView!
     
@@ -56,7 +56,7 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
     /// 顶部的滚动条
     var topTabLineView = UIView()
     
-    var isHide = false
+    var isHide = true
     
     //自动刷新计时器
     var refreshUserInfoTimer:Timer?
@@ -69,31 +69,42 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
     /// 是否自动显示过签到了
     var isAutoShowCheckInDialog = false
     
+    /// 新用户一元礼包
+    var newUserGiftDialog:NewUserGiftDialog!
+    
+    /// 是否已经显示过了一元礼包
+    var isShowNewUserGiftDialog = false
+    
+    /// 是否偏移量为0
+    var isStartOffsetZero = false
+    
+    var isAddStatus = false
+    
+    var isShowADV = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        headerHeight = Float(Constants.UI.HOME_HEADER_HEIGHT)
+        headerHeight = CGFloat(Constants.UI.HOME_HEADER_HEIGHT)
         
         self.view.backgroundColor = UIColor.white
         
         rootScrollView.frame = UIScreen.main.bounds
         rootScrollView.isPagingEnabled = true
         rootScrollView.delegate = self
-        rootScrollView.bounces = false
         
         if #available(iOS 11.0, *) {
             rootScrollView.contentInsetAdjustmentBehavior = .scrollableAxes
         } else {
             // Fallback on earlier versions
+            
         }
         
         view.addSubview(rootScrollView)
         
-        getTabData()
-        
-        headerView = HomeBannerView(frame: CGRect(x: 0, y: 0, width: Int(UIScreen.main.bounds.width), height: Constants.UI.HOME_HEADER_HEIGHT))
+        headerView = HomeBannerView(frame: CGRect(x: 0, y: 0, width: Int(UIScreen.main.bounds.width), height: Int(headerHeight)))
         headerView.tabClickCallback = { (index) in
-            self.rootScrollView.scrollRectToVisible(CGRect.init(x: CGFloat(index) * UIScreen.main.bounds.width, y: 0, width: self.rootScrollView.bounds.width, height: self.rootScrollView.bounds.height), animated: true)
+            self.rootScrollView.scrollRectToVisible(CGRect.init(x: CGFloat(index) * UIScreen.main.bounds.width, y: 0, width: self.rootScrollView.bounds.width, height: UIScreen.main.bounds.height), animated: true)
         }
         headerView.backgroundColor = UIColor.white
         view.addSubview(headerView)
@@ -102,21 +113,12 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
         
         createTopTabView()
         
-        getBannerList()
-        
         configureAutoRefeshUserInfoTimer()
         
         let tapBanner = UITapGestureRecognizer.init(target: self, action: #selector(bannerClick))
         headerView.bannerView.addGestureRecognizer(tapBanner)
         
         self.headerView.checkInButton.addTarget(self, action: #selector(showMyCheckInDialog), for: UIControlEvents.touchUpInside)
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 6) {[weak self] in
-            if self?.isAutoShowCheckInDialog == false && Constants.User.todayChecked == false {
-                self?.isAutoShowCheckInDialog = true
-                self?.showMyCheckInDialog()
-            }
-        }
     }
     
     /// 点击banner
@@ -133,13 +135,12 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
             webVC.shareTitle = item["shareTitle"].stringValue
             webVC.shareInfo = item["shareSubtitle"].stringValue
             webVC.thumbShareImage = item["shareImg"].stringValue
-            webVC.actionTitle = item["name"].stringValue
+            webVC.actionTitle = item["shareTitle"].stringValue
             self.navigationController?.pushViewController(webVC, animated: true)
         }else if item["redirectType"].intValue == 2 {
             let link = item["scheme"].intValue
             if link == -1 {
-                let payVC = PayWebViewController()
-                self.navigationController?.pushViewController(payVC, animated: true)
+                PayWebViewController.showPayWebVC(isShowBack: true)
                 return
             }else{
                 let gameRoomVC = GameRoomViewController()
@@ -191,28 +192,55 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
             return
         }
         
+        if isAddStatus == false {
+            isAddStatus = true
+            if (collectionView?.contentOffset.y)! >= CGFloat(0) {
+                isStartOffsetZero = true
+            }else{
+                isStartOffsetZero = false
+            }
+        }
+
         let tabviewOffsetY = collectionView?.contentOffset.y
-        self.lastTableViewOffsetY = Float(tabviewOffsetY!)
+        self.lastTableViewOffsetY = CGFloat(tabviewOffsetY!)
         offsetYs[(collectionView?.tag)!] = tabviewOffsetY!
-        
+
         UIView.animate(withDuration: 0.1) {
             self.statusBarView.backgroundColor = UIColor.init(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: CGFloat(self.lastTableViewOffsetY/100))
         }
+
+        let statusHeight:CGFloat = UIDevice.current.isX() ? 44 : 20
+
+        let moreHeight:CGFloat = self.headerView.tabItemHeight
         
-        let statusHeight:Float = UIDevice.current.isX() ? 44 : 0
-        
-        let moreHeight:Float = 14 + 45
-        
-        if lastTableViewOffsetY >= -statusHeight && lastTableViewOffsetY <= headerHeight {
-            self.headerView.frame.origin = CGPoint(x: 0, y: Int(-statusHeight - lastTableViewOffsetY))
-        }else if lastTableViewOffsetY > headerHeight {
-            self.headerView.frame.origin = CGPoint(x: 0, y: Int(-headerHeight))
-        }else if lastTableViewOffsetY < statusHeight + moreHeight {
-            self.headerView.frame.origin = CGPoint(x: 0, y: 0)
+        if isStartOffsetZero {
+            if lastTableViewOffsetY >= 0 && lastTableViewOffsetY <= headerHeight {
+                self.headerView.frame.origin = CGPoint(x: 0, y: Int(0 - lastTableViewOffsetY))
+            }else if lastTableViewOffsetY > headerHeight {
+                self.headerView.frame.origin = CGPoint(x: 0, y: Int(-headerHeight))
+            }else if lastTableViewOffsetY < statusHeight + moreHeight {
+                self.headerView.frame.origin = CGPoint(x: 0, y: 0)
+            }
+        }else{
+            if lastTableViewOffsetY >= -statusHeight && lastTableViewOffsetY <= headerHeight {
+                self.headerView.frame.origin = CGPoint(x: 0, y: Int(-statusHeight - lastTableViewOffsetY))
+            }else if lastTableViewOffsetY > headerHeight {
+                self.headerView.frame.origin = CGPoint(x: 0, y: Int(-headerHeight))
+            }else if lastTableViewOffsetY < statusHeight + moreHeight {
+                self.headerView.frame.origin = CGPoint(x: 0, y: 0)
+            }
         }
+
+        let statusHeight2:CGFloat = UIDevice.current.isX() ? 44 : 0
         
-        UIView.animate(withDuration: 0.15) {
-            if self.lastTableViewOffsetY >= self.headerHeight - statusHeight*2 - 45 {
+        if isStartOffsetZero {
+            if self.lastTableViewOffsetY >= CGFloat(self.headerHeight) - self.headerView.tabItemHeight + UIApplication.shared.statusBarFrame.height {
+                self.topTabVies.isHidden = false
+            }else{
+                self.topTabVies.isHidden = true
+            }
+        }else{
+            if self.lastTableViewOffsetY >= CGFloat(self.headerHeight) - statusHeight2 - self.headerView.tabItemHeight {
                 self.topTabVies.isHidden = false
             }else{
                 self.topTabVies.isHidden = true
@@ -228,18 +256,27 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
         if collectionViews.count <= 0 {
             return
         }
-        
+
         let index = Int((scrollView.contentOffset.x - scrollView.bounds.width/2)/scrollView.bounds.width + 1)
         currentCollectionView = collectionViews[index]
+
+        var collectionY:CGFloat
+        if UIDevice.current.isX() {
+            collectionY = CGFloat(self.headerHeight) - self.headerView.tabItemHeight + 0.5
+        }else{
+            collectionY = CGFloat(self.headerHeight) - self.headerView.tabItemHeight + 0.5
+        }
         
-        let statusHeight:Float = UIDevice.current.isX() ? 44 : 20
-        let collectionY = CGFloat(self.headerHeight - statusHeight*2 - 45)
+        if isStartOffsetZero {
+            collectionY = CGFloat(self.headerHeight) - self.headerView.tabItemHeight + 0.5 + UIApplication.shared.statusBarFrame.height
+        }
         
+
         for collectionView in self.collectionViews {
             if self.currentCollectionView.contentOffset.y < CGFloat(collectionY) {
                 collectionView.contentOffset = CGPoint(x: 0, y: self.currentCollectionView.contentOffset.y)
             }
-            
+
             if self.currentCollectionView.contentOffset.y > CGFloat(collectionY) {
                 if offsetYs[collectionView.tag] > CGFloat(collectionY) {
                     collectionView.contentOffset = CGPoint(x: 0, y: offsetYs[collectionView.tag])
@@ -248,20 +285,22 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
                 }
             }
         }
-        
+
         let lineViewY = headerView.tabScrollView.bounds.height - 8
         let itemWidth = (UIScreen.main.bounds.width - 28)/4
         let x  = itemWidth/2 - headerView.lineView.bounds.width/2 + CGFloat(itemWidth * CGFloat(index))
-        
+
         UIView.animate(withDuration: 0.2) {
             for itemView in self.headerView.tabviews {
                 if itemView.tag == index {
-                    itemView.tabTitle.textColor = UIColor.red
+                    itemView.tabTitle.textColor = UIColor.init(red: 65/255.0, green: 33/255.0, blue: 15/255.0, alpha: 1.0)
+                    itemView.tabTitle.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.bold)
                 }else{
-                    itemView.tabTitle.textColor = UIColor.black
+                    itemView.tabTitle.textColor = UIColor.init(red: 65/255.0, green: 33/255.0, blue: 15/255.0, alpha: 1.0)
+                    itemView.tabTitle.font = UIFont.systemFont(ofSize: 12)
                 }
             }
-            
+
             for item in self.topTabLabels {
                 if item.tag == index {
                     item.textColor = UIColor.red
@@ -269,16 +308,16 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
                     item.textColor = UIColor.black
                 }
             }
-            
+
             if index == 0 {
                 self.headerView.lineView.frame.origin = CGPoint(x: itemWidth/2 - self.headerView.lineView.bounds.width/2, y: lineViewY)
                 self.topTabLineView.frame.origin = CGPoint(x: itemWidth/2 - self.headerView.lineView.bounds.width/2, y: self.topTabLineView.frame.origin.y)
             }else{
                 self.headerView.lineView.frame.origin = CGPoint(x: x, y: lineViewY)
                 self.topTabLineView.frame.origin = CGPoint(x: x, y: self.topTabLineView.frame.origin.y)
-                
+
                 self.headerView.tabScrollView.scrollRectToVisible(CGRect.init(x: self.headerView.tabviews[index - 1].frame.minX - 28, y: 0, width: self.headerView.tabScrollView.bounds.width, height: self.headerView.tabScrollView.bounds.width), animated: true)
-                
+
                 self.topTabScrollView.scrollRectToVisible(CGRect.init(x: self.topTabLabels[index - 1].frame.minX - 28, y: 0, width: self.topTabScrollView.bounds.width, height: self.topTabScrollView.bounds.height), animated: true)
             }
         }
@@ -288,11 +327,94 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         /// 隐藏自带的navigationBar
         self.navigationController?.isNavigationBarHidden = true
-        isHide = false
+        
+        if isShowADV {
+            isHide = false
+            isShowADV = true
+            
+            updateHome()
+            return
+        }
+        if SplashView.isExistsSplashData() == false {
+            isHide = false
+            isShowADV = true
+            
+            updateHome()
+            return
+        }
+        SplashView.showSplashView(duration: 5, defaultImage: UIImage(named: "Launchplaceholder"), tapSplashImageBlock: { (resultStr) in
+            if resultStr != "" {
+                switch UserDefaults.standard.integer(forKey: SplashView.OPEN_ADV_URL_TYPE) {
+                case 1:
+                    let link = resultStr
+                    // 跳转到网页
+                    if link == "" {
+                        return
+                    }
+                    let webVC = WebViewController()
+                    webVC.link = link
+                    webVC.shareTitle = UserDefaults.standard.string(forKey: SplashView.OPEN_ADV_SHARE_TITLE)
+                    webVC.shareInfo = UserDefaults.standard.string(forKey: SplashView.OPEN_ADV_SHARE_INFO)
+                    webVC.thumbShareImage = UserDefaults.standard.string(forKey: SplashView.OPEN_ADV_SHARE_THUMBIMAGE)
+                    webVC.actionTitle = UserDefaults.standard.string(forKey: SplashView.OPEN_ADV_URL_TITLE)
+                    self.navigationController?.pushViewController(webVC, animated: true)
+                    break
+                case 2:
+                    let link = Int(resultStr!)
+                    if link == -1 {
+                        let payVC = PayViewController()
+                        self.navigationController?.pushViewController(payVC, animated: true)
+                    }
+                    break
+                case 3:
+                    //跳转到外部链接
+                    if let url = URL(string: resultStr!) {
+                        //根据iOS系统版本，分别处理
+                        if #available(iOS 10, *) {
+                            UIApplication.shared.open(url, options: [:],completionHandler: {(success) in })
+                        } else {
+                            UIApplication.shared.openURL(url)
+                        }
+                    }
+                    break
+                default: break
+                    //什么都不干
+                }
+            }
+        }) { (isDiss) in
+            self.isShowADV = true
+            self.isHide = false
+            
+            self.updateHome()
+        }
+    }
+    
+    func updateHome() {
+        if self.mainBannersData.count <= 0 {
+            self.getTabData()
+            
+            self.getBannerList()
+        }
+        
+        if self.isAutoShowCheckInDialog == false && Constants.User.todayChecked == false {
+            self.isAutoShowCheckInDialog = true
+            self.showMyCheckInDialog()
+        }
+        if self.isShowNewUserGiftDialog == false && Constants.User.ID != "" {
+            self.showNewUserGiftDialog()
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         isHide = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        isHide = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        isHide = false
     }
     
 }
@@ -417,7 +539,7 @@ extension HomeTabViewController{
                         itemPageContent.collectionView.addObserver(self, forKeyPath: "contentOffset", options: .new, context: nil)
                     }
                     
-                    self.rootScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(self.tabsDataSource.count), height: UIScreen.main.bounds.height)
+                    self.rootScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(self.tabsDataSource.count), height: 1)
                     
                     self.getsUserInfo()
                 }
@@ -452,6 +574,24 @@ extension HomeTabViewController{
         }
         
         UserTools.getUserInfo(callback: { })
+    }
+    
+    @objc func showNewUserGiftDialog(){
+        if isShowNewUserGiftDialog {
+            return
+        }
+        Alamofire.request(Constants.Network.Gift.IS_NEW_USER_GIFT).responseJSON { (dataReponse) in
+            if NetWorkUtils.checkReponse(response: dataReponse) {
+                let result = JSON.init(data: dataReponse.data!)
+                if result["data"].boolValue == false {
+                    self.newUserGiftDialog = nil
+                    self.newUserGiftDialog = NewUserGiftDialog(frame: UIScreen.main.bounds)
+                    self.newUserGiftDialog.createView()
+                    self.newUserGiftDialog.show()
+                    self.isShowNewUserGiftDialog = true
+                }
+            }
+        }
     }
     
 }

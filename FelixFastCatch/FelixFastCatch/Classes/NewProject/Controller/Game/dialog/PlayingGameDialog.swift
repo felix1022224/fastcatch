@@ -66,7 +66,7 @@ class PlayingGameDialog: BasicDialog {
         avaterImage.frame = CGRect.init(x: backgroundImage.frame.origin.x + backgroundImage.bounds.width * 0.2, y: backgroundImage.frame.origin.y + backgroundImage.bounds.height * 0.4, width: 45, height: 45)
         addSubview(avaterImage)
         
-        avaterImage.kf.setImage(with: URL.init(string: gameUserDataSource["avatar"].stringValue))
+        avaterImage.kf.setImage(with: URL.init(string: gameUserDataSource["avatar"].stringValue), placeholder: UIImage.init(named: "avater_default"), options: nil, progressBlock: nil, completionHandler: nil)
         
         avaterImage.layer.cornerRadius = 4
         avaterImage.layer.masksToBounds = true

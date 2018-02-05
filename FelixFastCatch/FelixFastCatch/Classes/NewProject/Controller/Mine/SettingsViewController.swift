@@ -94,8 +94,8 @@ class SettingsViewController: BaseActionBarViewController {
             self.logoutCallback!()
         }
         
-        Alamofire.request(Constants.Network.User.LOGOUT_URL, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { (response) in
-        }
+//        Alamofire.request(Constants.Network.User.LOGOUT_URL, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { (response) in
+//        }
     }
     
     /// 点击用户协议

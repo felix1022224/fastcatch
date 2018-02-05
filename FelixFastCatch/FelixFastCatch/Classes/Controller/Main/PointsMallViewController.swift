@@ -62,36 +62,36 @@ class PointsMallViewController: BaseActionBarViewController , UIWebViewDelegate,
         
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         
-        self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
-        let model = pointsJsModel()
-        model.vc = self
-        
-        self.jsContext.setObject(model, forKeyedSubscript: "miaozhuaApp" as NSCopying & NSObjectProtocol)
-        self.jsContext.exceptionHandler = { (context, exception) in
-        }
-        
-        if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
-            for cookieData in cookieArray {
-                if let dict = cookieData as? [HTTPCookiePropertyKey : Any] {
-                    if let cookie = HTTPCookie.init(properties : dict) {
-                        if cookie.name == "SESSION" {
-                            var cookieProperties =  [HTTPCookiePropertyKey : Any]()
-                            cookieProperties[HTTPCookiePropertyKey.name] = cookie.name
-                            cookieProperties[HTTPCookiePropertyKey.value] = cookie.value
-                            cookieProperties[HTTPCookiePropertyKey.domain] = "api.mz.meidaojia.com"
-                            cookieProperties[HTTPCookiePropertyKey.originURL] = "http://api.mz.meidaojia.com"
-                            cookieProperties[HTTPCookiePropertyKey.path] = "/"
-                            cookieProperties[HTTPCookiePropertyKey.version] = "0"
-                            
-                            let cookie = HTTPCookie(properties: cookieProperties)
-                            HTTPCookieStorage.shared.setCookie(cookie!)
-                        }
-                    }
-                }
-            }
-        }
-        
-        webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/market/score.html")!))
+//        self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
+//        let model = pointsJsModel()
+//        model.vc = self
+//
+//        self.jsContext.setObject(model, forKeyedSubscript: "miaozhuaApp" as NSCopying & NSObjectProtocol)
+//        self.jsContext.exceptionHandler = { (context, exception) in
+//        }
+//
+//        if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
+//            for cookieData in cookieArray {
+//                if let dict = cookieData as? [HTTPCookiePropertyKey : Any] {
+//                    if let cookie = HTTPCookie.init(properties : dict) {
+//                        if cookie.name == "SESSION" {
+//                            var cookieProperties =  [HTTPCookiePropertyKey : Any]()
+//                            cookieProperties[HTTPCookiePropertyKey.name] = cookie.name
+//                            cookieProperties[HTTPCookiePropertyKey.value] = cookie.value
+//                            cookieProperties[HTTPCookiePropertyKey.domain] = "api.mz.meidaojia.com"
+//                            cookieProperties[HTTPCookiePropertyKey.originURL] = "http://api.mz.meidaojia.com"
+//                            cookieProperties[HTTPCookiePropertyKey.path] = "/"
+//                            cookieProperties[HTTPCookiePropertyKey.version] = "0"
+//
+//                            let cookie = HTTPCookie(properties: cookieProperties)
+//                            HTTPCookieStorage.shared.setCookie(cookie!)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/html/score/score.html")!))
         
         pointListButton.setTitle("积分记录", for: UIControlState.normal)
         pointListButton.setTitleColor(UIColor.black, for: UIControlState.normal)
@@ -102,6 +102,8 @@ class PointsMallViewController: BaseActionBarViewController , UIWebViewDelegate,
         pointListButton.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - pointListButton.bounds.width - 15, y: backImageView.frame.origin.y + backImageView.bounds.height/2 - pointListButton.bounds.height/2)
         
         pointListButton.addTarget(self, action: #selector(showPointList), for: UIControlEvents.touchUpInside)
+        
+        pointListButton.isHidden = true
     }
 
     @objc func showPointList() {
@@ -141,6 +143,49 @@ class PointsMallViewController: BaseActionBarViewController , UIWebViewDelegate,
                 }
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
+        let model = pointsJsModel()
+        model.vc = self
+        
+        self.jsContext.setObject(model, forKeyedSubscript: "miaozhuaApp" as NSCopying & NSObjectProtocol)
+        self.jsContext.exceptionHandler = { (context, exception) in
+        }
+        
+        if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
+            for cookieData in cookieArray {
+                if let dict = cookieData as? [HTTPCookiePropertyKey : Any] {
+                    if let cookie = HTTPCookie.init(properties : dict) {
+                        if cookie.name == "SESSION" {
+                            var cookieProperties =  [HTTPCookiePropertyKey : Any]()
+                            cookieProperties[HTTPCookiePropertyKey.name] = cookie.name
+                            cookieProperties[HTTPCookiePropertyKey.value] = cookie.value
+                            cookieProperties[HTTPCookiePropertyKey.domain] = "api.mz.meidaojia.com"
+                            cookieProperties[HTTPCookiePropertyKey.originURL] = "http://api.mz.meidaojia.com"
+                            cookieProperties[HTTPCookiePropertyKey.path] = "/"
+                            cookieProperties[HTTPCookiePropertyKey.version] = "0"
+                            
+                            let cookie = HTTPCookie(properties: cookieProperties)
+                            HTTPCookieStorage.shared.setCookie(cookie!)
+                        }
+                    }
+                }
+            }
+        }
+        
+        let now = NSDate()
+        
+        let timeInterval:TimeInterval = now.timeIntervalSince1970
+        
+        let timeStamp = Int(timeInterval)
+        
+        webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/html/score/score.html?date=\(timeStamp)")!))
+        
+        backImageView.isHidden = true
+        
+        actionTitleLabel.text = "积分商城"
     }
     
     deinit {

@@ -150,6 +150,8 @@ class EditUserInfo: BaseActionBarViewController {
             return
         }
         
+        ToastUtils.showLoadingToast(msg: "正在保存")
+        
         var params = NetWorkUtils.createBaseParams()
         params["id"] = Constants.User.USER_ID
         params["nick"] = nickTextFiled.text

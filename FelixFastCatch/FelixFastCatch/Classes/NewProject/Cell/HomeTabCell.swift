@@ -32,20 +32,27 @@ class HomeTabCell: UICollectionViewCell {
         
         self.backgroundColor = UIColor.clear
         
-        rootView.frame = CGRect(x: 2, y: 0, width: self.bounds.width - 4, height: self.bounds.height)
+        rootView.frame = CGRect(x: 3, y: 0, width: self.bounds.width - 6, height: self.bounds.height)
         addSubview(rootView)
         
-        self.rootView.backgroundColor = UIColor.clear
+        rootView.backgroundColor = UIColor.white
+        
         self.rootView.layer.cornerRadius = 10
         self.rootView.layer.masksToBounds = true
         self.rootView.layer.borderWidth = 0.5
         self.rootView.layer.borderColor = UIColor.init(red: 220/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1.0).cgColor
         
+        // 阴影
+        layer.shadowColor = UIColor.init(red: 160/255.0, green: 195/255.0, blue: 253/255.0, alpha: 1.0).cgColor
+        layer.shadowOpacity = 0.2
+        layer.shadowRadius = 5
+        layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+        
         productImage.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height * 0.72)
         self.rootView.addSubview(productImage)
         
         errorShadowView.frame = productImage.bounds
-        errorShadowView.backgroundColor = UIColor.init(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.5)
+        errorShadowView.backgroundColor = UIColor.init(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.1)
         self.rootView.addSubview(errorShadowView)
         
         productName = UILabel()
@@ -62,7 +69,7 @@ class HomeTabCell: UICollectionViewCell {
         
         productCoin.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.bold)
         productCoin.text = "10000"
-        productCoin.textColor = Constants.UI.GEM_TEXT_COLOR
+        productCoin.textColor = UIColor.init(red: 241/255.0, green: 176/255.0, blue: 0/255.0, alpha: 1.0)
         productCoin.sizeToFit()
         productCoin.frame.origin = CGPoint(x: coinIcon.frame.midX + 15, y: 0)
         productCoin.center.y = coinIcon.center.y

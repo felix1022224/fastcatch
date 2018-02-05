@@ -19,6 +19,9 @@ class MessageListViewController: BaseActionBarViewController,UITableViewDelegate
     /// 消息列表的数据
     var messageDataSource = [JSON]()
     
+    /// 没有数据的图片
+    var noValueImage = UIImageView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,6 +29,7 @@ class MessageListViewController: BaseActionBarViewController,UITableViewDelegate
         
         messageTabList.rowHeight = 90
         messageTabList.frame = CGRect(x: 0, y: headView.bounds.height + 5, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - headView.bounds.height - 5)
+        messageTabList.separatorColor = UIColor.init(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         messageTabList.delegate = self
         messageTabList.dataSource = self
         messageTabList.backgroundColor = UIColor.white
@@ -33,6 +37,15 @@ class MessageListViewController: BaseActionBarViewController,UITableViewDelegate
         messageTabList.tableFooterView = UIView.init(frame: CGRect.zero)
         messageTabList.register(MessageTableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(messageTabList)
+        
+        noValueImage.image = UIImage.init(named: "消息空")
+        noValueImage.sizeToFit()
+        view.addSubview(noValueImage)
+        
+        noValueImage.center = view.center
+        
+        messageTabList.isHidden = true
+        noValueImage.isHidden = false
         
         getNotificationList()
     }
@@ -72,6 +85,14 @@ class MessageListViewController: BaseActionBarViewController,UITableViewDelegate
                         self.messageDataSource = self.messageDataSource + resultArray
                     }
                     self.messageTabList.reloadData()
+                    
+                    if self.messageDataSource.count <= 0 {
+                        self.messageTabList.isHidden = true
+                        self.noValueImage.isHidden = false
+                    }else{
+                        self.messageTabList.isHidden = false
+                        self.noValueImage.isHidden = true
+                    }
                 }
         }
     }

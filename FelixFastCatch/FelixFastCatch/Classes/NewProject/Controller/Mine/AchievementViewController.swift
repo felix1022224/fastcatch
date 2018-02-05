@@ -51,7 +51,7 @@ class AchievementViewController: UIViewController {
         nickNameLabel.frame = CGRect.init(x: 30 + backbutton.bounds.width, y: backbutton.frame.origin.y + backbutton.bounds.height/2 - nickNameLabel.bounds.height/2, width: nickNameWidth, height: nickNameLabel.bounds.height)
         view.addSubview(nickNameLabel)
         
-        numberLabel.text = "，已获成就100个"
+        numberLabel.text = "，已获成就0个"
         numberLabel.font = UIFont.systemFont(ofSize: 18)
         numberLabel.textColor = UIColor.white
         numberLabel.sizeToFit()

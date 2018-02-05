@@ -27,28 +27,28 @@ extension GameRoomViewController{
         titleGroupView.addSubview(productInfoTitle)
         
         let leftLine = UIView()
-        leftLine.backgroundColor = UIColor.black
+        leftLine.backgroundColor = UIColor.init(red: 169/255.0, green: 169/255.0, blue: 169/255.0, alpha: 1.0)
         leftLine.frame = CGRect(x: 0, y: titleGroupView.bounds.height/2 - 0.5, width: titleGroupView.bounds.width / 3, height: 1)
         titleGroupView.addSubview(leftLine)
         
         let rightLine = UIView()
-        rightLine.backgroundColor = UIColor.black
+        rightLine.backgroundColor = UIColor.init(red: 169/255.0, green: 169/255.0, blue: 169/255.0, alpha: 1.0)
         rightLine.frame = CGRect(x: titleGroupView.bounds.width - leftLine.bounds.width, y: titleGroupView.bounds.height/2 - 0.5, width: titleGroupView.bounds.width / 3, height: 1)
         titleGroupView.addSubview(rightLine)
         
         let bannerView = UIImageView()
         bannerView.frame.size = CGSize.init(width: UIScreen.main.bounds.width - 80, height: (UIScreen.main.bounds.width - 80) * 0.45)
+        bannerView.backgroundColor = UIColor.white
         bannerGroupView.addSubview(bannerView)
-        
-        bannerView.kf.setImage(with: URL.init(string: gameRoomData["activity"]["advertiseImg"].stringValue))
         
         bannerView.layer.cornerRadius = 10
         bannerView.layer.masksToBounds = true
         
         bannerView.frame.origin = CGPoint.init(x: 40, y: 50)
         
-        bannerView.isUserInteractionEnabled = true
+        bannerView.kf.setImage(with: URL.init(string: gameRoomData["activity"]["advertiseImg"].stringValue))
         
+        bannerView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer.init(target: self, action: #selector(clickActivityInfo))
         bannerView.addGestureRecognizer(tap)
     }
@@ -88,7 +88,7 @@ extension GameRoomViewController{
                     LoginViewController.showLoginVC()
                     return
                 }
-                self.navigationController?.pushViewController(PayWebViewController(), animated: true)
+                PayWebViewController.showPayWebVC(isShowBack: true)
                 return
             }
         }

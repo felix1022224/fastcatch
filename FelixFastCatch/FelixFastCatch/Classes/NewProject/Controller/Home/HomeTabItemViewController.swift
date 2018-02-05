@@ -58,7 +58,7 @@ class HomeTabItemViewController: UIViewController {
         if UIDevice.current.isX() {
             collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(CGFloat(Constants.UI.HOME_HEADER_HEIGHT - 44), 0, 0, 0)
         }else{
-            collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(CGFloat(Constants.UI.HOME_HEADER_HEIGHT - 0), 0, 0, 0)
+            collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(CGFloat(Constants.UI.HOME_HEADER_HEIGHT - 20), 0, 0, 0)
         }
         
         view.addSubview(collectionView)
@@ -179,6 +179,11 @@ extension HomeTabItemViewController: UICollectionViewDelegateFlowLayout, UIColle
             /// 广告
             itemClickByAdv(item: itemData)
         }else{
+            print("status:\(itemData)")
+            if itemData["status"].intValue >= 2 {
+                ToastUtils.showErrorToast(msg: "维护中，请稍后")
+                return
+            }
             itemGameRoomClick(deviceId: itemData["deviceId"].stringValue)
         }
     }
@@ -189,7 +194,6 @@ extension HomeTabItemViewController: UICollectionViewDelegateFlowLayout, UIColle
         gameRoomVC.deviceId = deviceId
         homeViewController.isHide = true
         self.homeViewController.navigationController?.pushViewController(gameRoomVC, animated: true)
-//        self.homeViewController.present(gameRoomVC, animated: true, completion: nil)
     }
     
     /// 点击广告

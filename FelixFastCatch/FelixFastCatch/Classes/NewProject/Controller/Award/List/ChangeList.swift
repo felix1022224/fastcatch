@@ -19,6 +19,7 @@ extension AwardViewController{
         changeList.rowHeight = UIScreen.main.bounds.width * 0.9 * 0.35
         changeList.frame = notTakeList.bounds
         changeList.separatorInset = UIEdgeInsets.init(top: 0, left: centerGroupView.bounds.width * 0.05, bottom: 0, right: centerGroupView.bounds.width * 0.05)
+        changeList.separatorColor = UIColor.init(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         changeList.delegate = changeListDelegate
         changeList.dataSource = changeListDelegate
         changeList.register(ChangeTableViewCell.self, forCellReuseIdentifier: "cellId")

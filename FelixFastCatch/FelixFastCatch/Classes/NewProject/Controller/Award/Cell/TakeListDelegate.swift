@@ -32,9 +32,9 @@ class TakeListDelegate:NSObject,  UITableViewDelegate, UITableViewDataSource {
             
             if itemData["status"].intValue == 1 {
                 cell.statusLabel.text = "已发货"
-                cell.statusLabel.textColor = UIColor.green
+                cell.statusLabel.textColor = UIColor.init(red: 20/255.0, green: 185/255.0, blue: 16/255.0, alpha: 1.0)
             }else{
-                cell.statusLabel.textColor = UIColor.black
+                cell.statusLabel.textColor = UIColor.init(red: 68/255.0, green: 68/255.0, blue: 68/255.0, alpha: 1.0)
                 cell.statusLabel.text = "配货中"
             }
         }else{
@@ -44,10 +44,10 @@ class TakeListDelegate:NSObject,  UITableViewDelegate, UITableViewDataSource {
             
             if itemData["status"].intValue == 1 {
                 cell.statusLabel.text = "已发货"
-                cell.statusLabel.textColor = UIColor.green
+                cell.statusLabel.textColor = UIColor.init(red: 20/255.0, green: 185/255.0, blue: 16/255.0, alpha: 1.0)
             }else{
                 cell.statusLabel.text = "配货中"
-                cell.statusLabel.textColor = UIColor.black
+                cell.statusLabel.textColor = UIColor.init(red: 68/255.0, green: 68/255.0, blue: 68/255.0, alpha: 1.0)
             }
         }
         

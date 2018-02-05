@@ -47,5 +47,6 @@
 #import "Classes/Tools/widget/SPPage/Controller/SPTabController.h"
 
 #import "Classes/NewProject/View/HorizontalPageableLayout.h"
+#import "Classes/NewProject/View/PageControl/LWDPageControl.h"
 
 #endif /* Login_header_h */

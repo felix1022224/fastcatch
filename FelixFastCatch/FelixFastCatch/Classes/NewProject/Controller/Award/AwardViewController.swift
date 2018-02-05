@@ -59,6 +59,10 @@ class AwardViewController: UIViewController {
     /// 确认兑换的弹窗
     var exchangeDialog:ConfirmExchangeDialog!
     
+    var takeNoValueImage = UIImageView()
+    var notTakeNoValueImage = UIImageView()
+    var changeNoValueImage = UIImageView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -69,7 +73,7 @@ class AwardViewController: UIViewController {
         
         userAwardNumberLabel.textColor = UIColor.white
         userAwardNumberLabel.font = UIFont.systemFont(ofSize: 18)
-        userAwardNumberLabel.text = "我四只小兔几，未提取奖品16件"
+        userAwardNumberLabel.text = "亲，未提取奖品0件"
         userAwardNumberLabel.sizeToFit()
         userAwardNumberLabel.frame.origin = CGPoint.init(x: 20, y: UIApplication.shared.statusBarFrame.height + 25)
         view.addSubview(userAwardNumberLabel)
@@ -85,6 +89,24 @@ class AwardViewController: UIViewController {
         centerGroupView.layer.shadowRadius = 20
         centerGroupView.layer.shadowOffset = CGSize(width: 0.5, height: 0.5)
         
+        takeNoValueImage.image = UIImage.init(named: "已提取空")
+        takeNoValueImage.sizeToFit()
+        centerGroupView.addSubview(takeNoValueImage)
+        takeNoValueImage.frame.origin = CGPoint.init(x: centerGroupView.bounds.width/2 - takeNoValueImage.bounds.width/2, y: centerGroupView.bounds.height/2 - takeNoValueImage.bounds.height/2)
+        
+        notTakeNoValueImage.image = UIImage.init(named: "未提取空")
+        notTakeNoValueImage.sizeToFit()
+        centerGroupView.addSubview(notTakeNoValueImage)
+        notTakeNoValueImage.frame.origin = CGPoint.init(x: centerGroupView.bounds.width/2 - notTakeNoValueImage.bounds.width/2, y: centerGroupView.bounds.height/2 - notTakeNoValueImage.bounds.height/2)
+        
+        changeNoValueImage.image = UIImage.init(named: "已兑换空")
+        changeNoValueImage.sizeToFit()
+        centerGroupView.addSubview(changeNoValueImage)
+        changeNoValueImage.frame.origin = CGPoint.init(x: centerGroupView.bounds.width/2 - changeNoValueImage.bounds.width/2, y: centerGroupView.bounds.height/2 - changeNoValueImage.bounds.height/2)
+        
+        takeNoValueImage.isHidden = true
+        notTakeNoValueImage.isHidden = true
+        changeNoValueImage.isHidden = true
         
         createTabScrollView()
     }
@@ -97,14 +119,14 @@ class AwardViewController: UIViewController {
         
         let grayLineView = UIView()
         grayLineView.frame = CGRect.init(x: centerGroupView.bounds.width * 0.05, y: 42, width: centerGroupView.bounds.width * 0.9, height: 0.5)
-        grayLineView.backgroundColor = UIColor.lightGray
+        grayLineView.backgroundColor = UIColor.init(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         centerGroupView.addSubview(grayLineView)
         
         /// 未提取的按钮
         notTakeTabButton.setTitle("待提取", for: UIControlState.normal)
         notTakeTabButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
-        notTakeTabButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
-        notTakeTabButton.setTitleColor(UIColor.black, for: UIControlState.selected)
+        notTakeTabButton.setTitleColor(UIColor.init(red: 136/255.0, green: 136/255.0, blue: 136/255.0, alpha: 1.0), for: UIControlState.normal)
+        notTakeTabButton.setTitleColor(UIColor.init(red: 65/255.0, green: 33/255.0, blue: 15/255.0, alpha: 1.0), for: UIControlState.selected)
         notTakeTabButton.frame.size = CGSize.init(width: tabScrollView.bounds.width/3, height: 40)
         notTakeTabButton.frame.origin = CGPoint.init(x: 0, y: 0)
         tabScrollView.addSubview(notTakeTabButton)
@@ -112,8 +134,8 @@ class AwardViewController: UIViewController {
         /// 未提取的按钮
         takeTabButton.setTitle("已提取", for: UIControlState.normal)
         takeTabButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
-        takeTabButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
-        takeTabButton.setTitleColor(UIColor.black, for: UIControlState.selected)
+        takeTabButton.setTitleColor(UIColor.init(red: 136/255.0, green: 136/255.0, blue: 136/255.0, alpha: 1.0), for: UIControlState.normal)
+        takeTabButton.setTitleColor(UIColor.init(red: 65/255.0, green: 33/255.0, blue: 15/255.0, alpha: 1.0), for: UIControlState.selected)
         takeTabButton.frame.size = CGSize.init(width: tabScrollView.bounds.width/3, height: 40)
         takeTabButton.frame.origin = CGPoint.init(x: notTakeTabButton.bounds.width, y: 0)
         tabScrollView.addSubview(takeTabButton)
@@ -121,14 +143,14 @@ class AwardViewController: UIViewController {
         /// 未提取的按钮
         changeTabButton.setTitle("已兑换", for: UIControlState.normal)
         changeTabButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
-        changeTabButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
-        changeTabButton.setTitleColor(UIColor.black, for: UIControlState.selected)
+        changeTabButton.setTitleColor(UIColor.init(red: 136/255.0, green: 136/255.0, blue: 136/255.0, alpha: 1.0), for: UIControlState.normal)
+        changeTabButton.setTitleColor(UIColor.init(red: 65/255.0, green: 33/255.0, blue: 15/255.0, alpha: 1.0), for: UIControlState.selected)
         changeTabButton.frame.size = CGSize.init(width: tabScrollView.bounds.width/3, height: 40)
         changeTabButton.frame.origin = CGPoint.init(x: notTakeTabButton.bounds.width * 2, y: 0)
         tabScrollView.addSubview(changeTabButton)
         
         pointLine.frame.size = CGSize.init(width: changeTabButton.bounds.width * 0.3, height: 1.5)
-        pointLine.backgroundColor = UIColor.orange
+        pointLine.backgroundColor = UIColor.init(red: 255/255.0, green: 194/255.0, blue: 53/255.0, alpha: 1.0)
         pointLine.frame.origin = CGPoint.init(x: notTakeTabButton.bounds.width/2 - pointLine.bounds.width/2, y: 32)
         tabScrollView.addSubview(pointLine)
         
@@ -152,6 +174,8 @@ class AwardViewController: UIViewController {
         changeTabButton.isSelected = false
         
         bottomGroupView.isHidden = false
+        
+        showNotTakeNoValue()
     }
     
     @objc func tabItemClick(sender:UIButton) {
@@ -169,6 +193,11 @@ class AwardViewController: UIViewController {
             UIView.animate(withDuration: 0.3, animations: {[weak self] in
                 self?.pointLine.frame.origin.x = (self?.notTakeTabButton.bounds.width)!/2 - (self?.pointLine.bounds.width)!/2
             })
+            
+            userAwardNumberLabel.text = Constants.User.USER_NICK_NAME + ",未提取奖品\(self.notTakeDataSources.count)个"
+            userAwardNumberLabel.sizeToFit()
+            
+            showNotTakeNoValue()
         }else if sender == takeTabButton {
             notTakeList.isHidden = true
             takeList.isHidden = false
@@ -185,6 +214,10 @@ class AwardViewController: UIViewController {
                 self?.pointLine.frame.origin.x = x + (self?.notTakeTabButton.bounds.width)!
             })
             
+            userAwardNumberLabel.text = Constants.User.USER_NICK_NAME + ",已提取奖品\(self.takeListDelegate.dataSources.count)个"
+            userAwardNumberLabel.sizeToFit()
+            
+            showTakeNoValue()
         }else{
             notTakeList.isHidden = true
             takeList.isHidden = true
@@ -201,6 +234,10 @@ class AwardViewController: UIViewController {
                 self?.pointLine.frame.origin.x = x + (self?.notTakeTabButton.bounds.width)! * 2
             })
             
+            userAwardNumberLabel.text = Constants.User.USER_NICK_NAME + ",已兑换奖品\(self.changeListDelegate.dataSources.count)个"
+            userAwardNumberLabel.sizeToFit()
+            
+            showChangeNoValue()
         }
     }
     
@@ -339,7 +376,56 @@ class AwardViewController: UIViewController {
         }
         exchangeDialog.createView()
         exchangeDialog.show()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getTakeList()
+        getNotTakeListDataSource()
+        getChangeListData()
+        selectedNumber.text = "已选择0个"
+        selectedNumber.sizeToFit()
+    }
+    
+    func showNotTakeNoValue(){
+        takeNoValueImage.isHidden = true
+        notTakeNoValueImage.isHidden = true
+        changeNoValueImage.isHidden = true
         
+        if notTakeDataSources.count <= 0 {
+            notTakeNoValueImage.isHidden = false
+            notTakeList.isHidden = true
+        }else{
+            notTakeNoValueImage.isHidden = true
+            notTakeList.isHidden = false
+        }
+    }
+    
+    func showTakeNoValue(){
+        takeNoValueImage.isHidden = true
+        notTakeNoValueImage.isHidden = true
+        changeNoValueImage.isHidden = true
+        
+        if takeListDelegate.dataSources.count <= 0 {
+            takeNoValueImage.isHidden = false
+            takeList.isHidden = true
+        }else{
+            takeNoValueImage.isHidden = true
+            takeList.isHidden = false
+        }
+    }
+    
+    func showChangeNoValue(){
+        takeNoValueImage.isHidden = true
+        notTakeNoValueImage.isHidden = true
+        changeNoValueImage.isHidden = true
+        
+        if changeListDelegate.dataSources.count <= 0 {
+            changeNoValueImage.isHidden = false
+            changeList.isHidden = true
+        }else{
+            changeNoValueImage.isHidden = true
+            changeList.isHidden = false
+        }
     }
     
 }

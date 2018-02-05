@@ -45,6 +45,8 @@ class MineViewController: UIViewController {
     /// 不是vip的提示
     let notVipLabel = UILabel()
     
+    let vipName = UILabel()
+    
     /// 续费按钮
     let renewFeeBtn = UIButton.init(type: .custom)
     
@@ -75,7 +77,7 @@ class MineViewController: UIViewController {
         userAvater.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - userAvater.bounds.width - 30, y: UIScreen.main.bounds.height * 0.065)
         rootView.addSubview(userAvater)
         
-        userAvater.kf.setImage(with: URL.init(string: Constants.User.USER_FACE_IMAGE))
+        userAvater.kf.setImage(with: URL.init(string: Constants.User.USER_FACE_IMAGE), placeholder: UIImage.init(named: "avater_default"), options: nil, progressBlock: nil, completionHandler: nil)
         
         print("vip:\(Constants.User.vip)")
         if Constants.User.vip == 100000 {
@@ -109,11 +111,13 @@ class MineViewController: UIViewController {
             make.top.equalTo(userAvater).offset(userAvater.bounds.height + 5)
         }
         
-        userNameLabel.font = UIFont.systemFont(ofSize: 20)
+        userNameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         userNameLabel.textColor = UIColor.white
         userNameLabel.text = Constants.User.USER_NICK_NAME
         userNameLabel.sizeToFit()
         rootView.addSubview(userNameLabel)
+        
+        userNameLabel.frame.origin = CGPoint.init(x: 30, y: userAvater.frame.origin.y + (45/2 - userNameLabel.bounds.height/2))
         
         userNameLabel.snp.makeConstraints { (make) in
             make.left.equalTo(rootView).offset(30)
@@ -130,6 +134,7 @@ class MineViewController: UIViewController {
         editUserButton.titleLabel?.textColor = UIColor.blue
         editUserButton.setTitle("编辑", for: UIControlState.normal)
         editUserButton.setTitleColor(UIColor.black, for: UIControlState.normal)
+        editUserButton.frame.size = CGSize.init(width: 40, height: 15)
         rootView.addSubview(editUserButton)
         
         editUserButton.addTarget(self, action: #selector(showEditUserVC), for: UIControlEvents.touchUpInside)
@@ -150,11 +155,15 @@ class MineViewController: UIViewController {
         }
         
         /// 星座
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd"
-        let con = ConstellationUtils.calculateWithDate(date: df.date(from: Constants.User.USER_BRITHDAY)!)
-        userXingZuo.text = con
-        userXingZuo.font = UIFont.systemFont(ofSize: 12)
+        if Constants.User.USER_BRITHDAY == "" {
+            userXingZuo.text = "未知"
+        }else{
+            let df = DateFormatter()
+            df.dateFormat = "yyyy-MM-dd"
+            let con = ConstellationUtils.calculateWithDate(date: df.date(from: Constants.User.USER_BRITHDAY)!)
+            userXingZuo.text = con
+        }
+        userXingZuo.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.bold)
         userXingZuo.sizeToFit()
         userXingZuo.textColor = UIColor.white
         rootView.addSubview(userXingZuo)
@@ -190,8 +199,8 @@ class MineViewController: UIViewController {
         numberGroupView.backgroundColor = UIColor.white
         rootView.addSubview(numberGroupView)
         
-        numberGroupView.layer.shadowColor = UIColor.init(red: 226/255.0, green: 238/255.0, blue: 253/255.0, alpha: 1.0).cgColor
-        numberGroupView.layer.shadowOpacity = 0.8
+        numberGroupView.layer.shadowColor = UIColor.init(red: 160/255.0, green: 195/255.0, blue: 253/255.0, alpha: 1.0).cgColor
+        numberGroupView.layer.shadowOpacity = 0.6
         numberGroupView.layer.shadowRadius = 5
         numberGroupView.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
         
@@ -199,12 +208,12 @@ class MineViewController: UIViewController {
             make.centerX.equalTo(rootView)
             make.top.equalTo(rootView).offset(rootView.bounds.height * 0.16)
             make.width.equalTo(UIScreen.main.bounds.width * 0.9)
-            make.height.equalTo(60)
+            make.height.equalTo(65)
         }
         
         goldNumber.text = "代币\n\(Constants.User.diamondsCount)"
         goldNumber.font = UIFont.systemFont(ofSize: 14)
-        goldNumber.numberOfLines = 2
+        goldNumber.numberOfLines = 3
         goldNumber.textAlignment = .center
         goldNumber.sizeToFit()
         numberGroupView.addSubview(goldNumber)
@@ -214,10 +223,10 @@ class MineViewController: UIViewController {
             make.centerY.equalTo(numberGroupView)
         }
         
-        redNumber.text = "红包\n\(Constants.User.diamondsCount)"
+        redNumber.text = "红包\n\(Constants.User.user_red_bag_number)"
         redNumber.font = UIFont.systemFont(ofSize: 14)
         redNumber.textAlignment = .center
-        redNumber.numberOfLines = 2
+        redNumber.numberOfLines = 3
         redNumber.sizeToFit()
         numberGroupView.addSubview(redNumber)
         
@@ -229,7 +238,7 @@ class MineViewController: UIViewController {
         couponNumber.text = "优惠券\n\(Constants.User.userCouponNumber)"
         couponNumber.font = UIFont.systemFont(ofSize: 14)
         couponNumber.textAlignment = .center
-        couponNumber.numberOfLines = 2
+        couponNumber.numberOfLines = 3
         couponNumber.sizeToFit()
         numberGroupView.addSubview(couponNumber)
         
@@ -238,7 +247,26 @@ class MineViewController: UIViewController {
             make.centerY.equalTo(numberGroupView)
         }
         
+        goldNumber.isUserInteractionEnabled = true
+        let goldNumberTap = UITapGestureRecognizer.init(target: self, action: #selector(NumberShowPayVC))
+        goldNumber.addGestureRecognizer(goldNumberTap)
+        
+        couponNumber.isUserInteractionEnabled = true
+        let couponNumberTap = UITapGestureRecognizer.init(target: self, action: #selector(showCouponListVC))
+        couponNumber.addGestureRecognizer(couponNumberTap)
+        
         createListGroup()
+    }
+    
+    /// 点击数量跳转到支付
+    @objc func NumberShowPayVC() {
+        PayWebViewController.showPayWebVC(isShowBack: true)
+    }
+    
+    /// 跳转到优惠券
+    @objc func showCouponListVC(){
+        let couponList = CouponListWebViewController()
+        self.navigationController?.pushViewController(couponList, animated: true)
     }
     
     /// 创建底部选项集合
@@ -259,8 +287,14 @@ class MineViewController: UIViewController {
             make.left.equalTo(vipGroup).offset(30)
         }
         
-        let vipName = UILabel()
-        vipName.text = "VIP会员"
+        if Constants.User.vip == 100000 && Constants.User.vipDay > 0 {
+            vipName.text = "VIP会员"
+        }else if Constants.User.vip == 110000 && Constants.User.vipDay > 0{
+            vipName.text = "SVIP会员"
+        }else{
+            vipName.text = "VIP会员"
+        }
+        
         vipName.font = UIFont.systemFont(ofSize: 16)
         vipName.sizeToFit()
         vipGroup.addSubview(vipName)
@@ -270,9 +304,10 @@ class MineViewController: UIViewController {
             make.centerY.equalTo(vipIcon)
         }
         
-        notVipLabel.font = UIFont.systemFont(ofSize: 11)
+        notVipLabel.textColor = UIColor.init(red: 136/255.0, green: 136/255.0, blue: 136/255.0, alpha: 1.0)
+        notVipLabel.font = UIFont.systemFont(ofSize: 10)
         let attrText = NSMutableAttributedString.init(string: "开通会员，送480代币+充值9折特权")
-        attrText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.red, range: NSRange(location: 6, length:10))
+        attrText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.init(red: 251/155.0, green: 127/255.0, blue: 131/255.0, alpha: 1.0), range: NSRange(location: 6, length:10))
         notVipLabel.attributedText = attrText
         notVipLabel.sizeToFit()
         vipGroup.addSubview(notVipLabel)
@@ -306,9 +341,27 @@ class MineViewController: UIViewController {
         if Constants.User.vipDay <= 0 {
             renewFeeBtn.isHidden = true
             notVipLabel.isHidden = false
+            
+            let attrText = NSMutableAttributedString.init(string: "开通会员，送480代币+充值8折特权")
+            attrText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.red, range: NSRange(location: 6, length:10))
+            notVipLabel.attributedText = attrText
+            notVipLabel.attributedText = attrText
         }else{
             renewFeeBtn.isHidden = false
-            notVipLabel.isHidden = true
+            notVipLabel.isHidden = false
+            
+            var currentDate = Date()
+            currentDate.addTimeInterval(TimeInterval(Constants.User.vipDay * 24 * 3600))
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale.current // 设置时区
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            if Constants.User.vip == 100000 {
+                //vip
+                notVipLabel.text = "\(dateFormatter.string(from: currentDate))到期"
+            }else if Constants.User.vip == 110000 {
+                //svip
+                notVipLabel.text = "\(dateFormatter.string(from: currentDate))到期"
+            }
         }
         
         /// 邀请
@@ -586,25 +639,27 @@ class MineViewController: UIViewController {
         userNameLabel.text = Constants.User.USER_NICK_NAME
         userNameLabel.sizeToFit()
         
-        editUserButton.snp.makeConstraints { (make) in
-            make.centerY.equalTo(userNameLabel)
-            make.left.equalTo(userNameLabel).offset(userNameLabel.bounds.width + 15)
-            make.width.equalTo(40)
-            make.height.equalTo(15)
-        }
+        editUserButton.frame.origin = CGPoint.init(x: userNameLabel.frame.origin.x + userNameLabel.bounds.width + 10, y: userNameLabel.frame.origin.y + (userNameLabel.bounds.height/2 - editUserButton.bounds.height/2))
         
         if Constants.User.USER_SEX == "0" {
             userSex.image = UIImage.init(named: "性别男")?.tint(color: UIColor.white, blendMode: CGBlendMode.destinationIn)
+            userSex.isHidden = false
         }else if Constants.User.USER_SEX == "-1"{
             userSex.image = UIImage.init(named: "性别男")?.tint(color: UIColor.white, blendMode: CGBlendMode.destinationIn)
+            userSex.isHidden = true
         }else{
             userSex.image = UIImage.init(named: "性别女")?.tint(color: UIColor.white, blendMode: CGBlendMode.destinationIn)
+            userSex.isHidden = false
         }
         
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd"
-        let con = ConstellationUtils.calculateWithDate(date: df.date(from: Constants.User.USER_BRITHDAY)!)
-        userXingZuo.text = con
+        if Constants.User.USER_BRITHDAY == "" {
+            userXingZuo.text = "未知"
+        }else{
+            let df = DateFormatter()
+            df.dateFormat = "yyyy-MM-dd"
+            let con = ConstellationUtils.calculateWithDate(date: df.date(from: Constants.User.USER_BRITHDAY)!)
+            userXingZuo.text = con
+        }
         
         if Constants.User.vip == 100000 {
             userVipLabel.text = "VIP会员"
@@ -617,16 +672,43 @@ class MineViewController: UIViewController {
         }
         
         goldNumber.text = "代币\n\(Constants.User.diamondsCount)"
-        redNumber.text = "红包\n\(Constants.User.diamondsCount)"
+        redNumber.text = "红包\n\(Constants.User.user_red_bag_number)"
         couponNumber.text = "优惠券\n\(Constants.User.userCouponNumber)"
         
         if Constants.User.vipDay <= 0 {
             renewFeeBtn.isHidden = true
             notVipLabel.isHidden = false
+            
+            let attrText = NSMutableAttributedString.init(string: "开通会员，送480代币+充值8折特权")
+            attrText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.init(red: 251/155.0, green: 127/255.0, blue: 131/255.0, alpha: 1.0), range: NSRange(location: 6, length:10))
+            notVipLabel.attributedText = attrText
         }else{
             renewFeeBtn.isHidden = false
-            notVipLabel.isHidden = true
+            notVipLabel.isHidden = false
+            
+            var currentDate = Date()
+            currentDate.addTimeInterval(TimeInterval(Constants.User.vipDay * 24 * 3600))
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale.current // 设置时区
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            if Constants.User.vip == 100000 {
+                //vip
+                notVipLabel.text = "\(dateFormatter.string(from: currentDate))到期"
+            }else if Constants.User.vip == 110000 {
+                //svip
+                notVipLabel.text = "\(dateFormatter.string(from: currentDate))到期"
+            }
         }
+        
+        if Constants.User.vip == 100000 && Constants.User.vipDay > 0 {
+            vipName.text = "VIP会员"
+        }else if Constants.User.vip == 110000 && Constants.User.vipDay > 0{
+            vipName.text = "SVIP会员"
+        }else{
+            vipName.text = "VIP会员"
+        }
+        
+        userAvater.kf.setImage(with: URL.init(string: Constants.User.USER_FACE_IMAGE), placeholder: UIImage.init(named: "avater_default"), options: nil, progressBlock: nil, completionHandler: nil)
     }
 
 }

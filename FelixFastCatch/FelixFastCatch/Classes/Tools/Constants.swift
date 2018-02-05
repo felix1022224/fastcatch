@@ -26,7 +26,7 @@ class Constants: NSObject {
             get{
                 if Network.nService == MZService.Test {
                     ///本地测试环境
-                    return "http://192.168.2.174:9125/"
+                    return "http://192.168.2.205:9125/"
                 }else if Network.nService == MZService.Debug{
                     ///测试环境
                     return  "http://47.92.72.158:9125/"
@@ -123,6 +123,9 @@ class Constants: NSObject {
             /// 获取已兑换的列表
             static let GET_CONVERTED_LIST = BASE_URL + "er/list"
             
+            /// 是否可以购买一元礼包
+            static let IS_NEW_USER_GIFT = BASE_URL + "rp/check1yuan"
+            
         }
         
         /// 用户相关
@@ -209,7 +212,9 @@ class Constants: NSObject {
         
         static let TITLE_IMAGE_HEIGHT = TITLE_IMAGE_WIDTH * 0.25
         
-        static let HOME_HEADER_HEIGHT = UIDevice.current.isX() ? 20 + 330 : 20 + 330
+        static let HOME_HEADER_HEIGHT = UIScreen.main.bounds.width > 320 ? 350 : 320
+        
+//        static let HOME_HEADER_HEIGHT = UIScreen.main.bounds.height * 0.45
         
     }
     
@@ -239,6 +244,9 @@ class Constants: NSObject {
         /// 用户邀请码
         static var USER_TAG = ""
         
+        /// 红包的数量
+        static var user_red_bag_number = 0
+        
         static let ID_KEY = "user_id"
         static let USER_SESSION_KEY = "userSessionId"
         static let USER_NICK_NAME_KEY = "userNickName"
@@ -252,6 +260,11 @@ class Constants: NSObject {
         static let USER_COUPON_NUMBER_KEY = "userCouponNumberKey"
         static let USER_CHECK_DAY_KEY = "userCheckDaysKey"
         static let USER_TODAY_CHECKED_KEY = "userTodayChecked"
+        static let USER_RED_BAG_NUMBER_KEY = "userRedBagNumberKey"
+        static let USER_SESSION_ID_KEY = "sessionIdKey"
+        
+        /// sessionId
+        static var sessionId = ""
         
         /// 钻石数
         static var diamondsCount = 0
@@ -307,4 +320,10 @@ class Constants: NSObject {
     
     /// 是否弹出了签到的界面
     public static var IS_SHOW_CHECKIN_DIALOG = false
+    
+    static func getTime() -> Int {
+        let now = NSDate()
+        let timeInterval:TimeInterval = now.timeIntervalSince1970
+        return Int(timeInterval)
+    }
 }

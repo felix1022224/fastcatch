@@ -36,12 +36,12 @@ class AchievementHeaderCollectionReusableView: UICollectionReusableView {
         titleGroupView.addSubview(productInfoTitle)
         
         let leftLine = UIView()
-        leftLine.backgroundColor = UIColor.gray
+        leftLine.backgroundColor = UIColor.init(red: 169/255.0, green: 169/255.0, blue: 169/255.0, alpha: 1.0)
         leftLine.frame = CGRect(x: 5, y: titleGroupView.bounds.height/2 - 0.5, width: titleGroupView.bounds.width / 3, height: 1)
         titleGroupView.addSubview(leftLine)
         
         let rightLine = UIView()
-        rightLine.backgroundColor = UIColor.gray
+        rightLine.backgroundColor = UIColor.init(red: 169/255.0, green: 169/255.0, blue: 169/255.0, alpha: 1.0)
         rightLine.frame = CGRect(x: titleGroupView.bounds.width - leftLine.bounds.width - 5, y: titleGroupView.bounds.height/2 - 0.5, width: titleGroupView.bounds.width / 3, height: 1)
         titleGroupView.addSubview(rightLine)
     }
@@ -87,9 +87,9 @@ class AchievementHeaderCollectionReusableView: UICollectionReusableView {
         
         if index != dataSources.count - 1 {
             let lineView = UIView.init()
-            lineView.backgroundColor = UIColor.gray
-            lineView.frame.size = CGSize.init(width: self.bounds.width * 0.9, height: 0.5)
-            lineView.frame.origin = CGPoint.init(x: self.bounds.width * 0.05, y: 99.5)
+            lineView.backgroundColor = UIColor.init(red: 169/255.0, green: 169/255.0, blue: 169/255.0, alpha: 1.0)
+            lineView.frame.size = CGSize.init(width:itemView.bounds.width * 0.9, height: 0.5)
+            lineView.frame.origin = CGPoint.init(x: itemView.bounds.width * 0.05, y: 99.5)
             itemView.addSubview(lineView)
         }
         

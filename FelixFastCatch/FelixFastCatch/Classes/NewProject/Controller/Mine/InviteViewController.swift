@@ -107,7 +107,7 @@ class InviteViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
             print("exception \(String(describing: exception))")
         }
         
-        webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/html/market/invite_awards.html")!))
+        webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/html/market/invite_awards.html?date=\(Constants.getTime())")!))
         
         exchangeButton.setTitle("输入邀请码", for: UIControlState.normal)
         exchangeButton.setTitleColor(UIColor.black, for: UIControlState.normal)
@@ -160,7 +160,12 @@ class InviteViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
     }
     
     func share(type:Int, title:String, img:String, desc:String, link: String) {
-        print("share:\(type)\(title)\(img)\(desc)\(link)")
+        if type == 0 || type == 1 {
+            if WeChatShared.isInstall() == false {
+                ToastUtils.showErrorToast(msg: "暂时无法分享")
+                return
+            }
+        }
         ///0是微信好友，1是朋友圈
         if type == 0 {
             getDataFromUrl(url: URL(string: img)!, completion: { (data, response, error) in

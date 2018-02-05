@@ -43,20 +43,21 @@ class NotTakeTableViewCell: UITableViewCell {
         sceneryName.font = UIFont.systemFont(ofSize: 16)
         sceneryName.text = "景品名称景品名称景品名称景品名称景品名称景品名称景品名称景品名称景品名称景品名称景品名称景品名称景品名称"
         sceneryName.numberOfLines = 2
+        sceneryName.textColor = UIColor.init(red: 68/255.0, green: 68/255.0, blue: 68/255.0, alpha: 1.0)
         sceneryName.sizeToFit()
         sceneryName.frame = CGRect.init(x: 15 + sceneryImage.bounds.width + 15, y: itemHeight * 0.1 + 5, width: UIScreen.main.bounds.width * 0.45, height: sceneryName.bounds.height * 2)
         addSubview(sceneryName)
         
         sceneryTime.font = UIFont.systemFont(ofSize: 12)
         sceneryTime.text = "申请提取剩余时间: 28天"
-        sceneryTime.textColor = UIColor.gray
+        sceneryTime.textColor = UIColor.init(red: 132/255.0, green: 132/255.0, blue: 132/255.0, alpha: 1.0)
         sceneryTime.sizeToFit()
         sceneryTime.frame.origin = CGPoint.init(x: 30 + sceneryImage.bounds.width, y: itemHeight * 0.9 - sceneryTime.bounds.height - 10)
         addSubview(sceneryTime)
         
         sceneryCount.font = UIFont.systemFont(ofSize: 12)
         sceneryCount.text = "可兑换积分:100 积分"
-        sceneryCount.textColor = UIColor.gray
+        sceneryCount.textColor = UIColor.init(red: 132/255.0, green: 132/255.0, blue: 132/255.0, alpha: 1.0)
         sceneryCount.sizeToFit()
         sceneryCount.frame.origin = CGPoint.init(x: sceneryTime.frame.origin.x, y: itemHeight * 0.9 - sceneryTime.bounds.height - 10 - 5 - sceneryCount.bounds.height)
         addSubview(sceneryCount)

@@ -50,6 +50,11 @@ class MyCheckInDialog: BasicDialog {
         
         vipUserLabel.textColor = UIColor.white
         vipUserLabel.font = UIFont.systemFont(ofSize: 24)
+        if Constants.User.vip == 100000 {
+            vipUserLabel.text = "VIP签到第 \(Constants.User.checkDays) 天"
+        }else if Constants.User.vip == 110000 {
+            vipUserLabel.text = "SVIP签到第 \(Constants.User.checkDays) 天"
+        }
         vipUserLabel.sizeToFit()
         addSubview(vipUserLabel)
         
@@ -69,7 +74,7 @@ class MyCheckInDialog: BasicDialog {
             make.centerX.equalTo(backgroundImage)
         }
         
-        if Constants.User.vipDay > 0 {
+        if Constants.User.vipDay <= 0 {
             vipTipsLabel.isHidden = true
             vipUserLabel.isHidden = true
             
@@ -160,7 +165,9 @@ class MyCheckInDialog: BasicDialog {
     }
     
     @objc func UserCheckIn() -> () {
+        ToastUtils.showLoadingToast(msg: "正在签到……")
         Alamofire.request(Constants.Network.User.USER_CHECKIN, method: .post, parameters: NetWorkUtils.createBaseParams()).responseJSON { [weak self] (response) in
+            ToastUtils.hide()
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(response.result.value!)
                 Constants.User.checkDays = json["data"]["checkedDays"].intValue

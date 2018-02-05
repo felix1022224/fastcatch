@@ -197,6 +197,12 @@ class GameRoomViewController: UIViewController {
     
     var redBagDialog:RedBagDialog!
     
+    /// 是不是普通房间
+    var isNormalRoom = false
+    
+    /// 游戏中的用户
+    var gameUserDataSource:JSON!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -208,10 +214,6 @@ class GameRoomViewController: UIViewController {
         UIApplication.shared.isIdleTimerDisabled = true
         
         initView()
-        
-        initGameRoomData()
-        
-        self.playBackgroundMusic() //播放背景音乐
     }
     
     /// 初始化游戏房间数据
@@ -258,9 +260,8 @@ class GameRoomViewController: UIViewController {
     /// 更新一下页面上面的数据
     func updateViewData() {
         print("gemd:\(gameRoomData)")
-        productNameLabel.text = gameRoomData["award"]["title"].stringValue
-        productInfoLabel.text = gameRoomData["award"]["description"].stringValue
-        productImage.kf.setImage(with: URL.init(string: gameRoomData["award"]["img"].stringValue))
+//        productNameLabel.text = gameRoomData["award"]["title"].stringValue
+//        productInfoLabel.text = gameRoomData["award"]["description"].stringValue
         
         startGameNumberLabel.text = gameRoomData["perDiamondsCount"].stringValue + "币/次"
         
@@ -270,13 +271,19 @@ class GameRoomViewController: UIViewController {
         
         createBottomGroupView()
         
-//        showZeroCatchSuccessDialog()
+        if gameRoomData["awardTypeId"].intValue == 0 {
+            isNormalRoom = true
+        }else{
+            isNormalRoom = false
+        }
+        
+        updateStartGameButton()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        if bgMusicPlayer != nil {
-            bgMusicPlayer.stop()
-        }
+//        if bgMusicPlayer != nil {
+//            bgMusicPlayer.stop()
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -295,10 +302,12 @@ class GameRoomViewController: UIViewController {
         
         gameRoomNetworkController = GameRoomNetworkController.init(grvc: self, deviceId: deviceId)
         gameRoomNetworkController.connectSocket()
+        
+        initGameRoomData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
+        self.playBackgroundMusic() //播放背景音乐
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -346,6 +355,11 @@ class GameRoomViewController: UIViewController {
     
     deinit {
         print("GameSceneDeinit")
+        if bgMusicPlayer != nil {
+            print("清理音乐")
+            bgMusicPlayer.stop()
+            bgMusicPlayer = nil
+        }
     }
     
     /// 显示0元抓抓中了的弹窗

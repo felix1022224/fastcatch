@@ -22,7 +22,7 @@ class PointListViewController: BaseActionBarViewController {
         webview.backgroundColor = UIColor.white
         view.addSubview(webview)
         
-        webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/html/market/record.html")!))
+        webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/html/score/record.html")!))
     }
 
 }

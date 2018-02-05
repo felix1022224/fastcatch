@@ -42,7 +42,7 @@ class SharedViewDialog: BaseDialog {
         
         ///微信好友
         sharedWechatSession = UIButton(type: .custom)
-        sharedWechatSession.setBackgroundImage(UIImage(named: "shared_wechat_session"), for: .normal)
+        sharedWechatSession.setBackgroundImage(UIImage(named: "微信"), for: .normal)
         sharedWechatSession.sizeToFit()
         rootView.addSubview(sharedWechatSession)
         
@@ -68,7 +68,7 @@ class SharedViewDialog: BaseDialog {
         
         ///微信朋友圈
         sharedWechatTimeLine = UIButton(type: .custom)
-        sharedWechatTimeLine.setBackgroundImage(UIImage(named: "shared_wechat_timeline"), for: .normal)
+        sharedWechatTimeLine.setBackgroundImage(UIImage(named: "朋友圈"), for: .normal)
         sharedWechatTimeLine.sizeToFit()
         rootView.addSubview(sharedWechatTimeLine)
         
@@ -109,7 +109,6 @@ class SharedViewDialog: BaseDialog {
     }
     
     @objc func sharedClick(sender:UIButton) -> () {
-        ToastUtils.showLoadingToast(msg: "请稍后...")
         if sender == sharedWechatSession {
             if thumbShareImage == "" || thumbShareImage == nil {
                 WeChatShared.shareURL(scheme, title: "免费抓娃娃啦，快来领游戏币！", description: "明星和网红们疯狂在抓的互联网实景娃娃机来啦！免费送钻快来抓！", thumbImg: UIImage(named: "shared_logo"), to: LDWechatScene.Session) { (isSuccess, info) in
@@ -120,8 +119,10 @@ class SharedViewDialog: BaseDialog {
                     }
                 }
             }else{
+                ToastUtils.showLoadingToast(msg: "请稍后...")
                 getDataFromUrl(url: URL(string: thumbShareImage)!, completion: { [weak self] (data, response, error) in
                     if response != nil {
+                        ToastUtils.hide()
                         WeChatShared.shareURL((self?.scheme)!, title: self?.shareTitle, description: self?.shareInfo, thumbImg: UIImage(data: data!), to: LDWechatScene.Session) { (isSuccess, info) in
                             if isSuccess {
                                 ToastUtils.showSuccessToast(msg: "分享成功")
@@ -142,8 +143,10 @@ class SharedViewDialog: BaseDialog {
                     }
                 }
             }else{
+                ToastUtils.showLoadingToast(msg: "请稍后...")
                 getDataFromUrl(url: URL(string: thumbShareImage)!, completion: { [weak self] (data, response, error) in
                     if response != nil {
+                        ToastUtils.hide()
                         WeChatShared.shareURL((self?.scheme)!, title: self?.shareTitle, description: self?.shareInfo, thumbImg: UIImage(data: data!), to: LDWechatScene.Timeline) { (isSuccess, info) in
                             if isSuccess {
                                 ToastUtils.showSuccessToast(msg: "分享成功")

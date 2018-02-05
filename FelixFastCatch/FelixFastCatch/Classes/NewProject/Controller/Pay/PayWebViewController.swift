@@ -14,9 +14,18 @@ import Alamofire
 @objc protocol payWebDelegate:JSExport {
     func showBack()
     func pay(payType:Int, payRp:String, couponId:String)
+    func setActionTitle(_ title:String)
 }
 
 @objc class PayJsModel: NSObject, payWebDelegate {
+    
+    func setActionTitle(_ title: String) {
+        if payVC != nil {
+            DispatchQueue.main.async {
+                self.payVC.actionTitleLabel.text = title
+            }
+        }
+    }
     
     var payVC:PayWebViewController!
     
@@ -64,7 +73,7 @@ class PayWebViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
         self.view.backgroundColor = UIColor.white
         
         backImageView.frame = CGRect(x: 0, y: UIApplication.shared.statusBarFrame.height + 45/2 - 45/2, width: 45, height: 45)
-        backImageView.setBackgroundImage(UIImage.init(named: "back"), for: UIControlState.normal)
+        backImageView.setImage(UIImage.init(named: "back"), for: UIControlState.normal)
         
         let headView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIApplication.shared.statusBarFrame.height + 45))
         headView.backgroundColor = UIColor.white
@@ -104,17 +113,55 @@ class PayWebViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
         webview.delegate = self
         view.addSubview(webview)
         
-        self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
-        let model = PayJsModel()
-        model.payVC = self
+//        self.jsContext = webview.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
+//        let model = PayJsModel()
+//        model.payVC = self
+//
+//        self.jsContext.setObject(model, forKeyedSubscript: "miaozhuaApp" as NSCopying & NSObjectProtocol)
+//        self.jsContext.exceptionHandler = { (context, exception) in
+//            print("exception \(String(describing: exception))")
+//        }
+//
+//        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+//
+//        if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
+//            for cookieData in cookieArray {
+//                if let dict = cookieData as? [HTTPCookiePropertyKey : Any] {
+//                    if let cookie = HTTPCookie.init(properties : dict) {
+//                        if cookie.name == "SESSION" {
+//                            var cookieProperties =  [HTTPCookiePropertyKey : Any]()
+//                            cookieProperties[HTTPCookiePropertyKey.name] = cookie.name
+//                            cookieProperties[HTTPCookiePropertyKey.value] = cookie.value
+//                            cookieProperties[HTTPCookiePropertyKey.domain] = "api.mz.meidaojia.com"
+//                            cookieProperties[HTTPCookiePropertyKey.originURL] = "http://api.mz.meidaojia.com"
+//                            cookieProperties[HTTPCookiePropertyKey.path] = "/"
+//                            cookieProperties[HTTPCookiePropertyKey.version] = "0"
+//
+//                            let cookie = HTTPCookie(properties: cookieProperties)
+//                            HTTPCookieStorage.shared.setCookie(cookie!)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/html/market/pay.html")!))
         
-        self.jsContext.setObject(model, forKeyedSubscript: "miaozhuaApp" as NSCopying & NSObjectProtocol)
-        self.jsContext.exceptionHandler = { (context, exception) in
-            print("exception \(String(describing: exception))")
-        }
+        exchangeButton.setTitle("兑换码", for: UIControlState.normal)
+        exchangeButton.setTitleColor(UIColor.black, for: UIControlState.normal)
+        exchangeButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        exchangeButton.isHidden = true
+        exchangeButton.sizeToFit()
+        headView.addSubview(exchangeButton)
         
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        exchangeButton.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - exchangeButton.bounds.width - 15, y: backImageView.frame.origin.y + backImageView.bounds.height/2 - exchangeButton.bounds.height/2)
         
+        exchangeButton.addTarget(self, action: #selector(showExchangeDialog), for: UIControlEvents.touchUpInside)
+    
+        hideShowExchangeBtn()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         if let cookieArray = UserDefaults.standard.array(forKey: Constants.User.USER_SESSION_KEY) {
             for cookieData in cookieArray {
                 if let dict = cookieData as? [HTTPCookiePropertyKey : Any] {
@@ -136,19 +183,23 @@ class PayWebViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
             }
         }
         
-        webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/html/market/pay.html")!))
+        let now = NSDate()
         
-        exchangeButton.setTitle("兑换码", for: UIControlState.normal)
-        exchangeButton.setTitleColor(UIColor.black, for: UIControlState.normal)
-        exchangeButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        exchangeButton.sizeToFit()
-        headView.addSubview(exchangeButton)
+        let timeInterval:TimeInterval = now.timeIntervalSince1970
         
-        exchangeButton.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - exchangeButton.bounds.width - 15, y: backImageView.frame.origin.y + backImageView.bounds.height/2 - exchangeButton.bounds.height/2)
+        let timeStamp = Int(timeInterval)
         
-        exchangeButton.addTarget(self, action: #selector(showExchangeDialog), for: UIControlEvents.touchUpInside)
-    
-//        hideShowExchangeBtn()
+        webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/html/market/pay.html?date=\(timeStamp)")!))
+        
+        hideShowExchangeBtn()
+        
+        actionTitleLabel.text = "充值"
+        
+        if !isShowBack {
+            backImageView.isHidden = true
+        }else{
+            backImageView.isHidden = false
+        }
     }
     
     @objc func back(){
@@ -162,8 +213,11 @@ class PayWebViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
             if webview.canGoBack {
                 webview.goBack()
                 backImageView.isHidden = true
+                hideShowExchangeBtn()
+                self.actionTitleLabel.text = "充值"
             }else{
                 backImageView.isHidden = false
+                hideShowExchangeBtn()
             }
         }
     }
@@ -319,8 +373,8 @@ class PayWebViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
     }
     
     func paySuccessCallbackH5(){
-//        self.jsContext.evaluateScript("pay.paySuccess();")
-        webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/html/market/pay.html")!))
+        UserTools.getUserInfo(callback: nil)
+        webview.loadRequest(URLRequest(url: URL(string: "https://api.mz.meidaojia.com/html/market/pay.html?date=\(Constants.getTime())")!))
     }
     
     @objc func showExchangeDialog() {

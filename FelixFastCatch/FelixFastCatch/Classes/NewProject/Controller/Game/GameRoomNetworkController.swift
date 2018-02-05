@@ -70,7 +70,7 @@ class GameRoomNetworkController: NSObject {
         
         /// 设备维护
         socket.on("maintain") { [weak self] (data, ack) in
-            ToastUtils.showErrorToast(msg: "维护中，请稍后")
+//            ToastUtils.showErrorToast(msg: "维护中，请稍后")
             self?.gameRoomVC.navigationController?.popViewController(animated: true)
         }
         
@@ -227,7 +227,7 @@ class GameRoomNetworkController: NSObject {
     func updateGameUser(data:[Any]) -> () {
         let resultJson = JSON(data[0])
         if resultJson["id"].intValue != 0 {
-            self.gameRoomVC.playingGameDialog.gameUserDataSource = resultJson
+            self.gameRoomVC.gameUserDataSource = resultJson
             self.gameRoomVC.updateGameUserInfo(userName: resultJson["nick"].stringValue, userAvater: resultJson["avatar"].stringValue)
         }else{
             self.gameRoomVC.hideGameUserView()

@@ -19,8 +19,6 @@ class MainTabsViewController: UITabBarController, UITabBarControllerDelegate {
     
     static var tabHeight:CGFloat = 0.0
     
-    var isShowADV = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -57,57 +55,6 @@ class MainTabsViewController: UITabBarController, UITabBarControllerDelegate {
         self.navigationController?.isNavigationBarHidden = true
         
         self.selectedViewController?.viewWillAppear(animated)
-        
-        if isShowADV {
-            isShowADV = true
-            return
-        }
-        if SplashView.isExistsSplashData() == false {
-            isShowADV = true
-            return
-        }
-        SplashView.showSplashView(duration: 5, defaultImage: UIImage(named: "Launchplaceholder"), tapSplashImageBlock: { (resultStr) in
-            if resultStr != "" {
-                switch UserDefaults.standard.integer(forKey: SplashView.OPEN_ADV_URL_TYPE) {
-                case 1:
-                    let link = resultStr
-                    // 跳转到网页
-                    if link == "" {
-                        return
-                    }
-                    let webVC = WebViewController()
-                    webVC.link = link
-                    webVC.shareTitle = UserDefaults.standard.string(forKey: SplashView.OPEN_ADV_SHARE_TITLE)
-                    webVC.shareInfo = UserDefaults.standard.string(forKey: SplashView.OPEN_ADV_SHARE_INFO)
-                    webVC.thumbShareImage = UserDefaults.standard.string(forKey: SplashView.OPEN_ADV_SHARE_THUMBIMAGE)
-                    webVC.actionTitle = UserDefaults.standard.string(forKey: SplashView.OPEN_ADV_URL_TITLE)
-                    self.navigationController?.pushViewController(webVC, animated: true)
-                    break
-                case 2:
-                    let link = Int(resultStr!)
-                    if link == -1 {
-                        let payVC = PayViewController()
-                        self.navigationController?.pushViewController(payVC, animated: true)
-                    }
-                    break
-                case 3:
-                    //跳转到外部链接
-                    if let url = URL(string: resultStr!) {
-                        //根据iOS系统版本，分别处理
-                        if #available(iOS 10, *) {
-                            UIApplication.shared.open(url, options: [:],completionHandler: {(success) in })
-                        } else {
-                            UIApplication.shared.openURL(url)
-                        }
-                    }
-                    break
-                default: break
-                    //什么都不干
-                }
-            }
-        }) { (isDiss) in
-            self.isShowADV = true
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

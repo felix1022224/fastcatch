@@ -18,6 +18,9 @@ class GameFailDialog: BasicDialog {
     
     var timeLabel = UILabel()
     
+    /// 是不是0元抓
+    var isZeroCatch = false
+    
     override func createView() {
         createBackgroundImage(imageName: "失败弹框")
         
@@ -64,11 +67,6 @@ class GameFailDialog: BasicDialog {
         cancelButton.sizeToFit()
         addSubview(cancelButton)
         
-        cancelButton.snp.makeConstraints { (make) in
-            make.left.equalTo(backgroundImage).offset(6)
-            make.bottom.equalTo(backgroundImage).offset(-15)
-        }
-        
         cancelButton.addTarget(self, action: #selector(cancel), for: UIControlEvents.touchUpInside)
         
         let againButton = UIButton.init(type: UIButtonType.custom)
@@ -77,8 +75,8 @@ class GameFailDialog: BasicDialog {
         addSubview(againButton)
         
         againButton.snp.makeConstraints { (make) in
-            make.centerY.equalTo(cancelButton)
             make.right.equalTo(backgroundImage).offset(-6)
+            make.bottom.equalTo(backgroundImage).offset(-15)
         }
         
         againButton.addTarget(self, action: #selector(again), for: UIControlEvents.touchUpInside)
@@ -94,7 +92,22 @@ class GameFailDialog: BasicDialog {
             make.right.equalTo(againButton).offset(-againButton.bounds.width * 0.15)
         }
         
-        isCounting = true
+        if isZeroCatch {
+            againButton.isHidden = true
+            cancelButton.snp.makeConstraints({ (make) in
+                make.centerX.equalTo(backgroundImage)
+                make.bottom.equalTo(backgroundImage).offset(-15)
+            })
+            timeLabel.isHidden = true
+        }else{
+            againButton.isHidden = false
+            isCounting = true
+            timeLabel.isHidden = false
+            cancelButton.snp.makeConstraints { (make) in
+                make.left.equalTo(backgroundImage).offset(6)
+                make.bottom.equalTo(backgroundImage).offset(-15)
+            }
+        }
         
         addDialogToWindow()
     }

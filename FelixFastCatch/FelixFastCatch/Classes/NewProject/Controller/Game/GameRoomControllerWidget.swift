@@ -43,7 +43,7 @@ extension GameRoomViewController {
         queueIndexLabel.font = UIFont.systemFont(ofSize: 12)
         gameControllerGroupView.addSubview(queueIndexLabel)
         
-        let attrText = NSMutableAttributedString.init(string: "您是第 \(6) 位哦")
+        let attrText = NSMutableAttributedString.init(string: "您是第 \(0) 位哦")
         attrText.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: 13, weight: UIFont.Weight.bold), range: NSRange(location: 4, length:1))
         attrText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white, range: NSRange(location: 4, length:1))
         queueIndexLabel.attributedText = attrText
@@ -55,14 +55,16 @@ extension GameRoomViewController {
         createOperationPanel()
         
         createRedBagNumber()
+        
+        updateStartGameButton()
     }
     
     func createRedBagNumber() {
         redBagNumber.font = UIFont.systemFont(ofSize: 12)
         redBagNumber.textColor = UIColor.red
-        let attrText = NSMutableAttributedString.init(string: "红包次数：\(1)次 (有疑问？)")
-        attrText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.gray, range: NSRange(location: 8, length:6))
-        attrText.addAttribute(NSAttributedStringKey.underlineStyle, value: NSNumber.init(value: 1), range: NSRange(location: 8, length: 6))
+        let attrText = NSMutableAttributedString.init(string: "红包次数：\(Constants.User.user_red_bag_number)次 (有疑问？)")
+        attrText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.gray, range: NSRange(location: 7 + String(Constants.User.user_red_bag_number).count, length:6))
+        attrText.addAttribute(NSAttributedStringKey.underlineStyle, value: NSNumber.init(value: 1), range: NSRange(location: 7 + String(Constants.User.user_red_bag_number).count, length: 6))
         redBagNumber.attributedText = attrText
         redBagNumber.sizeToFit()
         gameControllerGroupView.addSubview(redBagNumber)
@@ -75,6 +77,29 @@ extension GameRoomViewController {
         redBagNumber.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer.init(target: self, action: #selector(showRedBag))
         redBagNumber.addGestureRecognizer(tap)
+        
+        if Constants.User.user_red_bag_number != 0 {
+            redBagNumber.isHidden = false
+        }else{
+            redBagNumber.isHidden = true
+        }
+    }
+    
+    /// 更新开始游戏按钮的图片状态
+    func updateStartGameButton() {
+        if Constants.User.user_red_bag_number > 0 && isNormalRoom {
+            redBagNumber.isHidden = false
+            startGameBtn.setImage(UIImage.init(named: "使用红包开始"), for: .normal)
+            startGameBtn.setBackgroundImage(UIImage.init(named: "使用红包开始不可点击"), for: UIControlState.disabled)
+        }else{
+            redBagNumber.isHidden = true
+            startGameBtn.setImage(UIImage.init(named: "开始游戏啦"), for: .normal)
+            startGameBtn.setBackgroundImage(UIImage.init(named: "开始游戏啦不可点击"), for: UIControlState.disabled)
+        }
+        let attrText = NSMutableAttributedString.init(string: "红包次数：\(Constants.User.user_red_bag_number)次 (有疑问？)")
+        attrText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.gray, range: NSRange(location: 7 + String(Constants.User.user_red_bag_number).count, length:6))
+        attrText.addAttribute(NSAttributedStringKey.underlineStyle, value: NSNumber.init(value: 1), range: NSRange(location: 7 + String(Constants.User.user_red_bag_number).count, length: 6))
+        redBagNumber.attributedText = attrText
     }
     
     /// 显示红包的弹窗
@@ -156,6 +181,8 @@ extension GameRoomViewController {
         
         ToastUtils.showLoadingToast(msg: "开始游戏")
         
+        isGameing = true
+        
         print("开始游戏")
         var params = NetWorkUtils.createBaseParams()
         params["deviceid"] = deviceId
@@ -174,9 +201,14 @@ extension GameRoomViewController {
                     Constants.User.diamondsCount = json["data"]["diamondsCount"].intValue
                     self.updateGoldNumberView()
                     
+                    /// 更新红包状态
+                    Constants.User.user_red_bag_number = json["data"]["redCount"].intValue
+                    self.updateStartGameButton()
                 }else {
                     self.switchGameStatus(isGame: false)
                 }
+            }else{
+                self.switchGameStatus(isGame: false)
             }
             self.isStartClick = false
         }
@@ -288,6 +320,10 @@ extension GameRoomViewController {
             
             /// 切换到游戏模式
             self.switchGameMode()
+            
+            if Constants.User.user_red_bag_number > 0 && isNormalRoom {
+                redBagNumber.isHidden = true
+            }
         }else{
             disableControllerBtns(isEnbled: false)
             
@@ -314,6 +350,12 @@ extension GameRoomViewController {
             self.switchNotGameMode()
             
             startGameBtn.isEnabled = true
+            
+            self.wardCode = ""
+            
+            if Constants.User.user_red_bag_number > 0 && isNormalRoom {
+                redBagNumber.isHidden = false
+            }
         }
     }
     
@@ -481,6 +523,22 @@ extension GameRoomViewController {
         
         gameFailDialog = nil
         gameFailDialog = GameFailDialog(frame: UIScreen.main.bounds)
+        
+        print("result:\(gameRoomData["perDiamondsCount"].intValue)")
+        
+        if gameRoomData["perDiamondsCount"].intValue <= 0 {
+            /// 退出队列
+            gameRoomNetworkController.quitQueue(isShowToast: false)
+            
+            /// 切换到非游戏模式
+            switchGameStatus(isGame: false)
+            ///0元抓
+            gameFailDialog.isZeroCatch = true
+            gameFailDialog.createView()
+            gameFailDialog.show()
+            return
+        }
+        
         gameFailDialog.createView()
         gameFailDialog.cancelCallback = {[weak self] in
             /// 退出队列
@@ -567,8 +625,7 @@ extension GameRoomViewController {
     func sendWelfare() {
         ToastUtils.showLoadingToast(msg: "正在准备红包")
         var params = NetWorkUtils.createBaseParams()
-//        params["gTradeNo"] = wardCode
-        params["gTradeNo"] = "503381701554561"
+        params["gTradeNo"] = wardCode
         
         Alamofire.request(Constants.Network.User.SEND_RED_BAG, method: HTTPMethod.post, parameters: params).responseJSON { (dataResponse) in
             ToastUtils.hide()
@@ -576,9 +633,13 @@ extension GameRoomViewController {
                 let resultJson = JSON.init(data: dataResponse.data!)
                 print("resultJson:\(resultJson)")
                 
-//                let shareDialog = SharedViewDialog()
-//                shareDialog.createView()
-//                shareDialog.show()
+                let shareDialog = SharedViewDialog(frame: UIScreen.main.bounds)
+                shareDialog.createView()
+                shareDialog.shareTitle = resultJson["data"]["title"].stringValue
+                shareDialog.shareInfo = resultJson["data"]["desc"].stringValue
+                shareDialog.thumbShareImage = resultJson["data"]["img"].stringValue
+                shareDialog.scheme = resultJson["data"]["shareUrl"].stringValue
+                shareDialog.show()
             }
         }
     }

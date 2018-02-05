@@ -39,6 +39,9 @@ class TakeViewController: BaseActionBarViewController {
     
     var mailedCallback:(()->())!
     
+    /// 问题
+    let exchangeButton = UIButton.init(type: UIButtonType.custom)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,6 +71,18 @@ class TakeViewController: BaseActionBarViewController {
         addressValueView.addGestureRecognizer(showEditView)
         
         createContentGroupView()
+        
+        exchangeButton.setBackgroundImage(UIImage.init(named: "订单疑问"), for: UIControlState.normal)
+        exchangeButton.sizeToFit()
+        headView.addSubview(exchangeButton)
+        
+        exchangeButton.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - exchangeButton.bounds.width - 15, y: backImageView.frame.origin.y + backImageView.bounds.height/2 - exchangeButton.bounds.height/2)
+        
+        exchangeButton.addTarget(self, action: #selector(showQAWebView), for: UIControlEvents.touchUpInside)
+    }
+    
+    @objc func showQAWebView() {
+        self.navigationController?.pushViewController(QAWebViewController(), animated: true)
     }
     
     /// 创建未邮寄的地址
@@ -282,7 +297,7 @@ class TakeViewController: BaseActionBarViewController {
             if response.error == nil && response.data != nil {
                 let jsonData = JSON(data: response.data!)
                 if jsonData["code"].int! == 0 {
-                    ToastUtils.showSuccessToast(msg: "发货成功")
+                    ToastUtils.showSuccessToast(msg: "申请成功")
                     if self.mailedCallback != nil {
                         self.mailedCallback!()
                     }

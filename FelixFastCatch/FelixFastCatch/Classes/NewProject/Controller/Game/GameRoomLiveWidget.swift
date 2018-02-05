@@ -138,32 +138,31 @@ extension GameRoomViewController{
         gameUserNickName.text = userName
         gameUserNickName.sizeToFit()
         
-        gameUserAvatar.kf.setImage(with: URL(string: userAvater), placeholder: UIImage(named: "default_user_face"), options: nil, progressBlock: nil, completionHandler: nil)
+        let width:CGFloat = gameUserNickName.bounds.width < 90 ? 45 : 20
         
-        gameUserGroupView.frame.size = CGSize(width: gameUserAvatar.bounds.width + gameUserNickName.bounds.width + 55, height: gameUserAvatar.bounds.height * 1.3)
+        gameUserAvatar.kf.setImage(with: URL(string: userAvater), placeholder: UIImage(named: "avater_default"), options: nil, progressBlock: nil, completionHandler: nil)
+        
+        gameUserGroupView.frame.size = CGSize(width: gameUserAvatar.bounds.width + gameUserNickName.bounds.width + width, height: gameUserAvatar.bounds.height * 1.3)
         gameUserGroupView.frame.origin = CGPoint(x: UIScreen.main.bounds.width - 10 - gameUserGroupView.bounds.width, y: goldGroupView.frame.origin.y + goldGroupView.bounds.height + 10)
         
         gameUserAvatar.frame.origin = CGPoint(x: 5, y: gameUserGroupView.bounds.height/2 - gameUserAvatar.bounds.height/2)
         gameUserNickName.frame.origin = CGPoint(x: 5 + gameUserAvatar.bounds.width + 5, y: gameUserGroupView.bounds.height/2 - gameUserNickName.bounds.height/2)
         
-        vipView.frame.size = CGSize.init(width: (gameUserAvatar.bounds.width + gameUserNickName.bounds.width + 55) * 1.05, height: gameUserAvatar.bounds.height * 1.3 * 1.2)
+        vipView.frame.size = CGSize.init(width: (gameUserAvatar.bounds.width + gameUserNickName.bounds.width + width) * 1.05, height: gameUserAvatar.bounds.height * 1.3 * 1.2)
         vipView.frame.origin = CGPoint.init(x: gameUserGroupView.frame.origin.x + (gameUserGroupView.bounds.width/2 - vipView.bounds.width/2), y: gameUserGroupView.frame.origin.y + (gameUserGroupView.bounds.height/2 - vipView.bounds.height/2))
         
-        if self.playingGameDialog.gameUserDataSource["vip"].intValue == 100000 {
+        self.gameUserGroupView.isHidden = false
+        
+        if self.gameUserDataSource["vip"].intValue == 100000 {
             let vipImage = UIImage(named: "vip特殊边框")
             vipView.image = vipImage?.stretchableImage(withLeftCapWidth: Int((vipImage?.size.width)!/CGFloat(2)), topCapHeight: Int((vipImage?.size.height)!/CGFloat(2)))
             vipView.isHidden = false
-        }else if self.playingGameDialog.gameUserDataSource["vip"].intValue == 110000 {
+        }else if self.gameUserDataSource["vip"].intValue == 110000 {
             let vipImage = UIImage(named: "svip特殊边框")
             vipView.image = vipImage?.stretchableImage(withLeftCapWidth: Int((vipImage?.size.width)!/CGFloat(2)), topCapHeight: Int((vipImage?.size.height)!/CGFloat(2)))
             vipView.isHidden = false
         }else{
             vipView.isHidden = true
-        }
-        
-        UIView.animate(withDuration: 0.3) {
-            self.gameUserGroupView.isHidden = false
-            self.vipView.isHidden = false
         }
     }
     
@@ -178,6 +177,7 @@ extension GameRoomViewController{
     /// 展示游戏中的游戏信息的dialog
     @objc func showPlayingGameDialog(){
         playingGameDialog = PlayingGameDialog(frame: UIScreen.main.bounds)
+        playingGameDialog.gameUserDataSource = self.gameUserDataSource
         playingGameDialog.createView()
         playingGameDialog.show()
     }
