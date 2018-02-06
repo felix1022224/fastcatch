@@ -351,8 +351,6 @@ extension GameRoomViewController {
             
             startGameBtn.isEnabled = true
             
-            self.wardCode = ""
-            
             if Constants.User.user_red_bag_number > 0 && isNormalRoom {
                 redBagNumber.isHidden = false
             }
@@ -536,6 +534,8 @@ extension GameRoomViewController {
             gameFailDialog.isZeroCatch = true
             gameFailDialog.createView()
             gameFailDialog.show()
+            
+            self.wardCode = ""
             return
         }
         
@@ -579,6 +579,8 @@ extension GameRoomViewController {
             
             /// 切换到非游戏模式
             self?.switchGameStatus(isGame: false)
+            
+            self?.wardCode = ""
         }
         gameVictoryDialog.againCallback = {[weak self] in
             self?.startGameClick(isAgain: true)
@@ -591,6 +593,8 @@ extension GameRoomViewController {
             self?.switchGameStatus(isGame: false)
             
             self?.sendWelfare()
+            
+            self?.wardCode = ""
         }
         gameVictoryDialog.show()
     }
@@ -627,8 +631,11 @@ extension GameRoomViewController {
         var params = NetWorkUtils.createBaseParams()
         params["gTradeNo"] = wardCode
         
+        print("ward:\(wardCode)")
+        
         Alamofire.request(Constants.Network.User.SEND_RED_BAG, method: HTTPMethod.post, parameters: params).responseJSON { (dataResponse) in
             ToastUtils.hide()
+            print("result:\(dataResponse.result.value!)")
             if NetWorkUtils.checkReponse(response: dataResponse) {
                 let resultJson = JSON.init(data: dataResponse.data!)
                 print("resultJson:\(resultJson)")

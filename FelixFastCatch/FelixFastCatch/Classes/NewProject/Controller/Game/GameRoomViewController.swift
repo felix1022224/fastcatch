@@ -360,6 +360,9 @@ class GameRoomViewController: UIViewController {
             bgMusicPlayer.stop()
             bgMusicPlayer = nil
         }
+        isCounting = false
+        countdownTimer?.invalidate()
+        countdownTimer = nil
     }
     
     /// 显示0元抓抓中了的弹窗
