@@ -103,6 +103,7 @@ class MineViewController: UIViewController {
         
         userIdLabel.font = UIFont.systemFont(ofSize: 12)
         userIdLabel.text = "ID:\(Constants.User.USER_ID)"
+        userIdLabel.textAlignment = .center
         userIdLabel.sizeToFit()
         rootView.addSubview(userIdLabel)
         
@@ -645,6 +646,8 @@ class MineViewController: UIViewController {
         }else{
             vipAvater.isHidden = false
         }
+        
+        userIdLabel.text = "ID:" + Constants.User.USER_ID
         
         userNameLabel.text = Constants.User.USER_NICK_NAME
         userNameLabel.sizeToFit()
