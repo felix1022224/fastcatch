@@ -303,9 +303,11 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
 
             for item in self.topTabLabels {
                 if item.tag == index {
-                    item.textColor = UIColor.red
+                    item.textColor = UIColor.init(red: 65/255.0, green: 33/255.0, blue: 15/255.0, alpha: 1.0)
+                    item.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.bold)
                 }else{
-                    item.textColor = UIColor.black
+                    item.textColor = UIColor.init(red: 65/255.0, green: 33/255.0, blue: 15/255.0, alpha: 1.0)
+                    item.font = UIFont.systemFont(ofSize: 12)
                 }
             }
 
@@ -439,7 +441,7 @@ extension HomeTabViewController {
         topTabVies.addSubview(blackLine)
         
         topTabLineView = UIView()
-        topTabLineView.backgroundColor = UIColor.red
+        topTabLineView.backgroundColor = UIColor.init(red: 255/255.0, green: 194/255.0, blue: 53/255.0, alpha: 1.0)
         topTabLineView.frame = CGRect(x: 0, y: 0, width: (UIScreen.main.bounds.width - 28)/10, height: 3)
         topTabLineView.layer.cornerRadius = 2
         topTabLineView.layer.masksToBounds = true
@@ -468,11 +470,12 @@ extension HomeTabViewController {
     
     func createTopTabItem(index:Int, title:String) -> UILabel {
         let titleItem = UILabel()
-        titleItem.font = UIFont.systemFont(ofSize: 12)
         if index == 0 {
-            titleItem.textColor = UIColor.red
+            titleItem.textColor = UIColor.init(red: 65/255.0, green: 33/255.0, blue: 15/255.0, alpha: 1.0)
+            titleItem.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.bold)
         }else{
-            titleItem.textColor = UIColor.black
+            titleItem.textColor = UIColor.init(red: 65/255.0, green: 33/255.0, blue: 15/255.0, alpha: 1.0)
+            titleItem.font = UIFont.systemFont(ofSize: 12)
         }
         titleItem.frame = CGRect(x: CGFloat(index) * (UIScreen.main.bounds.width - 28)/4, y: 0, width: (UIScreen.main.bounds.width - 28)/4, height: 45)
         titleItem.tag = index
