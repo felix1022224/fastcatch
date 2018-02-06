@@ -209,6 +209,7 @@ class PayWebViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
                 return
             }
             self.dismiss(animated: true, completion: nil)
+            self.navigationController?.popViewController(animated: true)
         }else{
             if webview.canGoBack {
                 webview.goBack()

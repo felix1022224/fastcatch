@@ -505,6 +505,16 @@ class MineViewController: UIViewController {
         gameHistoryGroupView.frame.origin = CGPoint.init(x: 0, y: vipGroup.frame.origin.y + 10*4 + 50 * 4)
         
         
+        let redBagIcon = UIImageView()
+        redBagIcon.image = UIImage.init(named: "小红包")
+        redBagIcon.sizeToFit()
+        gameHistoryGroupView.addSubview(redBagIcon)
+        
+        redBagIcon.snp.makeConstraints { (make) in
+            make.right.equalTo(gameHistoryArrowIcon).offset(-(gameHistoryArrowIcon.bounds.width + 15))
+            make.centerY.equalTo(gameHistoryArrowIcon)
+        }
+        
         /// 设置
         let settingsGroupView = UIView()
         settingsGroupView.frame = CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50)
