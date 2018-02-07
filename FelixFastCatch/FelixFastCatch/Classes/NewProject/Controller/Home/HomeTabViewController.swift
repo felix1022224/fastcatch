@@ -262,7 +262,7 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
 
         var collectionY:CGFloat
         if UIDevice.current.isX() {
-            collectionY = CGFloat(self.headerHeight) - self.headerView.tabItemHeight + 0.5
+            collectionY = CGFloat(self.headerHeight) - self.headerView.tabItemHeight + 0.5 - UIApplication.shared.statusBarFrame.height
         }else{
             collectionY = CGFloat(self.headerHeight) - self.headerView.tabItemHeight + 0.5
         }
@@ -271,7 +271,6 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
             collectionY = CGFloat(self.headerHeight) - self.headerView.tabItemHeight + 0.5 + UIApplication.shared.statusBarFrame.height
         }
         
-
         for collectionView in self.collectionViews {
             if self.currentCollectionView.contentOffset.y < CGFloat(collectionY) {
                 collectionView.contentOffset = CGPoint(x: 0, y: self.currentCollectionView.contentOffset.y)
