@@ -23,6 +23,9 @@ class AchievementViewController: UIViewController {
     
     var headerList = [JSON]()
     
+    /// 没有数据的图片
+    var noValueImage = UIImageView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -93,6 +96,15 @@ class AchievementViewController: UIViewController {
         achievementList.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width * 0.05, y: UIScreen.main.bounds.height * 0.15)
         
         view.addSubview(self.achievementList)
+        
+        noValueImage.image = UIImage.init(named: "成就空")
+        noValueImage.sizeToFit()
+        view.addSubview(noValueImage)
+        
+        noValueImage.center = achievementList.center
+        
+        noValueImage.isHidden = false
+        achievementList.isHidden = true
     }
     
     func getTitlesList() -> () {
@@ -112,6 +124,14 @@ class AchievementViewController: UIViewController {
                     }
                     self.numberLabel.text = "已获成就\(self.headerList.count + self.titlesDataSource.count)个"
                     self.createAchievementList()
+                    
+                    if titlesArray.count <= 0 {
+                        self.noValueImage.isHidden = false
+                        self.achievementList.isHidden = true
+                    }else{
+                        self.noValueImage.isHidden = true
+                        self.achievementList.isHidden = false
+                    }
                 }
         }
     }

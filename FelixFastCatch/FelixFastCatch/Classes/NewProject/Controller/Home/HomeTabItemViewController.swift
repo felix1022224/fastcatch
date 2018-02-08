@@ -108,6 +108,8 @@ extension HomeTabItemViewController: UICollectionViewDelegateFlowLayout, UIColle
             
             let itemData = dataSources[indexPath.row]
             
+            print("itemData:\(itemData)")
+            
             cell?.switchStatus(status: itemData["status"].intValue)
             cell?.productImage.kf.setImage(with: URL(string: itemData["img"].stringValue))
             
