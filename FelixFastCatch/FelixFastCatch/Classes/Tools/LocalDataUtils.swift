@@ -222,6 +222,7 @@ class LocalDataUtils: NSObject {
         Constants.User.vipDay = 0
         Constants.User.userCouponNumber = 0
         Constants.User.todayChecked = false
+        Constants.User.diamondsCount = 0
         
         Constants.IS_SHOW_CHECKIN_DIALOG = false
         

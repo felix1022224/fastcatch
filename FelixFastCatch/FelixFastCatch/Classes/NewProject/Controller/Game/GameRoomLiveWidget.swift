@@ -419,6 +419,10 @@ extension GameRoomViewController{
         goldNumber.frame.origin = CGPoint(x: 4 + goldIcon.bounds.width + 4, y: goldGroupView.bounds.height/2 - goldNumber.bounds.height/2)
         
         goldGroupView.isHidden = false
+        
+        if Constants.User.USER_ID == "" {
+            goldGroupView.isHidden = true
+        }
     }
     
     func initLive() -> () {
