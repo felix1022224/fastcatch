@@ -144,7 +144,7 @@ extension GameRoomViewController {
             return
         }
         
-        if Constants.User.diamondsCount < gameRoomData["perDiamondsCount"].intValue  {
+        if Constants.User.diamondsCount < gameRoomData["perDiamondsCount"].intValue && Constants.User.user_red_bag_number <= 0 {
             /// 代币不足，请充值
             ToastUtils.showErrorToast(msg: "代币不足，请充值")
             return
@@ -467,9 +467,10 @@ extension GameRoomViewController {
         }
         
         /// 调用接口超过8次，默认失败
-        if getWardCodeNumber >= 6 {
+        if getWardCodeNumber >= 8 {
             getWardCodeNumber = 0
             self.switchGameStatus(isGame: false)
+            
             /// 隐藏loading
             ToastUtils.hide()
             
@@ -478,6 +479,9 @@ extension GameRoomViewController {
             
             /// 抓取失败的音效
             playGrapFail()
+            
+            updateEnergyNumber(energy: gameCount)
+            
             return
         }
         
@@ -487,16 +491,22 @@ extension GameRoomViewController {
         Alamofire.request(Constants.Network.Machine.GET_WARD, method: .post, parameters: params).responseJSON { (response) in
             if NetWorkUtils.checkReponse(response: response) {
                 let json = JSON(response.result.value!)
-                if json["data"]["drawable"].bool! == true {
+                print("gamejSON:\(json)")
+                if json["data"]["drawable"].boolValue == true {
                     /// 隐藏loading
                     ToastUtils.hide()
                     
                     self.getWardCodeNumber = 0
+                    
                     /// 显示再来一局的界面
-                    self.showGameVictoryDialog()
+                    self.showGameVictoryDialog(isEnergyFull: json["data"]["type"].intValue)
                     
                     /// 抓取成功的音效
                     self.playGrapSuccess()
+                    
+                    self.gameCount = 0
+                    self.updateEnergyNumber(energy: 0)
+                    
                 }else{
                     /// 抓取失败
                     self.getWardCodeNumber = self.getWardCodeNumber + 1
@@ -504,6 +514,7 @@ extension GameRoomViewController {
                         self?.getWard()
                     })
                 }
+                self.gameCount = json["data"]["gameCount"].intValue
             }else{
                 /// 异常，也认为抓取失败
                 self.getWardCodeNumber = self.getWardCodeNumber + 1
@@ -521,8 +532,7 @@ extension GameRoomViewController {
         
         gameFailDialog = nil
         gameFailDialog = GameFailDialog(frame: UIScreen.main.bounds)
-        
-        print("result:\(gameRoomData["perDiamondsCount"].intValue)")
+        gameFailDialog.eneryNumber = 10 - self.gameCount
         
         if gameRoomData["perDiamondsCount"].intValue <= 0 {
             /// 退出队列
@@ -554,7 +564,7 @@ extension GameRoomViewController {
     }
     
     /// 显示游戏胜利的弹窗
-    func showGameVictoryDialog() {
+    func showGameVictoryDialog(isEnergyFull:Int) {
         /// 修改下爪状态
         isGrab = false
         
@@ -572,6 +582,11 @@ extension GameRoomViewController {
         
         gameVictoryDialog = nil
         gameVictoryDialog = GameVictoryDialog(frame: UIScreen.main.bounds)
+        if isEnergyFull == 0 {
+            gameVictoryDialog.isEnergyFull = false
+        }else{
+            gameVictoryDialog.isEnergyFull = true
+        }
         gameVictoryDialog.createView()
         gameVictoryDialog.cancenCallback = {[weak self] in
             /// 退出队列
@@ -630,8 +645,6 @@ extension GameRoomViewController {
         ToastUtils.showLoadingToast(msg: "正在准备红包")
         var params = NetWorkUtils.createBaseParams()
         params["gTradeNo"] = wardCode
-        
-        print("ward:\(wardCode)")
         
         Alamofire.request(Constants.Network.User.SEND_RED_BAG, method: HTTPMethod.post, parameters: params).responseJSON { (dataResponse) in
             ToastUtils.hide()

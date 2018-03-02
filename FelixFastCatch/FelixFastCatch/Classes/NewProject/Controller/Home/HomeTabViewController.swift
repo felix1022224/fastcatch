@@ -82,6 +82,13 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
     
     var isShowADV = false
     
+    /// 通知的类型
+    var notificationType:String = ""
+    
+    /// 通知的内容,房间号,H5地址
+    var notificationContent:String = ""
+    var notificationContentDict:NSDictionary!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -119,6 +126,38 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
         headerView.bannerView.addGestureRecognizer(tapBanner)
         
         self.headerView.checkInButton.addTarget(self, action: #selector(showMyCheckInDialog), for: UIControlEvents.touchUpInside)
+    }
+    
+    func startNotification() {
+        if SplashView.isExistsSplashData() == false {
+            /// 没广告的情况下
+            if notificationType != "" {
+                if notificationType == "1" {
+                    // H5
+                    if notificationContentDict != nil {
+                        let webVC = WebViewController()
+                        webVC.link = notificationContentDict["scheme"]! as? String ?? ""
+                        webVC.shareTitle = notificationContentDict["shareTitle"]! as? String ?? ""
+                        webVC.shareInfo = notificationContentDict["shareSubtitle"]! as? String ?? ""
+                        webVC.thumbShareImage = notificationContentDict["shareImg"]! as? String ?? ""
+                        webVC.actionTitle = notificationContentDict["title"]! as? String ?? ""
+                        self.navigationController?.pushViewController(webVC, animated: true)
+                    }
+                }else if notificationType == "2" {
+                    // 跳转到房间
+                    let gameRoomVC = GameRoomViewController()
+                    gameRoomVC.deviceId = notificationContent
+                    self.navigationController?.pushViewController(gameRoomVC, animated: true)
+                }else if notificationType == "6" && Constants.User.ID != "" {
+                    // 邀请页
+                    let inviteVC = InviteViewController()
+                    self.navigationController?.pushViewController(inviteVC, animated: true)
+                }else if notificationType == "7" && Constants.User.ID != "" {
+                    // 我的消息
+                    self.navigationController?.pushViewController(MessageListViewController(), animated: true)
+                }
+            }
+        }
     }
     
     /// 点击banner
@@ -387,6 +426,34 @@ class HomeTabViewController: UIViewController, UIScrollViewDelegate {
             self.isHide = false
             
             self.updateHome()
+            
+            /// 没广告的情况下
+            if self.notificationType != "" {
+                if self.notificationType == "1" {
+                    // H5
+                    if self.notificationContentDict != nil {
+                        let webVC = WebViewController()
+                        webVC.link = self.notificationContentDict["scheme"]! as? String ?? ""
+                        webVC.shareTitle = self.notificationContentDict["shareTitle"]! as? String ?? ""
+                        webVC.shareInfo = self.notificationContentDict["shareSubtitle"]! as? String ?? ""
+                        webVC.thumbShareImage = self.notificationContentDict["shareImg"]! as? String ?? ""
+                        webVC.actionTitle = self.notificationContentDict["title"]! as? String ?? ""
+                        self.navigationController?.pushViewController(webVC, animated: true)
+                    }
+                }else if self.notificationType == "2" {
+                    // 跳转到房间
+                    let gameRoomVC = GameRoomViewController()
+                    gameRoomVC.deviceId = self.notificationContent
+                    self.navigationController?.pushViewController(gameRoomVC, animated: true)
+                }else if self.notificationType == "6" && Constants.User.ID != "" {
+                    // 邀请页
+                    let inviteVC = InviteViewController()
+                    self.navigationController?.pushViewController(inviteVC, animated: true)
+                }else if self.notificationType == "7" && Constants.User.ID != "" {
+                    // 我的消息
+                    self.navigationController?.pushViewController(MessageListViewController(), animated: true)
+                }
+            }
         }
     }
     

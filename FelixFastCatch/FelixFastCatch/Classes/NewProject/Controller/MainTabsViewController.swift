@@ -19,6 +19,10 @@ class MainTabsViewController: UITabBarController, UITabBarControllerDelegate {
     
     static var tabHeight:CGFloat = 0.0
     
+    var isNotification = false
+    
+    var nsnsnsnsn:NSDictionary!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,16 +35,53 @@ class MainTabsViewController: UITabBarController, UITabBarControllerDelegate {
         self.tabBar.tintColor = UIColor.white
         
         self.delegate = self
-        
+
         setUpOneChildViewController(viewController: PayWebViewController(), image: UIImage(named: "充值_tab_icon")!, selectedImage: UIImage(named: "充值选中_tab_icon")!, title: "")
         setUpOneChildViewController(viewController: AwardViewController(), image: UIImage(named: "奖品_tab_icon")!, selectedImage: UIImage(named: "奖品选中_tab_icon")!, title: "")
         setUpOneChildViewController(viewController: homeViewController, image: UIImage(named: "首页_tab_icon")!, selectedImage: UIImage(named: "首页选中_tab_icon")!, title: "")
         setUpOneChildViewController(viewController: PointsMallViewController(), image: UIImage(named: "商城_tab_icon")!, selectedImage: UIImage(named: "商城选中_tab_icon")!, title: "")
         setUpOneChildViewController(viewController: MineViewController(), image: UIImage(named: "我的_tab_icon")!, selectedImage: UIImage(named: "我的选中_tab_icon")!, title: "")
+    
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+            if self.nsnsnsnsn != nil && Constants.User.ID != "" {
+                self.initNotification()
+            }
+        }
         
         self.selectedIndex = 2
         
         getOpenAdv()
+    }
+    
+    func initNotification(){
+        if isNotification == true {
+            if let type = self.nsnsnsnsn.object(forKey: "type")! as? String {
+                if type == "3" {
+                    // 充值
+                    self.selectedIndex = 0
+                }else if type == "4" {
+                    // 奖品
+                    self.selectedIndex = 1
+                }else if type == "5" {
+                    // 积分
+                    self.selectedIndex = 3
+                }else if type == "1" {
+                    homeViewController.notificationType = "1"
+                    homeViewController.notificationContent = self.nsnsnsnsn.object(forKey: "content")! as! String
+                    homeViewController.startNotification()
+                }else if type == "2" {
+                    homeViewController.notificationType = "2"
+                    homeViewController.notificationContent = self.nsnsnsnsn.object(forKey: "content")! as! String
+                    homeViewController.startNotification()
+                }else if type == "6" {
+                    homeViewController.notificationType = "6"
+                    homeViewController.startNotification()
+                }else if type == "7" {
+                    homeViewController.notificationType = "7"
+                    homeViewController.startNotification()
+                }
+            }
+        }
     }
     
     override func viewWillLayoutSubviews() {

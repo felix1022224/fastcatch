@@ -391,10 +391,10 @@ class PayWebViewController: UIViewController, UIWebViewDelegate, UIGestureRecogn
                 let infoDictionary = Bundle.main.infoDictionary!
                 if let buildVersion = (infoDictionary["CFBundleVersion"] as? NSString)?.doubleValue {
                     if json["data"].doubleValue >= buildVersion {
-                        print("正式")
+                        /// 正式
                         self.exchangeButton.isHidden = false
                     }else{
-                        print("提审")
+                        /// 提审
                         self.exchangeButton.isHidden = true
                     }
                 }else {

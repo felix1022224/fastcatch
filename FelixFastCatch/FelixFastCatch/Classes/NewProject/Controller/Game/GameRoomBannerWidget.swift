@@ -37,7 +37,7 @@ extension GameRoomViewController{
         titleGroupView.addSubview(rightLine)
         
         let bannerView = UIImageView()
-        bannerView.frame.size = CGSize.init(width: UIScreen.main.bounds.width - 80, height: (UIScreen.main.bounds.width - 80) * 0.45)
+        bannerView.frame.size = CGSize.init(width: UIScreen.main.bounds.width - 80, height: (UIScreen.main.bounds.width - 80) * 0.4)
         bannerView.backgroundColor = UIColor.white
         bannerGroupView.addSubview(bannerView)
         

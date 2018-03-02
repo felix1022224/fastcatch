@@ -71,6 +71,145 @@ extension GameRoomViewController{
         initLive()
         
         createLiveBtns()
+        
+        
+        /// 能量条
+        
+        energyGroupView = UIView.init()
+        energyGroupView.frame = CGRect.init(x: 14, y: liveView.bounds.height/2 - 100, width: 24, height: 250)
+        rootView.addSubview(energyGroupView)
+        
+        energyImage.image = UIImage.init(named: "010")
+        energyImage.sizeToFit()
+        energyGroupView.addSubview(energyImage)
+        
+        energyNoValueLabel.text = "抓\n不\n到\n就\n免\n费\n送\n↘"
+        energyNoValueLabel.numberOfLines = 10
+        energyNoValueLabel.font = UIFont.systemFont(ofSize: 12)
+        energyNoValueLabel.textColor = UIColor.white
+        energyNoValueLabel.textAlignment = .center
+        energyNoValueLabel.frame = CGRect.init(x: 0, y: 0, width: energyImage.bounds.width/2.6, height: 250)
+        energyGroupView.addSubview(energyNoValueLabel)
+        
+        energyGroupView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer.init(target: self, action: #selector(showEnergyQADialog))
+        energyGroupView.addGestureRecognizer(tap)
+        
+        energyGroupView.isHidden = true
+        
+        
+        rootView.addSubview(energyIconGroupView)
+        
+        let energySize = energyImage.bounds.width * 0.55
+         
+//        energyIconGroupView.snp.makeConstraints { (make) in
+//            make.width.equalTo(energySize)
+//            make.height.equalTo(energySize)
+//            make.right.equalTo(energyImage).offset(-2)
+//            make.bottom.equalTo(energyImage).offset(-(energyImage.bounds.height*0.12 - energySize/1.8))
+//        }
+        
+        energyIconGroupView.frame.size = CGSize.init(width: energySize, height: energySize)
+        energyIconGroupView.frame.origin = CGPoint.init(x: 14 + energyImage.bounds.width - energySize - 2, y: energyGroupView.frame.origin.y + energyImage.bounds.height - (energyImage.bounds.height*0.11 + energySize/1.8))
+        
+        let awardIconImage = UIImageView()
+        awardIconImage.image = UIImage.init(named: "奖品_游戏")
+        awardIconImage.frame.size = CGSize.init(width: 15, height: 15)
+        awardIconImage.frame.origin = CGPoint.init(x: energySize/2 - awardIconImage.bounds.width/2, y: energySize/2 - awardIconImage.bounds.height/2)
+        energyIconGroupView.addSubview(awardIconImage)
+        
+        energyIconGroupView.isUserInteractionEnabled = true
+        energyIconGroupView.addGestureRecognizer(tap)
+        
+        /// 点点动画
+        energyIconAnimView.frame = CGRect.init(x: 0, y: 0, width: energySize, height: energySize)
+        
+        let energyAnimImage = UIImageView.init()
+        energyAnimImage.frame = CGRect.init(x: energySize/2 - energySize * 0.75/2, y: 3, width: energySize * 0.75, height: energySize * 0.75)
+        energyAnimImage.image = UIImage.init(named: "奖品_点点")
+        energyIconAnimView.addSubview(energyAnimImage)
+        
+        energyIconAnimView.force = 0.4      //弹力大小
+        energyIconAnimView.duration = 0.8  //动画持续时间
+        energyIconAnimView.delay = 0.4      //动画延时多久执行
+        
+        energyIconAnimView.damping = 0.7  //暂时不知什么用
+        energyIconAnimView.velocity = 0.7  //暂时不知
+        energyIconAnimView.scaleX = 0     //必须参数之一：范围0~1
+        energyIconAnimView.scaleY = 0     //必须参数之一：范围0~1
+        energyIconAnimView.x = 0              //必须参数之一：范围任意
+        energyIconAnimView.y = 0              //必须参数之一：范围任意
+        energyIconAnimView.rotate = 0      //暂时不知什么用
+        energyIconAnimView.repeatCount = 100000
+        energyIconAnimView.curve = "easeIn"     // 动画进入或是消失的样式
+        self.energyIconAnimView.animation = "pop"
+        
+        energyIconGroupView.addSubview(energyIconAnimView)
+        self.energyIconAnimView.animate()
+        
+        updateEnergyNumber(energy: 0)
+    }
+    
+    /// 更新能量条
+    func updateEnergyNumber(energy:Int){
+        if energy > 0 {
+            energyNoValueLabel.isHidden = true
+        }else{
+            energyNoValueLabel.isHidden = false
+        }
+        let energySize = energyImage.bounds.width * 0.55
+        switch energy {
+        case 0:
+            energyImage.image = UIImage.init(named: "010")
+            energyIconGroupView.frame.origin = CGPoint.init(x: 14 + energyImage.bounds.width - energySize - 2, y: energyGroupView.frame.origin.y + energyImage.bounds.height - (energyImage.bounds.height*0.11 + energySize/1.8))
+            break
+        case 1:
+            energyImage.image = UIImage.init(named: "110")
+            energyIconGroupView.frame.origin = CGPoint.init(x: 14 + energyImage.bounds.width - energySize - 2, y: energyGroupView.frame.origin.y + energyImage.bounds.height - (energyImage.bounds.height*0.19 + energySize/1.8))
+            break
+        case 2:
+            energyImage.image = UIImage.init(named: "210")
+            energyIconGroupView.frame.origin = CGPoint.init(x: 14 + energyImage.bounds.width - energySize - 2, y: energyGroupView.frame.origin.y + energyImage.bounds.height - (energyImage.bounds.height*0.27 + energySize/1.8))
+            break
+        case 3:
+            energyImage.image = UIImage.init(named: "310")
+            energyIconGroupView.frame.origin = CGPoint.init(x: 14 + energyImage.bounds.width - energySize - 2, y: energyGroupView.frame.origin.y + energyImage.bounds.height - (energyImage.bounds.height*0.35 + energySize/1.8))
+            break
+        case 4:
+            energyImage.image = UIImage.init(named: "410")
+            energyIconGroupView.frame.origin = CGPoint.init(x: 14 + energyImage.bounds.width - energySize - 2, y: energyGroupView.frame.origin.y + energyImage.bounds.height - (energyImage.bounds.height*0.43 + energySize/1.8))
+            break
+        case 5:
+            energyImage.image = UIImage.init(named: "510")
+            energyIconGroupView.frame.origin = CGPoint.init(x: 14 + energyImage.bounds.width - energySize - 2, y: energyGroupView.frame.origin.y + energyImage.bounds.height - (energyImage.bounds.height*0.51 + energySize/1.8))
+            break
+        case 6:
+            energyImage.image = UIImage.init(named: "610")
+            energyIconGroupView.frame.origin = CGPoint.init(x: 14 + energyImage.bounds.width - energySize - 2, y: energyGroupView.frame.origin.y + energyImage.bounds.height - (energyImage.bounds.height*0.59 + energySize/1.8))
+            break
+        case 7:
+            energyImage.image = UIImage.init(named: "710")
+            energyIconGroupView.frame.origin = CGPoint.init(x: 14 + energyImage.bounds.width - energySize - 2, y: energyGroupView.frame.origin.y + energyImage.bounds.height - (energyImage.bounds.height*0.67 + energySize/1.8))
+            break
+        case 8:
+            energyImage.image = UIImage.init(named: "810")
+            energyIconGroupView.frame.origin = CGPoint.init(x: 14 + energyImage.bounds.width - energySize - 2, y: energyGroupView.frame.origin.y + energyImage.bounds.height - (energyImage.bounds.height*0.75 + energySize/1.8))
+            break
+        case 9:
+            energyImage.image = UIImage.init(named: "910")
+            energyIconGroupView.frame.origin = CGPoint.init(x: 14 + energyImage.bounds.width - energySize - 2, y: energyGroupView.frame.origin.y + energyImage.bounds.height - (energyImage.bounds.height*0.83 + energySize/1.8))
+            break
+        default:
+            
+            break
+        }
+    }
+    
+    /// 显示能量条问题弹窗
+    @objc func showEnergyQADialog() {
+        let energyDialog = EnergyQADialog.init(frame: UIScreen.main.bounds)
+        energyDialog.createView()
+        energyDialog.show()
     }
     
     func createLiveBtns() {

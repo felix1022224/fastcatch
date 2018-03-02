@@ -108,8 +108,6 @@ extension HomeTabItemViewController: UICollectionViewDelegateFlowLayout, UIColle
             
             let itemData = dataSources[indexPath.row]
             
-            print("itemData:\(itemData)")
-            
             cell?.switchStatus(status: itemData["status"].intValue)
             cell?.productImage.kf.setImage(with: URL(string: itemData["img"].stringValue))
             
@@ -181,7 +179,6 @@ extension HomeTabItemViewController: UICollectionViewDelegateFlowLayout, UIColle
             /// 广告
             itemClickByAdv(item: itemData)
         }else{
-            print("status:\(itemData)")
             if itemData["status"].intValue >= 2 {
                 ToastUtils.showErrorToast(msg: "维护中，请稍后")
                 return

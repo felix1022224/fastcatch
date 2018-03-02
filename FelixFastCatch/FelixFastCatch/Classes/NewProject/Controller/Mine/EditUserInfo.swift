@@ -141,6 +141,7 @@ class EditUserInfo: BaseActionBarViewController {
         selectDateTime.show2 { [weak self] in
             // 选择了时间
             self?.brithdaySelectedLabel.text = self?.selectDateTime.selectTime
+            self?.brithdaySelectedLabel.sizeToFit()
         }
     }
     

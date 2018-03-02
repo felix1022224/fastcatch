@@ -10,6 +10,7 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 import AVFoundation
+import Spring
 
 class GameRoomViewController: UIViewController {
 
@@ -203,6 +204,23 @@ class GameRoomViewController: UIViewController {
     /// 游戏中的用户
     var gameUserDataSource:JSON!
     
+    /// 能量条的背景
+    var energyGroupView:UIView!
+    let energyImage = UIImageView()
+    /// 能量条为0的指示
+    var energyNoValueLabel = UILabel()
+    
+    /// 能量条指示器
+    var energyNumberLabel = UILabel()
+    
+    var gameCount = 0
+    
+    /// 能量条的view
+    var energyIconGroupView = UIView()
+    
+    /// 能量条动画的view
+    let energyIconAnimView = SpringView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -231,11 +249,11 @@ class GameRoomViewController: UIViewController {
                     
                     self.updateViewData()
                 }else{
-                    ToastUtils.showLoadingToast(msg: "发生异常")
+                    ToastUtils.showErrorToast(msg: "发生异常")
                     self.navigationController?.popViewController(animated: true)
                 }
             }else{
-                ToastUtils.showLoadingToast(msg: "发生异常")
+                ToastUtils.showErrorToast(msg: "发生异常")
                 self.navigationController?.popViewController(animated: true)
             }
         }
@@ -259,7 +277,6 @@ class GameRoomViewController: UIViewController {
     
     /// 更新一下页面上面的数据
     func updateViewData() {
-        print("gemd:\(gameRoomData)")
 //        productNameLabel.text = gameRoomData["award"]["title"].stringValue
 //        productInfoLabel.text = gameRoomData["award"]["description"].stringValue
         
@@ -276,6 +293,14 @@ class GameRoomViewController: UIViewController {
         }else{
             isNormalRoom = false
         }
+        
+        if gameRoomData["perDiamondsCount"].intValue <= 0 {
+            energyGroupView.isHidden = true
+        }else{
+            energyGroupView.isHidden = false
+        }
+        
+        updateEnergyNumber(energy: gameRoomData["gameCount"].intValue)
         
         updateStartGameButton()
     }

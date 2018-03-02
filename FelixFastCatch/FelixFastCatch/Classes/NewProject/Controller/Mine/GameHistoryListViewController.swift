@@ -88,7 +88,7 @@ class GameHistoryListViewController: BaseActionBarViewController, UITableViewDel
             cell.statusImage.image = UIImage.init(named: "未抓中印章")
         }
         cell.statusImage.sizeToFit()
-        cell.productImage.kf.setImage(with: URL(string: item["img"].stringValue))
+        cell.productImage.kf.setImage(with: URL(string: item["img"].stringValue + "&imageView2/1/w/200/h/200"))
         
         return cell
     }

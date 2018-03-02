@@ -13,7 +13,7 @@ import SVProgressHUD
 import SwiftyJSON
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate{
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate, UNUserNotificationCenterDelegate{
 
     var window: UIWindow?
 
@@ -37,6 +37,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         ///bugly
         Bugly.start(withAppId: "38f8b7d158")
+        
+        if launchOptions != nil {
+            if let notification = launchOptions![UIApplicationLaunchOptionsKey.remoteNotification] as? NSDictionary {
+                vc.isNotification = true
+                vc.nsnsnsnsn = notification
+//                if let dict = notification.userInfo {
+//                    // 获取通知上绑定的信息后作相应处理...
+//                    vc.isNotification = true
+//                }
+            }
+        }
         
         /// 取得用户授权 显示通知（上方提示条/声音/badgeNumber）
         if #available(iOS 10.0, *) {
@@ -205,7 +216,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             let alertView = UIAlertController(title: json["alert"]["title"].stringValue, message: json["alert"]["body"].stringValue, preferredStyle: UIAlertControllerStyle.alert)
             alertView.addAction(UIAlertAction(title: "确定", style: UIAlertActionStyle.cancel, handler: nil))
             UIViewController.currentViewController()?.present(alertView, animated: true, completion: nil)
+        }else{
+            if let type = userInfo["type"] as? String {
+                if type == "3" {
+                    // 充值
+                    vc.selectedIndex = 0
+                }else if type == "4" {
+                    // 奖品
+                    vc.selectedIndex = 1
+                }else if type == "5" {
+                    // 积分
+                    vc.selectedIndex = 3
+                }else if type == "1" {
+                    vc.homeViewController.notificationType = "1"
+                    vc.homeViewController.notificationContentDict = userInfo["content"]! as! NSDictionary
+                    vc.homeViewController.startNotification()
+                }else if type == "2" {
+                    vc.homeViewController.notificationType = "2"
+                    vc.homeViewController.notificationContent = userInfo["content"] as! String
+                    vc.homeViewController.startNotification()
+                }else if type == "6" {
+                    vc.homeViewController.notificationType = "6"
+                    vc.homeViewController.startNotification()
+                }else if type == "7" {
+                    vc.homeViewController.notificationType = "7"
+                    vc.homeViewController.startNotification()
+                }
+            }
         }
+        
     }
     
     @available(iOS 10.0, *)
@@ -229,11 +268,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     @available(iOS 10.0, *)
     func userNotificationCenter(center: UNUserNotificationCenter, didReceiveNotificationResponse response: UNNotificationResponse, withCompletionHandler completionHandler: () -> Void){
         let userInfo = response.notification.request.content.userInfo
+        ToastUtils.showInfoToast(msg: "123:\(userInfo["1234"])")
         if (response.notification.request.trigger?.isKind(of: UNPushNotificationTrigger.superclass()!))! {
-            //应用处于前台时的远程推送接受
             //必须加这句代码
             UMessage.setAutoAlert(false)
             UMessage.didReceiveRemoteNotification(userInfo)
+            
         }else{
             //应用处于前台时的本地推送接受
         }

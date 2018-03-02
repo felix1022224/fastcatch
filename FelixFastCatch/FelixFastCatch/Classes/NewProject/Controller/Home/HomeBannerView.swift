@@ -172,7 +172,7 @@ class HomeBannerView: UIView {
         
         pageControl.snp.makeConstraints { (make) in
             make.top.equalTo(title).offset(title.bounds.height + 20)
-            make.centerX.equalTo(bannerView).offset(100)
+            make.right.equalTo(bannerView).offset(-(pageControl.bounds.width + 40))
         }
         
         bannerView.isUserInteractionEnabled = true

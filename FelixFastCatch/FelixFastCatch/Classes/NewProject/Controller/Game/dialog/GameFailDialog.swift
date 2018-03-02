@@ -21,6 +21,8 @@ class GameFailDialog: BasicDialog {
     /// 是不是0元抓
     var isZeroCatch = false
     
+    var eneryNumber = 0
+    
     override func createView() {
         createBackgroundImage(imageName: "失败弹框")
         
@@ -39,7 +41,11 @@ class GameFailDialog: BasicDialog {
         }
         
         let descLabel = UILabel()
-        descLabel.text = "不要灰心哦~"
+        if isZeroCatch {
+            descLabel.text = "不要灰心哦~"
+        }else{
+            descLabel.text = "再玩\(eneryNumber)局直接带走~"
+        }
         descLabel.font = UIFont.systemFont(ofSize: 14)
         descLabel.textColor = UIColor.gray
         descLabel.sizeToFit()
@@ -51,7 +57,11 @@ class GameFailDialog: BasicDialog {
         }
         
         let descLabel2 = UILabel()
-        descLabel2.text = "再玩一次嘛~"
+        if isZeroCatch {
+            descLabel2.text = "再玩一次嘛~"
+        }else{
+            descLabel2.text = "不要放弃嘛~"
+        }
         descLabel2.font = UIFont.systemFont(ofSize: 14)
         descLabel2.textColor = UIColor.gray
         descLabel2.sizeToFit()
@@ -63,7 +73,11 @@ class GameFailDialog: BasicDialog {
         }
         
         let cancelButton = UIButton.init(type: UIButtonType.custom)
-        cancelButton.setBackgroundImage(UIImage.init(named: "游戏界面无力再战"), for: UIControlState.normal)
+        if isZeroCatch {
+            cancelButton.setBackgroundImage(UIImage.init(named: "游戏界面无力再战"), for: UIControlState.normal)
+        }else{
+            cancelButton.setBackgroundImage(UIImage.init(named: "就此放弃"), for: UIControlState.normal)
+        }
         cancelButton.sizeToFit()
         addSubview(cancelButton)
         

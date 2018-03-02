@@ -21,13 +21,19 @@ class GameVictoryDialog: BasicDialog {
     
     var timeLabel = UILabel()
     
+    var isEnergyFull = false
+    
     override func createView() {
         createBackgroundImage(imageName: "成功弹框")
         
         createCloseBtn()
         
         let title = UILabel()
-        title.text = "哎呀，抓到啦~"
+        if isEnergyFull {
+            title.text = "能量值满啦~"
+        }else{
+           title.text = "哎呀，抓到啦~"
+        }
         title.textColor = UIColor.init(red: 255/255.0, green: 131/255.0, blue: 78/255.0, alpha: 1.0)
         title.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.bold)
         title.sizeToFit()
@@ -39,7 +45,11 @@ class GameVictoryDialog: BasicDialog {
         }
         
         let descLabel = UILabel()
-        descLabel.text = "奖励你5个游戏红包"
+        if isEnergyFull {
+            descLabel.text = "奖品已悄悄塞进你的奖品背包"
+        }else{
+            descLabel.text = "奖励你5个游戏红包"
+        }
         descLabel.font = UIFont.systemFont(ofSize: 14)
         descLabel.textColor = UIColor.gray
         descLabel.sizeToFit()
@@ -51,7 +61,11 @@ class GameVictoryDialog: BasicDialog {
         }
         
         let descLabel2 = UILabel()
-        descLabel2.text = "快去请你的好友免费抓吧!"
+        if isEnergyFull {
+            descLabel2.text = "快去查看吧~"
+        }else{
+            descLabel2.text = "快去请你的好友免费抓吧!"
+        }
         descLabel2.font = UIFont.systemFont(ofSize: 14)
         descLabel2.textColor = UIColor.gray
         descLabel2.sizeToFit()

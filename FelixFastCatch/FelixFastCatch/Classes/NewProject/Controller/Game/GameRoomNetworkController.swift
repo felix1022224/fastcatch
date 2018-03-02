@@ -107,7 +107,7 @@ class GameRoomNetworkController: NSObject {
     /// 关闭连接
     func disconnect() -> () {
         print("离开房间")
-        
+        self.quitQueue(isShowToast: false)
         self.socket.disconnect()
     }
     
@@ -140,7 +140,6 @@ class GameRoomNetworkController: NSObject {
     /// 更新人数
     func updateGameNumber(data:[Any], ack:SocketAckEmitter) -> () {
         let resultData = JSON(data[0])
-        print("更新人数")
         self.gameRoomVC.updateGameRoomNumbers(watchNumberStr: String(resultData["waitWatchCount"].intValue) + "人", queueNumberStr: String(resultData["waitCtlCount"].intValue) + "人")
         self.gameRoomVC.updateGameNumber(gameNumberStr: "共\(resultData["awardDrawCount"].intValue)次")
     }

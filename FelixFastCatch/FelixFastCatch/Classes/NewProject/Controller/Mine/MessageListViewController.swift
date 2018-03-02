@@ -27,7 +27,7 @@ class MessageListViewController: BaseActionBarViewController,UITableViewDelegate
 
         actionTitleLabel.text = "我的消息"
         
-        messageTabList.rowHeight = 90
+        messageTabList.rowHeight = 100
         messageTabList.frame = CGRect(x: 0, y: headView.bounds.height + 5, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - headView.bounds.height - 5)
         messageTabList.separatorColor = UIColor.init(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         messageTabList.delegate = self

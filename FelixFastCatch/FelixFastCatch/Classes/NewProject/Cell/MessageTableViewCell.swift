@@ -13,7 +13,7 @@ class MessageTableViewCell: UITableViewCell {
 
     var title = UILabel()
     var time = UILabel()
-    var info = UILabel()
+    var info = UITextView()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -44,10 +44,12 @@ class MessageTableViewCell: UITableViewCell {
         info.font = UIFont.systemFont(ofSize: 12)
         info.text = "简介"
         info.textColor = UIColor.gray
-        info.numberOfLines = 3
+        info.textContainer.maximumNumberOfLines = 3
+        info.isEditable = false
+        info.isScrollEnabled = false
         info.sizeToFit()
-        info.frame.size = CGSize.init(width: UIScreen.main.bounds.width - title.frame.origin.x, height: info.bounds.height * 3)
-        info.frame.origin = CGPoint.init(x: title.frame.origin.x, y: 15 + title.bounds.height + 10)
+        info.frame.size = CGSize.init(width: UIScreen.main.bounds.width - title.frame.origin.x, height: info.bounds.height * 4)
+        info.frame.origin = CGPoint.init(x: 15 + iconImage.bounds.width, y: 15 + title.bounds.height + 10)
         addSubview(info)
     }
     

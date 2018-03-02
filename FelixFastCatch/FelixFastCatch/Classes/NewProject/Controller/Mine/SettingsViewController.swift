@@ -15,10 +15,14 @@ class SettingsViewController: BaseActionBarViewController {
     /// 退出登录的callback
     var logoutCallback:(()->())!
     
+    var versionView = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         actionTitleLabel.text = "设置"
+        
+        createVersionView()
         
         let centerGroupView = UIView.init()
         centerGroupView.backgroundColor = UIColor.white
@@ -62,7 +66,7 @@ class SettingsViewController: BaseActionBarViewController {
         arrowIcon2.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width - 15 - arrowIcon.bounds.width, y: uaGroupView.bounds.height/2 - arrowIcon2.bounds.height/2)
         uaGroupView.addSubview(arrowIcon2)
         
-        centerGroupView.frame = CGRect.init(x: 0, y: 5 + headView.bounds.height, width: UIScreen.main.bounds.width, height: 51 * 2)
+        centerGroupView.frame = CGRect.init(x: 0, y: 15 + headView.bounds.height + versionView.bounds.height, width: UIScreen.main.bounds.width, height: 51 * 2)
         view.addSubview(centerGroupView)
         
         let clickQa = UITapGestureRecognizer.init(target: self, action: #selector(onClickQA))
@@ -83,6 +87,28 @@ class SettingsViewController: BaseActionBarViewController {
         view.addSubview(logoutButton)
         
         logoutButton.addTarget(self, action: #selector(logout), for: UIControlEvents.touchUpInside)
+    }
+    
+    func createVersionView() {
+        versionView.frame = CGRect.init(x: 0, y: headView.bounds.height+1, width: UIScreen.main.bounds.width, height: 300)
+        versionView.backgroundColor = UIColor.white
+        
+        let logoView = UIImageView.init(image: UIImage.init(named: "秒抓一秒抓起所有"))
+        logoView.sizeToFit()
+        versionView.addSubview(logoView)
+        
+        logoView.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width/2 - logoView.bounds.width/2, y: versionView.bounds.height/2 - logoView.bounds.height/2)
+        
+        let versionLabel = UILabel()
+        versionLabel.textColor = UIColor.gray
+        versionLabel.font = UIFont.systemFont(ofSize: 14)
+        versionLabel.text = "V" + (Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "")
+        versionLabel.sizeToFit()
+        versionLabel.frame.origin = CGPoint.init(x: UIScreen.main.bounds.width/2 - versionLabel.bounds.width/2, y: versionView.bounds.height - 15 - versionLabel.bounds.height)
+        versionView.addSubview(versionLabel)
+        
+        view.addSubview(versionView)
+        
     }
     
     /// 退出登录
