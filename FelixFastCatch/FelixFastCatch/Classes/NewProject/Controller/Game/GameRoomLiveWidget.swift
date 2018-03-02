@@ -147,6 +147,8 @@ extension GameRoomViewController{
         energyIconGroupView.addSubview(energyIconAnimView)
         self.energyIconAnimView.animate()
         
+        energyIconGroupView.isHidden = true
+        
         updateEnergyNumber(energy: 0)
     }
     

@@ -294,10 +294,12 @@ class GameRoomViewController: UIViewController {
             isNormalRoom = false
         }
         
-        if gameRoomData["perDiamondsCount"].intValue <= 0 {
+        if gameRoomData["perDiamondsCount"].intValue <= 0 || gameRoomData["awardTypeId"].intValue == 3 {
             energyGroupView.isHidden = true
+            energyIconGroupView.isHidden = true
         }else{
             energyGroupView.isHidden = false
+            energyIconGroupView.isHidden = false
         }
         
         updateEnergyNumber(energy: gameRoomData["gameCount"].intValue)
